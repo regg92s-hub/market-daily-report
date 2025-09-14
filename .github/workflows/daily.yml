@@ -1,9 +1,18 @@
 name: Daily AV Report (20:00 Europe/Oslo)
 
+name: Daily AV Report (20:00 Europe/Oslo)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-daily-report
+  cancel-in-progress: true
+
 on:
   schedule:
-    - cron: "50 17 * * *"  # 19:50 Oslo (sommertid)
-    - cron: "50 18 * * *"  # 19:50 Oslo (vintertid)
+    - cron: "50 17 * * *"
+    - cron: "50 18 * * *"
   workflow_dispatch:
     inputs:
       force:
@@ -22,6 +31,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: "requirements.txt"
 
       - name: Install deps
         run: |
@@ -29,13 +40,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Debug inputs
-        run: |
-          echo "FORCE: ${{ github.event.inputs.force }}"
-                
+        run: echo "FORCE: ${{ github.event.inputs.force }}"
+
       - name: Show generator version
-        run: |
-          head -n 20 scripts/generate_report.py | sed -n '1,10p' || true
-      
+        run: sed -n '1,10p' scripts/generate_report.py || true
+
       - name: Run generator
         env:
           MPLBACKEND: Agg
@@ -52,7 +61,7 @@ jobs:
           if [ -f docs/run_log.txt ]; then tail -n 200 docs/run_log.txt; else echo "NO LOG"; fi
           echo "==== file tree ===="
           find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
-      
+
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
@@ -64,12 +73,11 @@ jobs:
             docs/volminers.json
             docs/news/news.json
 
-
       - name: List generated files
         run: |
           echo "Charts:"
           ls -1 docs/charts/*.png 2>/dev/null || true
-      
+
       - name: Sanity check before deploy
         if: ${{ github.event.inputs.force != 'true' }}
         run: |
@@ -81,7 +89,6 @@ jobs:
             exit 1
           fi
 
-
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -90,4 +97,3 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
-
