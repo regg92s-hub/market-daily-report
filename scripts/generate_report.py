@@ -12,36 +12,31 @@ API_KEY = os.environ["ALPHA_VANTAGE_KEY"]
 TZ = tz.gettz("Europe/Oslo")
 NOW = datetime.now(tz=TZ)
 
+# Sørg for at ./docs finnes FØR vi skriver noe
+os.makedirs("docs", exist_ok=True)
+
 # --- Force/fullrun-styring ---
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
-
 print(f"Full run mode: {FORCE} at {NOW.isoformat()}")
+
+# nyttig å kunne se modus på siden
 with open("docs/run_mode.json","w") as f:
     json.dump({"force": FORCE, "now": NOW.isoformat()}, f, indent=2)
 
 # Kjør bare full jobb rundt 20:00 lokal tid, med mindre FORCE=true
-from dateutil import tz
-if not FORCE:
-    if not (NOW.hour == 20 and NOW.minute <= 10):
-        # skriv heartbeat + minimal index for å unngå 404
-        with open("docs/heartbeat.json", "w") as f:
-            json.dump({"last_run_local": NOW.isoformat()}, f, indent=2)
-        with open("docs/index.html", "w") as f:
-            f.write(
-                f"<!doctype html><meta charset='utf-8'><title>Market Daily Report</title>"
-                f"<h1>Market Daily Report</h1>"
-                f"<p>Generert: {NOW.isoformat()}</p>"
-                f"<p>Full rapport genereres kl. 20:00 Europe/Oslo.</p>"
-            )
-        raise SystemExit(0)
-
-
-# Kjør kun full jobb nær kl. 20:00 lokal tid (±10 min). Ellers skriv heartbeat og avslutt uten feil.
-os.makedirs("docs", exist_ok=True)
-if not (NOW.hour == 20 and NOW.minute <= 10):
+if not FORCE and not (NOW.hour == 20 and NOW.minute <= 10):
+    # heartbeat + minimal index for å unngå 404
     with open("docs/heartbeat.json", "w") as f:
         json.dump({"last_run_local": NOW.isoformat()}, f, indent=2)
+    with open("docs/index.html", "w") as f:
+        f.write(
+            f"<!doctype html><meta charset='utf-8'><title>Market Daily Report</title>"
+            f"<h1>Market Daily Report</h1>"
+            f"<p>Generert: {NOW.isoformat()}</p>"
+            f"<p>Full rapport genereres kl. 20:00 Europe/Oslo.</p>"
+        )
     raise SystemExit(0)
+
 
 # For enkel gratisbruker: hold deg til symboler som fungerer på AV gratis
 TICKERS = {
