@@ -2,6 +2,7 @@ import os, json, time, math
 from datetime import datetime
 from dateutil import tz
 import requests
+import yfinance as yf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
