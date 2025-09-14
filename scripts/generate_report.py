@@ -8,6 +8,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 
+# Optional: Stooq via pandas-datareader
+try:
+    from pandas_datareader import data as pdr
+    HAS_PDR = True
+except Exception:
+    HAS_PDR = False
+
 # ---------- KONFIG ----------
 TZ = tz.gettz("Europe/Oslo")
 NOW = datetime.now(tz=TZ)
@@ -45,7 +52,17 @@ def flush_log():
     with open("docs/run_log.txt","w") as f:
         f.write("\n".join(LOG) + "\n")
 
-# ---------- TICKERS (yfinance) ----------
+# ---------- YF session med UA ----------
+YF_SESSION = requests.Session()
+YF_SESSION.headers.update({
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "*/*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Connection": "keep-alive",
+})
+
+# ---------- TICKERS ----------
 TICKERS = {
     "GLD":"ETF", "SLV":"ETF", "USO":"ETF",
     "GDX":"ETF","GDXJ":"ETF","SIL":"ETF","SILJ":"ETF",
@@ -55,7 +72,6 @@ TICKERS = {
 }
 ALL = list(TICKERS.keys())
 
-# Tillat å begrense antall tickere via env for test / fart
 allow = os.environ.get("ALLOWED_TICKERS", "").upper().strip()
 if allow:
     keep = {s.strip() for s in allow.split(",") if s.strip()}
@@ -64,89 +80,127 @@ if allow:
 
 DISABLE_INTRADAY = os.environ.get("DISABLE_INTRADAY","false").lower() == "true"
 
-# ---------- HJELPERE (indikatorer/plot) ----------
+# ---------- Indikatorer / plot ----------
 def SMA(s, n): return s.rolling(n).mean()
-
 def RSI(s, n=14):
-    delta = s.diff()
-    up = delta.clip(lower=0)
-    down = -delta.clip(upper=0)
+    d = s.diff(); up = d.clip(lower=0); down = -d.clip(upper=0)
     rs = up.rolling(n).mean() / down.rolling(n).mean()
     return 100 - (100/(1+rs))
-
 def MACD(s, fast=12, slow=26, sig=9):
-    ema_fast = s.ewm(span=fast, adjust=False).mean()
-    ema_slow = s.ewm(span=slow, adjust=False).mean()
-    macd = ema_fast - ema_slow
-    signal = macd.ewm(span=sig, adjust=False).mean()
-    hist = macd - signal
-    return macd, signal, hist
-
-def pct(a,b):
-    return (a-b)/b if (b is not None and b!=0) else np.nan
+    e_fast = s.ewm(span=fast, adjust=False).mean()
+    e_slow = s.ewm(span=slow, adjust=False).mean()
+    m = e_fast - e_slow; sigl = m.ewm(span=sig, adjust=False).mean()
+    return m, sigl, m - sigl
+def pct(a,b): return (a-b)/b if (b is not None and b!=0) else np.nan
 
 def plot_price_ind(df, title, outpath, ma_len):
-    plt.figure()
-    ax = plt.gca()
+    plt.figure(); ax = plt.gca()
     df["close_use"].plot(ax=ax, label="Close")
     SMA(df["close_use"], ma_len).plot(ax=ax, label=f"SMA{ma_len}")
-    ax.set_title(title)
-    ax.legend()
-    plt.tight_layout()
-    plt.savefig(outpath, dpi=120)
-    plt.close()
+    ax.set_title(title); ax.legend(); plt.tight_layout()
+    plt.savefig(outpath, dpi=120); plt.close()
 
 def plot_rsi_macd(df, title, out_rsi, out_macd):
-    rsi = RSI(df["close_use"])
-    plt.figure()
-    rsi.plot()
-    plt.title(f"{title} - RSI(14)")
-    plt.tight_layout()
-    plt.savefig(out_rsi, dpi=120)
-    plt.close()
-
+    rsi = RSI(df["close_use"]); plt.figure(); rsi.plot()
+    plt.title(f"{title} - RSI(14)"); plt.tight_layout()
+    plt.savefig(out_rsi, dpi=120); plt.close()
     macd, signal, hist = MACD(df["close_use"])
-    plt.figure()
-    macd.plot(label="MACD")
-    signal.plot(label="Signal")
-    hist.plot(label="Hist")
-    plt.legend()
-    plt.title(f"{title} - MACD(12,26,9)")
-    plt.tight_layout()
-    plt.savefig(out_macd, dpi=120)
-    plt.close()
+    plt.figure(); macd.plot(label="MACD"); signal.plot(label="Signal"); hist.plot(label="Hist")
+    plt.legend(); plt.title(f"{title} - MACD(12,26,9)"); plt.tight_layout()
+    plt.savefig(out_macd, dpi=120); plt.close()
 
-# ---------- yfinance henter ----------
+# ---------- Fallback-kilder ----------
+def stooq_series(sym: str):
+    """Daglig fra Stooq (ETF/aksjer)."""
+    if not HAS_PDR: 
+        return None
+    try:
+        df = pdr.DataReader(sym, "stooq")  # kolonner: Open High Low Close Volume
+        if df is None or df.empty: 
+            return None
+        df = df.sort_index()  # Stooq returnerer ofte desc
+        df = df.rename(columns=str.lower)
+        df["close_use"] = df["close"]
+        if "volume" not in df.columns: df["volume"] = np.nan
+        return df
+    except Exception as e:
+        log(f"stooq error {sym}: {e}")
+        return None
+
+CG_MAP = {"BTC-USD":"bitcoin", "ETH-USD":"ethereum"}
+def cg_series(sym: str):
+    """CoinGecko fallback for krypto (daglig)."""
+    coin = CG_MAP.get(sym)
+    if not coin: return None
+    url = f"https://api.coingecko.com/api/v3/coins/{coin}/market_chart?vs_currency=usd&days=max"
+    try:
+        r = requests.get(url, timeout=60, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
+        r.raise_for_status()
+        js = r.json(); prices = js.get("prices", [])
+        if not prices: return None
+        df = pd.DataFrame(prices, columns=["ts","price"])
+        df["date"] = pd.to_datetime(df["ts"], unit="ms")
+        df = df.set_index("date").sort_index()
+        out = pd.DataFrame(index=df.index)
+        out["close_use"] = df["price"].astype(float)
+        out["volume"] = np.nan
+        return out
+    except Exception as e:
+        log(f"coingecko error {sym}: {e}")
+        return None
+
+# ---------- yfinance henter (med retry + fallbacks) ----------
 def yf_series(sym: str, kind: str):
     """
     kind: 'DAILY','WEEKLY','MONTHLY','INTRADAY_60'
-    Vi resampler selv til uke/måned.
     """
-    try:
-        if kind == "DAILY":
-            data = yf.download(sym, period="max", interval="1d", auto_adjust=True, progress=False)
-        elif kind == "WEEKLY":
-            d = yf.download(sym, period="max", interval="1d", auto_adjust=True, progress=False)
-            data = d.resample("W-FRI").last()
-        elif kind == "MONTHLY":
-            d = yf.download(sym, period="max", interval="1d", auto_adjust=True, progress=False)
-            data = d.resample("M").last()
-        elif kind == "INTRADAY_60":
-            if DISABLE_INTRADAY:
-                return None
-            data = yf.download(sym, period="730d", interval="1h", auto_adjust=True, progress=False)
-        else:
-            return None
-    except Exception as e:
-        log(f"yfinance error {sym} {kind}: {e}")
+    # yfinance først, med 3 forsøk
+    def _dl(interval, period, resample=None):
+        for i in range(3):
+            try:
+                data = yf.download(
+                    sym, period=period, interval=interval,
+                    auto_adjust=True, progress=False, session=YF_SESSION
+                )
+                if data is not None and not data.empty:
+                    if resample:  # for uke/mnd
+                        data = data.resample(resample).last()
+                    return data
+            except Exception as e:
+                log(f"yfinance error {sym} {interval} try{i+1}: {e}")
+            time.sleep(2 + i)  # liten backoff
         return None
 
-    if data is None or data.empty or ("Close" not in data.columns and "close" not in data.columns):
-        log(f"no data {sym} {kind}")
+    if kind == "DAILY":
+        data = _dl("1d", "max")
+    elif kind == "WEEKLY":
+        d = _dl("1d", "max")
+        data = d.resample("W-FRI").last() if d is not None else None
+    elif kind == "MONTHLY":
+        d = _dl("1d", "max")
+        data = d.resample("ME").last() if d is not None else None  # unngå 'M' warning
+    elif kind == "INTRADAY_60":
+        if DISABLE_INTRADAY: 
+            data = None
+        else:
+            data = _dl("1h", "730d")
+    else:
         return None
+
+    if data is None or data.empty:
+        # Fallbacks
+        if sym.endswith("-USD"):     # krypto
+            df = cg_series(sym)
+        else:                        # ETF/aksjer
+            df = stooq_series(sym)
+        if df is None or df.empty:
+            log(f"no data {sym} {kind} (yf + fallbacks)")
+            return None
+        return df
 
     df = data.rename(columns=str.lower).copy()
     if "close" not in df.columns:
+        log(f"no close {sym} {kind}")
         return None
     df["close_use"] = df["close"]
     if "volume" not in df.columns:
@@ -219,9 +273,7 @@ def ratio_series(num_sym, den_sym):
     df["ratio"] = df["n"]/df["d"]
     df["ma50"] = df["ratio"].rolling(50).mean()
     out = f"docs/charts/{num_sym}_{den_sym}_ratio.png"
-    plt.figure()
-    df["ratio"].plot(label=f"{num_sym}/{den_sym}")
-    df["ma50"].plot(label="MA50")
+    plt.figure(); df["ratio"].plot(label=f"{num_sym}/{den_sym}"); df["ma50"].plot(label="MA50")
     plt.legend(); plt.tight_layout(); plt.title(f"{num_sym}/{den_sym} ratio vs MA50")
     plt.savefig(out, dpi=120); plt.close()
     return df.tail(400)
@@ -234,7 +286,7 @@ def volume_filter(sym):
     df["up20"] = df["up_day"].rolling(20).sum()
     return df.tail(60)[["volume","vol_ma20","up20"]]
 
-# Hent serier og lag grafer/indikatorer (yfinance)
+# yfinance/crypto/ETF serier + grafer
 for sym in ALL:
     daily   = yf_series(sym, "DAILY")
     weekly  = yf_series(sym, "WEEKLY")
@@ -282,8 +334,7 @@ spx_acwi = ratio_series("SPY","ACWI")
 # ---------- FRED: DXY proxy, VIX, renter, 2s10s ----------
 fred_assets = {}
 
-# DXY proxy: Trade Weighted U.S. Dollar Index (major) – DTWEXM
-dxy = fred_series("DTWEXM")
+dxy = fred_series("DTWEXM")  # DXY proxy
 if dxy is not None and not dxy.empty:
     sma200 = dxy["close_use"].rolling(200).mean()
     plot_price_ind(dxy.tail(800), "DXY proxy (DTWEXM) - price vs SMA200", "docs/charts/DXY_price.png", 200)
@@ -293,14 +344,12 @@ if dxy is not None and not dxy.empty:
         "dist_to_200DMA": float((dxy["close_use"].iloc[-1] - sma200.iloc[-1]) / sma200.iloc[-1]) if pd.notna(sma200.iloc[-1]) else None
     }
 
-# VIX: VIXCLS
 vix = fred_series("VIXCLS")
 if vix is not None and not vix.empty:
     plot_price_ind(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_price.png", 200)
     plot_rsi_macd(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_rsi.png", "docs/charts/VIX_macd.png")
     fred_assets["VIX"] = {"last": float(vix["close_use"].iloc[-1])}
 
-# Renter: 3M, 2Y, 10Y + 2s10s
 y3m = fred_series("DGS3MO")
 y2y = fred_series("DGS2")
 y10 = fred_series("DGS10")
@@ -309,8 +358,7 @@ if (y10 is not None and not y10.empty) and (y2y is not None and not y2y.empty):
     spread["y10"] = y10["close_use"]; spread["y2"] = y2y["close_use"]
     spread = spread.ffill().dropna()
     spread["s210"] = spread["y10"] - spread["y2"]
-    plt.figure(); spread["s210"].plot()
-    plt.title("2Y/10Y spread (DGS10 - DGS2)")
+    plt.figure(); spread["s210"].plot(); plt.title("2Y/10Y spread (DGS10 - DGS2)")
     plt.tight_layout(); plt.savefig("docs/charts/2Y10Y_spread.png", dpi=120); plt.close()
     fred_assets["yields"] = {
         "DGS3MO": float(y3m["close_use"].iloc[-1]) if (y3m is not None and not y3m.empty) else None,
@@ -360,7 +408,8 @@ with open("docs/index.html","w") as f: f.write(html)
 
 # ---------- LOGG ----------
 ok_assets = list(summary.get("assets", {}).keys())
-log(f"SUMMARY assets_count={len(ok_assets)} charts={len(files)} intraday_disabled={DISABLE_INTRADAY} fred_keys={list(fred_assets.keys())}")
+log(f"SUMMARY assets_count={len(ok_assets)} charts={len(files)} "
+    f"intraday_disabled={DISABLE_INTRADAY} fred_keys={list(fred_assets.keys())} "
+    f"pdr={HAS_PDR}")
 flush_log()
-
 print("Done.")
