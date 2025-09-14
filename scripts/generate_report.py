@@ -14,7 +14,16 @@ NOW = datetime.now(tz=TZ)
 
 # --- Force/fullrun-styring ---
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
+# Kjør kun full jobb nær kl. 20:00 lokal tid (±10 min). Ellers skriv heartbeat og avslutt uten feil.
 os.makedirs("docs", exist_ok=True)
+if not (NOW.hour == 20 and NOW.minute <= 10):
+    with open("docs/heartbeat.json", "w") as f:
+        json.dump({"last_run_local": NOW.isoformat()}, f, indent=2)
+    raise SystemExit(0)
+
+print(f"Full run mode: {FORCE} at {NOW.isoformat()}")
+with open("docs/run_mode.json","w") as f:
+    json.dump({"force": FORCE, "now": NOW.isoformat()}, f, indent=2)
 
 # Kjør bare full jobb rundt 20:00 lokal tid, med mindre FORCE=true
 from dateutil import tz
