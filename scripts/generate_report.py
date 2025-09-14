@@ -316,3 +316,51 @@ if (y10 is not None and not y10.empty) and (y2y is not None and not y2y.empty):
         "DGS3MO": float(y3m["close_use"].iloc[-1]) if (y3m is not None and not y3m.empty) else None,
         "DGS2": float(y2y["close_use"].iloc[-1]),
         "DGS10": float(y10["close_use"].iloc[-1]),
+        "2s10s": float(spread["s210"].iloc[-1])
+    }
+
+# ---------- RSS ----------
+news = {
+    "nftrh": last_n_days_posts("https://nftrh.com/blog/feed/"),
+    "northstar": last_n_days_posts("https://northstarbadcharts.com/feed/")
+}
+with open("docs/news/news.json","w") as f: json.dump(news, f, indent=2)
+
+# ---------- INDEX JSON ----------
+index = {
+  "generated_local": NOW.isoformat(),
+  "summary": summary,
+  "fred": fred_assets,
+  "notes": {
+    "ratios": {"GDX/GLD": bool(gdx_gld is not None), "SIL/SLV": bool(sil_slv is not None)},
+    "vol_filters": {k: bool(v is not None) for k,v in vol_filters.items()},
+    "market_temp": {
+        "HYG/LQD": bool(hyg_lqd is not None),
+        "SPX/ACWI": bool(spx_acwi is not None),
+        "DXY_vs_200DMA": "DXY" in fred_assets,
+        "VIX": "VIX" in fred_assets,
+        "yields_and_2s10s": "yields" in fred_assets
+    }
+  }
+}
+with open("docs/index.json","w") as f: json.dump(index, f, indent=2)
+
+# ---------- HTML (liste grafer) ----------
+files = sorted([f for f in os.listdir("docs/charts") if f.endswith(".png")])
+links = "\n".join([f'<li><a href="charts/{fn}">{fn}</a></li>' for fn in files])
+html = f"""<!doctype html><html><head><meta charset="utf-8">
+<title>Daglig rapport {NOW.strftime('%Y-%m-%d')}</title></head><body>
+<h1>Daglig rapport {NOW.strftime('%Y-%m-%d')}</h1>
+<p>Generert (Europe/Oslo): {NOW}</p>
+<p>Data: <a href="index.json">index.json</a> • Nyheter: <a href="news/news.json">news.json</a></p>
+<h2>Grafer</h2>
+<ul>{links}</ul>
+</body></html>"""
+with open("docs/index.html","w") as f: f.write(html)
+
+# ---------- LOGG ----------
+ok_assets = list(summary.get("assets", {}).keys())
+log(f"SUMMARY assets_count={len(ok_assets)} charts={len(files)} intraday_disabled={DISABLE_INTRADAY} fred_keys={list(fred_assets.keys())}")
+flush_log()
+
+print("Done.")
