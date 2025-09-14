@@ -9,24 +9,22 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 
 # ---------- KONFIG ----------
-API_KEY = os.environ["ALPHA_VANTAGE_KEY"]
 TZ = tz.gettz("Europe/Oslo")
 NOW = datetime.now(tz=TZ)
 
-# Sørg for at ./docs finnes FØR vi skriver noe
+# Kataloger
 os.makedirs("docs", exist_ok=True)
+os.makedirs("docs/charts", exist_ok=True)
+os.makedirs("docs/news", exist_ok=True)
 
 # --- Force/fullrun-styring ---
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
 print(f"Full run mode: {FORCE} at {NOW.isoformat()}")
 
-# nyttig å kunne se modus på siden
 with open("docs/run_mode.json","w") as f:
     json.dump({"force": FORCE, "now": NOW.isoformat()}, f, indent=2)
 
-# Kjør bare full jobb rundt 20:00 lokal tid, med mindre FORCE=true
 if not FORCE and not (NOW.hour == 20 and NOW.minute <= 10):
-    # heartbeat + minimal index for å unngå 404
     with open("docs/heartbeat.json", "w") as f:
         json.dump({"last_run_local": NOW.isoformat()}, f, indent=2)
     with open("docs/index.html", "w") as f:
@@ -38,82 +36,36 @@ if not FORCE and not (NOW.hour == 20 and NOW.minute <= 10):
         )
     raise SystemExit(0)
 
+# ---------- LOGGING ----------
+LOG = []
+def log(msg):
+    print(msg)
+    LOG.append(f"{datetime.now().isoformat()}  {msg}")
+def flush_log():
+    with open("docs/run_log.txt","w") as f:
+        f.write("\n".join(LOG) + "\n")
 
-# For enkel gratisbruker: hold deg til symboler som fungerer på AV gratis
+# ---------- TICKERS ----------
 TICKERS = {
     "GLD":"ETF", "SLV":"ETF", "USO":"ETF",
     "GDX":"ETF","GDXJ":"ETF","SIL":"ETF","SILJ":"ETF",
     "URNM":"ETF","ACWI":"ETF","SPY":"ETF",
     "HYG":"ETF","LQD":"ETF",
     "BTC-USD":"CRYPTO","ETH-USD":"CRYPTO",
-    # DXY, VIX og renteserier er ikke på AV gratis i en form som er stabil.
-    # De utelates i denne gratis-varianten for robusthet.
+    # DXY/VIX/renter tas ikke her (kan legges via FRED/yfinance senere)
 }
+ALL = list(TICKERS.keys())
 
-AV_MAP = {
-    "GLD":"GLD","SLV":"SLV","USO":"USO","GDX":"GDX","GDXJ":"GDXJ","SIL":"SIL","SILJ":"SILJ",
-    "URNM":"URNM","ACWI":"ACWI","SPY":"SPY","HYG":"HYG","LQD":"LQD",
-    "BTC-USD":"BTC","ETH-USD":"ETH",
-}
+# Tillat å begrense antall tickere via env for test / rate-kontroll
+allow = os.environ.get("ALLOWED_TICKERS", "").upper().strip()
+if allow:
+    keep = {s.strip() for s in allow.split(",") if s.strip()}
+    ALL = [t for t in ALL if t.upper() in keep]
+    log(f"ALLOWED_TICKERS filter aktiv: {ALL}")
 
-# ---------- ENKEL THROTTLING ----------
-# Alpha Vantage (free): ~5 kall/min og ~500/dag. Vi sover 13 sek pr. kall.
-def av_get(url):
-    r = requests.get(url, timeout=60)
-    log(f"GET {fn} {symbol} -> {r.status_code}")
-    r.raise_for_status()
-    js = r.json()
-    if "Note" in js: log(f"NOTE for {symbol} {interval}: {js['Note'][:140]}")
-    if "Error Message" in js: log(f"ERROR for {symbol} {interval}: {js['Error Message'][:140]}")
-    if key not in js:
-        log(f"MISS  {symbol} {interval}: expected key '{key}' not in response")
-        return None
-
-
-LOG = []
-
-def log(msg):
-    print(msg)
-    LOG.append(f"{datetime.now().isoformat()}  {msg}")
-
-def flush_log():
-    os.makedirs("docs", exist_ok=True)
-    with open("docs/av_log.txt","w") as f:
-        f.write("\n".join(LOG) + "\n")
+DISABLE_INTRADAY = os.environ.get("DISABLE_INTRADAY","false").lower() == "true"
 
 # ---------- HJELPERE ----------
-def av_series(symbol, interval):
-    base = "https://www.alphavantage.co/query?"
-    if interval == "DAILY":
-        fn = "TIME_SERIES_DAILY_ADJUSTED"; key = "Time Series (Daily)"
-        url = f"{base}function={fn}&symbol={symbol}&outputsize=full&apikey={API_KEY}"
-    elif interval == "WEEKLY":
-        fn = "TIME_SERIES_WEEKLY_ADJUSTED"; key = "Weekly Adjusted Time Series"
-        url = f"{base}function={fn}&symbol={symbol}&apikey={API_KEY}"
-    elif interval == "MONTHLY":
-        fn = "TIME_SERIES_MONTHLY_ADJUSTED"; key = "Monthly Adjusted Time Series"
-        url = f"{base}function={fn}&symbol={symbol}&apikey={API_KEY}"
-    elif interval == "INTRADAY_60":
-        fn = "TIME_SERIES_INTRADAY"; key = "Time Series (60min)"
-        url = f"{base}function={fn}&symbol={symbol}&interval=60min&outputsize=full&apikey={API_KEY}"
-    else:
-        raise ValueError("bad interval")
-
-    js = av_get(url).json()
-    if key not in js:
-        return None
-
-    df = (pd.DataFrame(js[key]).T
-          .rename(columns={
-              "1. open":"open","2. high":"high","3. low":"low","4. close":"close",
-              "5. adjusted close":"adj_close","6. volume":"volume"
-          })
-          .apply(pd.to_numeric, errors="ignore"))
-    df.index = pd.to_datetime(df.index)
-    df.sort_index(inplace=True)
-    df["close_use"] = df["adj_close"] if "adj_close" in df.columns and not df["adj_close"].isna().all() else df["close"]
-    return df
-
 def SMA(s, n): return s.rolling(n).mean()
 
 def RSI(s, n=14):
@@ -165,6 +117,44 @@ def plot_rsi_macd(df, title, out_rsi, out_macd):
     plt.savefig(out_macd, dpi=120)
     plt.close()
 
+def yf_series(sym: str, kind: str):
+    """
+    kind: 'DAILY','WEEKLY','MONTHLY','INTRADAY_60'
+    yfinance bruker '1d', '1h' osv. Vi resampler selv til uke/måned.
+    """
+    try:
+        if kind == "DAILY":
+            data = yf.download(sym, period="max", interval="1d", auto_adjust=True, progress=False)
+        elif kind == "WEEKLY":
+            d = yf.download(sym, period="max", interval="1d", auto_adjust=True, progress=False)
+            data = d.resample("W-FRI").last()
+        elif kind == "MONTHLY":
+            d = yf.download(sym, period="max", interval="1d", auto_adjust=True, progress=False)
+            data = d.resample("M").last()
+        elif kind == "INTRADAY_60":
+            if DISABLE_INTRADAY:
+                return None
+            data = yf.download(sym, period="730d", interval="1h", auto_adjust=True, progress=False)
+        else:
+            return None
+    except Exception as e:
+        log(f"yfinance error {sym} {kind}: {e}")
+        return None
+
+    if data is None or data.empty or ("Close" not in data.columns and "close" not in data.columns):
+        log(f"no data {sym} {kind}")
+        return None
+
+    df = data.rename(columns=str.lower).copy()
+    if "close" not in df.columns:
+        return None
+    df["close_use"] = df["close"]
+    if "volume" not in df.columns:
+        df["volume"] = np.nan
+    df.index = pd.to_datetime(df.index)
+    df.sort_index(inplace=True)
+    return df
+
 def last_n_days_posts(url, days=3):
     try:
         r = requests.get(url, timeout=30)
@@ -183,27 +173,45 @@ def last_n_days_posts(url, days=3):
             if ts is not None and ts.tz_convert(TZ) >= pd.Timestamp(cutoff, tz=TZ):
                 out.append({"title": t, "link": lnk, "published": ts.tz_convert(TZ).isoformat()})
         return out
-    except Exception:
+    except Exception as e:
+        log(f"rss error: {e}")
         return []
 
 # ---------- KJØRING ----------
-os.makedirs("docs/charts", exist_ok=True)
-os.makedirs("docs/news", exist_ok=True)
 summary = {"generated_local": NOW.isoformat(), "assets": {}}
 
-def safe_get(symbol, label):
-    try:
-        return av_series(symbol, label)
-    except Exception:
+def ratio_series(num_sym, den_sym):
+    num = yf_series(num_sym, "DAILY")
+    den = yf_series(den_sym, "DAILY")
+    if num is None or den is None or num.empty or den.empty:
         return None
+    df = pd.DataFrame(index=num.index.union(den.index))
+    df["n"] = num["close_use"]; df["d"] = den["close_use"]
+    df.dropna(inplace=True)
+    df["ratio"] = df["n"]/df["d"]
+    df["ma50"] = df["ratio"].rolling(50).mean()
+    out = f"docs/charts/{num_sym}_{den_sym}_ratio.png"
+    plt.figure()
+    df["ratio"].plot(label=f"{num_sym}/{den_sym}")
+    df["ma50"].plot(label="MA50")
+    plt.legend(); plt.tight_layout(); plt.title(f"{num_sym}/{den_sym} ratio vs MA50")
+    plt.savefig(out, dpi=120); plt.close()
+    return df.tail(400)
+
+def volume_filter(sym):
+    df = yf_series(sym, "DAILY")
+    if df is None or df.empty: return None
+    df["vol_ma20"] = df["volume"].rolling(20).mean()
+    df["up_day"] = (df["close_use"] > df["close_use"].shift(1)).astype(int)
+    df["up20"] = df["up_day"].rolling(20).sum()
+    return df.tail(60)[["volume","vol_ma20","up20"]]
 
 # Hent serier og lag grafer/indikatorer
-for sym in AV_MAP.keys():
-    av_sym = AV_MAP[sym]
-    daily = safe_get(av_sym, "DAILY")
-    weekly = safe_get(av_sym, "WEEKLY")
-    monthly = safe_get(av_sym, "MONTHLY")
-    hourly = safe_get(av_sym, "INTRADAY_60")
+for sym in ALL:
+    daily   = yf_series(sym, "DAILY")
+    weekly  = yf_series(sym, "WEEKLY")
+    monthly = yf_series(sym, "MONTHLY")
+    hourly  = yf_series(sym, "INTRADAY_60")
 
     series_map = [("hourly", hourly), ("daily", daily), ("weekly", weekly), ("monthly", monthly)]
     for name, df in series_map:
@@ -223,58 +231,34 @@ for sym in AV_MAP.keys():
         last_252 = daily.tail(252)
         hi52, lo52 = last_252["close_use"].max(), last_252["close_use"].min()
         dist_36w = np.nan
-        if weekly is not None and "sma36" in weekly.columns:
+        if weekly is not None and "sma36" in weekly.columns and pd.notna(weekly["sma36"].iloc[-1]):
             dist_36w = pct(weekly["close_use"].iloc[-1], weekly["sma36"].iloc[-1])
         dist_36m = np.nan
-        if monthly is not None and "sma36" in monthly.columns:
+        if monthly is not None and "sma36" in monthly.columns and pd.notna(monthly["sma36"].iloc[-1]):
             dist_36m = pct(monthly["close_use"].iloc[-1], monthly["sma36"].iloc[-1])
 
         summary["assets"][sym] = {
             "last": float(daily["close_use"].iloc[-1]),
             "52w_high": float(hi52), "52w_low": float(lo52),
-            "dist_to_36WMA": None if math.isnan(dist_36w) else float(dist_36w),
-            "dist_to_36MMA": None if math.isnan(dist_36m) else float(dist_36m),
+            "dist_to_36WMA": None if (isinstance(dist_36w, float) and math.isnan(dist_36w)) else float(dist_36w),
+            "dist_to_36MMA": None if (isinstance(dist_36m, float) and math.isnan(dist_36m)) else float(dist_36m),
         }
 
-def ratio_series(num_sym, den_sym):
-    num = safe_get(AV_MAP[num_sym], "DAILY")
-    den = safe_get(AV_MAP[den_sym], "DAILY")
-    if num is None or den is None: return None
-    df = pd.DataFrame(index=num.index.union(den.index))
-    df["n"] = num["close_use"]; df["d"] = den["close_use"]
-    df.dropna(inplace=True)
-    df["ratio"] = df["n"]/df["d"]
-    df["ma50"] = df["ratio"].rolling(50).mean()
-    out = f"docs/charts/{num_sym}_{den_sym}_ratio.png"
-    plt.figure()
-    df["ratio"].plot(label=f"{num_sym}/{den_sym}")
-    df["ma50"].plot(label="MA50")
-    plt.legend(); plt.tight_layout(); plt.title(f"{num_sym}/{den_sym} ratio vs MA50")
-    plt.savefig(out, dpi=120); plt.close()
-    return df.tail(400)
-
+# Ratioer / volumfilter / markedstemp-ratioer
 gdx_gld = ratio_series("GDX","GLD")
 sil_slv = ratio_series("SIL","SLV")
-
-def volume_filter(sym):
-    df = safe_get(AV_MAP[sym], "DAILY")
-    if df is None or df.empty: return None
-    df["vol_ma20"] = df["volume"].rolling(20).mean()
-    df["up_day"] = (df["close_use"] > df["close_use"].shift(1)).astype(int)
-    df["up20"] = df["up_day"].rolling(20).sum()
-    return df.tail(60)[["volume","vol_ma20","up20"]]
-
 vol_filters = {s: volume_filter(s) for s in ["GDX","GDXJ","SIL","SILJ"]}
-
 hyg_lqd = ratio_series("HYG","LQD")
 spx_acwi = ratio_series("SPY","ACWI")
 
+# RSS
 news = {
     "nftrh": last_n_days_posts("https://nftrh.com/blog/feed/"),
     "northstar": last_n_days_posts("https://northstarbadcharts.com/feed/")
 }
 with open("docs/news/news.json","w") as f: json.dump(news, f, indent=2)
 
+# Index JSON
 index = {
   "generated_local": NOW.isoformat(),
   "summary": summary,
@@ -282,25 +266,27 @@ index = {
     "ratios": {"GDX/GLD": bool(gdx_gld is not None), "SIL/SLV": bool(sil_slv is not None)},
     "vol_filters": {k: bool(v is not None) for k,v in vol_filters.items()},
     "market_temp": {"HYG/LQD": bool(hyg_lqd is not None), "SPX/ACWI": bool(spx_acwi is not None)},
-    "omitted_free_tickers": ["DXY","VIX","^TNX","^IRX","^UST2Y"]
+    "omitted": ["DXY","VIX","3M/2Y/10Y (kan legges via FRED)"]
   }
 }
 with open("docs/index.json","w") as f: json.dump(index, f, indent=2)
 
+# Enkel HTML (liste grafer)
+files = sorted([f for f in os.listdir("docs/charts") if f.endswith(".png")])
+links = "\n".join([f'<li><a href="charts/{fn}">{fn}</a></li>' for fn in files])
 html = f"""<!doctype html><html><head><meta charset="utf-8">
 <title>Daglig rapport {NOW.strftime('%Y-%m-%d')}</title></head><body>
 <h1>Daglig rapport {NOW.strftime('%Y-%m-%d')}</h1>
 <p>Generert (Europe/Oslo): {NOW}</p>
-<p>Se <a href="index.json">index.json</a> for tall og <code>charts/</code> for grafer.</p>
-<h2>Nyhetsutdrag (siste 2–3 dager)</h2>
-<pre>{json.dumps(news, indent=2)}</pre>
+<p>Data: <a href="index.json">index.json</a> • Nyheter: <a href="news/news.json">news.json</a></p>
+<h2>Grafer</h2>
+<ul>{links}</ul>
 </body></html>"""
 with open("docs/index.html","w") as f: f.write(html)
 
-# Skriv en enkel oppsummering i loggen
-ok_assets = [k for k,v in summary.get("assets", {}).items()]
-log(f"SUMMARY assets_count={len(ok_assets)} charts_dir_exists={os.path.isdir('docs/charts')}")
+# Logg
+ok_assets = list(summary.get("assets", {}).keys())
+log(f"SUMMARY assets_count={len(ok_assets)} charts={len(files)} intraday_disabled={DISABLE_INTRADAY}")
 flush_log()
-
 
 print("Done.")
