@@ -12,6 +12,27 @@ API_KEY = os.environ["ALPHA_VANTAGE_KEY"]
 TZ = tz.gettz("Europe/Oslo")
 NOW = datetime.now(tz=TZ)
 
+# --- Force/fullrun-styring ---
+FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
+os.makedirs("docs", exist_ok=True)
+
+# Kjør bare full jobb rundt 20:00 lokal tid, med mindre FORCE=true
+from dateutil import tz
+if not FORCE:
+    if not (NOW.hour == 20 and NOW.minute <= 10):
+        # skriv heartbeat + minimal index for å unngå 404
+        with open("docs/heartbeat.json", "w") as f:
+            json.dump({"last_run_local": NOW.isoformat()}, f, indent=2)
+        with open("docs/index.html", "w") as f:
+            f.write(
+                f"<!doctype html><meta charset='utf-8'><title>Market Daily Report</title>"
+                f"<h1>Market Daily Report</h1>"
+                f"<p>Generert: {NOW.isoformat()}</p>"
+                f"<p>Full rapport genereres kl. 20:00 Europe/Oslo.</p>"
+            )
+        raise SystemExit(0)
+
+
 # Kjør kun full jobb nær kl. 20:00 lokal tid (±10 min). Ellers skriv heartbeat og avslutt uten feil.
 os.makedirs("docs", exist_ok=True)
 if not (NOW.hour == 20 and NOW.minute <= 10):
