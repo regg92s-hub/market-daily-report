@@ -1,4 +1,4 @@
-VERSION = "2025-09-14b"  # synlig i logg
+VERSION = "2025-09-14c"
 
 import os, json, time, math
 from datetime import datetime
