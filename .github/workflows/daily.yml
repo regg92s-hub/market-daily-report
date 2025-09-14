@@ -2,8 +2,8 @@ name: Daily AV Report (20:00 Europe/Oslo)
 
 on:
   schedule:
-    - cron: "50 17 * * *"  # 19:50 Oslo når DST (sommer)
-    - cron: "50 18 * * *"  # 19:50 Oslo når standardtid (vinter)
+    - cron: "50 17 * * *"  # 19:50 Oslo (sommertid)
+    - cron: "50 18 * * *"  # 19:50 Oslo (vintertid)
   workflow_dispatch:
     inputs:
       force:
@@ -37,15 +37,29 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: python scripts/generate_report.py
-
+  
       - name: List generated files
         run: |
-          echo "==== DOCS TREE ===="
-          find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
-          echo "==== HEAD index.json ===="
-          head -c 2000 docs/index.json || true
-          echo "==== HEAD av_log.txt ===="
-          head -n 100 docs/av_log.txt || true
+          echo "Charts:"
+          ls -1 docs/charts/*.png 2>/dev/null || true
+      
+      - name: Sanity check before deploy
+        run: |
+          set -e
+          COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
+          echo "charts count: $COUNT"
+          if [ "$COUNT" -lt 10 ]; then
+            echo "Not enough charts; aborting deploy to protect the site."
+            exit 1
+          fi 
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generator-logs
+          path: |
+            docs/run_log.txt
+            docs/index.json
+            docs/news/news.json
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
