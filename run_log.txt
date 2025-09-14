@@ -1,69 +1,150 @@
-2025-09-14T17:11:06.119327  no data GLD DAILY
-2025-09-14T17:11:06.130420  yfinance error GLD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:06.141562  yfinance error GLD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:06.314616  no data GLD INTRADAY_60
-2025-09-14T17:11:06.567499  no data SLV DAILY
-2025-09-14T17:11:06.578407  yfinance error SLV WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:06.589221  yfinance error SLV MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:06.781409  no data SLV INTRADAY_60
-2025-09-14T17:11:06.953330  no data USO DAILY
-2025-09-14T17:11:06.964236  yfinance error USO WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:06.975021  yfinance error USO MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:07.157034  no data USO INTRADAY_60
-2025-09-14T17:11:07.329035  no data GDX DAILY
-2025-09-14T17:11:07.339959  yfinance error GDX WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:07.350726  yfinance error GDX MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:07.522714  no data GDX INTRADAY_60
-2025-09-14T17:11:07.705000  no data GDXJ DAILY
-2025-09-14T17:11:07.715909  yfinance error GDXJ WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:07.726659  yfinance error GDXJ MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:07.898503  no data GDXJ INTRADAY_60
-2025-09-14T17:11:08.072104  no data SIL DAILY
-2025-09-14T17:11:08.083012  yfinance error SIL WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:08.093774  yfinance error SIL MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:08.285789  no data SIL INTRADAY_60
-2025-09-14T17:11:08.479607  no data SILJ DAILY
-2025-09-14T17:11:08.490776  yfinance error SILJ WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:08.501566  yfinance error SILJ MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:08.694122  no data SILJ INTRADAY_60
-2025-09-14T17:11:08.867823  no data URNM DAILY
-2025-09-14T17:11:08.878722  yfinance error URNM WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:08.889482  yfinance error URNM MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:10.646112  no data URNM INTRADAY_60
-2025-09-14T17:11:10.828596  no data ACWI DAILY
-2025-09-14T17:11:10.839440  yfinance error ACWI WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:10.850175  yfinance error ACWI MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:11.023123  no data ACWI INTRADAY_60
-2025-09-14T17:11:11.205438  no data SPY DAILY
-2025-09-14T17:11:11.216388  yfinance error SPY WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:11.227229  yfinance error SPY MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:11.430656  no data SPY INTRADAY_60
-2025-09-14T17:11:11.613492  no data HYG DAILY
-2025-09-14T17:11:11.624411  yfinance error HYG WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:11.635201  yfinance error HYG MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:11.807190  no data HYG INTRADAY_60
-2025-09-14T17:11:11.989238  no data LQD DAILY
-2025-09-14T17:11:12.000089  yfinance error LQD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:12.010838  yfinance error LQD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:12.182969  no data LQD INTRADAY_60
-2025-09-14T17:11:12.354892  no data BTC-USD DAILY
-2025-09-14T17:11:12.365814  yfinance error BTC-USD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:12.376575  yfinance error BTC-USD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:12.700011  no data BTC-USD INTRADAY_60
-2025-09-14T17:11:12.872105  no data ETH-USD DAILY
-2025-09-14T17:11:12.883155  yfinance error ETH-USD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:12.893947  yfinance error ETH-USD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
-2025-09-14T17:11:13.076649  no data ETH-USD INTRADAY_60
-2025-09-14T17:11:13.087417  no data GDX DAILY
-2025-09-14T17:11:13.098117  no data GLD DAILY
-2025-09-14T17:11:13.108782  no data SIL DAILY
-2025-09-14T17:11:13.119437  no data SLV DAILY
-2025-09-14T17:11:13.130156  no data GDX DAILY
-2025-09-14T17:11:13.140846  no data GDXJ DAILY
-2025-09-14T17:11:13.151485  no data SIL DAILY
-2025-09-14T17:11:13.162127  no data SILJ DAILY
-2025-09-14T17:11:13.172714  no data HYG DAILY
-2025-09-14T17:11:13.183347  no data LQD DAILY
-2025-09-14T17:11:13.194029  no data SPY DAILY
-2025-09-14T17:11:13.204601  no data ACWI DAILY
-2025-09-14T17:11:13.900135  SUMMARY assets_count=0 charts=0 intraday_disabled=False
+2025-09-14T17:22:50.980325  stooq ok GLD
+2025-09-14T17:22:50.980337  using fallback for GLD DAILY
+2025-09-14T17:23:00.931391  stooq ok GLD
+2025-09-14T17:23:00.931402  using fallback for GLD WEEKLY
+2025-09-14T17:23:11.086824  stooq ok GLD
+2025-09-14T17:23:11.086835  using fallback for GLD MONTHLY
+2025-09-14T17:23:22.198533  stooq ok GLD
+2025-09-14T17:23:22.198545  using fallback for GLD INTRADAY_60
+2025-09-14T17:23:34.803076  stooq ok SLV
+2025-09-14T17:23:34.803087  using fallback for SLV DAILY
+2025-09-14T17:23:44.967319  stooq ok SLV
+2025-09-14T17:23:44.967330  using fallback for SLV WEEKLY
+2025-09-14T17:23:55.121316  stooq ok SLV
+2025-09-14T17:23:55.121327  using fallback for SLV MONTHLY
+2025-09-14T17:24:06.505001  stooq ok SLV
+2025-09-14T17:24:06.505012  using fallback for SLV INTRADAY_60
+2025-09-14T17:24:19.179468  stooq ok USO
+2025-09-14T17:24:19.179479  using fallback for USO DAILY
+2025-09-14T17:24:29.292437  stooq ok USO
+2025-09-14T17:24:29.292449  using fallback for USO WEEKLY
+2025-09-14T17:24:39.402231  stooq ok USO
+2025-09-14T17:24:39.402242  using fallback for USO MONTHLY
+2025-09-14T17:24:50.270058  stooq ok USO
+2025-09-14T17:24:50.270069  using fallback for USO INTRADAY_60
+2025-09-14T17:25:02.928178  stooq ok GDX
+2025-09-14T17:25:02.928189  using fallback for GDX DAILY
+2025-09-14T17:25:12.869089  stooq ok GDX
+2025-09-14T17:25:12.869100  using fallback for GDX WEEKLY
+2025-09-14T17:25:22.818708  stooq ok GDX
+2025-09-14T17:25:22.818717  using fallback for GDX MONTHLY
+2025-09-14T17:25:34.540081  stooq ok GDX
+2025-09-14T17:25:34.540092  using fallback for GDX INTRADAY_60
+2025-09-14T17:25:46.944411  stooq ok GDXJ
+2025-09-14T17:25:46.944422  using fallback for GDXJ DAILY
+2025-09-14T17:25:56.883184  stooq ok GDXJ
+2025-09-14T17:25:56.883195  using fallback for GDXJ WEEKLY
+2025-09-14T17:26:06.989814  stooq ok GDXJ
+2025-09-14T17:26:06.989825  using fallback for GDXJ MONTHLY
+2025-09-14T17:26:18.075191  stooq ok GDXJ
+2025-09-14T17:26:18.075202  using fallback for GDXJ INTRADAY_60
+2025-09-14T17:26:30.663213  stooq ok SIL
+2025-09-14T17:26:30.663225  using fallback for SIL DAILY
+2025-09-14T17:26:40.764612  stooq ok SIL
+2025-09-14T17:26:40.764622  using fallback for SIL WEEKLY
+2025-09-14T17:26:50.716606  stooq ok SIL
+2025-09-14T17:26:50.716618  using fallback for SIL MONTHLY
+2025-09-14T17:27:01.687595  stooq ok SIL
+2025-09-14T17:27:01.687606  using fallback for SIL INTRADAY_60
+2025-09-14T17:27:14.262679  stooq ok SILJ
+2025-09-14T17:27:14.262690  using fallback for SILJ DAILY
+2025-09-14T17:27:24.209644  stooq ok SILJ
+2025-09-14T17:27:24.209654  using fallback for SILJ WEEKLY
+2025-09-14T17:27:34.163497  stooq ok SILJ
+2025-09-14T17:27:34.163511  using fallback for SILJ MONTHLY
+2025-09-14T17:27:45.215845  stooq ok SILJ
+2025-09-14T17:27:45.215855  using fallback for SILJ INTRADAY_60
+2025-09-14T17:27:57.773084  stooq ok URNM
+2025-09-14T17:27:57.773097  using fallback for URNM DAILY
+2025-09-14T17:28:07.732940  stooq ok URNM
+2025-09-14T17:28:07.732956  using fallback for URNM WEEKLY
+2025-09-14T17:28:17.820865  stooq ok URNM
+2025-09-14T17:28:17.820876  using fallback for URNM MONTHLY
+2025-09-14T17:28:28.955796  stooq ok URNM
+2025-09-14T17:28:28.955816  using fallback for URNM INTRADAY_60
+2025-09-14T17:28:41.421737  stooq ok ACWI
+2025-09-14T17:28:41.421748  using fallback for ACWI DAILY
+2025-09-14T17:28:51.525517  stooq ok ACWI
+2025-09-14T17:28:51.525528  using fallback for ACWI WEEKLY
+2025-09-14T17:29:01.488837  stooq ok ACWI
+2025-09-14T17:29:01.488848  using fallback for ACWI MONTHLY
+2025-09-14T17:29:12.369052  stooq ok ACWI
+2025-09-14T17:29:12.369063  using fallback for ACWI INTRADAY_60
+2025-09-14T17:29:25.086699  stooq ok SPY
+2025-09-14T17:29:25.086711  using fallback for SPY DAILY
+2025-09-14T17:29:35.185453  stooq ok SPY
+2025-09-14T17:29:35.185463  using fallback for SPY WEEKLY
+2025-09-14T17:29:45.124446  stooq ok SPY
+2025-09-14T17:29:45.124475  using fallback for SPY MONTHLY
+2025-09-14T17:29:56.316799  stooq ok SPY
+2025-09-14T17:29:56.316809  using fallback for SPY INTRADAY_60
+2025-09-14T17:30:09.156604  stooq ok HYG
+2025-09-14T17:30:09.156616  using fallback for HYG DAILY
+2025-09-14T17:30:19.256368  stooq ok HYG
+2025-09-14T17:30:19.256379  using fallback for HYG WEEKLY
+2025-09-14T17:30:29.379714  stooq ok HYG
+2025-09-14T17:30:29.379727  using fallback for HYG MONTHLY
+2025-09-14T17:30:40.407562  stooq ok HYG
+2025-09-14T17:30:40.407573  using fallback for HYG INTRADAY_60
+2025-09-14T17:30:52.956321  stooq ok LQD
+2025-09-14T17:30:52.956331  using fallback for LQD DAILY
+2025-09-14T17:31:03.060846  stooq ok LQD
+2025-09-14T17:31:03.060857  using fallback for LQD WEEKLY
+2025-09-14T17:31:13.163653  stooq ok LQD
+2025-09-14T17:31:13.163682  using fallback for LQD MONTHLY
+2025-09-14T17:31:24.336656  stooq ok LQD
+2025-09-14T17:31:24.336667  using fallback for LQD INTRADAY_60
+2025-09-14T17:31:36.226093  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
+2025-09-14T17:31:36.226232  no data BTC-USD DAILY (yf + fallbacks)
+2025-09-14T17:31:45.402759  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
+2025-09-14T17:31:45.402886  no data BTC-USD WEEKLY (yf + fallbacks)
+2025-09-14T17:31:54.579850  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
+2025-09-14T17:31:54.580007  no data BTC-USD MONTHLY (yf + fallbacks)
+2025-09-14T17:32:04.704262  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
+2025-09-14T17:32:04.704414  no data BTC-USD INTRADAY_60 (yf + fallbacks)
+2025-09-14T17:32:14.185115  coingecko error ETH-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
+2025-09-14T17:32:14.185284  no data ETH-USD DAILY (yf + fallbacks)
+2025-09-14T17:32:23.360415  coingecko error ETH-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
+2025-09-14T17:32:23.360573  no data ETH-USD WEEKLY (yf + fallbacks)
+2025-09-14T17:32:32.536601  coingecko error ETH-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
+2025-09-14T17:32:32.536741  no data ETH-USD MONTHLY (yf + fallbacks)
+2025-09-14T17:32:42.734454  coingecko error ETH-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
+2025-09-14T17:32:42.734574  no data ETH-USD INTRADAY_60 (yf + fallbacks)
+2025-09-14T17:32:52.883556  stooq ok GDX
+2025-09-14T17:32:52.883566  using fallback for GDX DAILY
+2025-09-14T17:33:03.002335  stooq ok GLD
+2025-09-14T17:33:03.002346  using fallback for GLD DAILY
+2025-09-14T17:33:13.151693  stooq ok SIL
+2025-09-14T17:33:13.151703  using fallback for SIL DAILY
+2025-09-14T17:33:23.301147  stooq ok SLV
+2025-09-14T17:33:23.301158  using fallback for SLV DAILY
+2025-09-14T17:33:33.425774  stooq ok HYG
+2025-09-14T17:33:33.425785  using fallback for HYG DAILY
+2025-09-14T17:33:43.402155  stooq ok LQD
+2025-09-14T17:33:43.402166  using fallback for LQD DAILY
+2025-09-14T17:33:53.681679  stooq ok SPY
+2025-09-14T17:33:53.681690  using fallback for SPY DAILY
+2025-09-14T17:34:03.662594  stooq ok ACWI
+2025-09-14T17:34:03.662604  using fallback for ACWI DAILY
+2025-09-14T17:34:13.862086  stooq ok GLD
+2025-09-14T17:34:13.862100  using fallback for GLD DAILY
+2025-09-14T17:34:24.034565  stooq ok SPY
+2025-09-14T17:34:24.034575  using fallback for SPY DAILY
+2025-09-14T17:34:34.373393  stooq ok GDX
+2025-09-14T17:34:34.373409  using fallback for GDX DAILY
+2025-09-14T17:34:44.524665  stooq ok GDXJ
+2025-09-14T17:34:44.524676  using fallback for GDXJ DAILY
+2025-09-14T17:34:54.852013  stooq ok SIL
+2025-09-14T17:34:54.852031  using fallback for SIL DAILY
+2025-09-14T17:35:04.989054  stooq ok SILJ
+2025-09-14T17:35:04.989065  using fallback for SILJ DAILY
+2025-09-14T17:35:05.930289  fred ok DTWEXM
+2025-09-14T17:35:07.426258  fred ok VIXCLS
+2025-09-14T17:35:08.767395  fred ok DGS3MO
+2025-09-14T17:35:09.309991  fred ok DGS2
+2025-09-14T17:35:09.712892  fred ok DGS10
+2025-09-14T17:35:21.520256  stooq ok SPY
+2025-09-14T17:35:21.520266  using fallback for SPY DAILY
+2025-09-14T17:35:31.671454  stooq ok ACWI
+2025-09-14T17:35:31.671465  using fallback for ACWI DAILY
+2025-09-14T17:35:31.672778  SUMMARY assets_count=12 charts=161 intraday_disabled=False version=2025-09-14d

@@ -1,28 +1,154 @@
 {
-  "generated_local": "2025-09-14T19:11:05.087883+02:00",
+  "generated_local": "2025-09-14T19:22:39.811730+02:00",
+  "version": "2025-09-14d",
   "summary": {
-    "generated_local": "2025-09-14T19:11:05.087883+02:00",
-    "assets": {}
+    "generated_local": "2025-09-14T19:22:39.811730+02:00",
+    "assets": {
+      "GLD": {
+        "last": 335.42,
+        "52w_high": 335.42,
+        "52w_low": 232.25,
+        "dist_to_36WMA": 0.06541071505774339,
+        "dist_to_36MMA": 0.06541071505774339,
+        "rsi14_last": 89.10579345088168,
+        "macd_cross": false
+      },
+      "SLV": {
+        "last": 38.34,
+        "52w_high": 38.34,
+        "52w_low": 26.12,
+        "dist_to_36WMA": 0.08579430135779373,
+        "dist_to_36MMA": 0.08579430135779373,
+        "rsi14_last": 78.95752895752892,
+        "macd_cross": false
+      },
+      "USO": {
+        "last": 73.31,
+        "52w_high": 84.34,
+        "52w_low": 62.37,
+        "dist_to_36WMA": -0.019468263757820653,
+        "dist_to_36MMA": -0.019468263757820653,
+        "rsi14_last": 45.42955326460482,
+        "macd_cross": false
+      },
+      "GDX": {
+        "last": 69.75,
+        "52w_high": 69.76,
+        "52w_low": 33.77,
+        "dist_to_36WMA": 0.16949531456676048,
+        "dist_to_36MMA": 0.16949531456676048,
+        "rsi14_last": 89.31799506984376,
+        "macd_cross": false
+      },
+      "GDXJ": {
+        "last": 90.03,
+        "52w_high": 90.03,
+        "52w_low": 42.32,
+        "dist_to_36WMA": 0.1950356178930137,
+        "dist_to_36MMA": 0.1950356178930137,
+        "rsi14_last": 86.40211640211643,
+        "macd_cross": false
+      },
+      "SIL": {
+        "last": 65.85,
+        "52w_high": 65.85,
+        "52w_low": 31.46,
+        "dist_to_36WMA": 0.19480467115907027,
+        "dist_to_36MMA": 0.19480467115907027,
+        "rsi14_last": 87.51783166904421,
+        "macd_cross": false
+      },
+      "SILJ": {
+        "last": 20.48,
+        "52w_high": 20.48,
+        "52w_low": 9.81,
+        "dist_to_36WMA": 0.19779702045391764,
+        "dist_to_36MMA": 0.19779702045391764,
+        "rsi14_last": 86.35346756152126,
+        "macd_cross": false
+      },
+      "URNM": {
+        "last": 51.98,
+        "52w_high": 54.0,
+        "52w_low": 28.15,
+        "dist_to_36WMA": 0.06443080528552164,
+        "dist_to_36MMA": 0.06443080528552164,
+        "rsi14_last": 66.11785095320623,
+        "macd_cross": false
+      },
+      "ACWI": {
+        "last": 136.35,
+        "52w_high": 136.55,
+        "52w_low": 103.59,
+        "dist_to_36WMA": 0.02738091749724769,
+        "dist_to_36MMA": 0.02738091749724769,
+        "rsi14_last": 63.813229571984344,
+        "macd_cross": false
+      },
+      "SPY": {
+        "last": 657.41,
+        "52w_high": 657.63,
+        "52w_low": 496.48,
+        "dist_to_36WMA": 0.025320256074890062,
+        "dist_to_36MMA": 0.025320256074890062,
+        "rsi14_last": 65.40224032586566,
+        "macd_cross": false
+      },
+      "HYG": {
+        "last": 80.96,
+        "52w_high": 81.04,
+        "52w_low": 75.75,
+        "dist_to_36WMA": 0.005155865788847423,
+        "dist_to_36MMA": 0.005155865788847423,
+        "rsi14_last": 52.73631840796014,
+        "macd_cross": false
+      },
+      "LQD": {
+        "last": 112.01,
+        "52w_high": 113.72,
+        "52w_low": 105.1,
+        "dist_to_36WMA": 0.018455329112037865,
+        "dist_to_36MMA": 0.018455329112037865,
+        "rsi14_last": 66.48451730418942,
+        "macd_cross": false
+      }
+    }
+  },
+  "fred": {
+    "DXY": {
+      "last": 90.8221,
+      "dist_to_200DMA": -0.014992958289782575
+    },
+    "VIX": {
+      "last": 14.71
+    },
+    "yields": {
+      "DGS3MO": 4.08,
+      "DGS2": 3.52,
+      "DGS10": 4.01,
+      "2s10s": 0.48999999999999977
+    }
   },
   "notes": {
     "ratios": {
-      "GDX/GLD": false,
-      "SIL/SLV": false
+      "GDX/GLD": true,
+      "SIL/SLV": true,
+      "GLD/SPY": true
     },
     "vol_filters": {
-      "GDX": false,
-      "GDXJ": false,
-      "SIL": false,
-      "SILJ": false
+      "GDX": true,
+      "GDXJ": true,
+      "SIL": true,
+      "SILJ": true
     },
     "market_temp": {
-      "HYG/LQD": false,
-      "SPX/ACWI": false
-    },
-    "omitted": [
-      "DXY",
-      "VIX",
-      "3M/2Y/10Y (kan legges via FRED)"
-    ]
+      "HYG_LQD_ratio": true,
+      "SPY_ACWI_ratio": true,
+      "DXY_vs_200DMA": true,
+      "VIX": true,
+      "yields_and_2s10s": true,
+      "SPY_above_200DMA": true,
+      "ACWI_above_200DMA": true
+    }
   }
 }
