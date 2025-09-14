@@ -27,11 +27,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Debug inputs
+        run: echo "FORCE_RUN=${{ github.event.inputs.force }}"
+
       - name: Run generator
         env:
           ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
-        run:  python scripts/generate_report.py
+        run: python scripts/generate_report.py
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
