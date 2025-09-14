@@ -36,15 +36,14 @@ jobs:
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: python scripts/generate_report.py
 
-        - name: List generated files
-          run: |
-            echo "==== DOCS TREE ===="
-            find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
-            echo "==== HEAD index.json ===="
-            head -c 2000 docs/index.json || true
-            echo "==== HEAD av_log.txt ===="
-            head -n 100 docs/av_log.txt || true
-
+      - name: List generated files
+        run: |
+          echo "==== DOCS TREE ===="
+          find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
+          echo "==== HEAD index.json ===="
+          head -c 2000 docs/index.json || true
+          echo "==== HEAD av_log.txt ===="
+          head -n 100 docs/av_log.txt || true
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
