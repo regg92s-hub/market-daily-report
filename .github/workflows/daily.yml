@@ -3,7 +3,12 @@ name: Daily AV Report (20:00 Europe/Oslo)
 on:
   schedule:
     - cron: "50 17 * * *"   # 19:50 Oslo / 17:50 UTC
-  workflow_dispatch:        # lar deg starte manuelt ved behov
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force full run (ignorer klokkesjekk)"
+        required: false
+        default: "false"
 
 jobs:
   build:
