@@ -29,7 +29,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Debug inputs
-        run: echo "FORCE_RUN=${{ github.event.inputs.force }}"
+        run: |
+          echo "FORCE: ${{ github.event.inputs.force }}"
       
       - name: Run generator
         env:
@@ -37,13 +38,35 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: python scripts/generate_report.py
-  
+
+      - name: Show generator logs
+        if: ${{ always() }}
+        run: |
+          echo "==== run_log.txt ===="
+          if [ -f docs/run_log.txt ]; then tail -n 200 docs/run_log.txt; else echo "NO LOG"; fi
+          echo "==== index.json (head) ===="
+          if [ -f docs/index.json ]; then head -c 2000 docs/index.json; else echo "NO INDEX"; fi
+          echo "==== file tree ===="
+          find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
+      
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: generator-logs
+          path: |
+            docs/run_log.txt
+            docs/index.json
+            docs/news/news.json
+            docs/filelist.json
+            docs/volminers.json
+
       - name: List generated files
         run: |
           echo "Charts:"
           ls -1 docs/charts/*.png 2>/dev/null || true
       
       - name: Sanity check before deploy
+        if: ${{ github.event.inputs.force != 'true' }}
         run: |
           set -e
           COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
@@ -51,15 +74,7 @@ jobs:
           if [ "$COUNT" -lt 10 ]; then
             echo "Not enough charts; aborting deploy to protect the site."
             exit 1
-          fi 
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: generator-logs
-          path: |
-            docs/run_log.txt
-            docs/index.json
-            docs/news/news.json
+          fi
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
