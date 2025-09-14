@@ -1,7 +1,5 @@
 name: Daily AV Report (20:00 Europe/Oslo)
 
-name: Daily AV Report (20:00 Europe/Oslo)
-
 permissions:
   contents: write
 
@@ -11,8 +9,8 @@ concurrency:
 
 on:
   schedule:
-    - cron: "50 17 * * *"
-    - cron: "50 18 * * *"
+    - cron: "50 17 * * *"  # 19:50 Oslo (sommer)
+    - cron: "50 18 * * *"  # 19:50 Oslo (vinter)
   workflow_dispatch:
     inputs:
       force:
@@ -40,7 +38,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Debug inputs
-        run: echo "FORCE: ${{ github.event.inputs.force }}"
+        shell: bash
+        env:
+          FORCE_INPUT: ${{ github.event.inputs.force }}
+        run: |
+          echo "FORCE=${FORCE_INPUT}"
 
       - name: Show generator version
         run: sed -n '1,10p' scripts/generate_report.py || true
