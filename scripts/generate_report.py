@@ -45,18 +45,17 @@ def flush_log():
     with open("docs/run_log.txt","w") as f:
         f.write("\n".join(LOG) + "\n")
 
-# ---------- TICKERS ----------
+# ---------- TICKERS (yfinance) ----------
 TICKERS = {
     "GLD":"ETF", "SLV":"ETF", "USO":"ETF",
     "GDX":"ETF","GDXJ":"ETF","SIL":"ETF","SILJ":"ETF",
     "URNM":"ETF","ACWI":"ETF","SPY":"ETF",
     "HYG":"ETF","LQD":"ETF",
     "BTC-USD":"CRYPTO","ETH-USD":"CRYPTO",
-    # DXY/VIX/renter tas ikke her (kan legges via FRED/yfinance senere)
 }
 ALL = list(TICKERS.keys())
 
-# Tillat å begrense antall tickere via env for test / rate-kontroll
+# Tillat å begrense antall tickere via env for test / fart
 allow = os.environ.get("ALLOWED_TICKERS", "").upper().strip()
 if allow:
     keep = {s.strip() for s in allow.split(",") if s.strip()}
@@ -65,7 +64,7 @@ if allow:
 
 DISABLE_INTRADAY = os.environ.get("DISABLE_INTRADAY","false").lower() == "true"
 
-# ---------- HJELPERE ----------
+# ---------- HJELPERE (indikatorer/plot) ----------
 def SMA(s, n): return s.rolling(n).mean()
 
 def RSI(s, n=14):
@@ -117,10 +116,11 @@ def plot_rsi_macd(df, title, out_rsi, out_macd):
     plt.savefig(out_macd, dpi=120)
     plt.close()
 
+# ---------- yfinance henter ----------
 def yf_series(sym: str, kind: str):
     """
     kind: 'DAILY','WEEKLY','MONTHLY','INTRADAY_60'
-    yfinance bruker '1d', '1h' osv. Vi resampler selv til uke/måned.
+    Vi resampler selv til uke/måned.
     """
     try:
         if kind == "DAILY":
@@ -155,6 +155,7 @@ def yf_series(sym: str, kind: str):
     df.sort_index(inplace=True)
     return df
 
+# ---------- RSS ----------
 def last_n_days_posts(url, days=3):
     try:
         r = requests.get(url, timeout=30)
@@ -176,6 +177,33 @@ def last_n_days_posts(url, days=3):
     except Exception as e:
         log(f"rss error: {e}")
         return []
+
+# ---------- FRED ----------
+FRED_KEY = os.environ.get("FRED_API_KEY", "")
+FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
+
+def fred_series(series_id):
+    if not FRED_KEY:
+        return None
+    url = (f"{FRED_BASE}?series_id={series_id}"
+           f"&api_key={FRED_KEY}&file_type=json&observation_start=1990-01-01")
+    try:
+        r = requests.get(url, timeout=60)
+        r.raise_for_status()
+        js = r.json()
+        obs = js.get("observations", [])
+        if not obs:
+            return None
+        df = pd.DataFrame(obs)[["date","value"]]
+        df["date"] = pd.to_datetime(df["date"])
+        df["value"] = pd.to_numeric(df["value"], errors="coerce")
+        df = df.set_index("date").sort_index().dropna()
+        df = df.asfreq("B").ffill()  # handelsdager
+        df.rename(columns={"value":"close_use"}, inplace=True)
+        return df
+    except Exception as e:
+        log(f"fred error {series_id}: {e}")
+        return None
 
 # ---------- KJØRING ----------
 summary = {"generated_local": NOW.isoformat(), "assets": {}}
@@ -206,7 +234,7 @@ def volume_filter(sym):
     df["up20"] = df["up_day"].rolling(20).sum()
     return df.tail(60)[["volume","vol_ma20","up20"]]
 
-# Hent serier og lag grafer/indikatorer
+# Hent serier og lag grafer/indikatorer (yfinance)
 for sym in ALL:
     daily   = yf_series(sym, "DAILY")
     weekly  = yf_series(sym, "WEEKLY")
@@ -251,42 +279,40 @@ vol_filters = {s: volume_filter(s) for s in ["GDX","GDXJ","SIL","SILJ"]}
 hyg_lqd = ratio_series("HYG","LQD")
 spx_acwi = ratio_series("SPY","ACWI")
 
-# RSS
-news = {
-    "nftrh": last_n_days_posts("https://nftrh.com/blog/feed/"),
-    "northstar": last_n_days_posts("https://northstarbadcharts.com/feed/")
-}
-with open("docs/news/news.json","w") as f: json.dump(news, f, indent=2)
+# ---------- FRED: DXY proxy, VIX, renter, 2s10s ----------
+fred_assets = {}
 
-# Index JSON
-index = {
-  "generated_local": NOW.isoformat(),
-  "summary": summary,
-  "notes": {
-    "ratios": {"GDX/GLD": bool(gdx_gld is not None), "SIL/SLV": bool(sil_slv is not None)},
-    "vol_filters": {k: bool(v is not None) for k,v in vol_filters.items()},
-    "market_temp": {"HYG/LQD": bool(hyg_lqd is not None), "SPX/ACWI": bool(spx_acwi is not None)},
-    "omitted": ["DXY","VIX","3M/2Y/10Y (kan legges via FRED)"]
-  }
-}
-with open("docs/index.json","w") as f: json.dump(index, f, indent=2)
+# DXY proxy: Trade Weighted U.S. Dollar Index (major) – DTWEXM
+dxy = fred_series("DTWEXM")
+if dxy is not None and not dxy.empty:
+    sma200 = dxy["close_use"].rolling(200).mean()
+    plot_price_ind(dxy.tail(800), "DXY proxy (DTWEXM) - price vs SMA200", "docs/charts/DXY_price.png", 200)
+    plot_rsi_macd(dxy.tail(800), "DXY proxy (DTWEXM)", "docs/charts/DXY_rsi.png", "docs/charts/DXY_macd.png")
+    fred_assets["DXY"] = {
+        "last": float(dxy["close_use"].iloc[-1]),
+        "dist_to_200DMA": float((dxy["close_use"].iloc[-1] - sma200.iloc[-1]) / sma200.iloc[-1]) if pd.notna(sma200.iloc[-1]) else None
+    }
 
-# Enkel HTML (liste grafer)
-files = sorted([f for f in os.listdir("docs/charts") if f.endswith(".png")])
-links = "\n".join([f'<li><a href="charts/{fn}">{fn}</a></li>' for fn in files])
-html = f"""<!doctype html><html><head><meta charset="utf-8">
-<title>Daglig rapport {NOW.strftime('%Y-%m-%d')}</title></head><body>
-<h1>Daglig rapport {NOW.strftime('%Y-%m-%d')}</h1>
-<p>Generert (Europe/Oslo): {NOW}</p>
-<p>Data: <a href="index.json">index.json</a> • Nyheter: <a href="news/news.json">news.json</a></p>
-<h2>Grafer</h2>
-<ul>{links}</ul>
-</body></html>"""
-with open("docs/index.html","w") as f: f.write(html)
+# VIX: VIXCLS
+vix = fred_series("VIXCLS")
+if vix is not None and not vix.empty:
+    plot_price_ind(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_price.png", 200)
+    plot_rsi_macd(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_rsi.png", "docs/charts/VIX_macd.png")
+    fred_assets["VIX"] = {"last": float(vix["close_use"].iloc[-1])}
 
-# Logg
-ok_assets = list(summary.get("assets", {}).keys())
-log(f"SUMMARY assets_count={len(ok_assets)} charts={len(files)} intraday_disabled={DISABLE_INTRADAY}")
-flush_log()
-
-print("Done.")
+# Renter: 3M, 2Y, 10Y + 2s10s
+y3m = fred_series("DGS3MO")
+y2y = fred_series("DGS2")
+y10 = fred_series("DGS10")
+if (y10 is not None and not y10.empty) and (y2y is not None and not y2y.empty):
+    spread = pd.DataFrame(index=y10.index.union(y2y.index))
+    spread["y10"] = y10["close_use"]; spread["y2"] = y2y["close_use"]
+    spread = spread.ffill().dropna()
+    spread["s210"] = spread["y10"] - spread["y2"]
+    plt.figure(); spread["s210"].plot()
+    plt.title("2Y/10Y spread (DGS10 - DGS2)")
+    plt.tight_layout(); plt.savefig("docs/charts/2Y10Y_spread.png", dpi=120); plt.close()
+    fred_assets["yields"] = {
+        "DGS3MO": float(y3m["close_use"].iloc[-1]) if (y3m is not None and not y3m.empty) else None,
+        "DGS2": float(y2y["close_use"].iloc[-1]),
+        "DGS10": float(y10["close_use"].iloc[-1]),
