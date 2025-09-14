@@ -1,17 +1,69 @@
-2025-09-14T16:15:58.853514  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
-2025-09-14T16:15:58.853676  no data BTC-USD DAILY (yf + fallbacks)
-2025-09-14T16:16:08.029131  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
-2025-09-14T16:16:08.029282  no data BTC-USD WEEKLY (yf + fallbacks)
-2025-09-14T16:16:17.221838  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
-2025-09-14T16:16:17.222006  no data BTC-USD MONTHLY (yf + fallbacks)
-2025-09-14T16:16:28.336713  coingecko error BTC-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max
-2025-09-14T16:16:28.336875  no data BTC-USD INTRADAY_60 (yf + fallbacks)
-2025-09-14T16:16:37.623952  coingecko error ETH-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
-2025-09-14T16:16:37.624099  no data ETH-USD DAILY (yf + fallbacks)
-2025-09-14T16:16:46.767312  coingecko error ETH-USD: 401 Client Error: Unauthorized for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
-2025-09-14T16:16:46.767517  no data ETH-USD WEEKLY (yf + fallbacks)
-2025-09-14T16:16:55.837907  coingecko error ETH-USD: 429 Client Error: Too Many Requests for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
-2025-09-14T16:16:55.838010  no data ETH-USD MONTHLY (yf + fallbacks)
-2025-09-14T16:17:05.453017  coingecko error ETH-USD: 429 Client Error: Too Many Requests for url: https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=max
-2025-09-14T16:17:05.453127  no data ETH-USD INTRADAY_60 (yf + fallbacks)
-2025-09-14T16:19:11.780333  SUMMARY assets_count=12 charts=155 intraday_disabled=False fred_keys=['DXY', 'VIX', 'yields'] pdr=True
+2025-09-14T16:40:46.850193  no data GLD DAILY
+2025-09-14T16:40:46.861298  yfinance error GLD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:46.872328  yfinance error GLD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:47.317421  no data GLD INTRADAY_60
+2025-09-14T16:40:47.883182  no data SLV DAILY
+2025-09-14T16:40:47.894002  yfinance error SLV WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:47.904711  yfinance error SLV MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:48.450307  no data SLV INTRADAY_60
+2025-09-14T16:40:48.803709  no data USO DAILY
+2025-09-14T16:40:48.814535  yfinance error USO WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:48.825325  yfinance error USO MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:49.372247  no data USO INTRADAY_60
+2025-09-14T16:40:49.826428  no data GDX DAILY
+2025-09-14T16:40:49.837179  yfinance error GDX WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:49.847950  yfinance error GDX MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:50.403300  no data GDX INTRADAY_60
+2025-09-14T16:40:50.948518  no data GDXJ DAILY
+2025-09-14T16:40:50.959256  yfinance error GDXJ WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:50.969924  yfinance error GDXJ MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:51.323104  no data GDXJ INTRADAY_60
+2025-09-14T16:40:51.677360  no data SIL DAILY
+2025-09-14T16:40:51.688104  yfinance error SIL WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:51.698773  yfinance error SIL MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:52.154276  no data SIL INTRADAY_60
+2025-09-14T16:40:52.507813  no data SILJ DAILY
+2025-09-14T16:40:52.518583  yfinance error SILJ WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:52.529268  yfinance error SILJ MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:53.922704  no data SILJ INTRADAY_60
+2025-09-14T16:40:54.377495  no data URNM DAILY
+2025-09-14T16:40:54.388297  yfinance error URNM WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:54.399081  yfinance error URNM MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:54.833520  no data URNM INTRADAY_60
+2025-09-14T16:40:55.388974  no data ACWI DAILY
+2025-09-14T16:40:55.399751  yfinance error ACWI WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:55.410515  yfinance error ACWI MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:55.966634  no data ACWI INTRADAY_60
+2025-09-14T16:40:56.592340  no data SPY DAILY
+2025-09-14T16:40:56.603110  yfinance error SPY WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:56.613780  yfinance error SPY MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:57.058404  no data SPY INTRADAY_60
+2025-09-14T16:40:57.614151  no data HYG DAILY
+2025-09-14T16:40:57.624909  yfinance error HYG WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:57.635617  yfinance error HYG MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:58.110646  no data HYG INTRADAY_60
+2025-09-14T16:40:58.667253  no data LQD DAILY
+2025-09-14T16:40:58.678152  yfinance error LQD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:58.688879  yfinance error LQD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:59.044266  no data LQD INTRADAY_60
+2025-09-14T16:40:59.500506  no data BTC-USD DAILY
+2025-09-14T16:40:59.511269  yfinance error BTC-USD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:59.521926  yfinance error BTC-USD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:40:59.876231  no data BTC-USD INTRADAY_60
+2025-09-14T16:41:00.230077  no data ETH-USD DAILY
+2025-09-14T16:41:00.240905  yfinance error ETH-USD WEEKLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:41:00.251677  yfinance error ETH-USD MONTHLY: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+2025-09-14T16:41:00.696451  no data ETH-USD INTRADAY_60
+2025-09-14T16:41:00.707214  no data GDX DAILY
+2025-09-14T16:41:00.717818  no data GLD DAILY
+2025-09-14T16:41:00.728464  no data SIL DAILY
+2025-09-14T16:41:00.739005  no data SLV DAILY
+2025-09-14T16:41:00.749684  no data GDX DAILY
+2025-09-14T16:41:00.760232  no data GDXJ DAILY
+2025-09-14T16:41:00.770799  no data SIL DAILY
+2025-09-14T16:41:00.781446  no data SILJ DAILY
+2025-09-14T16:41:00.791976  no data HYG DAILY
+2025-09-14T16:41:00.802589  no data LQD DAILY
+2025-09-14T16:41:00.813139  no data SPY DAILY
+2025-09-14T16:41:00.823769  no data ACWI DAILY
+2025-09-14T16:41:03.993762  SUMMARY assets_count=0 charts=0 intraday_disabled=False
