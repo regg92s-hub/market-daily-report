@@ -59,9 +59,15 @@ AV_MAP = {
 # Alpha Vantage (free): ~5 kall/min og ~500/dag. Vi sover 13 sek pr. kall.
 def av_get(url):
     r = requests.get(url, timeout=60)
+    log(f"GET {fn} {symbol} -> {r.status_code}")
     r.raise_for_status()
-    time.sleep(13)
-    return r
+    js = r.json()
+    if "Note" in js: log(f"NOTE for {symbol} {interval}: {js['Note'][:140]}")
+    if "Error Message" in js: log(f"ERROR for {symbol} {interval}: {js['Error Message'][:140]}")
+    if key not in js:
+        log(f"MISS  {symbol} {interval}: expected key '{key}' not in response")
+        return None
+
 
 LOG = []
 
@@ -289,5 +295,11 @@ html = f"""<!doctype html><html><head><meta charset="utf-8">
 <pre>{json.dumps(news, indent=2)}</pre>
 </body></html>"""
 with open("docs/index.html","w") as f: f.write(html)
+
+# Skriv en enkel oppsummering i loggen
+ok_assets = [k for k,v in summary.get("assets", {}).items()]
+log(f"SUMMARY assets_count={len(ok_assets)} charts_dir_exists={os.path.isdir('docs/charts')}")
+flush_log()
+
 
 print("Done.")
