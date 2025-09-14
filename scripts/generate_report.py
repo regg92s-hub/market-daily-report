@@ -1,3 +1,5 @@
+VERSION = "2025-09-14b"  # synlig i logg
+
 import os, json, time, math
 from datetime import datetime
 from dateutil import tz
