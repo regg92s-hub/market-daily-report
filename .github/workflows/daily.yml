@@ -32,9 +32,10 @@ jobs:
 
       - name: Run generator
         env:
-          ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}   # valgfritt, men anbefalt
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: python scripts/generate_report.py
+
 
       - name: List generated files
         run: |
