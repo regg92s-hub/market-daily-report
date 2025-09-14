@@ -63,6 +63,17 @@ def av_get(url):
     time.sleep(13)
     return r
 
+LOG = []
+
+def log(msg):
+    print(msg)
+    LOG.append(f"{datetime.now().isoformat()}  {msg}")
+
+def flush_log():
+    os.makedirs("docs", exist_ok=True)
+    with open("docs/av_log.txt","w") as f:
+        f.write("\n".join(LOG) + "\n")
+
 # ---------- HJELPERE ----------
 def av_series(symbol, interval):
     base = "https://www.alphavantage.co/query?"
