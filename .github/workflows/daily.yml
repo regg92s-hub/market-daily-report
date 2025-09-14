@@ -31,6 +31,10 @@ jobs:
       - name: Debug inputs
         run: |
           echo "FORCE: ${{ github.event.inputs.force }}"
+                
+      - name: Show generator version
+        run: |
+          head -n 20 scripts/generate_report.py | sed -n '1,10p' || true
       
       - name: Run generator
         env:
@@ -42,10 +46,10 @@ jobs:
       - name: Show generator logs
         if: ${{ always() }}
         run: |
+          echo "==== VERSION ===="
+          head -n 5 scripts/generate_report.py || true
           echo "==== run_log.txt ===="
           if [ -f docs/run_log.txt ]; then tail -n 200 docs/run_log.txt; else echo "NO LOG"; fi
-          echo "==== index.json (head) ===="
-          if [ -f docs/index.json ]; then head -c 2000 docs/index.json; else echo "NO INDEX"; fi
           echo "==== file tree ===="
           find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
       
@@ -56,9 +60,10 @@ jobs:
           path: |
             docs/run_log.txt
             docs/index.json
-            docs/news/news.json
             docs/filelist.json
             docs/volminers.json
+            docs/news/news.json
+
 
       - name: List generated files
         run: |
@@ -75,6 +80,7 @@ jobs:
             echo "Not enough charts; aborting deploy to protect the site."
             exit 1
           fi
+
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
