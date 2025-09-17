@@ -44,8 +44,17 @@ jobs:
         run: |
           echo "FORCE=${FORCE_INPUT}"
 
+      - name: Check FRED secret
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.FRED_API_KEY }}" ]; then
+            echo "FRED_API_KEY is EMPTY (OK hvis du ikke bruker FRED)."
+          else
+            echo "FRED_API_KEY is SET"
+          fi
+
       - name: Show generator version
-        run: sed -n '1,10p' scripts/generate_report.py || true
+        run: sed -n '1,15p' scripts/generate_report.py || true
 
       - name: Run generator
         env:
@@ -54,14 +63,21 @@ jobs:
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: python scripts/generate_report.py
 
+      - name: List generated files
+        run: |
+          echo "Charts:"
+          ls -1 docs/charts/*.png 2>/dev/null || true
+
       - name: Show generator logs
         if: ${{ always() }}
         run: |
           echo "==== VERSION ===="
-          head -n 5 scripts/generate_report.py || true
-          echo "==== run_log.txt ===="
+          sed -n '1,5p' scripts/generate_report.py || true
+          echo "==== run_log.txt (tail) ===="
           if [ -f docs/run_log.txt ]; then tail -n 200 docs/run_log.txt; else echo "NO LOG"; fi
-          echo "==== file tree ===="
+          echo "==== build_status.json ===="
+          if [ -f docs/build_status.json ]; then cat docs/build_status.json; else echo "NO BUILD_STATUS"; fi
+          echo "==== file tree (docs/) ===="
           find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
 
       - uses: actions/upload-artifact@v4
@@ -73,12 +89,8 @@ jobs:
             docs/index.json
             docs/filelist.json
             docs/volminers.json
+            docs/build_status.json
             docs/news/news.json
-
-      - name: List generated files
-        run: |
-          echo "Charts:"
-          ls -1 docs/charts/*.png 2>/dev/null || true
 
       - name: Sanity check before deploy
         if: ${{ github.event.inputs.force != 'true' }}
@@ -86,7 +98,7 @@ jobs:
           set -e
           COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
           echo "charts count: $COUNT"
-          if [ "$COUNT" -lt 10 ]; then
+          if [ "$COUNT" -lt 30 ]; then
             echo "Not enough charts; aborting deploy to protect the site."
             exit 1
           fi
@@ -99,3 +111,12 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+      # Best-effort røyk-test mot Pages-URL (kan feile på propagering; ikke fatal)
+      - name: Smoke test (fetch filelist.json from Pages)
+        if: ${{ always() }}
+        continue-on-error: true
+        run: |
+          URL="https://${{ github.repository_owner }}.github.io/market-daily-report/filelist.json?ts=${{ github.run_id }}"
+          echo "GET $URL"
+          curl -sSL "$URL" | head -c 1000
