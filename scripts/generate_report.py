@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
-VERSION = "2025-09-14d"
+VERSION = "2025-09-17a"
 
-# Optional: Stooq via pandas-datareader (fallback for ETF/aksjer)
+# Optional fallback via Stooq (ETF/aksjer)
 try:
     from pandas_datareader import data as pdr
     HAS_PDR = True
@@ -31,16 +31,14 @@ os.makedirs("docs/news", exist_ok=True)
 # --- Force/fullrun-styring ---
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
 print(f"Full run mode: {FORCE} at {NOW.isoformat()} (version {VERSION})")
-
 with open("docs/run_mode.json","w") as f:
     json.dump({"force": FORCE, "now": NOW.isoformat(), "version": VERSION}, f, indent=2)
 
-# Ikke blokker manuell kjøring; kun planlagt begrenses av vindu:
+# Ikke blokker manuell kjøring; kun planlagt begrenses av vindu 19:45–20:10
 if not FORCE and not (
     (NOW.hour == 19 and NOW.minute >= 45) or
     (NOW.hour == 20 and NOW.minute <= 10)
 ):
-    # heartbeat + minimal index for å unngå tom side
     with open("docs/heartbeat.json", "w") as f:
         json.dump({"last_run_local": NOW.isoformat(), "version": VERSION}, f, indent=2)
     with open("docs/index.html", "w") as f:
@@ -61,9 +59,9 @@ def flush_log():
     with open("docs/run_log.txt","w") as f:
         f.write("\n".join(LOG) + "\n")
 
-# ---------- YF session ----------
-YF_SESSION = requests.Session()
-YF_SESSION.headers.update({
+# ---------- HTTP session ----------
+SESSION = requests.Session()
+SESSION.headers.update({
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
                   "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     "Accept": "*/*",
@@ -81,7 +79,7 @@ TICKERS = {
 }
 ALL = list(TICKERS.keys())
 
-# Valgfritt filter for test
+# Valgfritt filter via env (for testing)
 allow = os.environ.get("ALLOWED_TICKERS", "").upper().strip()
 if allow:
     keep = {s.strip() for s in allow.split(",") if s.strip()}
@@ -104,6 +102,7 @@ def MACD(s, fast=12, slow=26, sig=9):
 def pct(a,b): return (a-b)/b if (b is not None and b!=0) else np.nan
 
 def plot_price_ind(df, title, outpath, ma_len):
+    if df is None or df.empty: return
     plt.figure(); ax = plt.gca()
     df["close_use"].plot(ax=ax, label="Close")
     SMA(df["close_use"], ma_len).plot(ax=ax, label=f"SMA{ma_len}")
@@ -111,6 +110,7 @@ def plot_price_ind(df, title, outpath, ma_len):
     plt.savefig(outpath, dpi=120); plt.close()
 
 def plot_rsi_macd(df, title, out_rsi, out_macd):
+    if df is None or df.empty: return
     rsi = RSI(df["close_use"]); plt.figure(); rsi.plot()
     plt.title(f"{title} - RSI(14)"); plt.tight_layout()
     plt.savefig(out_rsi, dpi=120); plt.close()
@@ -139,7 +139,7 @@ def stooq_series(sym: str):
         tried.append(f"{sym}.US")
     for s in tried:
         try:
-            df = pdr.DataReader(s, "stooq")  # Open High Low Close Volume
+            df = pdr.DataReader(s, "stooq")
             if df is None or df.empty:
                 continue
             df = df.sort_index().rename(columns=str.lower)
@@ -158,7 +158,7 @@ def cg_series(sym: str):
     if not coin: return None
     url = f"https://api.coingecko.com/api/v3/coins/{coin}/market_chart?vs_currency=usd&days=max"
     try:
-        r = requests.get(url, timeout=60, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
+        r = SESSION.get(url, timeout=60)
         r.raise_for_status()
         js = r.json(); prices = js.get("prices", [])
         if not prices: return None
@@ -174,7 +174,7 @@ def cg_series(sym: str):
         log(f"coingecko error {sym}: {e}")
         return None
 
-# ---------- yfinance henter (med retry + fallbacks) ----------
+# ---------- yfinance (retry + fallbacks + korrekt resampling) ----------
 def yf_series(sym: str, kind: str):
     """
     kind: 'DAILY','WEEKLY','MONTHLY','INTRADAY_60'
@@ -184,7 +184,7 @@ def yf_series(sym: str, kind: str):
             try:
                 data = yf.download(
                     sym, period=period, interval=interval,
-                    auto_adjust=True, progress=False, session=YF_SESSION
+                    auto_adjust=True, progress=False
                 )
                 if data is not None and not data.empty:
                     return data
@@ -193,35 +193,51 @@ def yf_series(sym: str, kind: str):
             time.sleep(2 + i)
         return None
 
+    # Primær henting
     if kind == "DAILY":
         data = _dl("1d", "max")
     elif kind == "WEEKLY":
-        d = _dl("1d", "max"); data = d.resample("W-FRI").last() if d is not None else None
+        d = _dl("1d", "max"); data = d if d is not None else None
     elif kind == "MONTHLY":
-        d = _dl("1d", "max"); data = d.resample("ME").last() if d is not None else None
+        d = _dl("1d", "max"); data = d if d is not None else None
     elif kind == "INTRADAY_60":
         data = None if DISABLE_INTRADAY else _dl("1h", "730d")
     else:
         return None
 
+    fallback_used = None
     if data is None or data.empty:
-        df = cg_series(sym) if sym.endswith("-USD") else stooq_series(sym)
-        if df is None or df.empty:
+        # Fallback: krypto -> CoinGecko, ellers Stooq
+        df_fb = cg_series(sym) if sym.endswith("-USD") else stooq_series(sym)
+        if df_fb is None or df_fb.empty:
             log(f"no data {sym} {kind} (yf + fallbacks)")
             return None
-        log(f"using fallback for {sym} {kind}")
-        return df
+        data = df_fb
+        fallback_used = "CG" if sym.endswith("-USD") else "STOOQ"
 
+    # Normaliser kolonner
     df = data.rename(columns=str.lower).copy()
-    if "close" not in df.columns:
+    if "close" in df.columns and "close_use" not in df.columns:
+        df["close_use"] = df["close"]
+    if "close_use" not in df.columns:
         log(f"no close {sym} {kind}")
         return None
-    df["close_use"] = df["close"]
     if "volume" not in df.columns:
         df["volume"] = np.nan
     df.index = pd.to_datetime(df.index)
     df.sort_index(inplace=True)
-    log(f"using yfinance for {sym} {kind}")
+
+    # Resampling ved WEEKLY/MONTHLY uansett kilde
+    if kind == "WEEKLY":
+        df = df.resample("W-FRI").last()
+    elif kind == "MONTHLY":
+        df = df.resample("ME").last()
+
+    # Kilde-logg
+    if fallback_used:
+        log(f"using fallback ({fallback_used}) for {sym} {kind}")
+    else:
+        log(f"using yfinance for {sym} {kind}")
     return df
 
 # ---------- RSS + bildehenting ----------
@@ -230,7 +246,7 @@ def safe_slug(s):
 
 def fetch_first_image_from_page(url):
     try:
-        rr = requests.get(url, timeout=30, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
+        rr = SESSION.get(url, timeout=30)
         rr.raise_for_status()
         soup = BeautifulSoup(rr.text, "lxml")
         meta = soup.find("meta", property="og:image") or soup.find("meta", attrs={"name":"twitter:image"})
@@ -249,7 +265,7 @@ def fetch_first_image_from_page(url):
 def last_n_days_posts(url, days=3):
     out = []
     try:
-        r = requests.get(url, timeout=30)
+        r = SESSION.get(url, timeout=30)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "lxml")
         items = soup.find_all("item")
@@ -266,7 +282,7 @@ def last_n_days_posts(url, days=3):
                 img_url = fetch_first_image_from_page(lnk)
                 if img_url:
                     try:
-                        ir = requests.get(img_url, timeout=30, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
+                        ir = SESSION.get(img_url, timeout=30)
                         ir.raise_for_status()
                         ext = os.path.splitext(urlparse(img_url).path)[1].lower() or ".jpg"
                         fname = f"news_{safe_slug(t)}{ext if ext in ['.jpg','.jpeg','.png'] else '.jpg'}"
@@ -282,6 +298,7 @@ def last_n_days_posts(url, days=3):
 
 # ---------- KJØRING ----------
 summary = {"generated_local": NOW.isoformat(), "assets": {}}
+data_source_map = {}  # per ticker -> hvilke tidsrammer som lyktes
 
 def ratio_series(num_sym, den_sym):
     num = yf_series(num_sym, "DAILY")
@@ -308,12 +325,15 @@ def volume_filter(sym):
     plot_volume(df, sym)
     return df.tail(60)[["volume","vol_ma20","up20"]]
 
-# Hovedløp: yfinance/crypto/ETF serier + grafer (+ beriket index.json)
+# Hovedløp: henting + indikatorer + grafer + sammendrag
 for sym in ALL:
-    daily   = yf_series(sym, "DAILY")
-    weekly  = yf_series(sym, "WEEKLY")
-    monthly = yf_series(sym, "MONTHLY")
-    hourly  = yf_series(sym, "INTRADAY_60")
+    got = []
+    daily   = yf_series(sym, "DAILY");   got.append(("daily", daily is not None and not daily.empty))
+    weekly  = yf_series(sym, "WEEKLY");  got.append(("weekly", weekly is not None and not weekly.empty))
+    monthly = yf_series(sym, "MONTHLY"); got.append(("monthly", monthly is not None and not monthly.empty))
+    hourly  = None if DISABLE_INTRADAY else yf_series(sym, "INTRADAY_60"); got.append(("hourly", hourly is not None and not (hourly is None or hourly.empty)))
+
+    data_source_map[sym] = {k: bool(v) for k,v in got}
 
     rsi14_last = None
     macd_cross = None
@@ -333,13 +353,13 @@ for sym in ALL:
         plot_rsi_macd(df.tail(400), f"{sym} - {name}", base+"_rsi.png", base+"_macd.png")
 
         if name == "daily":
-            rsi14_last = float(df["rsi14"].iloc[-1]) if pd.notna(df["rsi14"].iloc[-1]) else None
+            if pd.notna(df["rsi14"].iloc[-1]): rsi14_last = float(df["rsi14"].iloc[-1])
             if len(df) >= 2:
                 last = df["macd"].iloc[-1] - df["macd_signal"].iloc[-1]
                 prev = df["macd"].iloc[-2] - df["macd_signal"].iloc[-2]
                 macd_cross = bool((last > 0) and (prev <= 0))
 
-        # SPY 200DMA (temperatur-figur)
+        # SPY 200DMA (temperatur)
         if sym == "SPY" and name == "daily":
             plt.figure()
             df["close_use"].plot(label="SPY")
@@ -371,7 +391,7 @@ gdx_gld = ratio_series("GDX","GLD")
 sil_slv = ratio_series("SIL","SLV")
 hyg_lqd = ratio_series("HYG","LQD")
 spx_acwi = ratio_series("SPY","ACWI")
-gld_spy = ratio_series("GLD","SPY")  # NY!
+gld_spy = ratio_series("GLD","SPY")
 
 # Volumfilter (PNG + JSON-sammendrag)
 vol_filters = {s: volume_filter(s) for s in ["GDX","GDXJ","SIL","SILJ"]}
@@ -397,7 +417,7 @@ def fred_series(series_id):
     url = (f"{FRED_BASE}?series_id={series_id}"
            f"&api_key={FRED_KEY}&file_type=json&observation_start=1990-01-01")
     try:
-        r = requests.get(url, timeout=60)
+        r = SESSION.get(url, timeout=60)
         r.raise_for_status()
         js = r.json()
         obs = js.get("observations", [])
@@ -482,23 +502,43 @@ index = {
   "notes": {
     "ratios": {"GDX/GLD": bool(gdx_gld is not None), "SIL/SLV": bool(sil_slv is not None), "GLD/SPY": bool(gld_spy is not None)},
     "vol_filters": {k: bool(v is not None) for k,v in vol_filters.items()},
-    "market_temp": temps
+    "market_temp": temps,
+    "data_sources": data_source_map
   }
 }
 with open("docs/index.json","w") as f: json.dump(index, f, indent=2)
 
-# ---------- FILLISTE ----------
+# ---------- FILLISTE + BUILD STATUS ----------
 files = sorted([f"charts/{fn}" for fn in os.listdir("docs/charts") if fn.endswith(".png")])
 with open("docs/filelist.json","w") as f:
     json.dump({"charts": files}, f, indent=2)
 
-# ---------- HTML ----------
+build_status = {
+    "version": VERSION,
+    "generated_local": NOW.isoformat(),
+    "charts_count": len(files),
+    "tickers_requested": ALL,
+    "tickers_with_data": [k for k,v in data_source_map.items() if any(v.values())],
+    "tickers_missing": [k for k,v in data_source_map.items() if not any(v.values())]
+}
+with open("docs/build_status.json","w") as f:
+    json.dump(build_status, f, indent=2)
+
+# ---------- HTML (med cache-buster på JSON-lenker) ----------
+ts = int(datetime.utcnow().timestamp())
 links = "\n".join([f'<li><a href="{fn}">{os.path.basename(fn)}</a></li>' for fn in files])
 html = f"""<!doctype html><html><head><meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-store" />
 <title>Daglig rapport {NOW.strftime('%Y-%m-%d')}</title></head><body>
 <h1>Daglig rapport {NOW.strftime('%Y-%m-%d')}</h1>
 <p>Generert (Europe/Oslo): {NOW}</p>
-<p>Data: <a href="index.json">index.json</a> • Nyheter: <a href="news/news.json">news.json</a> • Filer: <a href="filelist.json">filelist.json</a></p>
+<p>
+Data: <a href="index.json?ts={ts}">index.json</a> •
+Nyheter: <a href="news/news.json?ts={ts}">news.json</a> •
+Filer: <a href="filelist.json?ts={ts}">filelist.json</a> •
+Logg: <a href="run_log.txt?ts={ts}">run_log.txt</a> •
+Status: <a href="build_status.json?ts={ts}">build_status.json</a>
+</p>
 <h2>Grafer</h2>
 <ul>{links}</ul>
 </body></html>"""
