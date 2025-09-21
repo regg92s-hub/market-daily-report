@@ -9,8 +9,8 @@ concurrency:
 
 on:
   schedule:
-    - cron: "50 17 * * *"  # 19:50 Oslo (sommer)
-    - cron: "50 18 * * *"  # 19:50 Oslo (vinter)
+    - cron: "50 17 * * *"  # 19:50 Oslo (sommertid)
+    - cron: "50 18 * * *"  # 19:50 Oslo (vintertid)
   workflow_dispatch:
     inputs:
       force:
@@ -38,14 +38,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Debug inputs
-        shell: bash
         env:
           FORCE_INPUT: ${{ github.event.inputs.force }}
-        run: |
-          echo "FORCE=${FORCE_INPUT}"
+        run: echo "FORCE=${FORCE_INPUT}"
 
       - name: Check FRED secret
-        shell: bash
         run: |
           if [ -z "${{ secrets.FRED_API_KEY }}" ]; then
             echo "FRED_API_KEY is EMPTY (OK hvis du ikke bruker FRED)."
@@ -54,13 +51,14 @@ jobs:
           fi
 
       - name: Show generator version
-        run: sed -n '1,15p' scripts/generate_report.py || true
+        run: sed -n '1,20p' scripts/generate_report.py || true
 
       - name: Run generator
         env:
           MPLBACKEND: Agg
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
+          DISABLE_INTRADAY: "true"   # Stabilt default. Sett "false" om du vil ha 1t-grafer.
         run: python scripts/generate_report.py
 
       - name: List generated files
@@ -112,7 +110,6 @@ jobs:
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
 
-      # Best-effort røyk-test mot Pages-URL (kan feile på propagering; ikke fatal)
       - name: Smoke test (fetch filelist.json from Pages)
         if: ${{ always() }}
         continue-on-error: true
