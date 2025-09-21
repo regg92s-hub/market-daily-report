@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
-VERSION = "2025-09-17a"
+VERSION = "2025-09-21a"
 
 # Optional fallback via Stooq (ETF/aksjer)
 try:
@@ -119,6 +119,55 @@ def plot_rsi_macd(df, title, out_rsi, out_macd):
     plt.legend(); plt.title(f"{title} - MACD(12,26,9)"); plt.tight_layout()
     plt.savefig(out_macd, dpi=120); plt.close()
 
+# --- NY: kombinert graf (pris+SMA+vol, RSI, MACD) ---
+def plot_combo(df, title, outpath, ma_len=36):
+    if df is None or df.empty:
+        return
+    last = df.tail(400).copy()
+
+    import matplotlib.dates as mdates
+    from matplotlib.gridspec import GridSpec
+
+    fig = plt.figure(figsize=(10, 7))
+    gs = GridSpec(3, 1, height_ratios=[2.2, 1.0, 1.0], hspace=0.15)
+
+    # Topp: pris + SMA + volum (twin y)
+    ax_p = fig.add_subplot(gs[0])
+    ax_p.plot(last.index, last["close_use"], label="Close")
+    ax_p.plot(last.index, SMA(last["close_use"], ma_len), label=f"SMA{ma_len}")
+    ax_p.set_title(title)
+    ax_p.legend(loc="upper left")
+    if "volume" in last.columns and last["volume"].notna().any():
+        ax_v = ax_p.twinx()
+        ax_v.bar(last.index, last["volume"].fillna(0), alpha=0.2, width=1)
+        ax_v.set_yticks([])
+
+    # Midt: RSI
+    ax_r = fig.add_subplot(gs[1], sharex=ax_p)
+    rsi = RSI(last["close_use"])
+    ax_r.plot(last.index, rsi)
+    ax_r.axhline(70, ls="--", lw=0.8)
+    ax_r.axhline(30, ls="--", lw=0.8)
+    ax_r.set_ylabel("RSI14")
+
+    # Bunn: MACD
+    ax_m = fig.add_subplot(gs[2], sharex=ax_p)
+    macd, signal, hist = MACD(last["close_use"])
+    ax_m.plot(last.index, macd, label="MACD")
+    ax_m.plot(last.index, signal, label="Signal")
+    ax_m.bar(last.index, hist, alpha=0.3)
+    ax_m.legend(loc="upper left")
+
+    ax_m.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    for ax in (ax_p, ax_r, ax_m):
+        for spine in ("top", "right"):
+            ax.spines[spine].set_visible(False)
+
+    fig.autofmt_xdate()
+    plt.tight_layout()
+    fig.savefig(outpath, dpi=120)
+    plt.close(fig)
+
 def plot_volume(df, sym):
     last = df.tail(60).copy()
     if last.empty: return
@@ -131,7 +180,6 @@ def plot_volume(df, sym):
 
 # ---------- Fallback-kilder ----------
 def stooq_series(sym: str):
-    """Daglig fra Stooq (ETF/aksjer), prøver også .US-suffiks."""
     if not HAS_PDR:
         return None
     tried = [sym]
@@ -153,7 +201,6 @@ def stooq_series(sym: str):
 
 CG_MAP = {"BTC-USD":"bitcoin", "ETH-USD":"ethereum"}
 def cg_series(sym: str):
-    """CoinGecko fallback for krypto (daglig)."""
     coin = CG_MAP.get(sym)
     if not coin: return None
     url = f"https://api.coingecko.com/api/v3/coins/{coin}/market_chart?vs_currency=usd&days=max"
@@ -193,7 +240,6 @@ def yf_series(sym: str, kind: str):
             time.sleep(2 + i)
         return None
 
-    # Primær henting
     if kind == "DAILY":
         data = _dl("1d", "max")
     elif kind == "WEEKLY":
@@ -207,7 +253,6 @@ def yf_series(sym: str, kind: str):
 
     fallback_used = None
     if data is None or data.empty:
-        # Fallback: krypto -> CoinGecko, ellers Stooq
         df_fb = cg_series(sym) if sym.endswith("-USD") else stooq_series(sym)
         if df_fb is None or df_fb.empty:
             log(f"no data {sym} {kind} (yf + fallbacks)")
@@ -215,7 +260,6 @@ def yf_series(sym: str, kind: str):
         data = df_fb
         fallback_used = "CG" if sym.endswith("-USD") else "STOOQ"
 
-    # Normaliser kolonner
     df = data.rename(columns=str.lower).copy()
     if "close" in df.columns and "close_use" not in df.columns:
         df["close_use"] = df["close"]
@@ -227,13 +271,11 @@ def yf_series(sym: str, kind: str):
     df.index = pd.to_datetime(df.index)
     df.sort_index(inplace=True)
 
-    # Resampling ved WEEKLY/MONTHLY uansett kilde
     if kind == "WEEKLY":
         df = df.resample("W-FRI").last()
     elif kind == "MONTHLY":
         df = df.resample("ME").last()
 
-    # Kilde-logg
     if fallback_used:
         log(f"using fallback ({fallback_used}) for {sym} {kind}")
     else:
@@ -325,7 +367,7 @@ def volume_filter(sym):
     plot_volume(df, sym)
     return df.tail(60)[["volume","vol_ma20","up20"]]
 
-# Hovedløp: henting + indikatorer + grafer + sammendrag
+# Hovedløp
 for sym in ALL:
     got = []
     daily   = yf_series(sym, "DAILY");   got.append(("daily", daily is not None and not daily.empty))
@@ -349,8 +391,11 @@ for sym in ALL:
         df["macd"], df["macd_signal"], df["macd_hist"] = macd, signal, hist
 
         base = f"docs/charts/{sym}_{name}"
+        # Behold enkeltgrafer
         plot_price_ind(df.tail(400), f"{sym} - {name} price vs SMA{n}", base+"_price.png", n)
         plot_rsi_macd(df.tail(400), f"{sym} - {name}", base+"_rsi.png", base+"_macd.png")
+        # NY: Kombinert graf
+        plot_combo(df, f"{sym} - {name}", base + "_combo.png", 36)
 
         if name == "daily":
             if pd.notna(df["rsi14"].iloc[-1]): rsi14_last = float(df["rsi14"].iloc[-1])
@@ -441,6 +486,7 @@ if dxy is not None and not dxy.empty:
     sma200 = dxy["close_use"].rolling(200).mean()
     plot_price_ind(dxy.tail(800), "DXY proxy (DTWEXM) - price vs SMA200", "docs/charts/DXY_price.png", 200)
     plot_rsi_macd(dxy.tail(800), "DXY proxy (DTWEXM)", "docs/charts/DXY_rsi.png", "docs/charts/DXY_macd.png")
+    plot_combo(dxy, "DXY proxy (DTWEXM) - combo", "docs/charts/DXY_combo.png", 200)
     fred_assets["DXY"] = {
         "last": float(dxy["close_use"].iloc[-1]),
         "dist_to_200DMA": float((dxy["close_use"].iloc[-1] - sma200.iloc[-1]) / sma200.iloc[-1]) if pd.notna(sma200.iloc[-1]) else None
@@ -450,6 +496,7 @@ vix = fred_series("VIXCLS")
 if vix is not None and not vix.empty:
     plot_price_ind(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_price.png", 200)
     plot_rsi_macd(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_rsi.png", "docs/charts/VIX_macd.png")
+    plot_combo(vix, "VIX (VIXCLS) - combo", "docs/charts/VIX_combo.png", 200)
     fred_assets["VIX"] = {"last": float(vix["close_use"].iloc[-1])}
 
 y3m = fred_series("DGS3MO")
@@ -524,7 +571,7 @@ build_status = {
 with open("docs/build_status.json","w") as f:
     json.dump(build_status, f, indent=2)
 
-# ---------- HTML (med cache-buster på JSON-lenker) ----------
+# ---------- HTML (cache-buster på JSON-lenker) ----------
 ts = int(datetime.utcnow().timestamp())
 links = "\n".join([f'<li><a href="{fn}">{os.path.basename(fn)}</a></li>' for fn in files])
 html = f"""<!doctype html><html><head><meta charset="utf-8">
