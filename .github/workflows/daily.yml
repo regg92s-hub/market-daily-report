@@ -44,7 +44,10 @@ jobs:
           pip install yfinance pandas matplotlib beautifulsoup4 feedparser requests
 
       - name: Add BTC and ETH + compact PNGs
+        env:
+          MPLBACKEND: Agg
         run: python scripts/crypto_and_compacts.py
+
 
       - name: Fetch NFTRH and Northstar (last 3 days)
         run: python scripts/fetch_nftrh_northstar.py
