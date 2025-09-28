@@ -34,7 +34,6 @@ def macd(series, fast=12, slow=26, signal=9):
 def sma(s, n): return s.rolling(n).mean()
 
 def get_tf_data(ticker):
-    # daily / weekly / monthly
     d = yf.download(ticker, period="2y", interval="1d", auto_adjust=True, progress=False)
     if d.empty: return None
     d = d.dropna()
@@ -55,7 +54,6 @@ def get_tf_data(ticker):
     return d, w, m
 
 def weekly_close_count_above_36WMA(w):
-    # teller sammenhengende uker til slutt over 36WMA bakover
     above = (w["Close"] > w["SMA36"]).fillna(False)
     cnt = 0
     for val in reversed(above.tolist()):
@@ -64,7 +62,6 @@ def weekly_close_count_above_36WMA(w):
     return cnt
 
 def make_compact_png(ticker, d):
-    # kompakt: pris vs SMA36 + RSI + MACD
     close = d["Close"].tail(220)
     sma36 = d["SMA36"].tail(220)
     rsi14 = d["RSI14"].tail(220)
@@ -97,7 +94,6 @@ def make_compact_png(ticker, d):
     return out.name
 
 def upsert_index_for(ticker, d, w, m):
-    # last/52w/36WMA/MMA, RSI/MACD, uketeller
     last = float(d["Close"].iloc[-1])
     high_52 = float(d["Close"].rolling(252).max().iloc[-1])
     low_52 = float(d["Close"].rolling(252).min().iloc[-1])
@@ -162,12 +158,10 @@ def main():
         d, w, m = got
         entry = upsert_index_for(t, d, w, m)
         img = make_compact_png(t, d)
-        # oppdater filelist.json?
         assets[t] = {**assets.get(t, {}), **entry}
         changed = True
 
     if changed:
-        # bump metadata
         idx.setdefault("summary", {}).setdefault("assets", {})
         idx["summary"]["assets"] = assets
         idx["generated_local"] = datetime.now(timezone.utc).astimezone().isoformat()
