@@ -10,47 +10,42 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
-VERSION = "2025-09-21a"
+VERSION = "2025-09-28-compact-2"
 
-# Optional fallback via Stooq (ETF/aksjer)
 try:
     from pandas_datareader import data as pdr
     HAS_PDR = True
 except Exception:
     HAS_PDR = False
 
-# ---------- KONFIG ----------
 TZ = tz.gettz("Europe/Oslo")
 NOW = datetime.now(tz=TZ)
 
-# Kataloger
 os.makedirs("docs", exist_ok=True)
 os.makedirs("docs/charts", exist_ok=True)
 os.makedirs("docs/news", exist_ok=True)
 
-# --- Force/fullrun-styring ---
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
 print(f"Full run mode: {FORCE} at {NOW.isoformat()} (version {VERSION})")
+
 with open("docs/run_mode.json","w") as f:
     json.dump({"force": FORCE, "now": NOW.isoformat(), "version": VERSION}, f, indent=2)
 
-# Ikke blokker manuell kjøring; kun planlagt begrenses av vindu 19:45–20:10
-if not FORCE and not (
-    (NOW.hour == 19 and NOW.minute >= 45) or
-    (NOW.hour == 20 and NOW.minute <= 10)
-):
+# Ikke blokker manuell kjøring
+if not FORCE and not ((NOW.hour == 19 and NOW.minute >= 45) or (NOW.hour == 20 and NOW.minute <= 10)):
     with open("docs/heartbeat.json", "w") as f:
         json.dump({"last_run_local": NOW.isoformat(), "version": VERSION}, f, indent=2)
     with open("docs/index.html", "w") as f:
         f.write(
-            f"<!doctype html><meta charset='utf-8'><title>Market Daily Report</title>"
+            "<!doctype html><meta charset='utf-8'><title>Market Daily Report</title>"
             f"<h1>Market Daily Report</h1>"
             f"<p>Generert: {NOW.isoformat()}</p>"
-            f"<p>Full rapport genereres kl. 20:00 Europe/Oslo.</p>"
+            "<p>Full rapport genereres kl. 20:00 Europe/Oslo.</p>"
+            "<p>Data: <a href='index.json'>index.json</a> • Nyheter: "
+            "<a href='news/news.json'>news.json</a> • Filer: <a href='filelist.json'>filelist.json</a></p>"
         )
     raise SystemExit(0)
 
-# ---------- LOGGING ----------
 LOG = []
 def log(msg):
     print(msg)
@@ -59,17 +54,14 @@ def flush_log():
     with open("docs/run_log.txt","w") as f:
         f.write("\n".join(LOG) + "\n")
 
-# ---------- HTTP session ----------
-SESSION = requests.Session()
-SESSION.headers.update({
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+YF_SESSION = requests.Session()
+YF_SESSION.headers.update({
+    "User-Agent": "Mozilla/5.0",
     "Accept": "*/*",
     "Accept-Language": "en-US,en;q=0.9",
     "Connection": "keep-alive",
 })
 
-# ---------- TICKERS ----------
 TICKERS = {
     "GLD":"ETF", "SLV":"ETF", "USO":"ETF",
     "GDX":"ETF","GDXJ":"ETF","SIL":"ETF","SILJ":"ETF",
@@ -79,7 +71,6 @@ TICKERS = {
 }
 ALL = list(TICKERS.keys())
 
-# Valgfritt filter via env (for testing)
 allow = os.environ.get("ALLOWED_TICKERS", "").upper().strip()
 if allow:
     keep = {s.strip() for s in allow.split(",") if s.strip()}
@@ -88,7 +79,6 @@ if allow:
 
 DISABLE_INTRADAY = os.environ.get("DISABLE_INTRADAY","false").lower() == "true"
 
-# ---------- Indikatorer / plot ----------
 def SMA(s, n): return s.rolling(n).mean()
 def RSI(s, n=14):
     d = s.diff(); up = d.clip(lower=0); down = -d.clip(upper=0)
@@ -102,7 +92,6 @@ def MACD(s, fast=12, slow=26, sig=9):
 def pct(a,b): return (a-b)/b if (b is not None and b!=0) else np.nan
 
 def plot_price_ind(df, title, outpath, ma_len):
-    if df is None or df.empty: return
     plt.figure(); ax = plt.gca()
     df["close_use"].plot(ax=ax, label="Close")
     SMA(df["close_use"], ma_len).plot(ax=ax, label=f"SMA{ma_len}")
@@ -110,7 +99,6 @@ def plot_price_ind(df, title, outpath, ma_len):
     plt.savefig(outpath, dpi=120); plt.close()
 
 def plot_rsi_macd(df, title, out_rsi, out_macd):
-    if df is None or df.empty: return
     rsi = RSI(df["close_use"]); plt.figure(); rsi.plot()
     plt.title(f"{title} - RSI(14)"); plt.tight_layout()
     plt.savefig(out_rsi, dpi=120); plt.close()
@@ -119,54 +107,28 @@ def plot_rsi_macd(df, title, out_rsi, out_macd):
     plt.legend(); plt.title(f"{title} - MACD(12,26,9)"); plt.tight_layout()
     plt.savefig(out_macd, dpi=120); plt.close()
 
-# --- NY: kombinert graf (pris+SMA+vol, RSI, MACD) ---
-def plot_combo(df, title, outpath, ma_len=36):
-    if df is None or df.empty:
-        return
-    last = df.tail(400).copy()
-
-    import matplotlib.dates as mdates
-    from matplotlib.gridspec import GridSpec
-
-    fig = plt.figure(figsize=(10, 7))
-    gs = GridSpec(3, 1, height_ratios=[2.2, 1.0, 1.0], hspace=0.15)
-
-    # Topp: pris + SMA + volum (twin y)
-    ax_p = fig.add_subplot(gs[0])
-    ax_p.plot(last.index, last["close_use"], label="Close")
-    ax_p.plot(last.index, SMA(last["close_use"], ma_len), label=f"SMA{ma_len}")
-    ax_p.set_title(title)
-    ax_p.legend(loc="upper left")
-    if "volume" in last.columns and last["volume"].notna().any():
-        ax_v = ax_p.twinx()
-        ax_v.bar(last.index, last["volume"].fillna(0), alpha=0.2, width=1)
-        ax_v.set_yticks([])
-
-    # Midt: RSI
-    ax_r = fig.add_subplot(gs[1], sharex=ax_p)
-    rsi = RSI(last["close_use"])
-    ax_r.plot(last.index, rsi)
-    ax_r.axhline(70, ls="--", lw=0.8)
-    ax_r.axhline(30, ls="--", lw=0.8)
-    ax_r.set_ylabel("RSI14")
-
-    # Bunn: MACD
-    ax_m = fig.add_subplot(gs[2], sharex=ax_p)
-    macd, signal, hist = MACD(last["close_use"])
-    ax_m.plot(last.index, macd, label="MACD")
-    ax_m.plot(last.index, signal, label="Signal")
-    ax_m.bar(last.index, hist, alpha=0.3)
-    ax_m.legend(loc="upper left")
-
-    ax_m.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
-    for ax in (ax_p, ax_r, ax_m):
-        for spine in ("top", "right"):
-            ax.spines[spine].set_visible(False)
-
-    fig.autofmt_xdate()
-    plt.tight_layout()
-    fig.savefig(outpath, dpi=120)
-    plt.close(fig)
+def plot_compact(df, title, out_compact, ma_len=36):
+    try:
+        import matplotlib.dates as mdates
+        fig, axes = plt.subplots(3, 1, sharex=True, figsize=(10, 8))
+        axes[0].plot(df.index, df["close_use"], label="Close")
+        axes[0].plot(df.index, SMA(df["close_use"], ma_len), label=f"SMA{ma_len}")
+        axes[0].set_title(title); axes[0].legend(loc="upper left")
+        r = RSI(df["close_use"])
+        axes[1].plot(df.index, r, label="RSI(14)")
+        axes[1].axhline(70, linestyle="--", linewidth=0.8)
+        axes[1].axhline(30, linestyle="--", linewidth=0.8)
+        axes[1].legend(loc="upper left")
+        macd, sig, hist = MACD(df["close_use"])
+        axes[2].plot(df.index, macd, label="MACD")
+        axes[2].plot(df.index, sig, label="Signal")
+        axes[2].bar(df.index, hist, alpha=0.5, label="Hist")
+        axes[2].legend(loc="upper left")
+        axes[2].xaxis.set_major_locator(mdates.AutoDateLocator())
+        axes[2].xaxis.set_major_formatter(mdates.ConciseDateFormatter(mdates.AutoDateLocator()))
+        plt.tight_layout(); plt.savefig(out_compact, dpi=120); plt.close(fig)
+    except Exception as e:
+        log(f"compact plot error {title}: {e}")
 
 def plot_volume(df, sym):
     last = df.tail(60).copy()
@@ -178,34 +140,28 @@ def plot_volume(df, sym):
     plt.legend(); plt.title(f"{sym} - Volume (20D snitt)")
     plt.tight_layout(); plt.savefig(f"docs/charts/{sym}_volume.png", dpi=120); plt.close()
 
-# ---------- Fallback-kilder ----------
 def stooq_series(sym: str):
-    if not HAS_PDR:
-        return None
-    tried = [sym]
-    if not sym.endswith(".US"):
-        tried.append(f"{sym}.US")
+    if not HAS_PDR: return None
+    tried = [sym] + ([f"{sym}.US"] if not sym.endswith(".US") else [])
     for s in tried:
         try:
             df = pdr.DataReader(s, "stooq")
-            if df is None or df.empty:
-                continue
+            if df is None or df.empty: continue
             df = df.sort_index().rename(columns=str.lower)
             df["close_use"] = df["close"]
             if "volume" not in df.columns: df["volume"] = np.nan
-            log(f"stooq ok {s}")
-            return df
+            log(f"stooq ok {s}"); return df
         except Exception as e:
             log(f"stooq error {s}: {e}")
     return None
 
 CG_MAP = {"BTC-USD":"bitcoin", "ETH-USD":"ethereum"}
 def cg_series(sym: str):
-    coin = CG_MAP.get(sym)
+    coin = CG_MAP.get(sym); 
     if not coin: return None
     url = f"https://api.coingecko.com/api/v3/coins/{coin}/market_chart?vs_currency=usd&days=max"
     try:
-        r = SESSION.get(url, timeout=60)
+        r = requests.get(url, timeout=60, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
         r.raise_for_status()
         js = r.json(); prices = js.get("prices", [])
         if not prices: return None
@@ -221,18 +177,12 @@ def cg_series(sym: str):
         log(f"coingecko error {sym}: {e}")
         return None
 
-# ---------- yfinance (retry + fallbacks + korrekt resampling) ----------
 def yf_series(sym: str, kind: str):
-    """
-    kind: 'DAILY','WEEKLY','MONTHLY','INTRADAY_60'
-    """
     def _dl(interval, period):
         for i in range(3):
             try:
-                data = yf.download(
-                    sym, period=period, interval=interval,
-                    auto_adjust=True, progress=False
-                )
+                data = yf.download(sym, period=period, interval=interval,
+                                   auto_adjust=True, progress=False, session=YF_SESSION)
                 if data is not None and not data.empty:
                     return data
             except Exception as e:
@@ -243,63 +193,43 @@ def yf_series(sym: str, kind: str):
     if kind == "DAILY":
         data = _dl("1d", "max")
     elif kind == "WEEKLY":
-        d = _dl("1d", "max"); data = d if d is not None else None
+        d = _dl("1d", "max"); data = d.resample("W-FRI").last() if d is not None else None
     elif kind == "MONTHLY":
-        d = _dl("1d", "max"); data = d if d is not None else None
+        d = _dl("1d", "max"); data = d.resample("ME").last() if d is not None else None
     elif kind == "INTRADAY_60":
         data = None if DISABLE_INTRADAY else _dl("1h", "730d")
     else:
         return None
 
-    fallback_used = None
     if data is None or data.empty:
-        df_fb = cg_series(sym) if sym.endswith("-USD") else stooq_series(sym)
-        if df_fb is None or df_fb.empty:
-            log(f"no data {sym} {kind} (yf + fallbacks)")
-            return None
-        data = df_fb
-        fallback_used = "CG" if sym.endswith("-USD") else "STOOQ"
+        df = cg_series(sym) if sym.endswith("-USD") else stooq_series(sym)
+        if df is None or df.empty:
+            log(f"no data {sym} {kind} (yf + fallbacks)"); return None
+        log(f"using fallback for {sym} {kind}"); return df
 
     df = data.rename(columns=str.lower).copy()
-    if "close" in df.columns and "close_use" not in df.columns:
-        df["close_use"] = df["close"]
-    if "close_use" not in df.columns:
-        log(f"no close {sym} {kind}")
-        return None
-    if "volume" not in df.columns:
-        df["volume"] = np.nan
-    df.index = pd.to_datetime(df.index)
-    df.sort_index(inplace=True)
-
-    if kind == "WEEKLY":
-        df = df.resample("W-FRI").last()
-    elif kind == "MONTHLY":
-        df = df.resample("ME").last()
-
-    if fallback_used:
-        log(f"using fallback ({fallback_used}) for {sym} {kind}")
-    else:
-        log(f"using yfinance for {sym} {kind}")
+    if "close" not in df.columns:
+        log(f"no close {sym} {kind}"); return None
+    df["close_use"] = df["close"]
+    if "volume" not in df.columns: df["volume"] = np.nan
+    df.index = pd.to_datetime(df.index); df.sort_index(inplace=True)
+    log(f"using yfinance for {sym} {kind}")
     return df
 
-# ---------- RSS + bildehenting ----------
 def safe_slug(s):
     return re.sub(r"[^a-zA-Z0-9_-]+", "_", s)[:80]
 
 def fetch_first_image_from_page(url):
     try:
-        rr = SESSION.get(url, timeout=30)
+        rr = requests.get(url, timeout=30, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
         rr.raise_for_status()
         soup = BeautifulSoup(rr.text, "lxml")
         meta = soup.find("meta", property="og:image") or soup.find("meta", attrs={"name":"twitter:image"})
-        if meta and meta.get("content"):
-            return meta["content"]
+        if meta and meta.get("content"): return meta["content"]
         link = soup.find("link", rel="image_src")
-        if link and link.get("href"):
-            return link["href"]
+        if link and link.get("href"): return link["href"]
         img = soup.find("img")
-        if img and img.get("src"):
-            return img["src"]
+        if img and img.get("src"): return img["src"]
     except Exception:
         return None
     return None
@@ -307,8 +237,7 @@ def fetch_first_image_from_page(url):
 def last_n_days_posts(url, days=3):
     out = []
     try:
-        r = SESSION.get(url, timeout=30)
-        r.raise_for_status()
+        r = requests.get(url, timeout=30); r.raise_for_status()
         soup = BeautifulSoup(r.text, "lxml")
         items = soup.find_all("item")
         cutoff = pd.Timestamp(NOW.date()) - pd.Timedelta(days=days)
@@ -317,14 +246,13 @@ def last_n_days_posts(url, days=3):
             lnk = it.find("link").get_text(strip=True)
             pub = it.find("pubdate")
             ts = pd.to_datetime(pub.get_text(strip=True)) if pub else None
-            if ts is not None and ts.tzinfo is None:
-                ts = ts.tz_localize("UTC")
+            if ts is not None and ts.tzinfo is None: ts = ts.tz_localize("UTC")
             if ts is not None and ts.tz_convert(TZ) >= pd.Timestamp(cutoff, tz=TZ):
                 rec = {"title": t, "link": lnk, "published": ts.tz_convert(TZ).isoformat()}
                 img_url = fetch_first_image_from_page(lnk)
                 if img_url:
                     try:
-                        ir = SESSION.get(img_url, timeout=30)
+                        ir = requests.get(img_url, timeout=30, headers={"User-Agent": YF_SESSION.headers["User-Agent"]})
                         ir.raise_for_status()
                         ext = os.path.splitext(urlparse(img_url).path)[1].lower() or ".jpg"
                         fname = f"news_{safe_slug(t)}{ext if ext in ['.jpg','.jpeg','.png'] else '.jpg'}"
@@ -338,20 +266,15 @@ def last_n_days_posts(url, days=3):
         log(f"rss error: {e}")
     return out
 
-# ---------- KJØRING ----------
 summary = {"generated_local": NOW.isoformat(), "assets": {}}
-data_source_map = {}  # per ticker -> hvilke tidsrammer som lyktes
 
 def ratio_series(num_sym, den_sym):
-    num = yf_series(num_sym, "DAILY")
-    den = yf_series(den_sym, "DAILY")
-    if num is None or den is None or num.empty or den.empty:
-        return None
+    num = yf_series(num_sym, "DAILY"); den = yf_series(den_sym, "DAILY")
+    if num is None or den is None or num.empty or den.empty: return None
     df = pd.DataFrame(index=num.index.union(den.index))
     df["n"] = num["close_use"]; df["d"] = den["close_use"]
     df.dropna(inplace=True)
-    df["ratio"] = df["n"]/df["d"]
-    df["ma50"] = df["ratio"].rolling(50).mean()
+    df["ratio"] = df["n"]/df["d"]; df["ma50"] = df["ratio"].rolling(50).mean()
     out = f"docs/charts/{num_sym}_{den_sym}_ratio.png"
     plt.figure(); df["ratio"].plot(label=f"{num_sym}/{den_sym}"); df["ma50"].plot(label="MA50")
     plt.legend(); plt.tight_layout(); plt.title(f"{num_sym}/{den_sym} ratio vs MA50")
@@ -367,23 +290,15 @@ def volume_filter(sym):
     plot_volume(df, sym)
     return df.tail(60)[["volume","vol_ma20","up20"]]
 
-# Hovedløp
 for sym in ALL:
-    got = []
-    daily   = yf_series(sym, "DAILY");   got.append(("daily", daily is not None and not daily.empty))
-    weekly  = yf_series(sym, "WEEKLY");  got.append(("weekly", weekly is not None and not weekly.empty))
-    monthly = yf_series(sym, "MONTHLY"); got.append(("monthly", monthly is not None and not monthly.empty))
-    hourly  = None if DISABLE_INTRADAY else yf_series(sym, "INTRADAY_60"); got.append(("hourly", hourly is not None and not (hourly is None or hourly.empty)))
+    daily   = yf_series(sym, "DAILY")
+    weekly  = yf_series(sym, "WEEKLY")
+    monthly = yf_series(sym, "MONTHLY")
+    hourly  = yf_series(sym, "INTRADAY_60")
 
-    data_source_map[sym] = {k: bool(v) for k,v in got}
-
-    rsi14_last = None
-    macd_cross = None
-
-    series_map = [("hourly", hourly), ("daily", daily), ("weekly", weekly), ("monthly", monthly)]
-    for name, df in series_map:
-        if df is None or df.empty:
-            continue
+    frames_out = {}
+    for name, df in [("hourly",hourly),("daily",daily),("weekly",weekly),("monthly",monthly)]:
+        if df is None or df.empty: continue
         n = 36
         df[f"sma{n}"] = SMA(df["close_use"], n)
         df["rsi14"] = RSI(df["close_use"])
@@ -391,30 +306,37 @@ for sym in ALL:
         df["macd"], df["macd_signal"], df["macd_hist"] = macd, signal, hist
 
         base = f"docs/charts/{sym}_{name}"
-        # Behold enkeltgrafer
         plot_price_ind(df.tail(400), f"{sym} - {name} price vs SMA{n}", base+"_price.png", n)
         plot_rsi_macd(df.tail(400), f"{sym} - {name}", base+"_rsi.png", base+"_macd.png")
-        # NY: Kombinert graf
-        plot_combo(df, f"{sym} - {name}", base + "_combo.png", 36)
+        plot_compact(df.tail(400), f"{sym} - {name} (compact: price+RSI+MACD)", base+"_compact.png", n)
 
-        if name == "daily":
-            if pd.notna(df["rsi14"].iloc[-1]): rsi14_last = float(df["rsi14"].iloc[-1])
-            if len(df) >= 2:
-                last = df["macd"].iloc[-1] - df["macd_signal"].iloc[-1]
-                prev = df["macd"].iloc[-2] - df["macd_signal"].iloc[-2]
-                macd_cross = bool((last > 0) and (prev <= 0))
+        macd_cross = None
+        if len(df) >= 2:
+            last = (df["macd"].iloc[-1] - df["macd_signal"].iloc[-1])
+            prev = (df["macd"].iloc[-2] - df["macd_signal"].iloc[-2])
+            macd_cross = bool((last > 0) and (prev <= 0))
 
-        # SPY 200DMA (temperatur)
+        frames_out[name] = {
+            "last": float(df["close_use"].iloc[-1]),
+            "sma36": float(df[f"sma{n}"].iloc[-1]) if pd.notna(df[f"sma{n}"].iloc[-1]) else None,
+            "close_above_sma36": bool(df["close_use"].iloc[-1] > df[f"sma{n}"].iloc[-1]) if pd.notna(df[f"sma{n}"].iloc[-1]) else None,
+            "rsi14": float(df["rsi14"].iloc[-1]) if pd.notna(df["rsi14"].iloc[-1]) else None,
+            "macd": float(df["macd"].iloc[-1]) if pd.notna(df["macd"].iloc[-1]) else None,
+            "macd_signal": float(df["macd_signal"].iloc[-1]) if pd.notna(df["macd_signal"].iloc[-1]) else None,
+            "macd_hist": float(df["macd_hist"].iloc[-1]) if pd.notna(df["macd_hist"].iloc[-1]) else None,
+            "macd_cross": macd_cross
+        }
+
         if sym == "SPY" and name == "daily":
             plt.figure()
-            df["close_use"].plot(label="SPY")
-            df["close_use"].rolling(200).mean().plot(label="200DMA")
+            df["close_use"].plot(label="SPY"); df["close_use"].rolling(200).mean().plot(label="200DMA")
             plt.legend(); plt.title("SPY vs 200DMA"); plt.tight_layout()
             plt.savefig("docs/charts/SPY_200dma.png", dpi=120); plt.close()
 
     if daily is not None and not daily.empty:
         last_252 = daily.tail(252)
         hi52, lo52 = last_252["close_use"].max(), last_252["close_use"].min()
+
         dist_36w = np.nan
         if weekly is not None and "sma36" in weekly.columns and pd.notna(weekly["sma36"].iloc[-1]):
             dist_36w = pct(weekly["close_use"].iloc[-1], weekly["sma36"].iloc[-1])
@@ -423,22 +345,19 @@ for sym in ALL:
             dist_36m = pct(monthly["close_use"].iloc[-1], monthly["sma36"].iloc[-1])
 
         summary["assets"][sym] = {
-            "last": float(daily["close_use"].iloc[-1]),
             "52w_high": float(hi52), "52w_low": float(lo52),
             "dist_to_36WMA": None if (isinstance(dist_36w, float) and math.isnan(dist_36w)) else float(dist_36w),
             "dist_to_36MMA": None if (isinstance(dist_36m, float) and math.isnan(dist_36m)) else float(dist_36m),
-            "rsi14_last": rsi14_last,
-            "macd_cross": macd_cross
+            "frames": frames_out
         }
 
-# Ratioer / volumfilter / market-temp ratioer
+# Ratioer / volum / temperatur
 gdx_gld = ratio_series("GDX","GLD")
 sil_slv = ratio_series("SIL","SLV")
 hyg_lqd = ratio_series("HYG","LQD")
 spx_acwi = ratio_series("SPY","ACWI")
 gld_spy = ratio_series("GLD","SPY")
 
-# Volumfilter (PNG + JSON-sammendrag)
 vol_filters = {s: volume_filter(s) for s in ["GDX","GDXJ","SIL","SILJ"]}
 vol_summary = {}
 for s, df in vol_filters.items():
@@ -452,33 +371,27 @@ for s, df in vol_filters.items():
 with open("docs/volminers.json","w") as f:
     json.dump(vol_summary, f, indent=2)
 
-# ---------- FRED: DXY proxy, VIX, renter, 2s10s ----------
+# FRED (DXY proxy, VIX, renter, 2s10s)
 FRED_KEY = os.environ.get("FRED_API_KEY", "")
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 def fred_series(series_id):
-    if not FRED_KEY:
-        return None
+    if not FRED_KEY: return None
     url = (f"{FRED_BASE}?series_id={series_id}"
            f"&api_key={FRED_KEY}&file_type=json&observation_start=1990-01-01")
     try:
-        r = SESSION.get(url, timeout=60)
-        r.raise_for_status()
-        js = r.json()
-        obs = js.get("observations", [])
-        if not obs:
-            return None
+        r = requests.get(url, timeout=60); r.raise_for_status()
+        js = r.json(); obs = js.get("observations", [])
+        if not obs: return None
         df = pd.DataFrame(obs)[["date","value"]]
         df["date"] = pd.to_datetime(df["date"])
         df["value"] = pd.to_numeric(df["value"], errors="coerce")
-        df = df.set_index("date").sort_index().dropna()
-        df = df.asfreq("B").ffill()
+        df = df.set_index("date").sort_index().dropna().asfreq("B").ffill()
         df.rename(columns={"value":"close_use"}, inplace=True)
         log(f"fred ok {series_id}")
         return df
     except Exception as e:
-        log(f"fred error {series_id}: {e}")
-        return None
+        log(f"fred error {series_id}: {e}"); return None
 
 fred_assets = {}
 dxy = fred_series("DTWEXM")
@@ -486,7 +399,6 @@ if dxy is not None and not dxy.empty:
     sma200 = dxy["close_use"].rolling(200).mean()
     plot_price_ind(dxy.tail(800), "DXY proxy (DTWEXM) - price vs SMA200", "docs/charts/DXY_price.png", 200)
     plot_rsi_macd(dxy.tail(800), "DXY proxy (DTWEXM)", "docs/charts/DXY_rsi.png", "docs/charts/DXY_macd.png")
-    plot_combo(dxy, "DXY proxy (DTWEXM) - combo", "docs/charts/DXY_combo.png", 200)
     fred_assets["DXY"] = {
         "last": float(dxy["close_use"].iloc[-1]),
         "dist_to_200DMA": float((dxy["close_use"].iloc[-1] - sma200.iloc[-1]) / sma200.iloc[-1]) if pd.notna(sma200.iloc[-1]) else None
@@ -496,7 +408,6 @@ vix = fred_series("VIXCLS")
 if vix is not None and not vix.empty:
     plot_price_ind(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_price.png", 200)
     plot_rsi_macd(vix.tail(800), "VIX (VIXCLS)", "docs/charts/VIX_rsi.png", "docs/charts/VIX_macd.png")
-    plot_combo(vix, "VIX (VIXCLS) - combo", "docs/charts/VIX_combo.png", 200)
     fred_assets["VIX"] = {"last": float(vix["close_use"].iloc[-1])}
 
 y3m = fred_series("DGS3MO")
@@ -516,17 +427,18 @@ if (y10 is not None and not y10.empty) and (y2y is not None and not y2y.empty):
         "2s10s": float(spread["s210"].iloc[-1])
     }
 
-# ---------- RSS ----------
+# RSS
 news = {
     "nftrh": last_n_days_posts("https://nftrh.com/blog/feed/"),
     "northstar": last_n_days_posts("https://northstarbadcharts.com/feed/")
 }
 with open("docs/news/news.json","w") as f: json.dump(news, f, indent=2)
 
-# ---------- INDEX JSON ----------
+# INDEX JSON
 temps = {
     "HYG_LQD_ratio": bool(hyg_lqd is not None),
     "SPY_ACWI_ratio": bool(spx_acwi is not None),
+    "GLD_SPY_ratio": bool(gld_spy is not None),
     "DXY_vs_200DMA": "DXY" in fred_assets,
     "VIX": "VIX" in fred_assets,
     "yields_and_2s10s": "yields" in fred_assets
@@ -549,51 +461,29 @@ index = {
   "notes": {
     "ratios": {"GDX/GLD": bool(gdx_gld is not None), "SIL/SLV": bool(sil_slv is not None), "GLD/SPY": bool(gld_spy is not None)},
     "vol_filters": {k: bool(v is not None) for k,v in vol_filters.items()},
-    "market_temp": temps,
-    "data_sources": data_source_map
+    "market_temp": temps
   }
 }
 with open("docs/index.json","w") as f: json.dump(index, f, indent=2)
 
-# ---------- FILLISTE + BUILD STATUS ----------
+# FILLISTE
 files = sorted([f"charts/{fn}" for fn in os.listdir("docs/charts") if fn.endswith(".png")])
 with open("docs/filelist.json","w") as f:
     json.dump({"charts": files}, f, indent=2)
 
-build_status = {
-    "version": VERSION,
-    "generated_local": NOW.isoformat(),
-    "charts_count": len(files),
-    "tickers_requested": ALL,
-    "tickers_with_data": [k for k,v in data_source_map.items() if any(v.values())],
-    "tickers_missing": [k for k,v in data_source_map.items() if not any(v.values())]
-}
-with open("docs/build_status.json","w") as f:
-    json.dump(build_status, f, indent=2)
-
-# ---------- HTML (cache-buster på JSON-lenker) ----------
-ts = int(datetime.utcnow().timestamp())
+# HTML
 links = "\n".join([f'<li><a href="{fn}">{os.path.basename(fn)}</a></li>' for fn in files])
 html = f"""<!doctype html><html><head><meta charset="utf-8">
-<meta http-equiv="Cache-Control" content="no-store" />
 <title>Daglig rapport {NOW.strftime('%Y-%m-%d')}</title></head><body>
 <h1>Daglig rapport {NOW.strftime('%Y-%m-%d')}</h1>
 <p>Generert (Europe/Oslo): {NOW}</p>
-<p>
-Data: <a href="index.json?ts={ts}">index.json</a> •
-Nyheter: <a href="news/news.json?ts={ts}">news.json</a> •
-Filer: <a href="filelist.json?ts={ts}">filelist.json</a> •
-Logg: <a href="run_log.txt?ts={ts}">run_log.txt</a> •
-Status: <a href="build_status.json?ts={ts}">build_status.json</a>
-</p>
+<p>Data: <a href="index.json">index.json</a> • Nyheter: <a href="news/news.json">news.json</a> • Filer: <a href="filelist.json">filelist.json</a></p>
 <h2>Grafer</h2>
 <ul>{links}</ul>
 </body></html>"""
 with open("docs/index.html","w") as f: f.write(html)
 
-# ---------- LOGG ----------
-ok_assets = list(summary.get("assets", {}).keys())
-log(f"SUMMARY assets_count={len(ok_assets)} charts={len(files)} "
-    f"intraday_disabled={DISABLE_INTRADAY} version={VERSION}")
+assets_count = sum(1 for _ in summary.get("assets", {}).keys())
+log(f"SUMMARY assets_count={assets_count} charts={len(files)} intraday_disabled={DISABLE_INTRADAY} version={VERSION}")
 flush_log()
 print("Done.")
