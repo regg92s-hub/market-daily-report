@@ -38,7 +38,7 @@ jobs:
           MPLBACKEND: Agg
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
-          # valgfritt for testing:
+          # Valgfritt for testing:
           # DISABLE_INTRADAY: "true"
           # ALLOWED_TICKERS: "GLD,SLV,SPY"
         run: python scripts/generate_report.py
@@ -91,18 +91,16 @@ jobs:
           BASE="https://regg92s-hub.github.io/market-daily-report"
           for i in $(seq 1 10); do
             echo "Try $i..."
-            curl -sSfL "$BASE/index.json" >/dev/null && break || sleep 3
+            if curl -sSfL "$BASE/index.json" >/dev/null; then
+              break
+            fi
+            sleep 3
           done
+          echo "index.json (head):"
           curl -sSfL "$BASE/index.json" | head -c 500 || true
+          echo
+          echo "filelist.json (head):"
           curl -sSfL "$BASE/filelist.json" | head -c 500 || true
-          # Telle grafer hvis mulig
-          COUNT=$(curl -sSfL "$BASE/filelist.json" | python - << 'PY'
-import sys, json
-try:
-    j=json.load(sys.stdin)
-    print(len(j.get("charts",[])))
-except Exception:
-    print(0)
-PY
-          )
+          echo
+          COUNT=$(curl -sSfL "$BASE/filelist.json" | python -c "import sys,json; j=json.load(sys.stdin); print(len(j.get('charts',[])))")
           echo "Remote charts count: $COUNT"
