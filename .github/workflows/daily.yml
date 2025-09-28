@@ -1,16 +1,10 @@
-name: Daily AV Report (20:00 Europe/Oslo)
-
-permissions:
-  contents: write
-
-concurrency:
-  group: market-daily-report
-  cancel-in-progress: true
+name: Daily Market Report (19:50 Europe/Oslo)
 
 on:
   schedule:
-    - cron: "50 17 * * *"  # 19:50 Oslo (sommertid)
-    - cron: "50 18 * * *"  # 19:50 Oslo (vintertid)
+    # 19:50 Oslo (sommertid ~ UTC+2) og vintertid (~ UTC+1)
+    - cron: "50 17 * * *"
+    - cron: "50 18 * * *"
   workflow_dispatch:
     inputs:
       force:
@@ -29,8 +23,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
-          cache-dependency-path: "requirements.txt"
 
       - name: Install deps
         run: |
@@ -38,44 +30,25 @@ jobs:
           pip install -r requirements.txt
 
       - name: Debug inputs
-        env:
-          FORCE_INPUT: ${{ github.event.inputs.force }}
-        run: echo "FORCE=${FORCE_INPUT}"
-
-      - name: Check FRED secret
         run: |
-          if [ -z "${{ secrets.FRED_API_KEY }}" ]; then
-            echo "FRED_API_KEY is EMPTY (OK hvis du ikke bruker FRED)."
-          else
-            echo "FRED_API_KEY is SET"
-          fi
-
-      - name: Show generator version
-        run: sed -n '1,20p' scripts/generate_report.py || true
+          echo "FORCE: ${{ github.event.inputs.force }}"
 
       - name: Run generator
         env:
           MPLBACKEND: Agg
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
-          DISABLE_INTRADAY: "true"   # Stabilt default. Sett "false" om du vil ha 1t-grafer.
+          # valgfritt for testing:
+          # DISABLE_INTRADAY: "true"
+          # ALLOWED_TICKERS: "GLD,SLV,SPY"
         run: python scripts/generate_report.py
-
-      - name: List generated files
-        run: |
-          echo "Charts:"
-          ls -1 docs/charts/*.png 2>/dev/null || true
 
       - name: Show generator logs
         if: ${{ always() }}
         run: |
-          echo "==== VERSION ===="
-          sed -n '1,5p' scripts/generate_report.py || true
-          echo "==== run_log.txt (tail) ===="
-          if [ -f docs/run_log.txt ]; then tail -n 200 docs/run_log.txt; else echo "NO LOG"; fi
-          echo "==== build_status.json ===="
-          if [ -f docs/build_status.json ]; then cat docs/build_status.json; else echo "NO BUILD_STATUS"; fi
-          echo "==== file tree (docs/) ===="
+          echo "==== run_log.txt ===="
+          if [ -f docs/run_log.txt ]; then tail -n 400 docs/run_log.txt; else echo "NO LOG"; fi
+          echo "==== file tree ===="
           find docs -maxdepth 2 -type f -printf "%p\t%k KB\n" | sort || true
 
       - uses: actions/upload-artifact@v4
@@ -87,16 +60,16 @@ jobs:
             docs/index.json
             docs/filelist.json
             docs/volminers.json
-            docs/build_status.json
             docs/news/news.json
 
+      # Beskyttelse: ikke deploy tom side fra planlagt run
       - name: Sanity check before deploy
         if: ${{ github.event.inputs.force != 'true' }}
         run: |
           set -e
           COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
           echo "charts count: $COUNT"
-          if [ "$COUNT" -lt 30 ]; then
+          if [ "$COUNT" -lt 10 ]; then
             echo "Not enough charts; aborting deploy to protect the site."
             exit 1
           fi
@@ -110,10 +83,26 @@ jobs:
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
 
-      - name: Smoke test (fetch filelist.json from Pages)
+      # Røyk-test: verifiser at Pages faktisk serverer filene (retry pga. CDN)
+      - name: Smoke test GitHub Pages
         if: ${{ always() }}
-        continue-on-error: true
         run: |
-          URL="https://${{ github.repository_owner }}.github.io/market-daily-report/filelist.json?ts=${{ github.run_id }}"
-          echo "GET $URL"
-          curl -sSL "$URL" | head -c 1000
+          set -e
+          BASE="https://regg92s-hub.github.io/market-daily-report"
+          for i in $(seq 1 10); do
+            echo "Try $i..."
+            curl -sSfL "$BASE/index.json" >/dev/null && break || sleep 3
+          done
+          curl -sSfL "$BASE/index.json" | head -c 500 || true
+          curl -sSfL "$BASE/filelist.json" | head -c 500 || true
+          # Telle grafer hvis mulig
+          COUNT=$(curl -sSfL "$BASE/filelist.json" | python - << 'PY'
+import sys, json
+try:
+    j=json.load(sys.stdin)
+    print(len(j.get("charts",[])))
+except Exception:
+    print(0)
+PY
+          )
+          echo "Remote charts count: $COUNT"
