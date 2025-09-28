@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="UTF-8" />
-  <title>Market Daily Report</title>
+  <title>Daglig rapport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.4; padding: 16px; }
+    ul { margin-top: 0; }
+    table { border-collapse: collapse; margin-top: 16px; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+    th { background: #f4f4f4; }
+    code { background:#f7f7f7; padding:2px 4px; border-radius:4px; }
+  </style>
 </head>
 <body>
-  <h1>Market Daily Report</h1>
-  <p>This page provides the daily market report and related data files.</p>
+  <h1>Daglig rapport 2025-09-28</h1>
+  <p>Generert (Europe/Oslo): 2025-09-28 18:07:10.891665+02:00</p>
 
-  <h2>Data Files</h2>
+  <p>Data: <a href="index.json">index.json</a> • Nyheter: <a href="news/news.json">news.json</a> • Filer: <a href="filelist.json">filelist.json</a></p>
+
+  <h2>Grafer</h2>
   <ul>
-    <li><a href="index.json">index.json</a> – Main market data</li>
-    <li><a href="news/news.json">news.json</a> – News data</li>
-    <li><a href="report.json">report.json</a> – Combined report data</li>
-    <li><a href="report.md">report.md</a> – Markdown summary</li>
-    <li><a href="report_table.html">report_table.html</a> – Tabular report view</li>
-    <li><a href="filelist.json">filelist.json</a> – List of chart image files</li>
+    <!-- listen fylles av generatoren i dag, behold slik som nå -->
+    <!-- evt. behold statisk liste; postprocess endrer ikke denne -->
   </ul>
 
-  <h2>Charts</h2>
-  <ul>
-    <!-- CHARTS_LIST_START -->
-    <!-- CHARTS_LIST_END -->
-  </ul>
-
-  <!-- The daily summary table will be inserted below by postprocess_report.py -->
+  <!-- postprocess_report.py injiserer fallback-tabellen her nederst -->
 </body>
 </html>
