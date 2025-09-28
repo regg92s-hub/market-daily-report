@@ -2,9 +2,8 @@ name: Daily Market Report (19:50 Europe/Oslo)
 
 on:
   schedule:
-    # 19:50 Oslo (sommertid ~ UTC+2) og vintertid (~ UTC+1)
-    - cron: "50 17 * * *"
-    - cron: "50 18 * * *"
+    - cron: "50 17 * * *"   # 19:50 CET når UTC+2
+    - cron: "50 18 * * *"   # 19:50 CET når UTC+1
   workflow_dispatch:
     inputs:
       force:
@@ -15,76 +14,61 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
       - name: Install deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Debug inputs
-        run: echo "FORCE: ${{ github.event.inputs.force }}"
+        run: echo "FORCE=${{ github.event.inputs.force }}"
 
       - name: Run generator
         env:
           MPLBACKEND: Agg
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
-          # DISABLE_INTRADAY: "true"
-          # ALLOWED_TICKERS: "GLD,SLV,SPY"
         run: python scripts/generate_report.py
 
-      - name: Show generator logs
+      - name: Show generator logs (tail)
         if: ${{ always() }}
-        run: |
-          echo "==== run_log.txt ===="
-          if [ -f docs/run_log.txt ]; then tail -n 400 docs/run_log.txt; else echo "NO LOG"; fi
-          echo "==== file tree ===="
-          find docs -maxdepth 2 -type f | sort || true
+        run: bash -lc 'echo "==== run_log.txt ===="; [[ -f docs/run_log.txt ]] && tail -n 400 docs/run_log.txt || echo "NO LOG"; echo "==== file tree (docs) ===="; find docs -maxdepth 2 -type f | sort || true'
 
       - name: Upload generator artifacts
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: generator-logs
-          path: |
-            docs/run_log.txt
-            docs/index.json
-            docs/filelist.json
-            docs/volminers.json
-            docs/news/news.json
+          path: docs/run_log.txt
 
-      # Nytt: kompakt rapport (json/md/html) som er lett å lese maskinelt
+      # Nytt: kompakt rapport (json/md/html) basert på docs/index.json
       - name: Postprocess: build compact report (json/md/html)
         env:
           PAGES_DIR: docs
         run: python scripts/postprocess_report.py
 
-      - name: Commit report artifacts (for raw.githubusercontent.com)
+      - name: Commit report artifacts (for raw access)
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update report.json, report.md, report_table.html"
           file_pattern: "docs/report.json docs/report.md docs/report_table.html"
 
-      # Beskyttelse: ikke deploy hvis nesten ingen grafer
+      # Beskyttelse: ikke deploy hvis for få grafer
       - name: Sanity check before deploy
         if: ${{ github.event.inputs.force != 'true' }}
-        run: |
-          set -e
-          COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
-          echo "charts count: $COUNT"
-          if [ "$COUNT" -lt 10 ]; then
-            echo "Not enough charts; aborting deploy to protect the site."
-            exit 1
-          fi
+        run: bash -lc 'COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d " "); echo "charts count: $COUNT"; if [ "${COUNT:-0}" -lt 10 ]; then echo "Not enough charts; aborting deploy to protect the site."; exit 1; fi'
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
@@ -95,21 +79,6 @@ jobs:
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
 
-      # Røyk-test av Pages (enkel verifisering)
       - name: Smoke test GitHub Pages
         if: ${{ always() }}
-        run: |
-          set -e
-          BASE="https://regg92s-hub.github.io/market-daily-report"
-          for i in $(seq 1 10); do
-            echo "Try $i..."
-            if curl -sSfL "$BASE/index.json" >/dev/null; then
-              break
-            fi
-            sleep 3
-          done
-          echo "index.json (head):"
-          curl -sSfL "$BASE/index.json" | head -c 500 || true
-          echo
-          echo "filelist.json (head):"
-          curl -sSfL "$BASE/filelist.json" | head -c 500 || true
+        run: bash -lc 'set -e; BASE="https://regg92s-hub.github.io/market-daily-report"; for i in $(seq 1 10); do echo "Try $i..."; curl -sSfL "$BASE/index.json" >/dev/null && break || true; sleep 3; done; echo "index.json (head):"; curl -sSfL "$BASE/index.json" | head -c 500 || true; echo; echo "filelist.json (head):"; curl -sSfL "$BASE/filelist.json" | head -c 500 || true'
