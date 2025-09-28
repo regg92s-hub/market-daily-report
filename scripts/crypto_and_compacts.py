@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import json, math
+import os, json, math
 from pathlib import Path
 from datetime import datetime, timezone
 import pandas as pd
 import yfinance as yf
+import matplotlib
+matplotlib.use("Agg")  # failsafe, ikke avhengig av env
 import matplotlib.pyplot as plt
 
 PAGES = Path("docs")
@@ -31,11 +33,13 @@ def macd(series, fast=12, slow=26, signal=9):
     hist = macd_line - signal_line
     return macd_line, signal_line, hist
 
-def sma(s, n): return s.rolling(n).mean()
+def sma(s, n): 
+    return s.rolling(n).mean()
 
 def get_tf_data(ticker):
     d = yf.download(ticker, period="2y", interval="1d", auto_adjust=True, progress=False)
-    if d.empty: return None
+    if d.empty:
+        return None
     d = d.dropna()
     d["RSI14"] = rsi(d["Close"])
     d["MACD"], d["MACD_SIGNAL"], d["MACD_HIST"] = macd(d["Close"])
@@ -57,8 +61,10 @@ def weekly_close_count_above_36WMA(w):
     above = (w["Close"] > w["SMA36"]).fillna(False)
     cnt = 0
     for val in reversed(above.tolist()):
-        if val: cnt += 1
-        else: break
+        if val: 
+            cnt += 1
+        else: 
+            break
     return cnt
 
 def make_compact_png(ticker, d):
@@ -84,7 +90,7 @@ def make_compact_png(ticker, d):
 
     ax3.plot(macd_line.index, macd_line.values, label="MACD")
     ax3.plot(macd_sig.index, macd_sig.values, label="Signal")
-    ax3.bar(hist.index, hist.values)  # histogram
+    ax3.bar(hist.index, hist.values)
     ax3.legend(loc="upper left"); ax3.set_title("MACD(12,26,9)")
 
     fig.tight_layout()
@@ -93,20 +99,36 @@ def make_compact_png(ticker, d):
     plt.close(fig)
     return out.name
 
+def safe_load_index():
+    """Returner et gyldig index-objekt. Lag skeleton hvis fil mangler/er tom/ugyldig."""
+    if not INDEX.exists():
+        return {"summary":{"assets":{}}}
+    raw = INDEX.read_text(encoding="utf-8")
+    if not raw.strip():
+        return {"summary":{"assets":{}}}
+    try:
+        return json.loads(raw)
+    except Exception:
+        # fallback: behold filen, men fortsett med tom struktur
+        return {"summary":{"assets":{}}}
+
 def upsert_index_for(ticker, d, w, m):
     last = float(d["Close"].iloc[-1])
     high_52 = float(d["Close"].rolling(252).max().iloc[-1])
-    low_52 = float(d["Close"].rolling(252).min().iloc[-1])
+    low_52  = float(d["Close"].rolling(252).min().iloc[-1])
+
     dist_36w = None
     dist_36m = None
-    if not math.isnan(w["SMA36"].iloc[-1]) and w["SMA36"].iloc[-1] != 0:
+    if not pd.isna(w["SMA36"].iloc[-1]) and w["SMA36"].iloc[-1] != 0:
         dist_36w = (w["Close"].iloc[-1]-w["SMA36"].iloc[-1])/w["SMA36"].iloc[-1]
-    if not math.isnan(m["SMA36"].iloc[-1]) and m["SMA36"].iloc[-1] != 0:
+    if not pd.isna(m["SMA36"].iloc[-1]) and m["SMA36"].iloc[-1] != 0:
         dist_36m = (m["Close"].iloc[-1]-m["SMA36"].iloc[-1])/m["SMA36"].iloc[-1]
 
-    entry = {
-        "52w_high": high_52, "52w_low": low_52,
-        "dist_to_36WMA": dist_36w, "dist_to_36MMA": dist_36m,
+    return {
+        "52w_high": high_52, 
+        "52w_low": low_52,
+        "dist_to_36WMA": dist_36w, 
+        "dist_to_36MMA": dist_36m,
         "weekly_close_count_above_36WMA": weekly_close_count_above_36WMA(w),
         "frames": {
             "daily": {
@@ -117,7 +139,11 @@ def upsert_index_for(ticker, d, w, m):
                 "macd": float(d["MACD"].iloc[-1]),
                 "macd_signal": float(d["MACD_SIGNAL"].iloc[-1]),
                 "macd_hist": float(d["MACD_HIST"].iloc[-1]),
-                "macd_cross": bool(d["MACD"].iloc[-2] < d["MACD_SIGNAL"].iloc[-2] and d["MACD"].iloc[-1] > d["MACD_SIGNAL"].iloc[-1]) if len(d)>2 else None
+                "macd_cross": bool(
+                    len(d) > 2 and 
+                    d["MACD"].iloc[-2] < d["MACD_SIGNAL"].iloc[-2] and 
+                    d["MACD"].iloc[-1] > d["MACD_SIGNAL"].iloc[-1]
+                )
             },
             "weekly": {
                 "last": float(w["Close"].iloc[-1]),
@@ -127,7 +153,11 @@ def upsert_index_for(ticker, d, w, m):
                 "macd": float(w["MACD"].iloc[-1]),
                 "macd_signal": float(w["MACD_SIGNAL"].iloc[-1]),
                 "macd_hist": float(w["MACD_HIST"].iloc[-1]),
-                "macd_cross": bool(w["MACD"].iloc[-2] < w["MACD_SIGNAL"].iloc[-2] and w["MACD"].iloc[-1] > w["MACD_SIGNAL"].iloc[-1]) if len(w)>2 else None
+                "macd_cross": bool(
+                    len(w) > 2 and 
+                    w["MACD"].iloc[-2] < w["MACD_SIGNAL"].iloc[-2] and 
+                    w["MACD"].iloc[-1] > w["MACD_SIGNAL"].iloc[-1]
+                )
             },
             "monthly": {
                 "last": float(m["Close"].iloc[-1]),
@@ -137,27 +167,28 @@ def upsert_index_for(ticker, d, w, m):
                 "macd": float(m["MACD"].iloc[-1]),
                 "macd_signal": float(m["MACD_SIGNAL"].iloc[-1]),
                 "macd_hist": float(m["MACD_HIST"].iloc[-1]),
-                "macd_cross": bool(m["MACD"].iloc[-2] < m["MACD_SIGNAL"].iloc[-2] and m["MACD"].iloc[-1] > m["MACD_SIGNAL"].iloc[-1]) if len(m)>2 else None
+                "macd_cross": bool(
+                    len(m) > 2 and 
+                    m["MACD"].iloc[-2] < m["MACD_SIGNAL"].iloc[-2] and 
+                    m["MACD"].iloc[-1] > m["MACD_SIGNAL"].iloc[-1]
+                )
             }
         }
     }
-    return entry
 
 def main():
-    if not INDEX.exists():
-        raise SystemExit("Fant ikke docs/index.json – kjør generate_report.py først.")
-    idx = json.loads(INDEX.read_text(encoding="utf-8"))
+    idx = safe_load_index()
     assets = idx.get("summary", {}).get("assets", {})
     changed = False
 
     for t in CRYPTOS:
         got = get_tf_data(t)
-        if not got: 
+        if not got:
             print(f"Advarsel: ingen data for {t}")
             continue
         d, w, m = got
         entry = upsert_index_for(t, d, w, m)
-        img = make_compact_png(t, d)
+        _ = make_compact_png(t, d)
         assets[t] = {**assets.get(t, {}), **entry}
         changed = True
 
@@ -166,6 +197,9 @@ def main():
         idx["summary"]["assets"] = assets
         idx["generated_local"] = datetime.now(timezone.utc).astimezone().isoformat()
         INDEX.write_text(json.dumps(idx, ensure_ascii=False, indent=2), encoding="utf-8")
+        print("Oppdatert docs/index.json med BTC/ETH og generert compact-grafer.")
+    else:
+        print("Ingen endringer i BTC/ETH (ingen data).")
 
 if __name__ == "__main__":
     main()
