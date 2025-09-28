@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os, json, math
+import os, json, math, time
 from pathlib import Path
 from datetime import datetime, timezone
 import pandas as pd
 import yfinance as yf
 import matplotlib
-matplotlib.use("Agg")  # failsafe, ikke avhengig av env
+matplotlib.use("Agg")  # failsafe
 import matplotlib.pyplot as plt
 
 PAGES = Path("docs")
@@ -33,12 +33,27 @@ def macd(series, fast=12, slow=26, signal=9):
     hist = macd_line - signal_line
     return macd_line, signal_line, hist
 
-def sma(s, n): 
+def sma(s, n):
     return s.rolling(n).mean()
 
+def yf_download_retry(ticker, period="2y", interval="1d", tries=4, delay=2):
+    last_exc = None
+    for i in range(tries):
+        try:
+            df = yf.download(ticker, period=period, interval=interval, auto_adjust=True, progress=False)
+            # yfinance kan returnere tom df uten å kaste
+            if df is not None and not df.empty:
+                return df
+        except Exception as e:
+            last_exc = e
+        time.sleep(delay * (i + 1))  # enkel backoff
+    if last_exc:
+        print(f"[WARN] yfinance failed for {ticker}: {last_exc}")
+    return None
+
 def get_tf_data(ticker):
-    d = yf.download(ticker, period="2y", interval="1d", auto_adjust=True, progress=False)
-    if d.empty:
+    d = yf_download_retry(ticker)
+    if d is None or d.empty:
         return None
     d = d.dropna()
     d["RSI14"] = rsi(d["Close"])
@@ -61,9 +76,9 @@ def weekly_close_count_above_36WMA(w):
     above = (w["Close"] > w["SMA36"]).fillna(False)
     cnt = 0
     for val in reversed(above.tolist()):
-        if val: 
+        if val:
             cnt += 1
-        else: 
+        else:
             break
     return cnt
 
@@ -100,7 +115,6 @@ def make_compact_png(ticker, d):
     return out.name
 
 def safe_load_index():
-    """Returner et gyldig index-objekt. Lag skeleton hvis fil mangler/er tom/ugyldig."""
     if not INDEX.exists():
         return {"summary":{"assets":{}}}
     raw = INDEX.read_text(encoding="utf-8")
@@ -109,7 +123,6 @@ def safe_load_index():
     try:
         return json.loads(raw)
     except Exception:
-        # fallback: behold filen, men fortsett med tom struktur
         return {"summary":{"assets":{}}}
 
 def upsert_index_for(ticker, d, w, m):
@@ -125,9 +138,9 @@ def upsert_index_for(ticker, d, w, m):
         dist_36m = (m["Close"].iloc[-1]-m["SMA36"].iloc[-1])/m["SMA36"].iloc[-1]
 
     return {
-        "52w_high": high_52, 
-        "52w_low": low_52,
-        "dist_to_36WMA": dist_36w, 
+        "52w_high": high_52,
+        "52w_low":  low_52,
+        "dist_to_36WMA": dist_36w,
         "dist_to_36MMA": dist_36m,
         "weekly_close_count_above_36WMA": weekly_close_count_above_36WMA(w),
         "frames": {
@@ -140,8 +153,8 @@ def upsert_index_for(ticker, d, w, m):
                 "macd_signal": float(d["MACD_SIGNAL"].iloc[-1]),
                 "macd_hist": float(d["MACD_HIST"].iloc[-1]),
                 "macd_cross": bool(
-                    len(d) > 2 and 
-                    d["MACD"].iloc[-2] < d["MACD_SIGNAL"].iloc[-2] and 
+                    len(d) > 2 and
+                    d["MACD"].iloc[-2] < d["MACD_SIGNAL"].iloc[-2] and
                     d["MACD"].iloc[-1] > d["MACD_SIGNAL"].iloc[-1]
                 )
             },
@@ -154,8 +167,8 @@ def upsert_index_for(ticker, d, w, m):
                 "macd_signal": float(w["MACD_SIGNAL"].iloc[-1]),
                 "macd_hist": float(w["MACD_HIST"].iloc[-1]),
                 "macd_cross": bool(
-                    len(w) > 2 and 
-                    w["MACD"].iloc[-2] < w["MACD_SIGNAL"].iloc[-2] and 
+                    len(w) > 2 and
+                    w["MACD"].iloc[-2] < w["MACD_SIGNAL"].iloc[-2] and
                     w["MACD"].iloc[-1] > w["MACD_SIGNAL"].iloc[-1]
                 )
             },
@@ -168,8 +181,8 @@ def upsert_index_for(ticker, d, w, m):
                 "macd_signal": float(m["MACD_SIGNAL"].iloc[-1]),
                 "macd_hist": float(m["MACD_HIST"].iloc[-1]),
                 "macd_cross": bool(
-                    len(m) > 2 and 
-                    m["MACD"].iloc[-2] < m["MACD_SIGNAL"].iloc[-2] and 
+                    len(m) > 2 and
+                    m["MACD"].iloc[-2] < m["MACD_SIGNAL"].iloc[-2] and
                     m["MACD"].iloc[-1] > m["MACD_SIGNAL"].iloc[-1]
                 )
             }
@@ -184,7 +197,7 @@ def main():
     for t in CRYPTOS:
         got = get_tf_data(t)
         if not got:
-            print(f"Advarsel: ingen data for {t}")
+            print(f"[WARN] Ingen data for {t} (hopper over).")
             continue
         d, w, m = got
         entry = upsert_index_for(t, d, w, m)
