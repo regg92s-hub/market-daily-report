@@ -1,53 +1,89 @@
-name: Daily Report
+name: Daily Market Report
 
 on:
   schedule:
-    - cron: "0 5 * * *"   # adjust as needed for daily run time (UTC)
+    - cron: "50 17 * * *"   # 19:50 Oslo tid (UTC+2 som sommer, UTC+1 vinter)
+    - cron: "50 18 * * *"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: true   # so we can push with GITHUB_TOKEN
-          fetch-depth: 0
-          ref: main
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
-      - name: Install Python dependencies
-        if: exists('requirements.txt')
-        run: pip install -r requirements.txt
-
-      - name: Run report generation
-        run: python generate_report.py
-
-      - name: Post-process report data
-        run: python scripts/postprocess_report.py
-
-      - name: Commit and push report files
-        env:
-          TZ: UTC
+      - name: Install deps (if requirements.txt exists)
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Stage updated files in docs/ (data files, report outputs, charts)
-          git add docs/index.json docs/news docs/filelist.json docs/report.json docs/report.md docs/report_table.html docs/index.html docs/charts
-          # Commit if there are changes
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
+          if [ -f requirements.txt ]; then
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
           else
-            git commit -m "Daily update $(date '+%Y-%m-%d')"
-            git push origin HEAD:main
+            echo "No requirements.txt found, skipping pip install"
           fi
 
-      - name: Validate JSON outputs (smoke test)
+      - name: Run generator
+        env:
+          MPLBACKEND: Agg
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python scripts/generate_report.py
+
+      - name: Postprocess: build compact report (json/md/html)
+        env:
+          PAGES_DIR: docs
+        run: python scripts/postprocess_report.py
+
+      - name: Commit report artifacts
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update report.json, report.md, report_table.html"
+          file_pattern: |
+            docs/report.json
+            docs/report.md
+            docs/report_table.html
+            docs/index.html
+
+      - name: Sanity check before deploy
         run: |
-          python -c "import json; json.load(open('docs/index.json'))"
-          python -c "import json; json.load(open('docs/filelist.json'))"
+          set -e
+          COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
+          echo "charts count: $COUNT"
+          if [ "$COUNT" -lt 10 ]; then
+            echo "Not enough charts; aborting deploy to protect the site."
+            exit 1
+          fi
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Smoke test GitHub Pages
+        if: ${{ always() }}
+        run: |
+          set -e
+          BASE="https://regg92s-hub.github.io/market-daily-report"
+          for i in $(seq 1 10); do
+            echo "Try $i..."
+            if curl -sSfL "$BASE/index.json" >/dev/null; then
+              break
+            fi
+            sleep 3
+          done
+          echo "index.json (head):"
+          curl -sSfL "$BASE/index.json" | head -c 500 || true
+          echo
+          echo "filelist.json (head):"
+          curl -sSfL "$BASE/filelist.json" | head -c 500 || true
