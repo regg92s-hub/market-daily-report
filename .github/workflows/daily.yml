@@ -2,34 +2,33 @@ name: Daily Market Report
 
 on:
   schedule:
-    - cron: "50 17 * * *"   # 19:50 Oslo (sommer, UTC+2)
-    - cron: "50 18 * * *"   # 19:50 Oslo (vinter, UTC+1)
-  workflow_dispatch:
+    - cron: '50 17 * * *'  # 19:50 Oslo (sommer, UTC+2)
+    - cron: '50 18 * * *'  # 19:50 Oslo (vinter, UTC+1)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
 
-      - name: Install base deps (if requirements.txt exists)
+      - name: Install base deps (optional)
         shell: bash
         run: |
           set -e
           if [ -f requirements.txt ]; then
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-          else
-            echo "No requirements.txt; skipping pip install"
           fi
 
       - name: Run generator
@@ -38,32 +37,41 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python scripts/generate_report.py
 
-      - name: Install extra deps for crypto/news (if needed)
+      - name: Install extra deps for crypto and news
+        shell: bash
         run: |
           python -m pip install --upgrade pip
           pip install yfinance pandas matplotlib beautifulsoup4 feedparser requests
 
-      - name: Augment: add BTC/ETH + compact PNGs
+      - name: Add BTC and ETH + compact PNGs
         run: python scripts/crypto_and_compacts.py
 
-      - name: Fetch NFTRH & Northstar (last 2–3 days)
+      - name: Fetch NFTRH and Northstar (last 3 days)
         run: python scripts/fetch_nftrh_northstar.py
 
-      - name: Postprocess -> numeric table + JSON/MD/HTML
+      - name: Postprocess -> report.json / report.md / report_table.html
         run: python scripts/postprocess_report.py
 
       - name: Commit report artifacts
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update daily report artifacts"
-          file_pattern: "docs/report.json docs/report.md docs/report_table.html docs/index.html docs/index.json docs/news/news.json docs/filelist.json docs/charts/**"
+          file_pattern: |
+            docs/report.json
+            docs/report.md
+            docs/report_table.html
+            docs/index.html
+            docs/index.json
+            docs/news/news.json
+            docs/filelist.json
+            docs/charts/**
 
       - name: Sanity check before deploy
         shell: bash
         run: |
           set -e
           COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
-          echo "charts count: $COUNT"
+          echo "charts count: ${COUNT}"
           if [ "${COUNT:-0}" -lt 10 ]; then
             echo "Not enough charts; aborting deploy"
             exit 1
@@ -84,12 +92,11 @@ jobs:
           set -e
           BASE="https://regg92s-hub.github.io/market-daily-report"
           for i in $(seq 1 10); do
-            echo "Try $i..."
-            curl -fsSL "$BASE/index.json" >/dev/null && break || true
+            curl -fsSL "${BASE}/index.json" >/dev/null && break || true
             sleep 3
           done
           echo "index.json (head):"
-          curl -fsSL "$BASE/index.json" | head -c 400 || true
+          curl -fsSL "${BASE}/index.json" | head -c 400 || true
           echo
           echo "filelist.json (head):"
-          curl -fsSL "$BASE/filelist.json" | head -c 400 || true
+          curl -fsSL "${BASE}/filelist.json" | head -c 400 || true
