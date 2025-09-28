@@ -2,8 +2,8 @@ name: Daily Market Report
 
 on:
   schedule:
-    - cron: "50 17 * * *"   # 19:50 Oslo tid (UTC+2 som sommer, UTC+1 vinter)
-    - cron: "50 18 * * *"
+    - cron: "50 17 * * *"   # 19:50 Oslo (sommer, UTC+2)
+    - cron: "50 18 * * *"   # 19:50 Oslo (vinter, UTC+1)
   workflow_dispatch:
 
 jobs:
@@ -16,18 +16,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install deps (if requirements.txt exists)
+      - name: Install deps (optional)
+        shell: bash
         run: |
+          set -e
           if [ -f requirements.txt ]; then
             python -m pip install --upgrade pip
             pip install -r requirements.txt
           else
-            echo "No requirements.txt found, skipping pip install"
+            echo "No requirements.txt; skipping pip install"
           fi
 
       - name: Run generator
@@ -36,7 +38,7 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python scripts/generate_report.py
 
-      - name: Postprocess: build compact report (json/md/html)
+      - name: Postprocess -> report.json / report.md / report_table.html
         env:
           PAGES_DIR: docs
         run: python scripts/postprocess_report.py
@@ -44,20 +46,17 @@ jobs:
       - name: Commit report artifacts
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update report.json, report.md, report_table.html"
-          file_pattern: |
-            docs/report.json
-            docs/report.md
-            docs/report_table.html
-            docs/index.html
+          commit_message: "chore: update daily report artifacts"
+          file_pattern: "docs/report.json docs/report.md docs/report_table.html docs/index.html docs/index.json docs/news/news.json docs/filelist.json docs/charts/**"
 
       - name: Sanity check before deploy
+        shell: bash
         run: |
           set -e
           COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
           echo "charts count: $COUNT"
-          if [ "$COUNT" -lt 10 ]; then
-            echo "Not enough charts; aborting deploy to protect the site."
+          if [ "${COUNT:-0}" -lt 10 ]; then
+            echo "Not enough charts; aborting deploy"
             exit 1
           fi
 
@@ -71,19 +70,17 @@ jobs:
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Smoke test GitHub Pages
-        if: ${{ always() }}
+        shell: bash
         run: |
           set -e
           BASE="https://regg92s-hub.github.io/market-daily-report"
           for i in $(seq 1 10); do
             echo "Try $i..."
-            if curl -sSfL "$BASE/index.json" >/dev/null; then
-              break
-            fi
+            curl -fsSL "$BASE/index.json" >/dev/null && break || true
             sleep 3
           done
           echo "index.json (head):"
-          curl -sSfL "$BASE/index.json" | head -c 500 || true
+          curl -fsSL "$BASE/index.json" | head -c 400 || true
           echo
           echo "filelist.json (head):"
-          curl -sSfL "$BASE/filelist.json" | head -c 500 || true
+          curl -fsSL "$BASE/filelist.json" | head -c 400 || true
