@@ -62,6 +62,22 @@ jobs:
             docs/volminers.json
             docs/news/news.json
 
+      - name: Postprocess: build compact report (json/md/html)
+        env:
+          PAGES_DIR: docs
+        run: |
+          python3 scripts/postprocess_report.py
+
+      - name: Commit report artifacts (optional, for raw.githubusercontent.com)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: add/update report.json, report.md, report_table.html"
+          file_pattern: |
+            docs/report.json
+            docs/report.md
+            docs/report_table.html
+
+
       # Beskyttelse: ikke deploy tom side fra planlagt run
       - name: Sanity check before deploy
         if: ${{ github.event.inputs.force != 'true' }}
