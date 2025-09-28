@@ -4,30 +4,27 @@ import json, os, re
 from pathlib import Path
 from datetime import datetime
 
-PAGES_DIR = Path(os.getenv("PAGES_DIR", "docs")).resolve()
-INDEX_PATH = PAGES_DIR / "index.json"
-NEWS_PATH = PAGES_DIR / "news" / "news.json"
-OUT_JSON = PAGES_DIR / "report.json"
-OUT_MD = PAGES_DIR / "report.md"
-OUT_TABLE = PAGES_DIR / "report_table.html"
-INDEX_HTML = PAGES_DIR / "index.html"
+PAGES = Path("docs")
+INDEX = PAGES/"index.json"
+NEWS  = PAGES/"news"/"news.json"
+OUT_JSON  = PAGES/"report.json"
+OUT_MD    = PAGES/"report.md"
+OUT_TABLE = PAGES/"report_table.html"
+INDEX_HTML= PAGES/"index.html"
 
-def _get(d, *keys, default=None):
-    cur = d
-    for k in keys:
-        if not isinstance(cur, dict) or k not in cur:
-            return default
-        cur = cur[k]
+def _get(d,*ks,default=None):
+    cur=d
+    for k in ks:
+        if not isinstance(cur,dict) or k not in cur: return default
+        cur=cur[k]
     return cur
 
-def _frame_summary(fr):
-    if not isinstance(fr, dict):
-        return None
-    last  = fr.get("last")
-    sma36 = fr.get("sma36")
-    dist = None
+def _tf(fr):
+    if not isinstance(fr,dict): return {}
+    last=fr.get("last"); sma36=fr.get("sma36")
+    dist=None
     if isinstance(last,(int,float)) and isinstance(sma36,(int,float)) and sma36:
-        dist = (last - sma36) / sma36
+        dist=(last-sma36)/sma36
     return {
         "close_above_sma36": fr.get("close_above_sma36"),
         "dist_to_36MA": dist,
@@ -38,131 +35,132 @@ def _frame_summary(fr):
         "macd_cross": fr.get("macd_cross"),
     }
 
-def _asset_summary(ticker, a):
-    out = {
-        "ticker": ticker,
-        "52w_high": a.get("52w_high"),
-        "52w_low": a.get("52w_low"),
-        "dist_to_36WMA": a.get("dist_to_36WMA"),
-        "dist_to_36MMA": a.get("dist_to_36MMA"),
-        "weekly_close_count_above_36WMA": a.get("weekly_close_count_above_36WMA"),
-        "gdx_gld_ratio_vs_50dma": a.get("gdx_gld_ratio_vs_50dma"),
-        "sil_slv_ratio_vs_50dma": a.get("sil_slv_ratio_vs_50dma"),
-        "vol20_up_ok": a.get("vol20_up_ok"),
-        "frames": {
-            "hourly":  _frame_summary(_get(a, "frames", "hourly")),
-            "daily":   _frame_summary(_get(a, "frames", "daily")),
-            "weekly":  _frame_summary(_get(a, "frames", "weekly")),
-            "monthly": _frame_summary(_get(a, "frames", "monthly")),
-        },
-    }
-    # 52w flagg (basert på daily last om tilgjengelig):
-    last = _get(a, "frames", "daily", "last")
-    if isinstance(last,(int,float)):
-        if isinstance(out["52w_high"],(int,float)):
-            out["is_52w_high"] = last >= out["52w_high"] * 0.999
-        if isinstance(out["52w_low"],(int,float)):
-            out["is_52w_low"] = last <= out["52w_low"] * 1.001
+def _round(x,n=2): return round(x,n) if isinstance(x,(int,float)) else ""
+
+def build_assets(idx):
+    assets = _get(idx,"summary","assets",default={}) or {}
+    out=[]
+    for t,a in assets.items():
+        o={
+            "ticker": t,
+            "is_52w_high": None,
+            "is_52w_low": None,
+            "52w_high": a.get("52w_high"),
+            "52w_low": a.get("52w_low"),
+            "dist_to_36WMA": a.get("dist_to_36WMA"),
+            "dist_to_36MMA": a.get("dist_to_36MMA"),
+            "weekly_close_count_above_36WMA": a.get("weekly_close_count_above_36WMA"),
+            "gdx_gld_ratio_vs_50dma": a.get("gdx_gld_ratio_vs_50dma"),
+            "sil_slv_ratio_vs_50dma": a.get("sil_slv_ratio_vs_50dma"),
+            "vol20_up_ok": a.get("vol20_up_ok"),
+            "frames": {
+                "hourly":  _tf(_get(a,"frames","hourly",default={})),
+                "daily":   _tf(_get(a,"frames","daily",default={})),
+                "weekly":  _tf(_get(a,"frames","weekly",default={})),
+                "monthly": _tf(_get(a,"frames","monthly",default={})),
+            }
+        }
+        last = _get(a,"frames","daily","last")
+        if isinstance(last,(int,float)):
+            if isinstance(o["52w_high"],(int,float)): o["is_52w_high"] = last >= o["52w_high"]*0.999
+            if isinstance(o["52w_low"], (int,float)): o["is_52w_low"]  = last <= o["52w_low"]*1.001
+        out.append(o)
     return out
 
-def _round(x, n=2):
-    return round(x, n) if isinstance(x, (int,float)) else ""
-
-def build_table_html(assets, generated_local):
-    rows = []
-    for a in assets:
-        d = a["frames"].get("daily") or {}
-        rows.append(f"""
-    <tr>
-      <td>{a['ticker']}</td>
-      <td>{'H' if a.get('is_52w_high') else ''}{'L' if a.get('is_52w_low') else ''}</td>
-      <td>{a.get('weekly_close_count_above_36WMA') if a.get('weekly_close_count_above_36WMA') is not None else ''}</td>
-      <td>{_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else ''}%</td>
-      <td>{'Ja' if d.get('close_above_sma36') is True else ('Nei' if d.get('close_above_sma36') is False else '')}</td>
-      <td>{_round(d.get('rsi14'),2)}</td>
-      <td>{_round(d.get('macd'),3)}</td>
-    </tr>""")
-    return f"""<h2>Daglig tabell (fallback)</h2>
+def build_table_html(assets, gen):
+    header = """
+<h2>Daglig tabell (numerisk)</h2>
 <table>
-  <thead>
-    <tr>
-      <th>Ticker</th>
-      <th>52w</th>
-      <th>Uker ≥36WMA</th>
-      <th>Dist 36WMA</th>
-      <th>Daily ≥36MA</th>
-      <th>RSI14</th>
-      <th>MACD</th>
-    </tr>
-  </thead>
-  <tbody>
-{''.join(rows)}
-  </tbody>
+<thead>
+<tr>
+<th>Ticker</th>
+<th>52w</th>
+<th>Uker ≥36WMA</th>
+<th>Dist 36WMA</th>
+<th>Dist 36MMA</th>
+<th>H ≥36</th><th>D ≥36</th><th>W ≥36</th><th>M ≥36</th>
+<th>RSI14 (D)</th><th>MACD (D)</th><th>MACD cross (D)</th>
+<th>GDX/GLD>50DMA</th><th>SIL/SLV>50DMA</th><th>Vol20 up OK</th>
+</tr>
+</thead>
+<tbody>
+"""
+    rows=[]
+    for a in assets:
+        f=a["frames"]; d=f["daily"]; w=f["weekly"]; m=f["monthly"]; h=f["hourly"]
+        rows.append(f"<tr>"
+            f"<td>{a['ticker']}</td>"
+            f"<td>{'H' if a.get('is_52w_high') else ''}{'L' if a.get('is_52w_low') else ''}</td>"
+            f"<td>{a.get('weekly_close_count_above_36WMA') or ''}</td>"
+            f"<td>{_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else ''}%</td>"
+            f"<td>{_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else ''}%</td>"
+            f"<td>{'Ja' if h.get('close_above_sma36') else ('Nei' if h.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{'Ja' if d.get('close_above_sma36') else ('Nei' if d.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{'Ja' if w.get('close_above_sma36') else ('Nei' if w.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{'Ja' if m.get('close_above_sma36') else ('Nei' if m.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{_round(d.get('rsi14'),2)}</td>"
+            f"<td>{_round(d.get('macd'),3)}</td>"
+            f"<td>{'Ja' if d.get('macd_cross') else ('Nei' if d.get('macd_cross') is False else '')}</td>"
+            f"<td>{'Ja' if a.get('gdx_gld_ratio_vs_50dma') else ('Nei' if a.get('gdx_gld_ratio_vs_50dma') is False else '')}</td>"
+            f"<td>{'Ja' if a.get('sil_slv_ratio_vs_50dma') else ('Nei' if a.get('sil_slv_ratio_vs_50dma') is False else '')}</td>"
+            f"<td>{'Ja' if a.get('vol20_up_ok') else ('Nei' if a.get('vol20_up_ok') is False else '')}</td>"
+            f"</tr>")
+    footer = f"""
+</tbody>
 </table>
-<p>Generert: {generated_local}</p>"""
+<p>Generert: {gen}</p>
+"""
+    return header + "\n".join(rows) + footer
 
 def main():
-    if not INDEX_PATH.exists():
-        raise SystemExit("Mangler docs/index.json")
-    with open(INDEX_PATH, "r", encoding="utf-8") as f:
-        idx = json.load(f)
+    if not INDEX.exists(): raise SystemExit("Mangler docs/index.json")
+    idx=json.loads(INDEX.read_text(encoding="utf-8"))
+    gen = idx.get("generated_local") or datetime.utcnow().isoformat()+"Z"
+    assets = build_assets(idx)
 
-    generated_local = idx.get("generated_local") or datetime.utcnow().isoformat()+"Z"
-    assets_src = _get(idx, "summary", "assets") or {}
-    assets_out = [_asset_summary(t, a) for t, a in assets_src.items()]
+    news={}
+    if NEWS.exists():
+        try: news = json.loads(NEWS.read_text(encoding="utf-8"))
+        except: news = {}
 
-    # Nyheter (valgfritt)
-    news = {}
-    if NEWS_PATH.exists():
-        try:
-            with open(NEWS_PATH, "r", encoding="utf-8") as f:
-                news = json.load(f)
-        except Exception:
-            news = {}
+    OUT_JSON.write_text(json.dumps({
+        "generated_local": gen,
+        "spec_version": "v1",
+        "assets": assets,
+        "news": news
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # report.json
-    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUT_JSON, "w", encoding="utf-8") as f:
-        json.dump({
-            "generated_local": generated_local,
-            "spec_version": "v1",
-            "assets": assets_out,
-            "news": news
-        }, f, ensure_ascii=False, indent=2)
-
-    # report.md (kompakt)
-    lines = [
-        f"# Daglig rapport – {generated_local}",
+    md = [
+        f"# Daglig rapport – {gen}",
         "",
-        "| Ticker | 52w | Uker ≥36WMA | Dist 36WMA | Daily ≥36MA | RSI14 | MACD |",
-        "|---|---|---:|---:|---|---:|---:|",
+        "| Ticker | 52w | Uker≥36WMA | Dist36WMA | Dist36MMA | D≥36 | RSI14 | MACD | MACDcross | GDX/GLD>50 | SIL/SLV>50 | Vol20 |",
+        "|---|---|---:|---:|---:|---|---:|---:|---|---|---|---|",
     ]
-    for a in assets_out:
-        d = a["frames"].get("daily") or {}
-        lines.append(
+    for a in assets:
+        d=a["frames"]["daily"]
+        md.append(
             f"| {a['ticker']} | "
             f"{'H' if a.get('is_52w_high') else ''}{'L' if a.get('is_52w_low') else ''} | "
-            f"{a.get('weekly_close_count_above_36WMA') if a.get('weekly_close_count_above_36WMA') is not None else ''} | "
+            f"{a.get('weekly_close_count_above_36WMA') or ''} | "
             f"{_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else ''}% | "
-            f"{'Ja' if d.get('close_above_sma36') is True else ('Nei' if d.get('close_above_sma36') is False else '')} | "
+            f"{_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else ''}% | "
+            f"{'Ja' if d.get('close_above_sma36') else ('Nei' if d.get('close_above_sma36') is False else '')} | "
             f"{_round(d.get('rsi14'),2)} | "
-            f"{_round(d.get('macd'),3)} |"
+            f"{_round(d.get('macd'),3)} | "
+            f"{'Ja' if d.get('macd_cross') else ('Nei' if d.get('macd_cross') is False else '')} | "
+            f"{'Ja' if a.get('gdx_gld_ratio_vs_50dma') else ('Nei' if a.get('gdx_gld_ratio_vs_50dma') is False else '')} | "
+            f"{'Ja' if a.get('sil_slv_ratio_vs_50dma') else ('Nei' if a.get('sil_slv_ratio_vs_50dma') is False else '')} | "
+            f"{'Ja' if a.get('vol20_up_ok') else ('Nei' if a.get('vol20_up_ok') is False else '')} |"
         )
-    OUT_MD.write_text("\n".join(lines), encoding="utf-8")
+    OUT_MD.write_text("\n".join(md), encoding="utf-8")
 
-    # report_table.html
-    table_html = build_table_html(assets_out, generated_local)
+    table_html = build_table_html(assets, gen)
     OUT_TABLE.write_text(table_html, encoding="utf-8")
 
-    # injiser tabell nederst i index.html hvis finnes
     if INDEX_HTML.exists():
         html = INDEX_HTML.read_text(encoding="utf-8")
-        # fjern ev. gammel tabell
-        html = re.sub(r'<h2>Daglig tabell \(fallback\)</h2>.*?</table>\s*<p>Generert:.*?</p>', "", html, flags=re.DOTALL)
-        if "</body>" in html:
-            html = html.replace("</body>", table_html + "\n</body>")
-        else:
-            html = html + "\n" + table_html
+        html = re.sub(r'<h2>Daglig tabell.*?</table>\s*<p>Generert:.*?</p>', "", html, flags=re.DOTALL)
+        html = html.replace("</body>", table_html + "\n</body>") if "</body>" in html else (html + "\n" + table_html)
         INDEX_HTML.write_text(html, encoding="utf-8")
 
 if __name__ == "__main__":
