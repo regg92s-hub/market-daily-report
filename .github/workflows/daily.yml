@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Force full run (ignore time gate in generator)"
+        description: "Force full run (ignorer tidsvindu i generator)"
         required: false
         default: "false"
 
@@ -15,16 +15,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-market-report
+  group: market-daily-report
   cancel-in-progress: false
-
-env:
-  PIP_DISABLE_PIP_VERSION_CHECK: "1"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,51 +44,90 @@ jobs:
           MPLBACKEND: Agg
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           FORCE_RUN: ${{ github.event.inputs.force }}
-        run: python scripts/generate_report.py
+        run: |
+          set -e
+          if [ -f scripts/generate_report.py ]; then
+            python scripts/generate_report.py
+          else
+            echo "::error::scripts/generate_report.py mangler"; exit 2
+          fi
 
       - name: Install extra deps (crypto/news)
         shell: bash
         run: |
           set -e
           python -m pip install --upgrade pip
+          # Safe å kjøre selv om det også står i requirements.txt
           pip install yfinance beautifulsoup4 feedparser requests
 
       - name: Add BTC and ETH + compact PNGs
+        if: ${{ hashFiles('scripts/crypto_and_compacts.py') != '' }}
         env:
           MPLBACKEND: Agg
-        run: python scripts/crypto_and_compacts.py
+        run: |
+          set -e
+          python scripts/crypto_and_compacts.py
 
       - name: Fetch NFTRH and Northstar (last 3 days)
-        run: python scripts/fetch_nftrh_northstar.py
+        if: ${{ hashFiles('scripts/fetch_nftrh_northstar.py') != '' }}
+        run: |
+          set -e
+          python scripts/fetch_nftrh_northstar.py
 
       - name: Sanity check: index.json is JSON (not HTML)
+        id: sanity
         shell: bash
         run: |
           set -e
-          test -f docs/index.json || { echo "::error::docs/index.json missing"; exit 2; }
-          if head -n1 docs/index.json | grep -qiE '<!doctype|<html'; then
-            echo "::warning::docs/index.json contains HTML - postprocess will try mirrors."
+          if [ ! -f docs/index.json ]; then
+            echo "::warning::docs/index.json mangler"
+            echo "has_json=false" >> $GITHUB_OUTPUT
+            exit 0
           fi
+          # Avvis åpenbart HTML
+          head -c 200 docs/index.json | tr -d '\r' | grep -qiE '^<!doctype|^<html' && {
+            echo "::warning::docs/index.json inneholder HTML – feil filinnhold skrevet av generator"
+            echo "has_json=false" >> $GITHUB_OUTPUT
+            exit 0
+          }
+          python - <<'PY'
+          import json,sys
+          json.load(open('docs/index.json','r',encoding='utf-8'))
+          PY
+          echo "has_json=true" >> $GITHUB_OUTPUT
 
-      - name: Postprocess to report artifacts
+      - name: Postprocess -> report.json / report.md / report_table.html
+        if: ${{ steps.sanity.outputs.has_json == 'true' && hashFiles('scripts/postprocess_report.py') != '' }}
         env:
           POSTPROC_SOFT_FAIL: "false"
           PAGES_BRANCH: "gh-pages"
-        run: python scripts/postprocess_report.py
+        run: |
+          set -e
+          python scripts/postprocess_report.py
 
-      - name: Commit report artifacts
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: List generated files
+        shell: bash
+        run: |
+          echo "Top-level docs files:"
+          ls -l docs || true
+          echo
+          echo "Charts:"
+          ls -1 docs/charts/*.png 2>/dev/null || true
+
+      - name: Upload artifacts (logs + data)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
         with:
-          commit_message: "chore: update daily report artifacts"
-          file_pattern: |
+          name: generator-logs
+          path: |
+            docs/run_log.txt
+            docs/index.json
+            docs/index.html
+            docs/filelist.json
+            docs/news/news.json
             docs/report.json
             docs/report.md
             docs/report_table.html
-            docs/index.html
-            docs/index.json
-            docs/news/news.json
-            docs/filelist.json
-            docs/charts/**
 
       - name: Sanity check before deploy
         shell: bash
@@ -101,12 +136,12 @@ jobs:
           COUNT=$(ls -1 docs/charts/*.png 2>/dev/null | wc -l | tr -d ' ')
           echo "charts count: ${COUNT:-0}"
           if [ "${COUNT:-0}" -lt 10 ]; then
-            echo "Not enough charts; aborting deploy"
+            echo "::error::For få grafer; avbryter deploy for å beskytte siden"
             exit 1
           fi
 
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
@@ -128,19 +163,3 @@ jobs:
               curl -sSfL "$B/$f?t=${GITHUB_RUN_ID}" >/dev/null && echo "OK $B/$f" || echo "MISS $B/$f"
             done
           done
-
-      - name: Smoke test GitHub Pages
-        if: ${{ always() }}
-        shell: bash
-        run: |
-          set -e
-          BASE="https://regg92s-hub.github.io/market-daily-report"
-          for i in $(seq 1 10); do
-            curl -fsSL "${BASE}/index.json" >/dev/null && break || true
-            sleep 3
-          done
-          echo "index.json (head):"
-          curl -fsSL "${BASE}/index.json" | head -c 400 || true
-          echo
-          echo "filelist.json (head):"
-          curl -fsSL "${BASE}/filelist.json" | head -c 400 || true
