@@ -89,6 +89,23 @@ jobs:
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
 
+
+      - name: Smoke test mirrors
+        if: ${{ always() }}
+        run: |
+          set -e
+          PBASE="https://regg92s-hub.github.io/market-daily-report"
+          RBASE="https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages"
+          JBASE="https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages"
+    
+          for B in "$RBASE" "$JBASE" "$PBASE"; do
+            echo "Testing $B ..."
+            for f in index.json filelist.json news/news.json; do
+              curl -sSfL "$B/$f?t=${GITHUB_RUN_ID}" >/dev/null && echo "OK $B/$f" || echo "MISS $B/$f"
+            done
+          done
+
+
       - name: Smoke test GitHub Pages
         shell: bash
         run: |
