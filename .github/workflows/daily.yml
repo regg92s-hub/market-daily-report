@@ -52,6 +52,14 @@ jobs:
       - name: Fetch NFTRH and Northstar (last 3 days)
         run: python scripts/fetch_nftrh_northstar.py
 
+      - name: Sanity check: index.json is JSON (not HTML)
+    run: |
+      test -f docs/index.json || (echo "::error::docs/index.json missing" && exit 2)
+      head -n1 docs/index.json | grep -qi '<!doctype\|<html' && {
+        echo "::warning::docs/index.json inneholder HTML – generator eller et steg skrev til feil fil."
+      } || true
+
+
       - name: Postprocess -> report.json / report.md / report_table.html
         run: python scripts/postprocess_report.py
 
