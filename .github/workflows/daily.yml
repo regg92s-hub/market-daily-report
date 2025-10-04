@@ -46,7 +46,7 @@ jobs:
           FORCE_RUN: ${{ github.event.inputs.force }}
         run: |
           set -e
-          if [ -f scripts/generate_report.py ]; then
+          if [ -f scripts/ggenerate_report.py ]; then
             python scripts/generate_report.py
           else
             echo "::error::scripts/generate_report.py mangler"; exit 2
@@ -80,21 +80,17 @@ jobs:
           set -e
           if [ ! -f docs/index.json ]; then
             echo "::warning::docs/index.json mangler"
-            echo "has_json=false" >> $GITHUB_OUTPUT
+            echo "has_json=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           # Avvis åpenbart HTML
           if head -c 200 docs/index.json | tr -d '\r' | grep -qiE '^<!doctype|^<html'; then
             echo "::warning::docs/index.json inneholder HTML – feil filinnhold skrevet av generator"
-            echo "has_json=false" >> $GITHUB_OUTPUT
+            echo "has_json=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          python - <<'PY'
-import json
-with open('docs/index.json','r',encoding='utf-8') as f:
-    json.load(f)
-PY
-          echo "has_json=true" >> $GITHUB_OUTPUT
+          python -c "import json; json.load(open('docs/index.json','r',encoding='utf-8'))"
+          echo "has_json=true" >> "$GITHUB_OUTPUT"
 
       - name: Postprocess -> report.json / report.md / report_table.html
         if: ${{ steps.sanity.outputs.has_json == 'true' && hashFiles('scripts/postprocess_report.py') != '' }}
