@@ -2,23 +2,28 @@
 # -*- coding: utf-8 -*-
 
 """
-postprocess_report.py
-- Leser docs/index.json og docs/news/news.json
-- Bygger:
+postprocess_report.py (robust + speil-fallback)
+- Leser docs/index.json (eller henter korrekt fra raw/jsDelivr/github.io hvis lokal er HTML/ugyldig)
+- Leser docs/news/news.json (best effort)
+- Normaliserer pr-ticker felter (tåler variasjoner)
+- Skriver atomisk:
     docs/report.json
     docs/report.md
     docs/report_table.html
-- Setter inn HTML-tabellen i docs/index.html (idempotent; ingen duplikat)
-- Krever kun index.json (ingen index_lite.json)
+- Setter inn/erstatter merket blokk i docs/index.html:
+    <!-- REPORT_TABLE_START --> ... <!-- REPORT_TABLE_END -->
+- Miljøvariabler:
+    POSTPROC_SOFT_FAIL=true|false  (default false)
+    PAGES_BRANCH=gh-pages          (valgfritt; default gh-pages)
 """
 
 from __future__ import annotations
-import json, os, re, sys
+import json, os, re, sys, urllib.request, urllib.error
 from pathlib import Path
 from datetime import datetime
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
-# ---------- Paths ----------
+# ---------- Paths / Config ----------
 PAGES      = Path("docs")
 INDEX      = PAGES / "index.json"
 NEWS       = PAGES / "news" / "news.json"
@@ -30,7 +35,10 @@ INDEX_HTML = PAGES / "index.html"
 TABLE_START = "<!-- REPORT_TABLE_START -->"
 TABLE_END   = "<!-- REPORT_TABLE_END -->"
 
-# ---------- Utils ----------
+SOFT_FAIL   = os.environ.get("POSTPROC_SOFT_FAIL", "false").lower() == "true"
+PAGES_BRANCH= os.environ.get("PAGES_BRANCH", "gh-pages")
+
+# ---------- I/O helpers ----------
 def write_text_atomic(path: Path, text: str) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(text, encoding="utf-8")
@@ -41,19 +49,107 @@ def write_json_atomic(path: Path, obj: Any) -> None:
     tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
     os.replace(tmp, path)
 
-def load_json_file(path: Path) -> Any:
+def looks_like_html(s: str) -> bool:
+    head = s.lstrip()[:80].lower()
+    return head.startswith("<!doctype") or head.startswith("<html") or "<html" in head
+
+def load_local_json_or_html(path: Path) -> tuple[Optional[dict], Optional[str]]:
+    """Returner (json_obj, raw_text). Hvis JSON feiler, returner (None, raw_text)."""
     if not path.exists():
-        raise SystemExit(f"[postprocess] MISSING: {path}")
+        return None, None
     raw = path.read_text(encoding="utf-8")
     if not raw.strip():
-        raise SystemExit(f"[postprocess] EMPTY: {path} (size=0). Generator skrev ikke gyldig JSON.)")
+        return None, raw
+    # Hvis det ser ut som HTML, ikke prøv å parse som JSON
+    if looks_like_html(raw):
+        return None, raw
     try:
-        return json.loads(raw)
-    except json.JSONDecodeError as e:
-        # Skriv litt av innholdet for feilsøk
-        snip = raw[:400]
-        print(f"[postprocess] FIRST 400 CHARS OF {path}:\n{snip}")
-        raise SystemExit(f"[postprocess] INVALID JSON in {path}: {e}")
+        return json.loads(raw), raw
+    except json.JSONDecodeError:
+        return None, raw
+
+def fetch_text(url: str) -> Optional[str]:
+    try:
+        with urllib.request.urlopen(url, timeout=20) as r:
+            data = r.read()
+        # anta UTF-8
+        return data.decode("utf-8", errors="replace")
+    except Exception:
+        return None
+
+def try_fetch_index_from_mirrors() -> Optional[dict]:
+    """
+    Forsøk å hente korrekt index.json fra speil hvis lokal er HTML/ugyldig.
+    Speilrekkefølge: raw -> jsDelivr -> github.io
+    """
+    repo = os.environ.get("GITHUB_REPOSITORY")  # "owner/repo"
+    if not repo or "/" not in repo:
+        return None
+    owner, name = repo.split("/", 1)
+
+    mirrors = [
+        f"https://raw.githubusercontent.com/{owner}/{name}/{PAGES_BRANCH}/index.json",
+        f"https://cdn.jsdelivr.net/gh/{owner}/{name}@{PAGES_BRANCH}/index.json",
+        f"https://{owner}.github.io/{name}/index.json",
+    ]
+    for url in mirrors:
+        txt = fetch_text(url + f"?t={int(datetime.utcnow().timestamp())}")
+        if not txt:
+            continue
+        if looks_like_html(txt):
+            # feil ressurs (HTML) – prøv neste
+            continue
+        try:
+            return json.loads(txt)
+        except Exception:
+            continue
+    return None
+
+def _exit_or_raise(message: str):
+    if SOFT_FAIL:
+        print(f"{message}  (SOFT_FAIL=true ⇒ fortsetter uten output)")
+        _write_placeholders()
+        sys.exit(0)
+    raise SystemExit(message)
+
+def _write_placeholders():
+    now = datetime.utcnow().isoformat() + "Z"
+    out_obj = {"generated_local": now, "spec_version": "v1", "assets": [], "news": {}}
+    try:
+        write_json_atomic(OUT_JSON, out_obj)
+        write_text_atomic(OUT_MD, f"# Daglig rapport – {now}\n\n(Data manglet eller var ugyldig.)\n")
+        placeholder = f"{TABLE_START}\n<p>Ingen data tilgjengelig (index.json manglet/var tom/HTML) – {now}</p>\n{TABLE_END}"
+        write_text_atomic(OUT_TABLE, placeholder)
+        if INDEX_HTML.exists():
+            html = INDEX_HTML.read_text(encoding="utf-8")
+            if TABLE_START in html and TABLE_END in html:
+                html = re.sub(rf"{re.escape(TABLE_START)}.*?{re.escape(TABLE_END)}",
+                              placeholder, html, flags=re.DOTALL)
+            else:
+                if "</body>" in html:
+                    html = html.replace("</body>", placeholder + "\n</body>")
+                else:
+                    html += "\n" + placeholder
+            write_text_atomic(INDEX_HTML, html)
+    except Exception as e:
+        print(f"[postprocess] WARN writing placeholders: {e}")
+
+# ---------- Normalisering ----------
+def as_float(x: Any) -> Optional[float]:
+    if isinstance(x, (int, float)):
+        try:
+            if (x != x) or (x == float("inf")) or (x == float("-inf")):
+                return None
+            return float(x)
+        except Exception:
+            return None
+    if isinstance(x, str):
+        try:
+            x = x.strip().replace(",", "")
+            return float(x)
+        except Exception:
+            return None
+    return None
 
 def _get(d: Dict, *ks, default=None):
     cur = d
@@ -63,62 +159,69 @@ def _get(d: Dict, *ks, default=None):
         cur = cur[k]
     return cur
 
-def _round(x, n=2):
-    return round(x, n) if isinstance(x, (int, float)) else ""
-
 def _bool_to_ja_nei(v):
     return "Ja" if v is True else ("Nei" if v is False else "")
 
 def _tf(frame: Dict[str, Any] | None) -> Dict[str, Any]:
-    """Normaliser per-timeframe felt."""
     if not isinstance(frame, dict):
         frame = {}
-    last = frame.get("last")
-    sma36 = frame.get("sma36")
+    last = as_float(frame.get("last"))
+    sma36 = as_float(frame.get("sma36"))
     dist = None
-    if isinstance(last, (int, float)) and isinstance(sma36, (int, float)) and sma36:
+    if last is not None and sma36 not in (None, 0.0):
         dist = (last - sma36) / sma36
     return {
-        "last": last if isinstance(last, (int, float)) else None,
-        "sma36": sma36 if isinstance(sma36, (int, float)) else None,
+        "last": last,
+        "sma36": sma36,
         "close_above_sma36": frame.get("close_above_sma36"),
         "dist_to_36MA": dist,
-        "rsi14": frame.get("rsi14"),
-        "macd": frame.get("macd"),
-        "macd_signal": frame.get("macd_signal"),
-        "macd_hist": frame.get("macd_hist"),
+        "rsi14": as_float(frame.get("rsi14")),
+        "macd": as_float(frame.get("macd")),
+        "macd_signal": as_float(frame.get("macd_signal")),
+        "macd_hist": as_float(frame.get("macd_hist")),
         "macd_cross": frame.get("macd_cross"),
     }
 
-# ---------- Builders ----------
-def build_assets(idx: Dict[str, Any]) -> list[Dict[str, Any]]:
-    """Trekk ut pr-ticker tall fra index.json på en robust måte."""
-    assets_in = _get(idx, "summary", "assets", default={}) or {}
-    out = []
+def _maybe_frame(a: Dict[str, Any], key: str) -> Dict[str, Any] | None:
+    prefix = key[:1]  # h/d/w/m
+    cand_last = a.get(f"{prefix}_last") or a.get(f"{key}_last")
+    cand_sma  = a.get(f"{prefix}_sma36") or a.get(f"{key}_sma36")
+    cand_rsi  = a.get(f"{prefix}_rsi14") or a.get(f"{key}_rsi14")
+    if any(x is not None for x in (cand_last, cand_sma, cand_rsi)):
+        return {"last": as_float(cand_last), "sma36": as_float(cand_sma), "rsi14": as_float(cand_rsi)}
+    return None
 
+# ---------- Bygg pr-ticker ----------
+def build_assets(idx: Dict[str, Any]) -> list[Dict[str, Any]]:
+    assets_in = _get(idx, "summary", "assets") or _get(idx, "assets") or {}
+    if not isinstance(assets_in, dict):
+        assets_in = {}
+
+    out = []
     for ticker, a in sorted(assets_in.items()):
-        # Tolerer variasjon i index.json-struktur
+        if not isinstance(a, dict):
+            a = {}
+
+        frames_in = a.get("frames") if isinstance(a.get("frames"), dict) else {}
         frames = {
-            "hourly":  _tf(_get(a, "frames", "hourly",  default={})),
-            "daily":   _tf(_get(a, "frames", "daily",   default={})),
-            "weekly":  _tf(_get(a, "frames", "weekly",  default={})),
-            "monthly": _tf(_get(a, "frames", "monthly", default={})),
+            "hourly":  _tf(_get(frames_in, "hourly",  default=_maybe_frame(a, "hourly"))),
+            "daily":   _tf(_get(frames_in, "daily",   default=_maybe_frame(a, "daily"))),
+            "weekly":  _tf(_get(frames_in, "weekly",  default=_maybe_frame(a, "weekly"))),
+            "monthly": _tf(_get(frames_in, "monthly", default=_maybe_frame(a, "monthly"))),
         }
 
-        # Finn "last" (foretrekk daily.last, ellers top-nivå last)
-        last_daily = frames["daily"].get("last")
-        last_any   = a.get("last")
-        last = last_daily if isinstance(last_daily, (int, float)) else (last_any if isinstance(last_any, (int, float)) else None)
+        last = frames["daily"]["last"]
+        if last is None:
+            last = as_float(a.get("last"))
 
-        hi52 = a.get("52w_high")
-        lo52 = a.get("52w_low")
+        hi52 = as_float(a.get("52w_high"))
+        lo52 = as_float(a.get("52w_low"))
 
-        is_52w_high = None
-        is_52w_low  = None
-        if isinstance(last, (int, float)):
-            if isinstance(hi52, (int, float)):
+        is_52w_high = is_52w_low = None
+        if last is not None:
+            if hi52 is not None:
                 is_52w_high = (last >= hi52 * 0.999)
-            if isinstance(lo52, (int, float)):
+            if lo52 is not None:
                 is_52w_low  = (last <= lo52 * 1.001)
 
         out.append({
@@ -127,26 +230,29 @@ def build_assets(idx: Dict[str, Any]) -> list[Dict[str, Any]]:
             "is_52w_low":  is_52w_low,
             "52w_high": hi52,
             "52w_low":  lo52,
-            "dist_to_36WMA": a.get("dist_to_36WMA"),
-            "dist_to_36MMA": a.get("dist_to_36MMA"),
+            "dist_to_36WMA": as_float(a.get("dist_to_36WMA")),
+            "dist_to_36MMA": as_float(a.get("dist_to_36MMA")),
             "weekly_close_count_above_36WMA": a.get("weekly_close_count_above_36WMA"),
             "gdx_gld_ratio_vs_50dma": a.get("gdx_gld_ratio_vs_50dma"),
             "sil_slv_ratio_vs_50dma": a.get("sil_slv_ratio_vs_50dma"),
             "vol20_up_ok": a.get("vol20_up_ok"),
             "frames": frames
         })
-
     return out
+
+# ---------- HTML-tabell ----------
+def _round(x, n=2):
+    return round(x, n) if isinstance(x, (int, float)) else ""
 
 def build_table_html(assets: list[Dict[str, Any]], gen: str) -> str:
     css = """
 <style>
-#report-table {border-collapse: collapse; width: 100%; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-#report-table th, #report-table td { border:1px solid #ddd; padding:6px 8px; text-align:center; }
-#report-table th { background:#f5f5f7; position:sticky; top:0; }
-#report-table tbody tr:nth-child(even) { background:#fafafa; }
-#report-wrap h2 { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
-#genstamp { color:#555; font-size:12px; margin-top:8px; }
+#report-table {border-collapse: collapse; width: 100%; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+#report-table th, #report-table td { border:1px solid #ddd; padding:6px 8px; text-align:center;}
+#report-table th { background:#f5f5f7; position:sticky; top:0;}
+#report-table tbody tr:nth-child(even) { background:#fafafa;}
+#report-wrap h2 { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+#genstamp { color:#555; font-size:12px; margin-top:8px;}
 </style>
 """
     header = f"""
@@ -173,14 +279,13 @@ def build_table_html(assets: list[Dict[str, Any]], gen: str) -> str:
     for a in assets:
         f = a["frames"]
         h, d, w, m = f["hourly"], f["daily"], f["weekly"], f["monthly"]
-
         rows.append(
             "<tr>"
             f"<td>{a['ticker']}</td>"
             f"<td>{('H' if a.get('is_52w_high') else '')}{('L' if a.get('is_52w_low') else '')}</td>"
             f"<td>{a.get('weekly_close_count_above_36WMA') or ''}</td>"
-            f"<td>{(_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'), (int,float)) else '')}%</td>"
-            f"<td>{(_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'), (int,float)) else '')}%</td>"
+            f"<td>{(_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else '')}%</td>"
+            f"<td>{(_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else '')}%</td>"
             f"<td>{_bool_to_ja_nei(h.get('close_above_sma36'))}</td>"
             f"<td>{_bool_to_ja_nei(d.get('close_above_sma36'))}</td>"
             f"<td>{_bool_to_ja_nei(w.get('close_above_sma36'))}</td>"
@@ -205,33 +310,50 @@ def build_table_html(assets: list[Dict[str, Any]], gen: str) -> str:
 
 # ---------- Main ----------
 def main():
-    # 1) Les index.json (robust)
-    idx = load_json_file(INDEX)
+    # 1) Les lokal index.json. Hvis HTML/ugyldig, hent fra speil.
+    idx_obj, raw = load_local_json_or_html(INDEX)
+    if idx_obj is None:
+        if raw is None:
+            msg = f"[postprocess] MISSING or EMPTY: {INDEX}"
+            # prøv speil uansett
+        elif looks_like_html(raw):
+            msg = f"[postprocess] HTML detected in {INDEX} (feil innhold). Forsøker speil..."
+        else:
+            msg = f"[postprocess] INVALID JSON in {INDEX}. Forsøker speil..."
+        print(msg)
+        idx_obj = try_fetch_index_from_mirrors()
+        if idx_obj is None:
+            _exit_or_raise(msg + " Speil ga ingen gyldig JSON.")
+
+        # Lagre reparert index.json lokalt for sporbarhet
+        try:
+            write_json_atomic(INDEX, idx_obj)
+            print("[postprocess] Reparerte docs/index.json fra speil.")
+        except Exception as e:
+            print(f"[postprocess] WARN: kunne ikke skrive reparert index.json: {e}")
+
+    idx = idx_obj
     gen = idx.get("generated_local") or datetime.utcnow().isoformat() + "Z"
 
-    # 2) Bygg asset-liste
+    # 2) Bygg assets
     assets = build_assets(idx)
 
-    # 3) Les news (valgfritt)
+    # 3) Les news (best effort)
     news = {}
     if NEWS.exists():
-        try:
-            news = load_json_file(NEWS)
-        except SystemExit as e:
-            # Ikke fall; bare rapporter videre uten nyheter
-            print(str(e))
-            news = {}
-        except Exception as e:
-            print(f"[postprocess] WARN: kunne ikke lese {NEWS}: {e}")
-            news = {}
+        news_obj, news_raw = load_local_json_or_html(NEWS)
+        if news_obj is not None:
+            news = news_obj
+        else:
+            if news_raw and looks_like_html(news_raw):
+                print(f"[postprocess] HTML detected in {NEWS} (hopper over).")
+            elif news_raw is None:
+                print(f"[postprocess] MISSING: {NEWS}")
+            else:
+                print(f"[postprocess] INVALID JSON in {NEWS} (hopper over).")
 
-    # 4) Skriv outputs (atomisk)
-    out_obj = {
-        "generated_local": gen,
-        "spec_version": "v1",
-        "assets": assets,
-        "news": news
-    }
+    # 4) Skriv utdata atomisk
+    out_obj = {"generated_local": gen, "spec_version": "v1", "assets": assets, "news": news}
     write_json_atomic(OUT_JSON, out_obj)
 
     md_lines = [
@@ -241,7 +363,7 @@ def main():
         "|---|---|---:|---:|---:|---|---|---|---|---:|---:|---|---|---|---|"
     ]
     for a in assets:
-        f = a["frames"]; d = f["daily"]; h=f["hourly"]; w=f["weekly"]; m=f["monthly"]
+        f = a["frames"]; h, d, w, m = f["hourly"], f["daily"], f["weekly"], f["monthly"]
         md_lines.append(
             f"| {a['ticker']} | "
             f"{('H' if a.get('is_52w_high') else '')}{('L' if a.get('is_52w_low') else '')} | "
@@ -264,35 +386,21 @@ def main():
     table_html = build_table_html(assets, gen)
     write_text_atomic(OUT_TABLE, table_html)
 
-    # 5) Oppdater index.html idempotent (ingen duplikater)
+    # 5) Oppdater index.html idempotent
     if INDEX_HTML.exists():
         html = INDEX_HTML.read_text(encoding="utf-8")
-
-        # Fjern tidligere blokk mellom markører hvis den finnes
         if TABLE_START in html and TABLE_END in html:
-            html = re.sub(
-                rf"{re.escape(TABLE_START)}.*?{re.escape(TABLE_END)}",
-                table_html,
-                html,
-                flags=re.DOTALL
-            )
+            html = re.sub(rf"{re.escape(TABLE_START)}.*?{re.escape(TABLE_END)}",
+                          table_html, html, flags=re.DOTALL)
         else:
-            # Backward-compat: fjern evt. gammel tabell-seksjon basert på overskrift
-            html = re.sub(
-                r'<h2>Daglig tabell.*?</table>\s*(<div id="genstamp">.*?</div>)?',
-                "",
-                html,
-                flags=re.DOTALL
-            )
-            # Sett inn før </body> om mulig, ellers append
+            html = re.sub(r'<h2>Daglig tabell.*?</table>\s*(<div id="genstamp">.*?</div>)?',
+                          "", html, flags=re.DOTALL)
             if "</body>" in html:
                 html = html.replace("</body>", table_html + "\n</body>")
             else:
-                html = html + "\n" + table_html
-
+                html += "\n" + table_html
         write_text_atomic(INDEX_HTML, html)
     else:
-        # Hvis index.html ikke finnes, lag en minimal side
         minimal = f"""<!doctype html><meta charset="utf-8">
 <title>Daglig rapport</title>
 <body>
