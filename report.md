@@ -1,4 +1,4 @@
-# Daglig rapport – 2025-10-04T09:34:34.000375+02:00
+# Daglig rapport – 2025-10-04T19:58:06.758467+02:00
 
 | Ticker | 52w | Uker≥36WMA | Dist36WMA | Dist36MMA | H≥36 | D≥36 | W≥36 | M≥36 | RSI14(D) | MACD(D) | MACDcross(D) | GDX/GLD>50 | SIL/SLV>50 | Vol20 |
 |---|---|---:|---:|---:|---|---|---|---|---:|---:|---|---|---|---|
