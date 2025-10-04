@@ -14,6 +14,13 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: daily-market-report
+  cancel-in-progress: false
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -63,8 +70,11 @@ jobs:
           set -e
           test -f docs/index.json || { echo "::error::docs/index.json missing"; exit 2; }
           if head -n1 docs/index.json | grep -qiE '<!doctype|<html'; then
-            echo "::warning::docs/index.json contains HTML – generator wrote wrong content. Postprocess will try mirrors."
+            echo "::warning::docs/index.json contains HTML – postprocess will try mirrors."
           fi
+
+      - name: Print context (no-op for diff)
+        run: echo "repo=${{ github.repository }} run=${{ github.run_id }}"
 
       - name: Postprocess -> report.json / report.md / report_table.html
         env:
