@@ -1,45 +1,126 @@
+<h2>Daglig tabell (fallback)</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Ticker</th>
+      <th>52w</th>
+      <th>Uker ≥36WMA</th>
+      <th>Dist 36WMA</th>
+      <th>Daily ≥36MA</th>
+      <th>RSI14</th>
+      <th>MACD</th>
+    </tr>
+  </thead>
+  <tbody>
 
-<!-- REPORT_TABLE_START -->
-<div id="report-wrap">
-<h2>Daglig tabell (numerisk)</h2>
-
-<style>
-#report-table {border-collapse: collapse; width: 100%; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;}
-#report-table th, #report-table td { border:1px solid #ddd; padding:6px 8px; text-align:center;}
-#report-table th { background:#f5f5f7; position:sticky; top:0;}
-#report-table tbody tr:nth-child(even) { background:#fafafa;}
-#report-wrap h2 { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
-#genstamp { color:#555; font-size:12px; margin-top:8px;}
-</style>
-
-<table id="report-table">
-<thead>
-<tr>
-<th>Ticker</th>
-<th>52w</th>
-<th>Uker ≥36WMA</th>
-<th>Dist 36WMA</th>
-<th>Dist 36MMA</th>
-<th>H ≥36</th><th>D ≥36</th><th>W ≥36</th><th>M ≥36</th>
-<th>RSI14 (D)</th><th>MACD (D)</th><th>MACD cross (D)</th>
-<th>GDX/GLD&gt;50DMA</th><th>SIL/SLV&gt;50DMA</th><th>Vol20 up OK</th>
-</tr>
-</thead>
-<tbody>
-<tr><td>ACWI</td><td></td><td></td><td>2.28%</td><td>2.28%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>59.68</td><td>1.375</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>GDX</td><td></td><td></td><td>8.86%</td><td>8.86%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>59.17</td><td>3.437</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>GDXJ</td><td></td><td></td><td>11.95%</td><td>11.95%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>64.83</td><td>5.159</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>GLD</td><td></td><td></td><td>8.36%</td><td>8.36%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>76.92</td><td>10.773</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>HYG</td><td></td><td></td><td>-0.59%</td><td>-0.59%</td><td>Nei</td><td>Nei</td><td>Nei</td><td>Nei</td><td>23.75</td><td>-0.034</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>LQD</td><td></td><td></td><td>-0.02%</td><td>-0.02%</td><td>Nei</td><td>Nei</td><td>Nei</td><td>Nei</td><td>38.49</td><td>0.146</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>SIL</td><td></td><td></td><td>9.93%</td><td>9.93%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>62.04</td><td>3.204</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>SILJ</td><td></td><td></td><td>16.34%</td><td>16.34%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>69.05</td><td>1.377</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>SLV</td><td>H</td><td></td><td>14.69%</td><td>14.69%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>83.47</td><td>1.977</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>SPY</td><td></td><td></td><td>2.24%</td><td>2.24%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>60.99</td><td>6.041</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>URNM</td><td>H</td><td></td><td>11.21%</td><td>11.21%</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Ja</td><td>63.63</td><td>2.392</td><td>Nei</td><td></td><td></td><td></td></tr>
-<tr><td>USO</td><td></td><td></td><td>-2.29%</td><td>-2.29%</td><td>Nei</td><td>Nei</td><td>Nei</td><td>Nei</td><td>45.84</td><td>-0.467</td><td>Nei</td><td></td><td></td><td></td></tr>
-</tbody>
+    <tr>
+      <td>GLD</td>
+      <td>H</td>
+      <td></td>
+      <td>6.91%</td>
+      <td>Ja</td>
+      <td>70.8</td>
+      <td>7.75</td>
+    </tr>
+    <tr>
+      <td>SLV</td>
+      <td>H</td>
+      <td></td>
+      <td>13.86%</td>
+      <td>Ja</td>
+      <td>79.43</td>
+      <td>1.408</td>
+    </tr>
+    <tr>
+      <td>USO</td>
+      <td></td>
+      <td></td>
+      <td>3.75%</td>
+      <td>Ja</td>
+      <td>66.81</td>
+      <td>0.435</td>
+    </tr>
+    <tr>
+      <td>GDX</td>
+      <td>H</td>
+      <td></td>
+      <td>15.52%</td>
+      <td>Ja</td>
+      <td>73.4</td>
+      <td>3.594</td>
+    </tr>
+    <tr>
+      <td>GDXJ</td>
+      <td>H</td>
+      <td></td>
+      <td>16.94%</td>
+      <td>Ja</td>
+      <td>70.45</td>
+      <td>4.833</td>
+    </tr>
+    <tr>
+      <td>SIL</td>
+      <td>H</td>
+      <td></td>
+      <td>16.61%</td>
+      <td>Ja</td>
+      <td>69.27</td>
+      <td>3.451</td>
+    </tr>
+    <tr>
+      <td>SILJ</td>
+      <td>H</td>
+      <td></td>
+      <td>19.58%</td>
+      <td>Ja</td>
+      <td>71.29</td>
+      <td>1.251</td>
+    </tr>
+    <tr>
+      <td>URNM</td>
+      <td></td>
+      <td></td>
+      <td>16.6%</td>
+      <td>Ja</td>
+      <td>68.32</td>
+      <td>2.958</td>
+    </tr>
+    <tr>
+      <td>ACWI</td>
+      <td></td>
+      <td></td>
+      <td>2.02%</td>
+      <td>Ja</td>
+      <td>68.35</td>
+      <td>1.277</td>
+    </tr>
+    <tr>
+      <td>SPY</td>
+      <td></td>
+      <td></td>
+      <td>1.93%</td>
+      <td>Ja</td>
+      <td>68.84</td>
+      <td>5.75</td>
+    </tr>
+    <tr>
+      <td>HYG</td>
+      <td></td>
+      <td></td>
+      <td>0.38%</td>
+      <td>Ja</td>
+      <td>56.44</td>
+      <td>0.152</td>
+    </tr>
+    <tr>
+      <td>LQD</td>
+      <td></td>
+      <td></td>
+      <td>0.52%</td>
+      <td>Ja</td>
+      <td>44.99</td>
+      <td>0.377</td>
+    </tr>
+  </tbody>
 </table>
-<div id="genstamp">Generert: 2025-10-10T19:58:43.871113+02:00</div>
-</div>
-<!-- REPORT_TABLE_END -->
+<p>Generert: 2025-09-28T20:10:47.612188+02:00</p>
