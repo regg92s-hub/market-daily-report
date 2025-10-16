@@ -1,652 +1,105 @@
 {
-  "generated_local": "2025-10-16T19:57:58.305831+02:00",
+  "generated_local": "2025-10-03T19:57:13.725370+02:00",
   "spec_version": "v1",
   "assets": [
     {
-      "ticker": "ACWI",
-      "is_52w_high": false,
-      "is_52w_low": false,
-      "52w_high": 140.05,
-      "52w_low": 103.59,
-      "dist_to_36WMA": 0.013336692053444345,
-      "dist_to_36MMA": 0.013336692053444345,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 138.56,
-          "sma36": 136.73638888888888,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.013336692053444345,
-          "rsi14": 57.73524720893144,
-          "macd": 0.7700726357817302,
-          "macd_signal": 1.067627470735317,
-          "macd_hist": -0.2975548349535868,
-          "macd_cross": false
-        },
-        "daily": {
-          "last": 138.56,
-          "sma36": 136.73638888888888,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.013336692053444345,
-          "rsi14": 57.73524720893144,
-          "macd": 0.7700726357817302,
-          "macd_signal": 1.067627470735317,
-          "macd_hist": -0.2975548349535868,
-          "macd_cross": false
-        },
-        "weekly": {
-          "last": 138.56,
-          "sma36": 136.73638888888888,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.013336692053444345,
-          "rsi14": 57.73524720893144,
-          "macd": 0.7700726357817302,
-          "macd_signal": 1.067627470735317,
-          "macd_hist": -0.2975548349535868,
-          "macd_cross": false
-        },
-        "monthly": {
-          "last": 138.56,
-          "sma36": 136.73638888888888,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.013336692053444345,
-          "rsi14": 57.73524720893144,
-          "macd": 0.7700726357817302,
-          "macd_signal": 1.067627470735317,
-          "macd_hist": -0.2975548349535868,
-          "macd_cross": false
-        }
-      }
-    },
-    {
-      "ticker": "GDX",
-      "is_52w_high": true,
-      "is_52w_low": false,
-      "52w_high": 81.47,
-      "52w_low": 33.77,
-      "dist_to_36WMA": 0.13792421132678692,
-      "dist_to_36MMA": 0.13792421132678692,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 81.47,
-          "sma36": 71.59527777777777,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.13792421132678692,
-          "rsi14": 70.20348837209302,
-          "macd": 3.2848781912880582,
-          "macd_signal": 3.3959060406687667,
-          "macd_hist": -0.11102784938070842,
-          "macd_cross": false
-        },
-        "daily": {
-          "last": 81.47,
-          "sma36": 71.59527777777777,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.13792421132678692,
-          "rsi14": 70.20348837209302,
-          "macd": 3.2848781912880582,
-          "macd_signal": 3.3959060406687667,
-          "macd_hist": -0.11102784938070842,
-          "macd_cross": false
-        },
-        "weekly": {
-          "last": 81.47,
-          "sma36": 71.59527777777777,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.13792421132678692,
-          "rsi14": 70.20348837209302,
-          "macd": 3.2848781912880582,
-          "macd_signal": 3.3959060406687667,
-          "macd_hist": -0.11102784938070842,
-          "macd_cross": false
-        },
-        "monthly": {
-          "last": 81.47,
-          "sma36": 71.59527777777777,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.13792421132678692,
-          "rsi14": 70.20348837209302,
-          "macd": 3.2848781912880582,
-          "macd_signal": 3.3959060406687667,
-          "macd_hist": -0.11102784938070842,
-          "macd_cross": false
-        }
-      }
-    },
-    {
-      "ticker": "GDXJ",
-      "is_52w_high": true,
-      "is_52w_low": false,
-      "52w_high": 108.48,
-      "52w_low": 42.32,
-      "dist_to_36WMA": 0.17314428189492023,
-      "dist_to_36MMA": 0.17314428189492023,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 108.48,
-          "sma36": 92.46944444444445,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.17314428189492023,
-          "rsi14": 73.00730390600191,
-          "macd": 5.180851637329027,
-          "macd_signal": 5.086283374998721,
-          "macd_hist": 0.09456826233030657,
-          "macd_cross": true
-        },
-        "daily": {
-          "last": 108.48,
-          "sma36": 92.46944444444445,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.17314428189492023,
-          "rsi14": 73.00730390600191,
-          "macd": 5.180851637329027,
-          "macd_signal": 5.086283374998721,
-          "macd_hist": 0.09456826233030657,
-          "macd_cross": true
-        },
-        "weekly": {
-          "last": 108.48,
-          "sma36": 92.46944444444445,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.17314428189492023,
-          "rsi14": 73.00730390600191,
-          "macd": 5.180851637329027,
-          "macd_signal": 5.086283374998721,
-          "macd_hist": 0.09456826233030657,
-          "macd_cross": true
-        },
-        "monthly": {
-          "last": 108.48,
-          "sma36": 92.46944444444445,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.17314428189492023,
-          "rsi14": 73.00730390600191,
-          "macd": 5.180851637329027,
-          "macd_signal": 5.086283374998721,
-          "macd_hist": 0.09456826233030657,
-          "macd_cross": true
-        }
-      }
-    },
-    {
       "ticker": "GLD",
-      "is_52w_high": true,
+      "is_52w_high": false,
       "is_52w_low": false,
-      "52w_high": 387.39,
+      "52w_high": 356.03,
       "52w_low": 236.59,
-      "dist_to_36WMA": 0.12283159506683348,
-      "dist_to_36MMA": 0.12283159506683348,
+      "dist_to_36WMA": 0.07773480975328233,
+      "dist_to_36MMA": 0.07773480975328233,
       "weekly_close_count_above_36WMA": null,
       "gdx_gld_ratio_vs_50dma": null,
       "sil_slv_ratio_vs_50dma": null,
       "vol20_up_ok": null,
       "frames": {
         "hourly": {
-          "last": 387.39,
-          "sma36": 345.01166666666666,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.12283159506683348,
-          "rsi14": 86.22154264356104,
-          "macd": 13.012616424000669,
-          "macd_signal": 11.069422043511269,
-          "macd_hist": 1.9431943804894,
+          "dist_to_36MA": 0.07773480975328233,
+          "rsi14": 76.85056833934031,
+          "macd": 8.941518995316471,
+          "macd_signal": 8.174746448869973,
+          "macd_hist": 0.7667725464464983,
           "macd_cross": false
         },
         "daily": {
-          "last": 387.39,
-          "sma36": 345.01166666666666,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.12283159506683348,
-          "rsi14": 86.22154264356104,
-          "macd": 13.012616424000669,
-          "macd_signal": 11.069422043511269,
-          "macd_hist": 1.9431943804894,
+          "dist_to_36MA": 0.07773480975328233,
+          "rsi14": 76.85056833934031,
+          "macd": 8.941518995316471,
+          "macd_signal": 8.174746448869973,
+          "macd_hist": 0.7667725464464983,
           "macd_cross": false
         },
         "weekly": {
-          "last": 387.39,
-          "sma36": 345.01166666666666,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.12283159506683348,
-          "rsi14": 86.22154264356104,
-          "macd": 13.012616424000669,
-          "macd_signal": 11.069422043511269,
-          "macd_hist": 1.9431943804894,
+          "dist_to_36MA": 0.07773480975328233,
+          "rsi14": 76.85056833934031,
+          "macd": 8.941518995316471,
+          "macd_signal": 8.174746448869973,
+          "macd_hist": 0.7667725464464983,
           "macd_cross": false
         },
         "monthly": {
-          "last": 387.39,
-          "sma36": 345.01166666666666,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.12283159506683348,
-          "rsi14": 86.22154264356104,
-          "macd": 13.012616424000669,
-          "macd_signal": 11.069422043511269,
-          "macd_hist": 1.9431943804894,
-          "macd_cross": false
-        }
-      }
-    },
-    {
-      "ticker": "HYG",
-      "is_52w_high": false,
-      "is_52w_low": false,
-      "52w_high": 81.32,
-      "52w_low": 75.75,
-      "dist_to_36WMA": -0.001122912567349032,
-      "dist_to_36MMA": -0.001122912567349032,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 80.8,
-          "sma36": 80.89083333333333,
-          "close_above_sma36": false,
-          "dist_to_36MA": -0.001122912567349032,
-          "rsi14": 47.560975609755985,
-          "macd": -0.09582279527400317,
-          "macd_signal": -0.0388975183088863,
-          "macd_hist": -0.05692527696511687,
-          "macd_cross": false
-        },
-        "daily": {
-          "last": 80.8,
-          "sma36": 80.89083333333333,
-          "close_above_sma36": false,
-          "dist_to_36MA": -0.001122912567349032,
-          "rsi14": 47.560975609755985,
-          "macd": -0.09582279527400317,
-          "macd_signal": -0.0388975183088863,
-          "macd_hist": -0.05692527696511687,
-          "macd_cross": false
-        },
-        "weekly": {
-          "last": 80.8,
-          "sma36": 80.89083333333333,
-          "close_above_sma36": false,
-          "dist_to_36MA": -0.001122912567349032,
-          "rsi14": 47.560975609755985,
-          "macd": -0.09582279527400317,
-          "macd_signal": -0.0388975183088863,
-          "macd_hist": -0.05692527696511687,
-          "macd_cross": false
-        },
-        "monthly": {
-          "last": 80.8,
-          "sma36": 80.89083333333333,
-          "close_above_sma36": false,
-          "dist_to_36MA": -0.001122912567349032,
-          "rsi14": 47.560975609755985,
-          "macd": -0.09582279527400317,
-          "macd_signal": -0.0388975183088863,
-          "macd_hist": -0.05692527696511687,
-          "macd_cross": false
-        }
-      }
-    },
-    {
-      "ticker": "LQD",
-      "is_52w_high": false,
-      "is_52w_low": false,
-      "52w_high": 112.36,
-      "52w_low": 105.1,
-      "dist_to_36WMA": 0.007346168535034668,
-      "dist_to_36MMA": 0.007346168535034668,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 112.1,
-          "sma36": 111.2825,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.007346168535034668,
-          "rsi14": 67.44966442953013,
-          "macd": 0.22886106236011017,
-          "macd_signal": 0.22158785784478702,
-          "macd_hist": 0.007273204515323151,
-          "macd_cross": true
-        },
-        "daily": {
-          "last": 112.1,
-          "sma36": 111.2825,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.007346168535034668,
-          "rsi14": 67.44966442953013,
-          "macd": 0.22886106236011017,
-          "macd_signal": 0.22158785784478702,
-          "macd_hist": 0.007273204515323151,
-          "macd_cross": true
-        },
-        "weekly": {
-          "last": 112.1,
-          "sma36": 111.2825,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.007346168535034668,
-          "rsi14": 67.44966442953013,
-          "macd": 0.22886106236011017,
-          "macd_signal": 0.22158785784478702,
-          "macd_hist": 0.007273204515323151,
-          "macd_cross": true
-        },
-        "monthly": {
-          "last": 112.1,
-          "sma36": 111.2825,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.007346168535034668,
-          "rsi14": 67.44966442953013,
-          "macd": 0.22886106236011017,
-          "macd_signal": 0.22158785784478702,
-          "macd_hist": 0.007273204515323151,
-          "macd_cross": true
-        }
-      }
-    },
-    {
-      "ticker": "SIL",
-      "is_52w_high": true,
-      "is_52w_low": false,
-      "52w_high": 78.1,
-      "52w_low": 31.61,
-      "dist_to_36WMA": 0.16980865165781137,
-      "dist_to_36MMA": 0.16980865165781137,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 78.1,
-          "sma36": 66.76305555555555,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.16980865165781137,
-          "rsi14": 73.9193783389995,
-          "macd": 3.454064283070309,
-          "macd_signal": 3.308567118522112,
-          "macd_hist": 0.14549716454819706,
-          "macd_cross": true
-        },
-        "daily": {
-          "last": 78.1,
-          "sma36": 66.76305555555555,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.16980865165781137,
-          "rsi14": 73.9193783389995,
-          "macd": 3.454064283070309,
-          "macd_signal": 3.308567118522112,
-          "macd_hist": 0.14549716454819706,
-          "macd_cross": true
-        },
-        "weekly": {
-          "last": 78.1,
-          "sma36": 66.76305555555555,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.16980865165781137,
-          "rsi14": 73.9193783389995,
-          "macd": 3.454064283070309,
-          "macd_signal": 3.308567118522112,
-          "macd_hist": 0.14549716454819706,
-          "macd_cross": true
-        },
-        "monthly": {
-          "last": 78.1,
-          "sma36": 66.76305555555555,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.16980865165781137,
-          "rsi14": 73.9193783389995,
-          "macd": 3.454064283070309,
-          "macd_signal": 3.308567118522112,
-          "macd_hist": 0.14549716454819706,
-          "macd_cross": true
-        }
-      }
-    },
-    {
-      "ticker": "SILJ",
-      "is_52w_high": true,
-      "is_52w_low": false,
-      "52w_high": 26.08,
-      "52w_low": 9.81,
-      "dist_to_36WMA": 0.2214344256963327,
-      "dist_to_36MMA": 0.2214344256963327,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 26.08,
-          "sma36": 21.35194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.2214344256963327,
-          "rsi14": 74.28909952606635,
-          "macd": 1.4559448225584575,
-          "macd_signal": 1.3641659747275439,
-          "macd_hist": 0.09177884783091361,
-          "macd_cross": false
-        },
-        "daily": {
-          "last": 26.08,
-          "sma36": 21.35194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.2214344256963327,
-          "rsi14": 74.28909952606635,
-          "macd": 1.4559448225584575,
-          "macd_signal": 1.3641659747275439,
-          "macd_hist": 0.09177884783091361,
-          "macd_cross": false
-        },
-        "weekly": {
-          "last": 26.08,
-          "sma36": 21.35194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.2214344256963327,
-          "rsi14": 74.28909952606635,
-          "macd": 1.4559448225584575,
-          "macd_signal": 1.3641659747275439,
-          "macd_hist": 0.09177884783091361,
-          "macd_cross": false
-        },
-        "monthly": {
-          "last": 26.08,
-          "sma36": 21.35194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.2214344256963327,
-          "rsi14": 74.28909952606635,
-          "macd": 1.4559448225584575,
-          "macd_signal": 1.3641659747275439,
-          "macd_hist": 0.09177884783091361,
+          "dist_to_36MA": 0.07773480975328233,
+          "rsi14": 76.85056833934031,
+          "macd": 8.941518995316471,
+          "macd_signal": 8.174746448869973,
+          "macd_hist": 0.7667725464464983,
           "macd_cross": false
         }
       }
     },
     {
       "ticker": "SLV",
-      "is_52w_high": true,
+      "is_52w_high": false,
       "is_52w_low": false,
-      "52w_high": 48.33,
+      "52w_high": 42.91,
       "52w_low": 26.33,
-      "dist_to_36WMA": 0.19839651752259213,
-      "dist_to_36MMA": 0.19839651752259213,
+      "dist_to_36WMA": 0.12944821481262925,
+      "dist_to_36MMA": 0.12944821481262925,
       "weekly_close_count_above_36WMA": null,
       "gdx_gld_ratio_vs_50dma": null,
       "sil_slv_ratio_vs_50dma": null,
       "vol20_up_ok": null,
       "frames": {
         "hourly": {
-          "last": 48.33,
-          "sma36": 40.32888888888888,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.19839651752259213,
-          "rsi14": 84.49905482041588,
-          "macd": 2.4452723484941856,
-          "macd_signal": 2.070849738643526,
-          "macd_hist": 0.3744226098506598,
+          "dist_to_36MA": 0.12944821481262925,
+          "rsi14": 77.60210803689067,
+          "macd": 1.7335528510633935,
+          "macd_signal": 1.453215325789451,
+          "macd_hist": 0.2803375252739426,
           "macd_cross": false
         },
         "daily": {
-          "last": 48.33,
-          "sma36": 40.32888888888888,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.19839651752259213,
-          "rsi14": 84.49905482041588,
-          "macd": 2.4452723484941856,
-          "macd_signal": 2.070849738643526,
-          "macd_hist": 0.3744226098506598,
+          "dist_to_36MA": 0.12944821481262925,
+          "rsi14": 77.60210803689067,
+          "macd": 1.7335528510633935,
+          "macd_signal": 1.453215325789451,
+          "macd_hist": 0.2803375252739426,
           "macd_cross": false
         },
         "weekly": {
-          "last": 48.33,
-          "sma36": 40.32888888888888,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.19839651752259213,
-          "rsi14": 84.49905482041588,
-          "macd": 2.4452723484941856,
-          "macd_signal": 2.070849738643526,
-          "macd_hist": 0.3744226098506598,
+          "dist_to_36MA": 0.12944821481262925,
+          "rsi14": 77.60210803689067,
+          "macd": 1.7335528510633935,
+          "macd_signal": 1.453215325789451,
+          "macd_hist": 0.2803375252739426,
           "macd_cross": false
         },
         "monthly": {
-          "last": 48.33,
-          "sma36": 40.32888888888888,
           "close_above_sma36": true,
-          "dist_to_36MA": 0.19839651752259213,
-          "rsi14": 84.49905482041588,
-          "macd": 2.4452723484941856,
-          "macd_signal": 2.070849738643526,
-          "macd_hist": 0.3744226098506598,
-          "macd_cross": false
-        }
-      }
-    },
-    {
-      "ticker": "SPY",
-      "is_52w_high": false,
-      "is_52w_low": false,
-      "52w_high": 673.11,
-      "52w_low": 496.48,
-      "dist_to_36WMA": 0.009753820502884022,
-      "dist_to_36MMA": 0.009753820502884022,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 665.17,
-          "sma36": 658.7447222222222,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.009753820502884022,
-          "rsi14": 56.60237388724037,
-          "macd": 3.1907610750356525,
-          "macd_signal": 4.615825574410678,
-          "macd_hist": -1.4250644993750257,
-          "macd_cross": false
-        },
-        "daily": {
-          "last": 665.17,
-          "sma36": 658.7447222222222,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.009753820502884022,
-          "rsi14": 56.60237388724037,
-          "macd": 3.1907610750356525,
-          "macd_signal": 4.615825574410678,
-          "macd_hist": -1.4250644993750257,
-          "macd_cross": false
-        },
-        "weekly": {
-          "last": 665.17,
-          "sma36": 658.7447222222222,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.009753820502884022,
-          "rsi14": 56.60237388724037,
-          "macd": 3.1907610750356525,
-          "macd_signal": 4.615825574410678,
-          "macd_hist": -1.4250644993750257,
-          "macd_cross": false
-        },
-        "monthly": {
-          "last": 665.17,
-          "sma36": 658.7447222222222,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.009753820502884022,
-          "rsi14": 56.60237388724037,
-          "macd": 3.1907610750356525,
-          "macd_signal": 4.615825574410678,
-          "macd_hist": -1.4250644993750257,
-          "macd_cross": false
-        }
-      }
-    },
-    {
-      "ticker": "URNM",
-      "is_52w_high": false,
-      "is_52w_low": false,
-      "52w_high": 66.33,
-      "52w_low": 28.15,
-      "dist_to_36WMA": 0.15553960393638552,
-      "dist_to_36MMA": 0.15553960393638552,
-      "weekly_close_count_above_36WMA": null,
-      "gdx_gld_ratio_vs_50dma": null,
-      "sil_slv_ratio_vs_50dma": null,
-      "vol20_up_ok": null,
-      "frames": {
-        "hourly": {
-          "last": 66.18,
-          "sma36": 57.27194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.15553960393638552,
-          "rsi14": 72.20779220779231,
-          "macd": 2.824743243774911,
-          "macd_signal": 2.5850214921602874,
-          "macd_hist": 0.23972175161462372,
-          "macd_cross": false
-        },
-        "daily": {
-          "last": 66.18,
-          "sma36": 57.27194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.15553960393638552,
-          "rsi14": 72.20779220779231,
-          "macd": 2.824743243774911,
-          "macd_signal": 2.5850214921602874,
-          "macd_hist": 0.23972175161462372,
-          "macd_cross": false
-        },
-        "weekly": {
-          "last": 66.18,
-          "sma36": 57.27194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.15553960393638552,
-          "rsi14": 72.20779220779231,
-          "macd": 2.824743243774911,
-          "macd_signal": 2.5850214921602874,
-          "macd_hist": 0.23972175161462372,
-          "macd_cross": false
-        },
-        "monthly": {
-          "last": 66.18,
-          "sma36": 57.27194444444444,
-          "close_above_sma36": true,
-          "dist_to_36MA": 0.15553960393638552,
-          "rsi14": 72.20779220779231,
-          "macd": 2.824743243774911,
-          "macd_signal": 2.5850214921602874,
-          "macd_hist": 0.23972175161462372,
+          "dist_to_36MA": 0.12944821481262925,
+          "rsi14": 77.60210803689067,
+          "macd": 1.7335528510633935,
+          "macd_signal": 1.453215325789451,
+          "macd_hist": 0.2803375252739426,
           "macd_cross": false
         }
       }
@@ -657,55 +110,506 @@
       "is_52w_low": false,
       "52w_high": 84.34,
       "52w_low": 62.37,
-      "dist_to_36WMA": -0.06318036769088026,
-      "dist_to_36MMA": -0.06318036769088026,
+      "dist_to_36WMA": -0.036199044222485724,
+      "dist_to_36MMA": -0.036199044222485724,
       "weekly_close_count_above_36WMA": null,
       "gdx_gld_ratio_vs_50dma": null,
       "sil_slv_ratio_vs_50dma": null,
       "vol20_up_ok": null,
       "frames": {
         "hourly": {
-          "last": 68.99,
-          "sma36": 73.64277777777778,
           "close_above_sma36": false,
-          "dist_to_36MA": -0.06318036769088026,
-          "rsi14": 21.05643994211286,
-          "macd": -1.2539211491630624,
-          "macd_signal": -0.7312010534648636,
-          "macd_hist": -0.5227200956981988,
+          "dist_to_36MA": -0.036199044222485724,
+          "rsi14": 43.50696991929568,
+          "macd": -0.20543247755524874,
+          "macd_signal": 0.061105191515919206,
+          "macd_hist": -0.26653766907116794,
           "macd_cross": false
         },
         "daily": {
-          "last": 68.99,
-          "sma36": 73.64277777777778,
           "close_above_sma36": false,
-          "dist_to_36MA": -0.06318036769088026,
-          "rsi14": 21.05643994211286,
-          "macd": -1.2539211491630624,
-          "macd_signal": -0.7312010534648636,
-          "macd_hist": -0.5227200956981988,
+          "dist_to_36MA": -0.036199044222485724,
+          "rsi14": 43.50696991929568,
+          "macd": -0.20543247755524874,
+          "macd_signal": 0.061105191515919206,
+          "macd_hist": -0.26653766907116794,
           "macd_cross": false
         },
         "weekly": {
-          "last": 68.99,
-          "sma36": 73.64277777777778,
           "close_above_sma36": false,
-          "dist_to_36MA": -0.06318036769088026,
-          "rsi14": 21.05643994211286,
-          "macd": -1.2539211491630624,
-          "macd_signal": -0.7312010534648636,
-          "macd_hist": -0.5227200956981988,
+          "dist_to_36MA": -0.036199044222485724,
+          "rsi14": 43.50696991929568,
+          "macd": -0.20543247755524874,
+          "macd_signal": 0.061105191515919206,
+          "macd_hist": -0.26653766907116794,
           "macd_cross": false
         },
         "monthly": {
-          "last": 68.99,
-          "sma36": 73.64277777777778,
           "close_above_sma36": false,
-          "dist_to_36MA": -0.06318036769088026,
-          "rsi14": 21.05643994211286,
-          "macd": -1.2539211491630624,
-          "macd_signal": -0.7312010534648636,
-          "macd_hist": -0.5227200956981988,
+          "dist_to_36MA": -0.036199044222485724,
+          "rsi14": 43.50696991929568,
+          "macd": -0.20543247755524874,
+          "macd_signal": 0.061105191515919206,
+          "macd_hist": -0.26653766907116794,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "GDX",
+      "is_52w_high": true,
+      "is_52w_low": false,
+      "52w_high": 77.13,
+      "52w_low": 33.77,
+      "dist_to_36WMA": 0.1556621449449148,
+      "dist_to_36MMA": 0.1556621449449148,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1556621449449148,
+          "rsi14": 74.38619774386193,
+          "macd": 3.8358812613989244,
+          "macd_signal": 3.6465549202017753,
+          "macd_hist": 0.18932634119714908,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1556621449449148,
+          "rsi14": 74.38619774386193,
+          "macd": 3.8358812613989244,
+          "macd_signal": 3.6465549202017753,
+          "macd_hist": 0.18932634119714908,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1556621449449148,
+          "rsi14": 74.38619774386193,
+          "macd": 3.8358812613989244,
+          "macd_signal": 3.6465549202017753,
+          "macd_hist": 0.18932634119714908,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1556621449449148,
+          "rsi14": 74.38619774386193,
+          "macd": 3.8358812613989244,
+          "macd_signal": 3.6465549202017753,
+          "macd_hist": 0.18932634119714908,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "GDXJ",
+      "is_52w_high": false,
+      "is_52w_low": false,
+      "52w_high": 99.9,
+      "52w_low": 42.32,
+      "dist_to_36WMA": 0.16876337937303895,
+      "dist_to_36MMA": 0.16876337937303895,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.16876337937303895,
+          "rsi14": 71.10232762406673,
+          "macd": 5.296938820224483,
+          "macd_signal": 4.979270841089783,
+          "macd_hist": 0.3176679791346997,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.16876337937303895,
+          "rsi14": 71.10232762406673,
+          "macd": 5.296938820224483,
+          "macd_signal": 4.979270841089783,
+          "macd_hist": 0.3176679791346997,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.16876337937303895,
+          "rsi14": 71.10232762406673,
+          "macd": 5.296938820224483,
+          "macd_signal": 4.979270841089783,
+          "macd_hist": 0.3176679791346997,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.16876337937303895,
+          "rsi14": 71.10232762406673,
+          "macd": 5.296938820224483,
+          "macd_signal": 4.979270841089783,
+          "macd_hist": 0.3176679791346997,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "SIL",
+      "is_52w_high": false,
+      "is_52w_low": false,
+      "52w_high": 71.89,
+      "52w_low": 31.61,
+      "dist_to_36WMA": 0.15010043762106334,
+      "dist_to_36MMA": 0.15010043762106334,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.15010043762106334,
+          "rsi14": 66.30434782608694,
+          "macd": 3.6342852690135885,
+          "macd_signal": 3.5157401453379657,
+          "macd_hist": 0.11854512367562275,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.15010043762106334,
+          "rsi14": 66.30434782608694,
+          "macd": 3.6342852690135885,
+          "macd_signal": 3.5157401453379657,
+          "macd_hist": 0.11854512367562275,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.15010043762106334,
+          "rsi14": 66.30434782608694,
+          "macd": 3.6342852690135885,
+          "macd_signal": 3.5157401453379657,
+          "macd_hist": 0.11854512367562275,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.15010043762106334,
+          "rsi14": 66.30434782608694,
+          "macd": 3.6342852690135885,
+          "macd_signal": 3.5157401453379657,
+          "macd_hist": 0.11854512367562275,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "SILJ",
+      "is_52w_high": false,
+      "is_52w_low": false,
+      "52w_high": 23.32,
+      "52w_low": 9.81,
+      "dist_to_36WMA": 0.18026062807092502,
+      "dist_to_36MMA": 0.18026062807092502,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.18026062807092502,
+          "rsi14": 69.12650602409637,
+          "macd": 1.3662734182638907,
+          "macd_signal": 1.2725486455858217,
+          "macd_hist": 0.093724772678069,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.18026062807092502,
+          "rsi14": 69.12650602409637,
+          "macd": 1.3662734182638907,
+          "macd_signal": 1.2725486455858217,
+          "macd_hist": 0.093724772678069,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.18026062807092502,
+          "rsi14": 69.12650602409637,
+          "macd": 1.3662734182638907,
+          "macd_signal": 1.2725486455858217,
+          "macd_hist": 0.093724772678069,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.18026062807092502,
+          "rsi14": 69.12650602409637,
+          "macd": 1.3662734182638907,
+          "macd_signal": 1.2725486455858217,
+          "macd_hist": 0.093724772678069,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "URNM",
+      "is_52w_high": true,
+      "is_52w_low": false,
+      "52w_high": 61.05,
+      "52w_low": 28.15,
+      "dist_to_36WMA": 0.1439374999999999,
+      "dist_to_36MMA": 0.1439374999999999,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1439374999999999,
+          "rsi14": 73.97769516728624,
+          "macd": 2.7660312238317744,
+          "macd_signal": 2.7045457544988576,
+          "macd_hist": 0.061485469332916765,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1439374999999999,
+          "rsi14": 73.97769516728624,
+          "macd": 2.7660312238317744,
+          "macd_signal": 2.7045457544988576,
+          "macd_hist": 0.061485469332916765,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1439374999999999,
+          "rsi14": 73.97769516728624,
+          "macd": 2.7660312238317744,
+          "macd_signal": 2.7045457544988576,
+          "macd_hist": 0.061485469332916765,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.1439374999999999,
+          "rsi14": 73.97769516728624,
+          "macd": 2.7660312238317744,
+          "macd_signal": 2.7045457544988576,
+          "macd_hist": 0.061485469332916765,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "ACWI",
+      "is_52w_high": true,
+      "is_52w_low": false,
+      "52w_high": 139.26,
+      "52w_low": 103.59,
+      "dist_to_36WMA": 0.02876983312675965,
+      "dist_to_36MMA": 0.02876983312675965,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02876983312675965,
+          "rsi14": 70.69701280227594,
+          "macd": 1.3450203529184535,
+          "macd_signal": 1.3192770833071232,
+          "macd_hist": 0.025743269611330222,
+          "macd_cross": true
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02876983312675965,
+          "rsi14": 70.69701280227594,
+          "macd": 1.3450203529184535,
+          "macd_signal": 1.3192770833071232,
+          "macd_hist": 0.025743269611330222,
+          "macd_cross": true
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02876983312675965,
+          "rsi14": 70.69701280227594,
+          "macd": 1.3450203529184535,
+          "macd_signal": 1.3192770833071232,
+          "macd_hist": 0.025743269611330222,
+          "macd_cross": true
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02876983312675965,
+          "rsi14": 70.69701280227594,
+          "macd": 1.3450203529184535,
+          "macd_signal": 1.3192770833071232,
+          "macd_hist": 0.025743269611330222,
+          "macd_cross": true
+        }
+      }
+    },
+    {
+      "ticker": "SPY",
+      "is_52w_high": true,
+      "is_52w_low": false,
+      "52w_high": 669.22,
+      "52w_low": 496.48,
+      "dist_to_36WMA": 0.02540756595986281,
+      "dist_to_36MMA": 0.02540756595986281,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02540756595986281,
+          "rsi14": 67.97564687975643,
+          "macd": 6.020938932300055,
+          "macd_signal": 5.972907383355046,
+          "macd_hist": 0.048031548945009384,
+          "macd_cross": true
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02540756595986281,
+          "rsi14": 67.97564687975643,
+          "macd": 6.020938932300055,
+          "macd_signal": 5.972907383355046,
+          "macd_hist": 0.048031548945009384,
+          "macd_cross": true
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02540756595986281,
+          "rsi14": 67.97564687975643,
+          "macd": 6.020938932300055,
+          "macd_signal": 5.972907383355046,
+          "macd_hist": 0.048031548945009384,
+          "macd_cross": true
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.02540756595986281,
+          "rsi14": 67.97564687975643,
+          "macd": 6.020938932300055,
+          "macd_signal": 5.972907383355046,
+          "macd_hist": 0.048031548945009384,
+          "macd_cross": true
+        }
+      }
+    },
+    {
+      "ticker": "HYG",
+      "is_52w_high": false,
+      "is_52w_low": false,
+      "52w_high": 81.32,
+      "52w_low": 75.75,
+      "dist_to_36WMA": 0.0008072466705368979,
+      "dist_to_36MMA": 0.0008072466705368979,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.0008072466705368979,
+          "rsi14": 49.079754601227386,
+          "macd": 0.10257569401802868,
+          "macd_signal": 0.14654901385439284,
+          "macd_hist": -0.043973319836364155,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.0008072466705368979,
+          "rsi14": 49.079754601227386,
+          "macd": 0.10257569401802868,
+          "macd_signal": 0.14654901385439284,
+          "macd_hist": -0.043973319836364155,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.0008072466705368979,
+          "rsi14": 49.079754601227386,
+          "macd": 0.10257569401802868,
+          "macd_signal": 0.14654901385439284,
+          "macd_hist": -0.043973319836364155,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.0008072466705368979,
+          "rsi14": 49.079754601227386,
+          "macd": 0.10257569401802868,
+          "macd_signal": 0.14654901385439284,
+          "macd_hist": -0.043973319836364155,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "LQD",
+      "is_52w_high": false,
+      "is_52w_low": false,
+      "52w_high": 113.26,
+      "52w_low": 105.1,
+      "dist_to_36WMA": 0.007529837450730339,
+      "dist_to_36MMA": 0.007529837450730339,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.007529837450730339,
+          "rsi14": 44.557823129251545,
+          "macd": 0.3105587969347141,
+          "macd_signal": 0.4061701353943332,
+          "macd_hist": -0.09561133845961911,
+          "macd_cross": false
+        },
+        "daily": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.007529837450730339,
+          "rsi14": 44.557823129251545,
+          "macd": 0.3105587969347141,
+          "macd_signal": 0.4061701353943332,
+          "macd_hist": -0.09561133845961911,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.007529837450730339,
+          "rsi14": 44.557823129251545,
+          "macd": 0.3105587969347141,
+          "macd_signal": 0.4061701353943332,
+          "macd_hist": -0.09561133845961911,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 0.007529837450730339,
+          "rsi14": 44.557823129251545,
+          "macd": 0.3105587969347141,
+          "macd_signal": 0.4061701353943332,
+          "macd_hist": -0.09561133845961911,
           "macd_cross": false
         }
       }
@@ -713,7 +617,20 @@
   ],
   "news": [
     {
-      "nftrh": [],
+      "source": "NFTRH",
+      "title": "Protected: NFTRH+; For anyone trading MP Materials stock",
+      "url": "https://nftrh.com/2025/09/30/mp-materials-stock/",
+      "published": "2025-09-30T18:32:27+00:00",
+      "image": "news/NFTRH_Protected_NFTRH_For_anyone_trading_MP_Materials_stock.jpg"
+    },
+    {
+      "nftrh": [
+        {
+          "title": "Protected: NFTRH+; For anyone trading MP Materials stock",
+          "link": "",
+          "published": "2025-09-30T20:32:27+02:00"
+        }
+      ],
       "northstar": []
     }
   ]
