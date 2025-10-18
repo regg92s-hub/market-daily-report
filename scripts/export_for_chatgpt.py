@@ -1,156 +1,290 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import json, os, re, time
+
+"""
+Export a single, robust feed for the ChatGPT report runner.
+
+Input (under docs/):
+- index.json
+- filelist.json
+- news/news.json
+
+Output:
+- chatgpt_feed.json  (in docs/)
+"""
+
+from __future__ import annotations
+import json, os, re, sys
 from pathlib import Path
 from datetime import datetime, timezone
 
-PAGES = Path("docs")
-INDEX = PAGES / "index.json"
-FILELIST = PAGES / "filelist.json"
-NEWS = PAGES / "news" / "news.json"
-OUT = PAGES / "chatgpt_feed.json"
+# ---------- Paths ----------
+ROOT = Path(__file__).resolve().parents[1]
+DOCS = ROOT / "docs"
+INDEX = DOCS / "index.json"
+FILELIST = DOCS / "filelist.json"
+NEWS = DOCS / "news" / "news.json"
+OUT = DOCS / "chatgpt_feed.json"
 
-OWNER = "regg92s-hub"
-REPO  = "market-daily-report"
-BRANCH = os.getenv("PAGES_BRANCH", "gh-pages")
+# ---------- Mirrors ----------
+REPO = "regg92s-hub/market-daily-report"
+BRANCH = "gh-pages"
+PAGES_BASE = f"https://{REPO.split('/')[0]}.github.io/{REPO.split('/')[1]}"
+RAW_BASE   = f"https://raw.githubusercontent.com/{REPO}/{BRANCH}"
+JS_BASE    = f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}"
 
-def load_json(p: Path):
-    if not p.exists(): return None
+MIRRORS = {
+    "raw": RAW_BASE,
+    "jsdelivr": JS_BASE,
+    "pages": PAGES_BASE,
+}
+
+# ---------- Helpers ----------
+def _safe_read_json(p: Path):
+    if not p.exists():
+        return None
     try:
         return json.loads(p.read_text(encoding="utf-8"))
     except Exception:
         return None
 
-def ensure_filelist_from_dir():
-    """Hvis filelist.json mangler: bygg den ved å liste docs/charts/*."""
-    if FILELIST.exists(): 
-        return load_json(FILELIST) or {}
-    charts_dir = PAGES / "charts"
-    items = []
-    if charts_dir.exists():
-        for p in sorted(charts_dir.glob("*.png")):
-            items.append({"path": f"charts/{p.name}"})
-    data = {"files": items}
-    FILELIST.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    return data
+def _get(d, *ks, default=None):
+    cur = d
+    for k in ks:
+        if not isinstance(cur, dict) or k not in cur:
+            return default
+        cur = cur[k]
+    return cur
 
-def pick_compact_per_ticker(filelist):
+def _num(x):
+    return x if isinstance(x, (int, float)) else None
+
+def _now_utc_iso():
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+def _normalize_news_container(nw):
     """
-    Returnerer dict: {ticker: {"charts": {best:'path', 'daily':..., 'weekly':..., 'monthly':..., 'hourly':...}}}
-    velger kun *_compact.png. Prioritet: daily > weekly > monthly > hourly
+    Accept:
+      - {"items": [...]} or {"news":[...]} or [...]
+    Return list.
     """
-    files = (filelist or {}).get("files", [])
-    compacts = [f["path"] for f in files if isinstance(f, dict) and isinstance(f.get("path"), str) and f["path"].endswith("_compact.png")]
-    # Mønster: <ticker>_<tf>_compact.png, fx: GLD_daily_compact.png
-    rx = re.compile(r"^charts/([A-Za-z0-9\-\._]+)_(hourly|daily|weekly|monthly)_compact\.png$")
-    by_ticker = {}
-    for path in compacts:
-        m = rx.match(path)
-        if not m: 
+    if nw is None:
+        return []
+    if isinstance(nw, dict):
+        if "items" in nw and isinstance(nw["items"], list):
+            return nw["items"]
+        if "news" in nw and isinstance(nw["news"], list):
+            return nw["news"]
+        # Sometimes producers put directly under "data"
+        if "data" in nw and isinstance(nw["data"], list):
+            return nw["data"]
+        return []
+    if isinstance(nw, list):
+        return nw
+    return []
+
+def _abspath_for(rel: str) -> dict:
+    """
+    Build absolute URLs for a file under docs/ (e.g. charts/GLD_daily_compact.png)
+    """
+    rel = rel.lstrip("/")
+    return {
+        "raw":     f"{RAW_BASE}/{rel}",
+        "jsdelivr":f"{JS_BASE}/{rel}",
+        "pages":   f"{PAGES_BASE}/{rel}",
+    }
+
+def _choose_best_compact(files_for_ticker: list[str]) -> dict:
+    """
+    Prioritize *_daily_compact.png → *_weekly_compact.png → *_monthly_compact.png → *_hourly_compact.png
+    Return dict with keys best, daily, weekly, monthly, hourly where present (as absolute mirror dicts).
+    """
+    frames = ["daily", "weekly", "monthly", "hourly"]
+    out = {}
+    def find_for(frame):
+        pat = re.compile(rf"_{frame}_compact\.png$", re.IGNORECASE)
+        for f in files_for_ticker:
+            if pat.search(f):
+                return f
+        return None
+
+    for fr in frames:
+        hit = find_for(fr)
+        if hit:
+            out[fr] = _abspath_for(hit)
+
+    # pick best = first available in priority
+    for fr in frames:
+        if fr in out:
+            out["best"] = out[fr]
+            break
+    return out
+
+def _collect_compacts_by_ticker(filelist) -> dict[str, list[str]]:
+    """
+    filelist is expected as list of paths or dict with "files": [...]
+    Filter on *_compact.png then bucket by ticker inferred from prefix before first "_".
+    """
+    files = []
+    if isinstance(filelist, list):
+        files = filelist
+    elif isinstance(filelist, dict):
+        if isinstance(filelist.get("files"), list):
+            files = filelist["files"]
+        # Some producers store under "all" or "charts"
+        elif isinstance(filelist.get("all"), list):
+            files = filelist["all"]
+        elif isinstance(filelist.get("charts"), list):
+            files = filelist["charts"]
+
+    # Keep only PNGs that end with _compact.png
+    files = [f for f in files if isinstance(f, str) and f.lower().endswith("_compact.png")]
+    # Try to ensure "charts/" prefix if missing
+    normalized = []
+    for f in files:
+        if not f.startswith("charts/") and "charts/" not in f:
+            if f.startswith("/"):
+                normalized.append("charts" + f)
+            else:
+                normalized.append("charts/" + f)
+        else:
+            normalized.append(f.lstrip("/"))
+    files = normalized
+
+    buckets = {}
+    for f in files:
+        # Infer ticker as the prefix before first "_"
+        base = Path(f).name
+        m = re.match(r"^([A-Za-z0-9\-\._]+)_", base)
+        if not m:
             continue
-        ticker, tf = m.group(1), m.group(2)
-        info = by_ticker.setdefault(ticker, {"charts": {}})
-        info["charts"][tf] = path
+        ticker = m.group(1)
+        buckets.setdefault(ticker, []).append(f)
+    return buckets
 
-    # finn "best" i prioritert rekkefølge
-    for t, info in by_ticker.items():
-        charts = info["charts"]
-        for tf in ("daily","weekly","monthly","hourly"):
-            if tf in charts:
-                info["charts"]["best"] = charts[tf]
-                break
-    return by_ticker
+def _metrics_from_index(idx, ticker: str) -> dict:
+    """
+    Defensive extraction aligned with your index.json produced by generate_report.
+    """
+    a = _get(idx, "summary", "assets", ticker, default={}) or {}
+    frames = _get(a, "frames", default={}) or {}
+    d = frames.get("daily") or {}
+    w = frames.get("weekly") or {}
+    m = frames.get("monthly") or {}
+    h = frames.get("hourly") or {}
 
-def build_urls(path, ts):
-    raw = f"https://raw.githubusercontent.com/{OWNER}/{REPO}/{BRANCH}/{path}?t={ts}"
-    jsd = f"https://cdn.jsdelivr.net/gh/{OWNER}/{REPO}@{BRANCH}/{path}?t={ts}"
-    ghp = f"https://{OWNER}.github.io/{REPO}/{path}?t={ts}"
-    return {"raw": raw, "jsdelivr": jsd, "pages": ghp}
+    out = {
+        "last": _num(d.get("last")),
+        "is_52w_high": a.get("is_52w_high"),
+        "is_52w_low":  a.get("is_52w_low"),
+        "52w_high": _num(a.get("52w_high")),
+        "52w_low":  _num(a.get("52w_low")),
+        "dist_to_36WMA": _num(a.get("dist_to_36WMA")),
+        "dist_to_36MMA": _num(a.get("dist_to_36MMA")),
+        "weekly_close_count_above_36WMA": _num(a.get("weekly_close_count_above_36WMA")),
+        "gdx_gld_ratio_vs_50dma": a.get("gdx_gld_ratio_vs_50dma"),
+        "sil_slv_ratio_vs_50dma": a.get("sil_slv_ratio_vs_50dma"),
+        "vol20_up_ok": a.get("vol20_up_ok"),
+        "frames": {
+            "hourly": {
+                "close_above_sma36": h.get("close_above_sma36"),
+                "dist_to_36MA": _num(h.get("dist_to_36MA")),
+                "rsi14": _num(h.get("rsi14")),
+                "macd": _num(h.get("macd")),
+                "macd_signal": _num(h.get("macd_signal")),
+                "macd_hist": _num(h.get("macd_hist")),
+                "macd_cross": h.get("macd_cross"),
+            },
+            "daily": {
+                "close_above_sma36": d.get("close_above_sma36"),
+                "dist_to_36MA": _num(d.get("dist_to_36MA")),
+                "rsi14": _num(d.get("rsi14")),
+                "macd": _num(d.get("macd")),
+                "macd_signal": _num(d.get("macd_signal")),
+                "macd_hist": _num(d.get("macd_hist")),
+                "macd_cross": d.get("macd_cross"),
+            },
+            "weekly": {
+                "close_above_sma36": w.get("close_above_sma36"),
+                "dist_to_36MA": _num(w.get("dist_to_36MA")),
+                "rsi14": _num(w.get("rsi14")),
+                "macd": _num(w.get("macd")),
+                "macd_signal": _num(w.get("macd_signal")),
+                "macd_hist": _num(w.get("macd_hist")),
+                "macd_cross": w.get("macd_cross"),
+            },
+            "monthly": {
+                "close_above_sma36": m.get("close_above_sma36"),
+                "dist_to_36MA": _num(m.get("dist_to_36MA")),
+                "rsi14": _num(m.get("rsi14")),
+                "macd": _num(m.get("macd")),
+                "macd_signal": _num(m.get("macd_signal")),
+                "macd_hist": _num(m.get("macd_hist")),
+                "macd_cross": m.get("macd_cross"),
+            },
+        }
+    }
+    return out
 
 def main():
-    ts = os.getenv("GITHUB_RUN_ID") or str(int(time.time()))
-    idx = load_json(INDEX) or {}
-    fl = ensure_filelist_from_dir()
-    nw = load_json(NEWS) or {"items": []}
+    idx = _safe_read_json(INDEX) or {}
+    fl = _safe_read_json(FILELIST) or []
+    nw = _safe_read_json(NEWS)
 
-    # bygg kompakter per ticker
-    comp = pick_compact_per_ticker(fl)
+    # Build compacts per ticker
+    compacts = _collect_compacts_by_ticker(fl)
 
-    # hent tall vi bryr oss om per ticker fra index.json (om tilgjengelig)
-    # forventet struktur: idx["summary"]["assets"][ticker] -> metrics
-    assets = ((idx.get("summary") or {}).get("assets") or {}) if isinstance(idx, dict) else {}
-    out_tickers = {}
-    for ticker, charts in comp.items():
-        a = assets.get(ticker, {})
-        frames = (a.get("frames") or {}) if isinstance(a, dict) else {}
-        d = {
-            "ticker": ticker,
-            "metrics": {
-                "52w_high": a.get("52w_high"),
-                "52w_low": a.get("52w_low"),
-                "dist_to_36WMA": a.get("dist_to_36WMA"),
-                "dist_to_36MMA": a.get("dist_to_36MMA"),
-                "weekly_close_count_above_36WMA": a.get("weekly_close_count_above_36WMA"),
-                "gdx_gld_ratio_vs_50dma": a.get("gdx_gld_ratio_vs_50dma"),
-                "sil_slv_ratio_vs_50dma": a.get("sil_slv_ratio_vs_50dma"),
-                "vol20_up_ok": a.get("vol20_up_ok"),
-                "frames": {
-                    "hourly":  frames.get("hourly"),
-                    "daily":   frames.get("daily"),
-                    "weekly":  frames.get("weekly"),
-                    "monthly": frames.get("monthly"),
-                }
-            },
-            "charts": {}
-        }
-        # legg på URLer for valgt graf + alle tidsrammer som finnes
-        for key in ("best","daily","weekly","monthly","hourly"):
-            p = charts["charts"].get(key)
-            if not p: 
-                continue
-            d["charts"][key] = build_urls(p, ts)
-        out_tickers[ticker] = d
+    # Determine ticker universe from either index.json summary assets keys or from compacts
+    tickers_from_index = list((_get(idx, "summary", "assets", default={}) or {}).keys())
+    tickers_from_files = list(compacts.keys())
+    tickers = sorted(set(tickers_from_index) | set(tickers_from_files))
 
-    # nyheter (lett dedup ved URL+title+ts hvis finnes)
-    news_items = []
-    seen = set()
-    for it in nw.get("items", []):
-        if not isinstance(it, dict): 
+    # Build tickers payload
+    tickers_payload = []
+    for t in tickers:
+        metrics = _metrics_from_index(idx, t) if idx else {}
+        chart_files = compacts.get(t, [])
+        charts = _choose_best_compact(chart_files) if chart_files else {}
+        tickers_payload.append({
+            "symbol": t,
+            "metrics": metrics,
+            "charts": charts,
+        })
+
+    # Build news payload
+    news_items_src = _normalize_news_container(nw)
+    news_payload = []
+    for it in news_items_src:
+        if not isinstance(it, dict):
             continue
-        title = it.get("title") or ""
-        url = it.get("url") or it.get("link") or ""
-        tstamp = it.get("published") or it.get("date") or ""
-        dedup_key = (title.strip(), url.strip(), tstamp.strip())
-        if dedup_key in seen:
+        title = it.get("title") or it.get("headline") or ""
+        url   = it.get("url") or it.get("link") or ""
+        ts    = it.get("timestamp") or it.get("published_at") or it.get("pubDate") or it.get("date") or ""
+        summary = it.get("summary") or it.get("description") or ""
+        image = it.get("image") or it.get("image_url") or it.get("thumb") or None
+        source = it.get("source") or it.get("site") or ""
+        if not title and not url:
             continue
-        seen.add(dedup_key)
-        news_items.append({
+        news_payload.append({
             "title": title,
             "url": url,
-            "timestamp": tstamp,
-            "summary": it.get("summary") or it.get("description") or "",
-            "image": it.get("image") or it.get("img") or ""
+            "timestamp": ts,
+            "summary": summary,
+            "image": image,
+            "source": source,
         })
 
     out = {
-        "generated_utc": datetime.now(timezone.utc).isoformat().replace("+00:00","Z"),
-        "cache_bust": ts,
-        "mirrors": {
-            "primary": f"https://raw.githubusercontent.com/{OWNER}/{REPO}/{BRANCH}",
-            "fallback": f"https://cdn.jsdelivr.net/gh/{OWNER}/{REPO}@{BRANCH}",
-            "pages": f"https://{OWNER}.github.io/{REPO}",
-        },
-        "tickers": out_tickers,
-        "news": news_items,
-        "sources": {
-            "index_json_ok": bool(idx),
-            "filelist_ok": bool(fl),
-            "news_ok": bool(news_items),
-        }
+        "spec": "chatgpt-feed-v1",
+        "generated_utc": _now_utc_iso(),
+        "mirrors": MIRRORS,
+        "tickers": tickers_payload,
+        "news": news_payload,
     }
 
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Wrote {OUT.relative_to(Path.cwd())}")
+    print(f"[export_for_chatgpt] wrote {OUT}")
 
 if __name__ == "__main__":
     main()
