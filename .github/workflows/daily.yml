@@ -94,6 +94,9 @@ jobs:
         run: |
           echo "Top-level docs files:"; ls -l docs || true
           echo; echo "Charts:"; ls -1 docs/charts/*.png 2>/dev/null || true
+          
+      - name: Export ChatGPT feed
+        run: python scripts/export_for_chatgpt.py
 
       - name: Upload artifacts (logs + data)
         if: ${{ always() }}
