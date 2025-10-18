@@ -21,6 +21,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +30,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
       - name: Install base deps
         shell: bash
@@ -38,7 +40,7 @@ jobs:
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
-          # safe uansett (noen er brukt i scripts/)
+          # safe uansett (brukes i scripts/)
           pip install yfinance beautifulsoup4 feedparser requests pandas matplotlib
 
       - name: Run generator
@@ -65,38 +67,20 @@ jobs:
         if: ${{ hashFiles('scripts/fetch_nftrh_northstar.py') != '' }}
         run: python scripts/fetch_nftrh_northstar.py
 
-      - name: Sanity check (logg – ikke gate)
-        id: sanity
-        shell: bash
-        run: |
-          set -e
-          if [ ! -f docs/index.json ]; then
-            echo "::warning::docs/index.json mangler (postprocess vil forsøke speil)."
-            echo "has_json=false" >> "$GITHUB_OUTPUT"
-          else
-            if head -c 256 docs/index.json | tr -d '\r' | grep -qiE '^<!doctype|^<html'; then
-              echo "::warning::docs/index.json er HTML (postprocess vil forsøke speil)."
-              echo "has_json=false" >> "$GITHUB_OUTPUT"
-            else
-              python -c "import json; json.load(open('docs/index.json','r',encoding='utf-8'))" && echo "has_json=true" >> "$GITHUB_OUTPUT" || echo "has_json=false" >> "$GITHUB_OUTPUT"
-            fi
-          fi
-
-      # VIKTIG: Kjør alltid postprocess. Den reparerer fra speil om nødvendig.
       - name: Postprocess -> report.json / report.md / report_table.html
         env:
           POSTPROC_SOFT_FAIL: 'false'
           PAGES_BRANCH: 'gh-pages'
         run: python scripts/postprocess_report.py
 
+      - name: Export ChatGPT feed
+        run: python scripts/export_for_chatgpt.py
+
       - name: List generated files
         shell: bash
         run: |
           echo "Top-level docs files:"; ls -l docs || true
           echo; echo "Charts:"; ls -1 docs/charts/*.png 2>/dev/null || true
-          
-      - name: Export ChatGPT feed
-        run: python scripts/export_for_chatgpt.py
 
       - name: Upload artifacts (logs + data)
         if: ${{ always() }}
@@ -112,6 +96,7 @@ jobs:
             docs/report.json
             docs/report.md
             docs/report_table.html
+            docs/chatgpt_feed.json
             docs/charts/**
 
       - name: Sanity check before deploy
@@ -124,6 +109,16 @@ jobs:
             echo "::error::For få grafer; avbryter deploy for å beskytte siden"
             exit 1
           fi
+          # Rask validering av JSON (ikke gate videre dersom kun småfeil)
+          python - <<'PY'
+import json,sys,glob
+ok=True
+for f in ["docs/index.json","docs/filelist.json","docs/news/news.json","docs/chatgpt_feed.json"]:
+    try:
+        with open(f,"r",encoding="utf-8") as h: json.load(h)
+    except Exception as e:
+        print(f"::warning::{f} JSON-problem: {e}")
+PY
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -133,3 +128,45 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Smoke test mirrors (index/filelist/news/chatgpt_feed)
+        if: ${{ always() }}
+        shell: bash
+        env:
+          RUNID: ${{ github.run_id }}
+        run: |
+          set -e
+          PBASE="https://regg92s-hub.github.io/market-daily-report"
+          RBASE="https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages"
+          JBASE="https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages"
+          FILES="index.json filelist.json news/news.json chatgpt_feed.json"
+
+          for B in "$RBASE" "$JBASE" "$PBASE"; do
+            echo "Testing $B ..."
+            for f in $FILES; do
+              if curl -sSfL "$B/$f?t=${RUNID}" >/dev/null; then
+                echo "OK $B/$f"
+              else
+                echo "::warning::MISS $B/$f"
+              fi
+            done
+          done
+
+      - name: Smoke test GitHub Pages readiness
+        if: ${{ always() }}
+        shell: bash
+        env:
+          BASE: https://regg92s-hub.github.io/market-daily-report
+        run: |
+          set -e
+          for i in $(seq 1 10); do
+            if curl -fsSL "${BASE}/chatgpt_feed.json?t=${GITHUB_RUN_ID}" >/dev/null; then
+              echo "Pages ready"; break
+            fi
+            sleep 3
+          done
+          echo "index.json (head):"
+          curl -fsSL "${BASE}/index.json?t=${GITHUB_RUN_ID}" | head -c 400 || true
+          echo
+          echo "chatgpt_feed.json (head):"
+          curl -fsSL "${BASE}/chatgpt_feed.json?t=${GITHUB_RUN_ID}" | head -c 400 || true
