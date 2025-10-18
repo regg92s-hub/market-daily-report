@@ -1,8 +1,8 @@
 {
-  "generated_local": "2025-10-18T10:46:55.523294+02:00",
+  "generated_local": "2025-10-18T19:51:41.772244+02:00",
   "version": "2025-09-28-compact-2",
   "summary": {
-    "generated_local": "2025-10-18T10:46:55.523294+02:00",
+    "generated_local": "2025-10-18T19:51:41.772244+02:00",
     "assets": {
       "GLD": {
         "52w_high": 396.45,
@@ -607,7 +607,7 @@
       "GDX": true,
       "GDXJ": true,
       "SIL": true,
-      "SILJ": true
+      "SILJ": false
     },
     "market_temp": {
       "HYG_LQD_ratio": true,
@@ -615,9 +615,7 @@
       "GLD_SPY_ratio": true,
       "DXY_vs_200DMA": true,
       "VIX": true,
-      "yields_and_2s10s": true,
-      "SPY_above_200DMA": true,
-      "ACWI_above_200DMA": true
+      "yields_and_2s10s": true
     }
   }
 }
