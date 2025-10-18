@@ -61,19 +61,23 @@ jobs:
         if: ${{ hashFiles('scripts/crypto_and_compacts.py') != '' }}
         env:
           MPLBACKEND: Agg
+        shell: bash
         run: python scripts/crypto_and_compacts.py
 
       - name: Fetch NFTRH & Northstar (optional)
         if: ${{ hashFiles('scripts/fetch_nftrh_northstar.py') != '' }}
+        shell: bash
         run: python scripts/fetch_nftrh_northstar.py
 
       - name: Postprocess -> report.json / report.md / report_table.html
         env:
           POSTPROC_SOFT_FAIL: 'false'
           PAGES_BRANCH: 'gh-pages'
+        shell: bash
         run: python scripts/postprocess_report.py
 
       - name: Export ChatGPT feed
+        shell: bash
         run: python scripts/export_for_chatgpt.py
 
       - name: List generated files
@@ -109,16 +113,16 @@ jobs:
             echo "::error::For få grafer; avbryter deploy for å beskytte siden"
             exit 1
           fi
-          # Rask validering av JSON (ikke gate videre dersom kun småfeil)
-          python - <<'PY'
-import json,sys,glob
-ok=True
-for f in ["docs/index.json","docs/filelist.json","docs/news/news.json","docs/chatgpt_feed.json"]:
-    try:
-        with open(f,"r",encoding="utf-8") as h: json.load(h)
-    except Exception as e:
-        print(f"::warning::{f} JSON-problem: {e}")
-PY
+          # Rask JSON-validering (ikke gate videre dersom småfeil)
+          for f in docs/index.json docs/filelist.json docs/news/news.json docs/chatgpt_feed.json; do
+            if [ -f "$f" ]; then
+              python -c "import json,sys; json.load(open(sys.argv[1],'r',encoding='utf-8'))" "$f" \
+                && echo "OK JSON $f" \
+                || echo "::warning::$f JSON-problem"
+            else
+              echo "::warning::mangler $f"
+            fi
+          done
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -140,7 +144,6 @@ PY
           RBASE="https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages"
           JBASE="https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages"
           FILES="index.json filelist.json news/news.json chatgpt_feed.json"
-
           for B in "$RBASE" "$JBASE" "$PBASE"; do
             echo "Testing $B ..."
             for f in $FILES; do
