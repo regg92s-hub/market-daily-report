@@ -1,266 +1,80 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-"""
-postprocess_report.py (robust + speil-fallback)
-- Leser docs/index.json (eller henter korrekt fra raw/jsDelivr/github.io hvis lokal er HTML/ugyldig)
-- Leser docs/news/news.json (best effort)
-- Normaliserer pr-ticker felter (tåler variasjoner)
-- Skriver atomisk:
-    docs/report.json
-    docs/report.md
-    docs/report_table.html
-- Setter inn/erstatter merket blokk i docs/index.html:
-    <!-- REPORT_TABLE_START --> ... <!-- REPORT_TABLE_END -->
-- Miljøvariabler:
-    POSTPROC_SOFT_FAIL=true|false  (default false)
-    PAGES_BRANCH=gh-pages          (valgfritt; default gh-pages)
-"""
-
-from __future__ import annotations
-import json, os, re, sys, urllib.request, urllib.error
+import os, json, re, datetime as dt
 from pathlib import Path
-from datetime import datetime
-from typing import Any, Dict, Optional
+from lib_net import build_session, fetch_first_ok
 
-# ---------- Paths / Config ----------
-PAGES      = Path("docs")
-INDEX      = PAGES / "index.json"
-NEWS       = PAGES / "news" / "news.json"
-OUT_JSON   = PAGES / "report.json"
-OUT_MD     = PAGES / "report.md"
-OUT_TABLE  = PAGES / "report_table.html"
-INDEX_HTML = PAGES / "index.html"
+PAGES = Path("docs")
+INDEX = PAGES/"index.json"
+NEWS  = PAGES/"news"/"news.json"
+OUT_JSON  = PAGES/"report.json"
+OUT_MD    = PAGES/"report.md"
+OUT_TABLE = PAGES/"report_table.html"
+INDEX_HTML= PAGES/"index.html"
 
-TABLE_START = "<!-- REPORT_TABLE_START -->"
-TABLE_END   = "<!-- REPORT_TABLE_END -->"
+RAW_BASE = "https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages"
+JSD_BASE = "https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages"
+PAG_BASE = "https://regg92s-hub.github.io/market-daily-report"
 
-SOFT_FAIL   = os.environ.get("POSTPROC_SOFT_FAIL", "false").lower() == "true"
-PAGES_BRANCH= os.environ.get("PAGES_BRANCH", "gh-pages")
-
-# ---------- I/O helpers ----------
-def write_text_atomic(path: Path, text: str) -> None:
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(text, encoding="utf-8")
-    os.replace(tmp, path)
-
-def write_json_atomic(path: Path, obj: Any) -> None:
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
-    os.replace(tmp, path)
-
-def looks_like_html(s: str) -> bool:
-    head = s.lstrip()[:80].lower()
-    return head.startswith("<!doctype") or head.startswith("<html") or "<html" in head
-
-def load_local_json_or_html(path: Path) -> tuple[Optional[dict], Optional[str]]:
-    """Returner (json_obj, raw_text). Hvis JSON feiler, returner (None, raw_text)."""
-    if not path.exists():
-        return None, None
-    raw = path.read_text(encoding="utf-8")
-    if not raw.strip():
-        return None, raw
-    # Hvis det ser ut som HTML, ikke prøv å parse som JSON
-    if looks_like_html(raw):
-        return None, raw
-    try:
-        return json.loads(raw), raw
-    except json.JSONDecodeError:
-        return None, raw
-
-def fetch_text(url: str) -> Optional[str]:
-    try:
-        with urllib.request.urlopen(url, timeout=20) as r:
-            data = r.read()
-        # anta UTF-8
-        return data.decode("utf-8", errors="replace")
-    except Exception:
-        return None
-
-def try_fetch_index_from_mirrors() -> Optional[dict]:
-    """
-    Forsøk å hente korrekt index.json fra speil hvis lokal er HTML/ugyldig.
-    Speilrekkefølge: raw -> jsDelivr -> github.io
-    """
-    repo = os.environ.get("GITHUB_REPOSITORY")  # "owner/repo"
-    if not repo or "/" not in repo:
-        return None
-    owner, name = repo.split("/", 1)
-
-    mirrors = [
-        f"https://raw.githubusercontent.com/{owner}/{name}/{PAGES_BRANCH}/index.json",
-        f"https://cdn.jsdelivr.net/gh/{owner}/{name}@{PAGES_BRANCH}/index.json",
-        f"https://{owner}.github.io/{name}/index.json",
-    ]
-    for url in mirrors:
-        txt = fetch_text(url + f"?t={int(datetime.utcnow().timestamp())}")
-        if not txt:
-            continue
-        if looks_like_html(txt):
-            # feil ressurs (HTML) – prøv neste
-            continue
-        try:
-            return json.loads(txt)
-        except Exception:
-            continue
-    return None
-
-def _exit_or_raise(message: str):
-    if SOFT_FAIL:
-        print(f"{message}  (SOFT_FAIL=true ⇒ fortsetter uten output)")
-        _write_placeholders()
-        sys.exit(0)
-    raise SystemExit(message)
-
-def _write_placeholders():
-    now = datetime.utcnow().isoformat() + "Z"
-    out_obj = {"generated_local": now, "spec_version": "v1", "assets": [], "news": {}}
-    try:
-        write_json_atomic(OUT_JSON, out_obj)
-        write_text_atomic(OUT_MD, f"# Daglig rapport – {now}\n\n(Data manglet eller var ugyldig.)\n")
-        placeholder = f"{TABLE_START}\n<p>Ingen data tilgjengelig (index.json manglet/var tom/HTML) – {now}</p>\n{TABLE_END}"
-        write_text_atomic(OUT_TABLE, placeholder)
-        if INDEX_HTML.exists():
-            html = INDEX_HTML.read_text(encoding="utf-8")
-            if TABLE_START in html and TABLE_END in html:
-                html = re.sub(rf"{re.escape(TABLE_START)}.*?{re.escape(TABLE_END)}",
-                              placeholder, html, flags=re.DOTALL)
-            else:
-                if "</body>" in html:
-                    html = html.replace("</body>", placeholder + "\n</body>")
-                else:
-                    html += "\n" + placeholder
-            write_text_atomic(INDEX_HTML, html)
-    except Exception as e:
-        print(f"[postprocess] WARN writing placeholders: {e}")
-
-# ---------- Normalisering ----------
-def as_float(x: Any) -> Optional[float]:
-    if isinstance(x, (int, float)):
-        try:
-            if (x != x) or (x == float("inf")) or (x == float("-inf")):
-                return None
-            return float(x)
-        except Exception:
-            return None
-    if isinstance(x, str):
-        try:
-            x = x.strip().replace(",", "")
-            return float(x)
-        except Exception:
-            return None
-    return None
-
-def _get(d: Dict, *ks, default=None):
-    cur = d
+def _get(d,*ks,default=None):
+    cur=d
     for k in ks:
-        if not isinstance(cur, dict) or k not in cur:
-            return default
-        cur = cur[k]
+        if not isinstance(cur,dict) or k not in cur: return default
+        cur=cur[k]
     return cur
 
-def _bool_to_ja_nei(v):
-    return "Ja" if v is True else ("Nei" if v is False else "")
-
-def _tf(frame: Dict[str, Any] | None) -> Dict[str, Any]:
-    if not isinstance(frame, dict):
-        frame = {}
-    last = as_float(frame.get("last"))
-    sma36 = as_float(frame.get("sma36"))
-    dist = None
-    if last is not None and sma36 not in (None, 0.0):
-        dist = (last - sma36) / sma36
+def _tf(fr):
+    if not isinstance(fr,dict): return {}
+    last=fr.get("last"); sma36=fr.get("sma36")
+    dist=None
+    if isinstance(last,(int,float)) and isinstance(sma36,(int,float)) and sma36:
+        dist=(last-sma36)/sma36
     return {
-        "last": last,
-        "sma36": sma36,
-        "close_above_sma36": frame.get("close_above_sma36"),
+        "close_above_sma36": fr.get("close_above_sma36"),
         "dist_to_36MA": dist,
-        "rsi14": as_float(frame.get("rsi14")),
-        "macd": as_float(frame.get("macd")),
-        "macd_signal": as_float(frame.get("macd_signal")),
-        "macd_hist": as_float(frame.get("macd_hist")),
-        "macd_cross": frame.get("macd_cross"),
+        "rsi14": fr.get("rsi14"),
+        "macd": fr.get("macd"),
+        "macd_signal": fr.get("macd_signal"),
+        "macd_hist": fr.get("macd_hist"),
+        "macd_cross": fr.get("macd_cross"),
     }
 
-def _maybe_frame(a: Dict[str, Any], key: str) -> Dict[str, Any] | None:
-    prefix = key[:1]  # h/d/w/m
-    cand_last = a.get(f"{prefix}_last") or a.get(f"{key}_last")
-    cand_sma  = a.get(f"{prefix}_sma36") or a.get(f"{key}_sma36")
-    cand_rsi  = a.get(f"{prefix}_rsi14") or a.get(f"{key}_rsi14")
-    if any(x is not None for x in (cand_last, cand_sma, cand_rsi)):
-        return {"last": as_float(cand_last), "sma36": as_float(cand_sma), "rsi14": as_float(cand_rsi)}
-    return None
+def _round(x,n=2): return round(x,n) if isinstance(x,(int,float)) else ""
 
-# ---------- Bygg pr-ticker ----------
-def build_assets(idx: Dict[str, Any]) -> list[Dict[str, Any]]:
-    assets_in = _get(idx, "summary", "assets") or _get(idx, "assets") or {}
-    if not isinstance(assets_in, dict):
-        assets_in = {}
-
-    out = []
-    for ticker, a in sorted(assets_in.items()):
-        if not isinstance(a, dict):
-            a = {}
-
-        frames_in = a.get("frames") if isinstance(a.get("frames"), dict) else {}
-        frames = {
-            "hourly":  _tf(_get(frames_in, "hourly",  default=_maybe_frame(a, "hourly"))),
-            "daily":   _tf(_get(frames_in, "daily",   default=_maybe_frame(a, "daily"))),
-            "weekly":  _tf(_get(frames_in, "weekly",  default=_maybe_frame(a, "weekly"))),
-            "monthly": _tf(_get(frames_in, "monthly", default=_maybe_frame(a, "monthly"))),
-        }
-
-        last = frames["daily"]["last"]
-        if last is None:
-            last = as_float(a.get("last"))
-
-        hi52 = as_float(a.get("52w_high"))
-        lo52 = as_float(a.get("52w_low"))
-
-        is_52w_high = is_52w_low = None
-        if last is not None:
-            if hi52 is not None:
-                is_52w_high = (last >= hi52 * 0.999)
-            if lo52 is not None:
-                is_52w_low  = (last <= lo52 * 1.001)
-
-        out.append({
-            "ticker": ticker,
-            "is_52w_high": is_52w_high,
-            "is_52w_low":  is_52w_low,
-            "52w_high": hi52,
-            "52w_low":  lo52,
-            "dist_to_36WMA": as_float(a.get("dist_to_36WMA")),
-            "dist_to_36MMA": as_float(a.get("dist_to_36MMA")),
+def build_assets(idx):
+    assets = _get(idx,"summary","assets",default={}) or {}
+    out=[]
+    for t,a in assets.items():
+        o={
+            "ticker": t,
+            "is_52w_high": None,
+            "is_52w_low": None,
+            "52w_high": a.get("52w_high"),
+            "52w_low": a.get("52w_low"),
+            "dist_to_36WMA": a.get("dist_to_36WMA"),
+            "dist_to_36MMA": a.get("dist_to_36MMA"),
             "weekly_close_count_above_36WMA": a.get("weekly_close_count_above_36WMA"),
             "gdx_gld_ratio_vs_50dma": a.get("gdx_gld_ratio_vs_50dma"),
             "sil_slv_ratio_vs_50dma": a.get("sil_slv_ratio_vs_50dma"),
             "vol20_up_ok": a.get("vol20_up_ok"),
-            "frames": frames
-        })
+            "frames": {
+                "hourly":  _tf(_get(a,"frames","hourly",default={})),
+                "daily":   _tf(_get(a,"frames","daily",default={})),
+                "weekly":  _tf(_get(a,"frames","weekly",default={})),
+                "monthly": _tf(_get(a,"frames","monthly",default={})),
+            }
+        }
+        last = _get(a,"frames","daily","last")
+        if isinstance(last,(int,float)):
+            if isinstance(o["52w_high"],(int,float)): o["is_52w_high"] = last >= o["52w_high"]*0.999
+            if isinstance(o["52w_low"], (int,float)): o["is_52w_low"]  = last <= o["52w_low"]*1.001
+        out.append(o)
     return out
 
-# ---------- HTML-tabell ----------
-def _round(x, n=2):
-    return round(x, n) if isinstance(x, (int, float)) else ""
-
-def build_table_html(assets: list[Dict[str, Any]], gen: str) -> str:
-    css = """
-<style>
-#report-table {border-collapse: collapse; width: 100%; font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;}
-#report-table th, #report-table td { border:1px solid #ddd; padding:6px 8px; text-align:center;}
-#report-table th { background:#f5f5f7; position:sticky; top:0;}
-#report-table tbody tr:nth-child(even) { background:#fafafa;}
-#report-wrap h2 { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
-#genstamp { color:#555; font-size:12px; margin-top:8px;}
-</style>
-"""
-    header = f"""
-{TABLE_START}
-<div id="report-wrap">
+def build_table_html(assets, gen):
+    header = """
 <h2>Daglig tabell (numerisk)</h2>
-{css}
-<table id="report-table">
+<table>
 <thead>
 <tr>
 <th>Ticker</th>
@@ -270,147 +84,135 @@ def build_table_html(assets: list[Dict[str, Any]], gen: str) -> str:
 <th>Dist 36MMA</th>
 <th>H ≥36</th><th>D ≥36</th><th>W ≥36</th><th>M ≥36</th>
 <th>RSI14 (D)</th><th>MACD (D)</th><th>MACD cross (D)</th>
-<th>GDX/GLD&gt;50DMA</th><th>SIL/SLV&gt;50DMA</th><th>Vol20 up OK</th>
+<th>GDX/GLD>50DMA</th><th>SIL/SLV>50DMA</th><th>Vol20 up OK</th>
 </tr>
 </thead>
 <tbody>
 """
-    rows = []
+    rows=[]
     for a in assets:
-        f = a["frames"]
-        h, d, w, m = f["hourly"], f["daily"], f["weekly"], f["monthly"]
-        rows.append(
-            "<tr>"
+        f=a["frames"]; d=f["daily"]; w=f["weekly"]; m=f["monthly"]; h=f["hourly"]
+        rows.append(f"<tr>"
             f"<td>{a['ticker']}</td>"
-            f"<td>{('H' if a.get('is_52w_high') else '')}{('L' if a.get('is_52w_low') else '')}</td>"
+            f"<td>{'H' if a.get('is_52w_high') else ''}{'L' if a.get('is_52w_low') else ''}</td>"
             f"<td>{a.get('weekly_close_count_above_36WMA') or ''}</td>"
-            f"<td>{(_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else '')}%</td>"
-            f"<td>{(_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else '')}%</td>"
-            f"<td>{_bool_to_ja_nei(h.get('close_above_sma36'))}</td>"
-            f"<td>{_bool_to_ja_nei(d.get('close_above_sma36'))}</td>"
-            f"<td>{_bool_to_ja_nei(w.get('close_above_sma36'))}</td>"
-            f"<td>{_bool_to_ja_nei(m.get('close_above_sma36'))}</td>"
+            f"<td>{_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else ''}%</td>"
+            f"<td>{_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else ''}%</td>"
+            f"<td>{'Ja' if h.get('close_above_sma36') else ('Nei' if h.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{'Ja' if d.get('close_above_sma36') else ('Nei' if d.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{'Ja' if w.get('close_above_sma36') else ('Nei' if w.get('close_above_sma36') is False else '')}</td>"
+            f"<td>{'Ja' if m.get('close_above_sma36') else ('Nei' if m.get('close_above_sma36') is False else '')}</td>"
             f"<td>{_round(d.get('rsi14'),2)}</td>"
             f"<td>{_round(d.get('macd'),3)}</td>"
-            f"<td>{_bool_to_ja_nei(d.get('macd_cross'))}</td>"
-            f"<td>{_bool_to_ja_nei(a.get('gdx_gld_ratio_vs_50dma'))}</td>"
-            f"<td>{_bool_to_ja_nei(a.get('sil_slv_ratio_vs_50dma'))}</td>"
-            f"<td>{_bool_to_ja_nei(a.get('vol20_up_ok'))}</td>"
-            "</tr>"
-        )
-
+            f"<td>{'Ja' if d.get('macd_cross') else ('Nei' if d.get('macd_cross') is False else '')}</td>"
+            f"<td>{'Ja' if a.get('gdx_gld_ratio_vs_50dma') else ('Nei' if a.get('gdx_gld_ratio_vs_50dma') is False else '')}</td>"
+            f"<td>{'Ja' if a.get('sil_slv_ratio_vs_50dma') else ('Nei' if a.get('sil_slv_ratio_vs_50dma') is False else '')}</td>"
+            f"<td>{'Ja' if a.get('vol20_up_ok') else ('Nei' if a.get('vol20_up_ok') is False else '')}</td>"
+            f"</tr>")
     footer = f"""
 </tbody>
 </table>
-<div id="genstamp">Generert: {gen}</div>
-</div>
-{TABLE_END}
+<p>Generert: {gen}</p>
 """
     return header + "\n".join(rows) + footer
 
-# ---------- Main ----------
 def main():
-    # 1) Les lokal index.json. Hvis HTML/ugyldig, hent fra speil.
-    idx_obj, raw = load_local_json_or_html(INDEX)
-    if idx_obj is None:
-        if raw is None:
-            msg = f"[postprocess] MISSING or EMPTY: {INDEX}"
-            # prøv speil uansett
-        elif looks_like_html(raw):
-            msg = f"[postprocess] HTML detected in {INDEX} (feil innhold). Forsøker speil..."
-        else:
-            msg = f"[postprocess] INVALID JSON in {INDEX}. Forsøker speil..."
-        print(msg)
-        idx_obj = try_fetch_index_from_mirrors()
-        if idx_obj is None:
-            _exit_or_raise(msg + " Speil ga ingen gyldig JSON.")
+    # Prøv lokal index.json; hvis HTML/mangler – prøv speil i postprocess (fail-soft)
+    gen = dt.datetime.utcnow().isoformat(timespec="seconds")+"Z"
+    idx = None
+    missing_notes = []
 
-        # Lagre reparert index.json lokalt for sporbarhet
+    def is_html_text(path: Path) -> bool:
         try:
-            write_json_atomic(INDEX, idx_obj)
-            print("[postprocess] Reparerte docs/index.json fra speil.")
+            head = path.read_text(encoding="utf-8")[:200].lower()
+            return head.startswith("<!doctype") or head.startswith("<html")
+        except Exception:
+            return False
+
+    if INDEX.exists() and not is_html_text(INDEX):
+        try:
+            idx = json.loads(INDEX.read_text(encoding="utf-8"))
+            gen = idx.get("generated_local") or gen
         except Exception as e:
-            print(f"[postprocess] WARN: kunne ikke skrive reparert index.json: {e}")
+            missing_notes.append(f"docs/index.json invalid JSON: {e}")
 
-    idx = idx_obj
-    gen = idx.get("generated_local") or datetime.utcnow().isoformat() + "Z"
+    if idx is None:
+        # forsøk å hente index.json fra speil
+        session = build_session()
+        urls = [
+            f"{RAW_BASE}/index.json?t={os.environ.get('GITHUB_RUN_ID','postproc')}",
+            f"{JSD_BASE}/index.json?t={os.environ.get('GITHUB_RUN_ID','postproc')}",
+            f"{PAG_BASE}/index.json?t={os.environ.get('GITHUB_RUN_ID','postproc')}",
+        ]
+        try:
+            body, used, hdrs = fetch_first_ok(session, urls)
+            if body:
+                idx = json.loads(body.decode("utf-8", errors="replace"))
+                gen = idx.get("generated_local") or gen
+                missing_notes.append(f"postprocess: brukte speil for index.json ({used})")
+            else:
+                missing_notes.append("postprocess: index.json 304 Not Modified – beholder lokal hvis fantes")
+        except Exception as e:
+            missing_notes.append(f"postprocess: klarte ikke hente index.json fra speil: {e}")
 
-    # 2) Bygg assets
-    assets = build_assets(idx)
+    assets = build_assets(idx or {"summary": {"assets": {}}})
 
-    # 3) Les news (best effort)
     news = {}
     if NEWS.exists():
-        news_obj, news_raw = load_local_json_or_html(NEWS)
-        if news_obj is not None:
-            news = news_obj
-        else:
-            if news_raw and looks_like_html(news_raw):
-                print(f"[postprocess] HTML detected in {NEWS} (hopper over).")
-            elif news_raw is None:
-                print(f"[postprocess] MISSING: {NEWS}")
-            else:
-                print(f"[postprocess] INVALID JSON in {NEWS} (hopper over).")
+        try: news = json.loads(NEWS.read_text(encoding="utf-8"))
+        except Exception as e:
+            news = {}
+            missing_notes.append(f"news/news.json invalid JSON: {e}")
 
-    # 4) Skriv utdata atomisk
-    out_obj = {"generated_local": gen, "spec_version": "v1", "assets": assets, "news": news}
-    write_json_atomic(OUT_JSON, out_obj)
+    OUT_JSON.write_text(json.dumps({
+        "generated_local": gen,
+        "spec_version": "v1",
+        "assets": assets,
+        "news": news,
+        "missing": missing_notes
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    md_lines = [
+    md = [
         f"# Daglig rapport – {gen}",
         "",
-        "| Ticker | 52w | Uker≥36WMA | Dist36WMA | Dist36MMA | H≥36 | D≥36 | W≥36 | M≥36 | RSI14(D) | MACD(D) | MACDcross(D) | GDX/GLD>50 | SIL/SLV>50 | Vol20 |",
-        "|---|---|---:|---:|---:|---|---|---|---|---:|---:|---|---|---|---|"
+        "## Manglet/feilet",
+    ] + [f"- {m}" for m in missing_notes] + [
+        "",
+        "## Oversikt",
+        "",
+        "| Ticker | 52w | Uker≥36WMA | Dist36WMA | Dist36MMA | D≥36 | RSI14 | MACD | MACDcross | GDX/GLD>50 | SIL/SLV>50 | Vol20 |",
+        "|---|---|---:|---:|---:|---|---:|---:|---|---|---|---|",
     ]
     for a in assets:
-        f = a["frames"]; h, d, w, m = f["hourly"], f["daily"], f["weekly"], f["monthly"]
-        md_lines.append(
+        d=a["frames"]["daily"]
+        md.append(
             f"| {a['ticker']} | "
-            f"{('H' if a.get('is_52w_high') else '')}{('L' if a.get('is_52w_low') else '')} | "
+            f"{'H' if a.get('is_52w_high') else ''}{'L' if a.get('is_52w_low') else ''} | "
             f"{a.get('weekly_close_count_above_36WMA') or ''} | "
-            f"{(_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else '')}% | "
-            f"{(_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else '')}% | "
-            f"{_bool_to_ja_nei(h.get('close_above_sma36'))} | "
-            f"{_bool_to_ja_nei(d.get('close_above_sma36'))} | "
-            f"{_bool_to_ja_nei(w.get('close_above_sma36'))} | "
-            f"{_bool_to_ja_nei(m.get('close_above_sma36'))} | "
+            f"{_round((a.get('dist_to_36WMA') or 0)*100,2) if isinstance(a.get('dist_to_36WMA'),(int,float)) else ''}% | "
+            f"{_round((a.get('dist_to_36MMA') or 0)*100,2) if isinstance(a.get('dist_to_36MMA'),(int,float)) else ''}% | "
+            f"{'Ja' if d.get('close_above_sma36') else ('Nei' if d.get('close_above_sma36') is False else '')} | "
             f"{_round(d.get('rsi14'),2)} | "
             f"{_round(d.get('macd'),3)} | "
-            f"{_bool_to_ja_nei(d.get('macd_cross'))} | "
-            f"{_bool_to_ja_nei(a.get('gdx_gld_ratio_vs_50dma'))} | "
-            f"{_bool_to_ja_nei(a.get('sil_slv_ratio_vs_50dma'))} | "
-            f"{_bool_to_ja_nei(a.get('vol20_up_ok'))} |"
+            f"{'Ja' if d.get('macd_cross') else ('Nei' if d.get('macd_cross') is False else '')} | "
+            f"{'Ja' if a.get('gdx_gld_ratio_vs_50dma') else ('Nei' if a.get('gdx_gld_ratio_vs_50dma') is False else '')} | "
+            f"{'Ja' if a.get('sil_slv_ratio_vs_50dma') else ('Nei' if a.get('sil_slv_ratio_vs_50dma') is False else '')} | "
+            f"{'Ja' if a.get('vol20_up_ok') else ('Nei' if a.get('vol20_up_ok') is False else '')} |"
         )
-    write_text_atomic(OUT_MD, "\n".join(md_lines))
+    OUT_MD.write_text("\n".join(md), encoding="utf-8")
 
     table_html = build_table_html(assets, gen)
-    write_text_atomic(OUT_TABLE, table_html)
+    OUT_TABLE.write_text(table_html, encoding="utf-8")
 
-    # 5) Oppdater index.html idempotent
+    # injiser tabell i index.html hvis finnes
     if INDEX_HTML.exists():
-        html = INDEX_HTML.read_text(encoding="utf-8")
-        if TABLE_START in html and TABLE_END in html:
-            html = re.sub(rf"{re.escape(TABLE_START)}.*?{re.escape(TABLE_END)}",
-                          table_html, html, flags=re.DOTALL)
-        else:
-            html = re.sub(r'<h2>Daglig tabell.*?</table>\s*(<div id="genstamp">.*?</div>)?',
-                          "", html, flags=re.DOTALL)
-            if "</body>" in html:
-                html = html.replace("</body>", table_html + "\n</body>")
-            else:
-                html += "\n" + table_html
-        write_text_atomic(INDEX_HTML, html)
-    else:
-        minimal = f"""<!doctype html><meta charset="utf-8">
-<title>Daglig rapport</title>
-<body>
-<h1>Daglig rapport</h1>
-{table_html}
-</body>
-"""
-        write_text_atomic(INDEX_HTML, minimal)
-
-    print("[postprocess] OK")
+        try:
+            html = INDEX_HTML.read_text(encoding="utf-8")
+            html = re.sub(r'<h2>Daglig tabell.*?</table>\s*<p>Generert:.*?</p>', "", html, flags=re.DOTALL|re.IGNORECASE)
+            html = html.replace("</body>", table_html + "\n</body>") if "</body>" in html else (html + "\n" + table_html)
+            INDEX_HTML.write_text(html, encoding="utf-8")
+        except Exception:
+            pass
 
 if __name__ == "__main__":
     main()
