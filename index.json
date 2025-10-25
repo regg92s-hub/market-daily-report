@@ -1,35 +1,44 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-  <meta charset="UTF-8" />
-  <title>Daglig rapport</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.5; padding: 16px; max-width: 1100px; margin: 0 auto; }
-    ul { margin-top: 0; }
-    table { border-collapse: collapse; margin-top: 16px; width: 100%; }
-    th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
-    th { background: #f4f4f4; }
-    code { background:#f7f7f7; padding:2px 4px; border-radius:4px; }
-  </style>
-</head>
-<body>
-  <h1>Daglig rapport</h1>
-  <p>Data:
-    <a href="index.json">index.json</a> •
-    <a href="news/news.json">news.json</a> •
-    <a href="filelist.json">filelist.json</a> •
-    <strong><a href="report.json">report.json</a></strong> •
-    <a href="report.md">report.md</a> •
-    <a href="report_table.html">report_table.html</a>
-  </p>
-
-  <h2>Grafer</h2>
-  <ul>
-    <!-- CHARTS_LIST_START -->
-    <!-- CHARTS_LIST_END -->
-  </ul>
-
-  <!-- postprocess_report.py vil injisere en numerisk fallback-tabell nederst -->
-</body>
-</html>
+{
+  "generated_local": "2025-10-25T19:52:17.441000+02:00",
+  "version": "2025-09-28-compact-2",
+  "summary": {
+    "generated_local": "2025-10-25T19:52:17.441000+02:00",
+    "assets": {}
+  },
+  "fred": {
+    "DXY": {
+      "last": 90.8221,
+      "dist_to_200DMA": -0.014992958289782575
+    },
+    "VIX": {
+      "last": 17.3
+    },
+    "yields": {
+      "DGS3MO": 3.95,
+      "DGS2": 3.48,
+      "DGS10": 4.01,
+      "2s10s": 0.5299999999999998
+    }
+  },
+  "notes": {
+    "ratios": {
+      "GDX/GLD": false,
+      "SIL/SLV": false,
+      "GLD/SPY": false
+    },
+    "vol_filters": {
+      "GDX": false,
+      "GDXJ": false,
+      "SIL": false,
+      "SILJ": false
+    },
+    "market_temp": {
+      "HYG_LQD_ratio": false,
+      "SPY_ACWI_ratio": false,
+      "GLD_SPY_ratio": false,
+      "DXY_vs_200DMA": true,
+      "VIX": true,
+      "yields_and_2s10s": true
+    }
+  }
+}
