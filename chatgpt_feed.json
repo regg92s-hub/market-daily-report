@@ -1,126 +1,463 @@
 {
   "spec": "chatgpt-feed-v1",
-  "generated_utc": "2025-10-25T18:55:28Z",
+  "generated_utc": "2025-10-26T16:00:15Z",
   "mirrors": {
-    "raw": "https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages",
-    "jsdelivr": "https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages",
-    "pages": "https://regg92s-hub.github.io/market-daily-report"
+    "primary": "https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages/chatgpt_feed.json",
+    "jsdelivr": "https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages/chatgpt_feed.json",
+    "pages": "https://regg92s-hub.github.io/market-daily-report/chatgpt_feed.json",
+    "txt": "https://regg92s-hub.github.io/market-daily-report/chatgpt_feed.txt",
+    "html": "https://regg92s-hub.github.io/market-daily-report/chatgpt_feed.html"
   },
   "tickers": [
     {
-      "symbol": "GLD",
-      "metrics": {},
-      "charts": {}
+      "ticker": "GLD",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "SLV",
-      "metrics": {},
-      "charts": {}
+      "ticker": "SLV",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "USO",
-      "metrics": {},
-      "charts": {}
+      "ticker": "USO",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "ETH-USD",
-      "metrics": {},
-      "charts": {}
+      "ticker": "ETH-USD",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "BTC-USD",
-      "metrics": {},
-      "charts": {}
+      "ticker": "BTC-USD",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "URNM",
-      "metrics": {},
-      "charts": {}
+      "ticker": "URNM",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "GDX",
-      "metrics": {},
-      "charts": {}
+      "ticker": "GDX",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "GDXJ",
-      "metrics": {},
-      "charts": {}
+      "ticker": "GDXJ",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "SIL",
-      "metrics": {},
-      "charts": {}
+      "ticker": "SIL",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "SILJ",
-      "metrics": {},
-      "charts": {}
+      "ticker": "SILJ",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "ACWI",
-      "metrics": {},
-      "charts": {}
+      "ticker": "ACWI",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "SPY",
-      "metrics": {},
-      "charts": {}
+      "ticker": "SPY",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "DTWEXM",
-      "metrics": {},
-      "charts": {}
+      "ticker": "DTWEXM",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "VIXCLS",
-      "metrics": {},
-      "charts": {}
+      "ticker": "VIXCLS",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "HYG",
-      "metrics": {},
-      "charts": {}
+      "ticker": "HYG",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "LQD",
-      "metrics": {},
-      "charts": {}
+      "ticker": "LQD",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "DGS10",
-      "metrics": {},
-      "charts": {}
+      "ticker": "DGS10",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "DGS3MO",
-      "metrics": {},
-      "charts": {}
+      "ticker": "DGS3MO",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "DGS2",
-      "metrics": {},
-      "charts": {}
+      "ticker": "DGS2",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     },
     {
-      "symbol": "2s10s",
-      "metrics": {},
-      "charts": {}
+      "ticker": "2s10s",
+      "metrics": {
+        "last": null,
+        "h52": null,
+        "l52": null,
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "rsi14": null,
+        "macd_line": null,
+        "macd_signal": null,
+        "macd_hist": null,
+        "weekly_above_36w": null
+      },
+      "charts": {
+        "best": null,
+        "daily": null,
+        "weekly": null,
+        "monthly": null,
+        "hourly": null
+      }
     }
   ],
   "news": [
     {
       "title": "“Gold Bubble” Callers, On Cue",
-      "source": "NFTRH",
-      "url": "https://nftrh.com/2025/10/24/gold-bubble-callers-on-cue",
-      "timestamp_iso": "2025-10-24T18:45:51+00:00",
       "summary": "",
-      "image": "news/NFTRH__Gold_Bubble_Callers_On_Cue.png"
+      "url": "https://nftrh.com/2025/10/24/gold-bubble-callers-on-cue/",
+      "image": "news/NFTRH__Gold_Bubble_Callers_On_Cue.png",
+      "timestamp": null,
+      "source": "NFTRH"
     }
-  ],
-  "notes": {},
-  "market_temp": {},
-  "missing": [
-    "docs/index.json: missing or HTML"
   ]
 }
