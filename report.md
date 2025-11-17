@@ -1,4 +1,4 @@
-# Daglig rapport – 2025-11-16T19:55:38.421200+01:00
+# Daglig rapport – 2025-11-17T19:59:11.575127+01:00
 
 ## Manglet/feilet
 
