@@ -15,7 +15,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 
-VERSION = "2026-03-30-cycles-homepage-1"
+VERSION = "2026-03-30-cycles-homepage-2"
 TZ = ZoneInfo("Europe/Oslo")
 NOW = datetime.now(tz=TZ)
 
@@ -27,11 +27,27 @@ DOCS.mkdir(exist_ok=True)
 CHARTS.mkdir(exist_ok=True)
 NEWS_DIR.mkdir(exist_ok=True)
 
-FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
-print(f"Full run mode: {FORCE} at {NOW.isoformat()} (version {VERSION})")
+FORCE_INPUT = os.environ.get("FORCE_RUN", "false").lower() == "true"
+IN_GITHUB_ACTIONS = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+FORCE = FORCE_INPUT or IN_GITHUB_ACTIONS
+print(
+    f"Full run mode: {FORCE} "
+    f"(force_input={FORCE_INPUT}, github_actions={IN_GITHUB_ACTIONS}) "
+    f"at {NOW.isoformat()} (version {VERSION})"
+)
 
 with open(DOCS / "run_mode.json", "w", encoding="utf-8") as f:
-    json.dump({"force": FORCE, "now": NOW.isoformat(), "version": VERSION}, f, indent=2)
+    json.dump(
+        {
+            "force": FORCE,
+            "force_input": FORCE_INPUT,
+            "github_actions": IN_GITHUB_ACTIONS,
+            "now": NOW.isoformat(),
+            "version": VERSION,
+        },
+        f,
+        indent=2,
+    )
 
 if not FORCE and not ((NOW.hour == 19 and NOW.minute >= 45) or (NOW.hour == 20 and NOW.minute <= 10)):
     with open(DOCS / "heartbeat.json", "w", encoding="utf-8") as f:
