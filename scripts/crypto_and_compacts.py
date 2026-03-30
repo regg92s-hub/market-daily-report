@@ -7,7 +7,7 @@ Denne jobben:
 - fyller inn manglende data for weekly/monthly compact-grafer
 - bruker mer robuste fallback-kandidater for Yahoo Finance
 - oppdaterer kategorier på forsiden
-- bytter Platina fra PLTM til PPLT
+- bruker PPLT for platina
 """
 import os
 import json
@@ -57,22 +57,12 @@ INSTRUMENT_GROUPS = [
             {"id": "EEM", "label": "MSCI EM", "symbol_label": "EEM", "source": "yf", "candidates": ["EEM", "VWO"]},
             {"id": "VNQ", "label": "Housing US", "symbol_label": "VNQ", "source": "yf", "candidates": ["VNQ", "IYR", "SCHH"]},
             {"id": "TRET", "label": "Housing global", "symbol_label": "TRET", "source": "yf", "candidates": ["TRET", "REET", "VNQI"]},
-        ],
-    },
-    {
-        "key": "renter_og_finansielle_forhold",
-        "title": "2. Renter, kurve og finansielle forhold",
-        "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold.",
-        "instruments": [
-            {"id": "UTWO", "label": "2-årig UST", "symbol_label": "UTWO", "source": "yf", "candidates": ["UTWO", "SHY", "VGSH", "USTB"]},
-            {"id": "UTEN", "label": "10-årig UST", "symbol_label": "UTEN", "source": "yf", "candidates": ["UTEN", "IEF", "GOVT", "TLH"]},
-            {"id": "2S10S", "label": "2s10s", "symbol_label": "STPU / UCT2", "source": "fred_spread"},
-            {"id": "SCHP", "label": "10-årig realrente", "symbol_label": "SCHP", "source": "yf", "candidates": ["SCHP", "TIP"]},
+            {"id": "QQQ", "label": "Nasdaq-100", "symbol_label": "QQQ", "source": "yf", "candidates": ["QQQ", "QQQM"]},
         ],
     },
     {
         "key": "inflasjonssyklusen",
-        "title": "3. Inflasjonssyklusen",
+        "title": "2. Inflasjonssyklusen",
         "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon.",
         "instruments": [
             {"id": "BCOM", "label": "Commodity", "symbol_label": "BCOM", "source": "yf", "candidates": ["BCOM", "PDBC", "DBC"]},
@@ -83,44 +73,18 @@ INSTRUMENT_GROUPS = [
     },
     {
         "key": "kredittsyklusen",
-        "title": "4. Kredittsyklusen",
+        "title": "3. Kredittsyklusen",
         "description": "Her følger du hvor mye stress eller lettelse det er i kredittmarkedet.",
         "instruments": [
             {"id": "HYG", "label": "US High Yield OAS", "symbol_label": "HYG", "source": "yf", "candidates": ["HYG", "JNK"]},
         ],
     },
     {
-        "key": "valuta_og_dollar",
-        "title": "5. Valuta- og dollar-syklusen",
-        "description": "Dette er hovedinstrumentet for dollarregimet og globalt finansielt press.",
+        "key": "valuta_edelmetaller_og_nisjeravarer",
+        "title": "4. Valuta, edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som fanger opp dollarregimet, globalt finansielt press, realrente, safe haven, industribruk og spesialsykluser.",
         "instruments": [
             {"id": "UUP", "label": "DXY", "symbol_label": "UUP", "source": "yf", "candidates": ["UUP", "USDU", "DX-Y.NYB"]},
-        ],
-    },
-    {
-        "key": "lederskap_i_aksjemarkedet",
-        "title": "6. Lederskap innad i aksjemarkedet",
-        "description": "Dette er instrumenter som sier noe om hvilke deler av aksjemarkedet som leder an.",
-        "instruments": [
-            {"id": "QQQ", "label": "Nasdaq-100", "symbol_label": "QQQ", "source": "yf", "candidates": ["QQQ", "QQQM"]},
-            {"id": "SOXQ", "label": "SOX / semiconductors", "symbol_label": "SOXQ", "source": "yf", "candidates": ["SOXQ", "SMH", "SOXX"]},
-        ],
-    },
-    {
-        "key": "volatilitet_og_risikovilje",
-        "title": "7. Volatilitet og risikovilje",
-        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet.",
-        "instruments": [
-            {"id": "VIXY", "label": "VIX", "symbol_label": "VIXY", "source": "yf", "candidates": ["VIXY", "^VIX"]},
-            {"id": "BTC", "label": "BTC", "symbol_label": "BITO / IBIT", "source": "yf", "candidates": ["BITO", "IBIT", "BTC-USD"]},
-            {"id": "ETHA", "label": "ETH", "symbol_label": "ETHA", "source": "yf", "candidates": ["ETHA", "ETH-USD"]},
-        ],
-    },
-    {
-        "key": "edelmetaller_og_nisjeravarer",
-        "title": "8. Edelmetaller og nisjeråvarer",
-        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser.",
-        "instruments": [
             {"id": "GLD", "label": "Gull", "symbol_label": "GLD", "source": "yf", "candidates": ["GLD", "IAU"]},
             {"id": "SLV", "label": "Sølv", "symbol_label": "SLV", "source": "yf", "candidates": ["SLV", "SIVR"]},
             {"id": "URA", "label": "Uranium", "symbol_label": "URA", "source": "yf", "candidates": ["URA", "URNM"]},
@@ -128,7 +92,19 @@ INSTRUMENT_GROUPS = [
             {"id": "PALL", "label": "Palladium", "symbol_label": "PALL", "source": "yf", "candidates": ["PALL", "PA=F"]},
         ],
     },
+    {
+        "key": "volatilitet_og_risikovilje",
+        "title": "5. Volatilitet og risikovilje",
+        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet.",
+        "instruments": [
+            {"id": "VIXY", "label": "VIX", "symbol_label": "VIXY", "source": "yf", "candidates": ["VIXY", "^VIX"]},
+            {"id": "BTC", "label": "BTC", "symbol_label": "BITO / IBIT", "source": "yf", "candidates": ["BITO", "IBIT", "BTC-USD"]},
+            {"id": "ETHA", "label": "ETH", "symbol_label": "ETHA", "source": "yf", "candidates": ["ETHA", "ETH-USD"]},
+        ],
+    },
 ]
+
+REMOVED_IDS = {"UTWO", "UTEN", "2S10S", "SCHP", "SOXQ", "PLTM"}
 
 
 def load_json(path: Path, default):
@@ -143,10 +119,6 @@ def load_json(path: Path, default):
 
 def save_json(path: Path, obj):
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
-
-
-def safe_id(s: str) -> str:
-    return re.sub(r"[^A-Za-z0-9_-]+", "_", s or "")
 
 
 def sma(s, n):
@@ -222,45 +194,6 @@ def yf_series_from_candidates(candidates):
             return df, sym
         time.sleep(0.5)
     return None, None
-
-
-def fred_series(series_id):
-    if not FRED_KEY:
-        return None
-    url = (
-        f"{FRED_BASE}?series_id={series_id}"
-        f"&api_key={FRED_KEY}&file_type=json&observation_start=1990-01-01"
-    )
-    try:
-        r = HTTP.get(url, timeout=60)
-        r.raise_for_status()
-        obs = r.json().get("observations", [])
-        if not obs:
-            return None
-        df = pd.DataFrame(obs)[["date", "value"]]
-        df["date"] = pd.to_datetime(df["date"])
-        df["value"] = pd.to_numeric(df["value"], errors="coerce")
-        df = df.set_index("date").sort_index().dropna()
-        df = df.asfreq("B").ffill()
-        df["close_use"] = df["value"]
-        df["volume"] = np.nan
-        return df[["close_use", "volume"]]
-    except Exception:
-        return None
-
-
-def fred_2s10s_series():
-    y2 = fred_series("DGS2")
-    y10 = fred_series("DGS10")
-    if y2 is None or y10 is None or y2.empty or y10.empty:
-        return None, None
-    df = pd.DataFrame(index=y10.index.union(y2.index))
-    df["y2"] = y2["close_use"]
-    df["y10"] = y10["close_use"]
-    df = df.sort_index().ffill().dropna()
-    df["close_use"] = df["y10"] - df["y2"]
-    df["volume"] = np.nan
-    return df[["close_use", "volume"]], "FRED:DGS10-DGS2"
 
 
 def with_indicators(df, ma_len=36):
@@ -434,13 +367,14 @@ def main():
     idx = load_json(INDEX, default={})
     current_assets = ((idx.get("summary") or {}).get("assets") or {}) if isinstance(idx, dict) else {}
 
-    for old_name in ("PLTM_weekly_compact.png", "PLTM_monthly_compact.png"):
-        old_path = CHARTS / old_name
-        if old_path.exists():
-            try:
-                old_path.unlink()
-            except Exception:
-                pass
+    for removed in REMOVED_IDS:
+        for suffix in ("weekly_compact.png", "monthly_compact.png"):
+            old_path = CHARTS / f"{removed}_{suffix}"
+            if old_path.exists():
+                try:
+                    old_path.unlink()
+                except Exception:
+                    pass
 
     summary = {
         "generated_local": idx.get("generated_local") or pd.Timestamp.utcnow().isoformat(),
@@ -463,10 +397,7 @@ def main():
             if instrument_id == "PPLT" and not asset_existing:
                 asset_existing = current_assets.get("PLTM") or {}
 
-            if inst["source"] == "fred_spread":
-                df, resolved_symbol = fred_2s10s_series()
-            else:
-                df, resolved_symbol = yf_series_from_candidates(inst["candidates"])
+            df, resolved_symbol = yf_series_from_candidates(inst["candidates"])
 
             entry = {
                 "id": instrument_id,
@@ -525,7 +456,7 @@ def main():
     save_json(FILELIST, {"charts": files})
 
     (DOCS / "index.html").write_text(build_homepage(idx, files), encoding="utf-8")
-    print("crypto_and_compacts.py: backfill complete")
+    print("crypto_and_compacts.py: category rebuild complete")
 
 
 if __name__ == "__main__":
