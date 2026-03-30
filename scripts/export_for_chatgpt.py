@@ -6,12 +6,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 
-def load_json(p):
-    with open(p, "r", encoding="utf-8") as f:
-        return json.load(f)
+def load_json(p, default=None):
+    fallback = {} if default is None else default
+    try:
+        raw = Path(p).read_text(encoding="utf-8")
+    except Exception:
+        return fallback
+    if not raw.strip():
+        return fallback
+    try:
+        return json.loads(raw)
+    except Exception:
+        return fallback
 
 def norm(s):
-    return re.sub(r"\s+", " ", s or "").strip()
+    return re.sub(r"\\s+", " ", s or "").strip()
 
 def absolute_url(u):
     if not u:
@@ -26,7 +35,7 @@ def charts_from_filelist(filelist):
         fp = str(p)
         if not fp.endswith(".png"):
             continue
-        m = re.search(r"(?:^|/)charts/([A-Za-z0-9\-_]+)_(weekly|monthly)_compact\.png$", fp)
+        m = re.search(r"(?:^|/)charts/([A-Za-z0-9\-_]+)_(weekly|monthly)_compact\\.png$", fp)
         if not m:
             continue
         ticker, tf = m.group(1), m.group(2)
@@ -132,10 +141,10 @@ def write_all(feed):
         f.write(html_doc)
 
 def main():
-    idx = load_json(DOCS / "index.json") if (DOCS / "index.json").exists() else {}
+    idx = load_json(DOCS / "index.json", default={}) if (DOCS / "index.json").exists() else {}
     fl_path = DOCS / "filelist.json"
     if fl_path.exists():
-        fl_raw = load_json(fl_path)
+        fl_raw = load_json(fl_path, default={})
         if isinstance(fl_raw, list):
             filelist = fl_raw
         else:
@@ -146,7 +155,7 @@ def main():
     news = {}
     npath = DOCS / "news" / "news.json"
     if npath.exists():
-        raw = load_json(npath)
+        raw = load_json(npath, default={})
         news = raw
 
     feed = build_feed(idx, filelist, news)
