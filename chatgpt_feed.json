@@ -1,6 +1,6 @@
 {
   "spec": "chatgpt-feed-v2",
-  "generated_utc": "2026-03-30T13:34:09Z",
+  "generated_utc": "2026-03-30T13:54:31Z",
   "mirrors": {
     "primary": "https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages/chatgpt_feed.json",
     "jsdelivr": "https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages/chatgpt_feed.json",
@@ -8,7 +8,606 @@
     "txt": "https://regg92s-hub.github.io/market-daily-report/chatgpt_feed.txt",
     "html": "https://regg92s-hub.github.io/market-daily-report/chatgpt_feed.html"
   },
-  "tickers": [],
+  "tickers": [
+    {
+      "ticker": "SPY",
+      "display_name": "S&P 500",
+      "symbol_label": "SPY",
+      "resolved_symbol": null,
+      "category": {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "IWM",
+      "display_name": "Russell 2000",
+      "symbol_label": "IWM",
+      "resolved_symbol": null,
+      "category": {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "EXSA",
+      "display_name": "STOXX Europe 600",
+      "symbol_label": "EXSA",
+      "resolved_symbol": null,
+      "category": {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "EEM",
+      "display_name": "MSCI EM",
+      "symbol_label": "EEM",
+      "resolved_symbol": null,
+      "category": {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "VNQ",
+      "display_name": "Housing US",
+      "symbol_label": "VNQ",
+      "resolved_symbol": null,
+      "category": {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "TRET",
+      "display_name": "Housing global",
+      "symbol_label": "TRET",
+      "resolved_symbol": null,
+      "category": {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "UTWO",
+      "display_name": "2-årig UST",
+      "symbol_label": "UTWO",
+      "resolved_symbol": null,
+      "category": {
+        "key": "renter_og_finansielle_forhold",
+        "title": "2. Renter, kurve og finansielle forhold",
+        "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "UTEN",
+      "display_name": "10-årig UST",
+      "symbol_label": "UTEN",
+      "resolved_symbol": null,
+      "category": {
+        "key": "renter_og_finansielle_forhold",
+        "title": "2. Renter, kurve og finansielle forhold",
+        "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "2S10S",
+      "display_name": "2s10s",
+      "symbol_label": "STPU / UCT2",
+      "resolved_symbol": "FRED:DGS10-DGS2",
+      "category": {
+        "key": "renter_og_finansielle_forhold",
+        "title": "2. Renter, kurve og finansielle forhold",
+        "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
+      },
+      "metrics": {
+        "dist_36wma": -0.21516587677725113,
+        "dist_36mma": 25.28571428571425,
+        "weekly_rsi14": 28.84615384615391,
+        "monthly_rsi14": 53.52112676056337,
+        "weekly_macd": -0.003304466305302789,
+        "monthly_macd": 0.1865502284593537
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "SCHP",
+      "display_name": "10-årig realrente",
+      "symbol_label": "SCHP",
+      "resolved_symbol": null,
+      "category": {
+        "key": "renter_og_finansielle_forhold",
+        "title": "2. Renter, kurve og finansielle forhold",
+        "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "BCOM",
+      "display_name": "Commodity",
+      "symbol_label": "BCOM",
+      "resolved_symbol": null,
+      "category": {
+        "key": "inflasjonssyklusen",
+        "title": "3. Inflasjonssyklusen",
+        "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "USO",
+      "display_name": "Olje",
+      "symbol_label": "USO",
+      "resolved_symbol": null,
+      "category": {
+        "key": "inflasjonssyklusen",
+        "title": "3. Inflasjonssyklusen",
+        "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "UNG",
+      "display_name": "Naturgass",
+      "symbol_label": "UNG",
+      "resolved_symbol": null,
+      "category": {
+        "key": "inflasjonssyklusen",
+        "title": "3. Inflasjonssyklusen",
+        "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "COPX",
+      "display_name": "Kobber",
+      "symbol_label": "COPX",
+      "resolved_symbol": null,
+      "category": {
+        "key": "inflasjonssyklusen",
+        "title": "3. Inflasjonssyklusen",
+        "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "HYG",
+      "display_name": "US High Yield OAS",
+      "symbol_label": "HYG",
+      "resolved_symbol": null,
+      "category": {
+        "key": "kredittsyklusen",
+        "title": "4. Kredittsyklusen",
+        "description": "Her følger du hvor mye stress eller lettelse det er i kredittmarkedet."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "UUP",
+      "display_name": "DXY",
+      "symbol_label": "UUP",
+      "resolved_symbol": null,
+      "category": {
+        "key": "valuta_og_dollar",
+        "title": "5. Valuta- og dollar-syklusen",
+        "description": "Dette er hovedinstrumentet for dollarregimet og globalt finansielt press."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "QQQ",
+      "display_name": "Nasdaq-100",
+      "symbol_label": "QQQ",
+      "resolved_symbol": null,
+      "category": {
+        "key": "lederskap_i_aksjemarkedet",
+        "title": "6. Lederskap innad i aksjemarkedet",
+        "description": "Dette er instrumenter som sier noe om hvilke deler av aksjemarkedet som leder an."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "SOXQ",
+      "display_name": "SOX / semiconductors",
+      "symbol_label": "SOXQ",
+      "resolved_symbol": null,
+      "category": {
+        "key": "lederskap_i_aksjemarkedet",
+        "title": "6. Lederskap innad i aksjemarkedet",
+        "description": "Dette er instrumenter som sier noe om hvilke deler av aksjemarkedet som leder an."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "VIXY",
+      "display_name": "VIX",
+      "symbol_label": "VIXY",
+      "resolved_symbol": null,
+      "category": {
+        "key": "volatilitet_og_risikovilje",
+        "title": "7. Volatilitet og risikovilje",
+        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "BTC",
+      "display_name": "BTC",
+      "symbol_label": "BITO / IBIT",
+      "resolved_symbol": null,
+      "category": {
+        "key": "volatilitet_og_risikovilje",
+        "title": "7. Volatilitet og risikovilje",
+        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "ETHA",
+      "display_name": "ETH",
+      "symbol_label": "ETHA",
+      "resolved_symbol": null,
+      "category": {
+        "key": "volatilitet_og_risikovilje",
+        "title": "7. Volatilitet og risikovilje",
+        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "GLD",
+      "display_name": "Gull",
+      "symbol_label": "GLD",
+      "resolved_symbol": null,
+      "category": {
+        "key": "edelmetaller_og_nisjeravarer",
+        "title": "8. Edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "SLV",
+      "display_name": "Sølv",
+      "symbol_label": "SLV",
+      "resolved_symbol": null,
+      "category": {
+        "key": "edelmetaller_og_nisjeravarer",
+        "title": "8. Edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "URA",
+      "display_name": "Uranium",
+      "symbol_label": "URA",
+      "resolved_symbol": null,
+      "category": {
+        "key": "edelmetaller_og_nisjeravarer",
+        "title": "8. Edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "PLTM",
+      "display_name": "Platina",
+      "symbol_label": "PLTM",
+      "resolved_symbol": null,
+      "category": {
+        "key": "edelmetaller_og_nisjeravarer",
+        "title": "8. Edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "PALL",
+      "display_name": "Palladium",
+      "symbol_label": "PALL",
+      "resolved_symbol": null,
+      "category": {
+        "key": "edelmetaller_og_nisjeravarer",
+        "title": "8. Edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": null,
+        "monthly_rsi14": null,
+        "weekly_macd": null,
+        "monthly_macd": null
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    }
+  ],
   "news": [
     {
       "title": "Protected: Notes From the Rabbit Hole, #908",

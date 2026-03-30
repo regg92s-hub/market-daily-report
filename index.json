@@ -1,35 +1,518 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-  <meta charset="UTF-8" />
-  <title>Daglig rapport</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.5; padding: 16px; max-width: 1100px; margin: 0 auto; }
-    ul { margin-top: 0; }
-    table { border-collapse: collapse; margin-top: 16px; width: 100%; }
-    th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
-    th { background: #f4f4f4; }
-    code { background:#f7f7f7; padding:2px 4px; border-radius:4px; }
-  </style>
-</head>
-<body>
-  <h1>Daglig rapport</h1>
-  <p>Data:
-    <a href="index.json">index.json</a> •
-    <a href="news/news.json">news.json</a> •
-    <a href="filelist.json">filelist.json</a> •
-    <strong><a href="report.json">report.json</a></strong> •
-    <a href="report.md">report.md</a> •
-    <a href="report_table.html">report_table.html</a>
-  </p>
-
-  <h2>Grafer</h2>
-  <ul>
-    <!-- CHARTS_LIST_START -->
-    <!-- CHARTS_LIST_END -->
-  </ul>
-
-  <!-- postprocess_report.py vil injisere en numerisk fallback-tabell nederst -->
-</body>
-</html>
+{
+  "generated_local": "2026-03-30T15:51:37.410372+02:00",
+  "version": "2026-03-30-cycles-homepage-2",
+  "summary": {
+    "generated_local": "2026-03-30T15:51:37.410372+02:00",
+    "assets": {
+      "SPY": {
+        "id": "SPY",
+        "display_name": "S&P 500",
+        "symbol_label": "SPY",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "vekstsyklusen",
+        "category_title": "1. Vekstsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "IWM": {
+        "id": "IWM",
+        "display_name": "Russell 2000",
+        "symbol_label": "IWM",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "vekstsyklusen",
+        "category_title": "1. Vekstsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "EXSA": {
+        "id": "EXSA",
+        "display_name": "STOXX Europe 600",
+        "symbol_label": "EXSA",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "vekstsyklusen",
+        "category_title": "1. Vekstsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "EEM": {
+        "id": "EEM",
+        "display_name": "MSCI EM",
+        "symbol_label": "EEM",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "vekstsyklusen",
+        "category_title": "1. Vekstsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "VNQ": {
+        "id": "VNQ",
+        "display_name": "Housing US",
+        "symbol_label": "VNQ",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "vekstsyklusen",
+        "category_title": "1. Vekstsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "TRET": {
+        "id": "TRET",
+        "display_name": "Housing global",
+        "symbol_label": "TRET",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "vekstsyklusen",
+        "category_title": "1. Vekstsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "UTWO": {
+        "id": "UTWO",
+        "display_name": "2-årig UST",
+        "symbol_label": "UTWO",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "renter_og_finansielle_forhold",
+        "category_title": "2. Renter, kurve og finansielle forhold",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "UTEN": {
+        "id": "UTEN",
+        "display_name": "10-årig UST",
+        "symbol_label": "UTEN",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "renter_og_finansielle_forhold",
+        "category_title": "2. Renter, kurve og finansielle forhold",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "2S10S": {
+        "id": "2S10S",
+        "display_name": "2s10s",
+        "symbol_label": "STPU / UCT2",
+        "resolved_symbol": "FRED:DGS10-DGS2",
+        "source": "fred_spread",
+        "category_key": "renter_og_finansielle_forhold",
+        "category_title": "2. Renter, kurve og finansielle forhold",
+        "frames": {
+          "daily": {
+            "last": 0.45999999999999996,
+            "sma36": 0.5836111111111111,
+            "close_above_sma36": false,
+            "rsi14": 31.428571428571516,
+            "macd": -0.03764319661336479,
+            "macd_signal": -0.03435878995494247,
+            "macd_hist": -0.0032844066584223203,
+            "macd_cross": false
+          },
+          "weekly": {
+            "last": 0.45999999999999996,
+            "sma36": 0.586111111111111,
+            "close_above_sma36": false,
+            "rsi14": 28.84615384615391,
+            "macd": -0.003304466305302789,
+            "macd_signal": 0.02374822426891687,
+            "macd_hist": -0.02705269057421966,
+            "macd_cross": false
+          },
+          "monthly": {
+            "last": 0.45999999999999996,
+            "sma36": 0.017500000000000022,
+            "close_above_sma36": true,
+            "rsi14": 53.52112676056337,
+            "macd": 0.1865502284593537,
+            "macd_signal": 0.1897977493578271,
+            "macd_hist": -0.0032475208984733828,
+            "macd_cross": false
+          }
+        },
+        "missing_data": false,
+        "52w_high": 0.7399999999999998,
+        "52w_low": 0.4299999999999997,
+        "dist_to_36WMA": -0.21516587677725113,
+        "dist_to_36MMA": 25.28571428571425
+      },
+      "SCHP": {
+        "id": "SCHP",
+        "display_name": "10-årig realrente",
+        "symbol_label": "SCHP",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "renter_og_finansielle_forhold",
+        "category_title": "2. Renter, kurve og finansielle forhold",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "BCOM": {
+        "id": "BCOM",
+        "display_name": "Commodity",
+        "symbol_label": "BCOM",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "inflasjonssyklusen",
+        "category_title": "3. Inflasjonssyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "USO": {
+        "id": "USO",
+        "display_name": "Olje",
+        "symbol_label": "USO",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "inflasjonssyklusen",
+        "category_title": "3. Inflasjonssyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "UNG": {
+        "id": "UNG",
+        "display_name": "Naturgass",
+        "symbol_label": "UNG",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "inflasjonssyklusen",
+        "category_title": "3. Inflasjonssyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "COPX": {
+        "id": "COPX",
+        "display_name": "Kobber",
+        "symbol_label": "COPX",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "inflasjonssyklusen",
+        "category_title": "3. Inflasjonssyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "HYG": {
+        "id": "HYG",
+        "display_name": "US High Yield OAS",
+        "symbol_label": "HYG",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "kredittsyklusen",
+        "category_title": "4. Kredittsyklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "UUP": {
+        "id": "UUP",
+        "display_name": "DXY",
+        "symbol_label": "UUP",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "valuta_og_dollar",
+        "category_title": "5. Valuta- og dollar-syklusen",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "QQQ": {
+        "id": "QQQ",
+        "display_name": "Nasdaq-100",
+        "symbol_label": "QQQ",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "lederskap_i_aksjemarkedet",
+        "category_title": "6. Lederskap innad i aksjemarkedet",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "SOXQ": {
+        "id": "SOXQ",
+        "display_name": "SOX / semiconductors",
+        "symbol_label": "SOXQ",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "lederskap_i_aksjemarkedet",
+        "category_title": "6. Lederskap innad i aksjemarkedet",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "VIXY": {
+        "id": "VIXY",
+        "display_name": "VIX",
+        "symbol_label": "VIXY",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "volatilitet_og_risikovilje",
+        "category_title": "7. Volatilitet og risikovilje",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "BTC": {
+        "id": "BTC",
+        "display_name": "BTC",
+        "symbol_label": "BITO / IBIT",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "volatilitet_og_risikovilje",
+        "category_title": "7. Volatilitet og risikovilje",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "ETHA": {
+        "id": "ETHA",
+        "display_name": "ETH",
+        "symbol_label": "ETHA",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "volatilitet_og_risikovilje",
+        "category_title": "7. Volatilitet og risikovilje",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "GLD": {
+        "id": "GLD",
+        "display_name": "Gull",
+        "symbol_label": "GLD",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "edelmetaller_og_nisjeravarer",
+        "category_title": "8. Edelmetaller og nisjeråvarer",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "SLV": {
+        "id": "SLV",
+        "display_name": "Sølv",
+        "symbol_label": "SLV",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "edelmetaller_og_nisjeravarer",
+        "category_title": "8. Edelmetaller og nisjeråvarer",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "URA": {
+        "id": "URA",
+        "display_name": "Uranium",
+        "symbol_label": "URA",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "edelmetaller_og_nisjeravarer",
+        "category_title": "8. Edelmetaller og nisjeråvarer",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "PLTM": {
+        "id": "PLTM",
+        "display_name": "Platina",
+        "symbol_label": "PLTM",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "edelmetaller_og_nisjeravarer",
+        "category_title": "8. Edelmetaller og nisjeråvarer",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      },
+      "PALL": {
+        "id": "PALL",
+        "display_name": "Palladium",
+        "symbol_label": "PALL",
+        "resolved_symbol": null,
+        "source": "yf",
+        "category_key": "edelmetaller_og_nisjeravarer",
+        "category_title": "8. Edelmetaller og nisjeråvarer",
+        "frames": {
+          "daily": {},
+          "weekly": {},
+          "monthly": {}
+        },
+        "missing_data": true
+      }
+    },
+    "categories": [
+      {
+        "key": "vekstsyklusen",
+        "title": "1. Vekstsyklusen",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje.",
+        "instrument_ids": [
+          "SPY",
+          "IWM",
+          "EXSA",
+          "EEM",
+          "VNQ",
+          "TRET"
+        ]
+      },
+      {
+        "key": "renter_og_finansielle_forhold",
+        "title": "2. Renter, kurve og finansielle forhold",
+        "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold.",
+        "instrument_ids": [
+          "UTWO",
+          "UTEN",
+          "2S10S",
+          "SCHP"
+        ]
+      },
+      {
+        "key": "inflasjonssyklusen",
+        "title": "3. Inflasjonssyklusen",
+        "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon.",
+        "instrument_ids": [
+          "BCOM",
+          "USO",
+          "UNG",
+          "COPX"
+        ]
+      },
+      {
+        "key": "kredittsyklusen",
+        "title": "4. Kredittsyklusen",
+        "description": "Her følger du hvor mye stress eller lettelse det er i kredittmarkedet.",
+        "instrument_ids": [
+          "HYG"
+        ]
+      },
+      {
+        "key": "valuta_og_dollar",
+        "title": "5. Valuta- og dollar-syklusen",
+        "description": "Dette er hovedinstrumentet for dollarregimet og globalt finansielt press.",
+        "instrument_ids": [
+          "UUP"
+        ]
+      },
+      {
+        "key": "lederskap_i_aksjemarkedet",
+        "title": "6. Lederskap innad i aksjemarkedet",
+        "description": "Dette er instrumenter som sier noe om hvilke deler av aksjemarkedet som leder an.",
+        "instrument_ids": [
+          "QQQ",
+          "SOXQ"
+        ]
+      },
+      {
+        "key": "volatilitet_og_risikovilje",
+        "title": "7. Volatilitet og risikovilje",
+        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet.",
+        "instrument_ids": [
+          "VIXY",
+          "BTC",
+          "ETHA"
+        ]
+      },
+      {
+        "key": "edelmetaller_og_nisjeravarer",
+        "title": "8. Edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser.",
+        "instrument_ids": [
+          "GLD",
+          "SLV",
+          "URA",
+          "PLTM",
+          "PALL"
+        ]
+      }
+    ]
+  },
+  "notes": {
+    "homepage": "Forsiden viser kun weekly_compact.png og monthly_compact.png gruppert etter kategori og sortert på RSI(14) monthly.",
+    "instrument_count": 26
+  }
+}

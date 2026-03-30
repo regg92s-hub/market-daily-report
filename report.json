@@ -1,7 +1,1412 @@
 {
-  "generated_local": "2026-03-29T20:02:42.887928+02:00",
+  "generated_local": "2026-03-30T15:51:37.410372+02:00",
   "spec_version": "v1",
-  "assets": [],
+  "assets": [
+    {
+      "ticker": "SPY",
+      "display_name": "S&P 500",
+      "symbol_label": "SPY",
+      "category_title": "1. Vekstsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "IWM",
+      "display_name": "Russell 2000",
+      "symbol_label": "IWM",
+      "category_title": "1. Vekstsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "EXSA",
+      "display_name": "STOXX Europe 600",
+      "symbol_label": "EXSA",
+      "category_title": "1. Vekstsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "EEM",
+      "display_name": "MSCI EM",
+      "symbol_label": "EEM",
+      "category_title": "1. Vekstsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "VNQ",
+      "display_name": "Housing US",
+      "symbol_label": "VNQ",
+      "category_title": "1. Vekstsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "TRET",
+      "display_name": "Housing global",
+      "symbol_label": "TRET",
+      "category_title": "1. Vekstsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "UTWO",
+      "display_name": "2-årig UST",
+      "symbol_label": "UTWO",
+      "category_title": "2. Renter, kurve og finansielle forhold",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "UTEN",
+      "display_name": "10-årig UST",
+      "symbol_label": "UTEN",
+      "category_title": "2. Renter, kurve og finansielle forhold",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "2S10S",
+      "display_name": "2s10s",
+      "symbol_label": "STPU / UCT2",
+      "category_title": "2. Renter, kurve og finansielle forhold",
+      "is_52w_high": false,
+      "is_52w_low": false,
+      "52w_high": 0.7399999999999998,
+      "52w_low": 0.4299999999999997,
+      "dist_to_36WMA": -0.21516587677725113,
+      "dist_to_36MMA": 25.28571428571425,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": false,
+          "dist_to_36MA": -0.21180390290337936,
+          "rsi14": 31.428571428571516,
+          "macd": -0.03764319661336479,
+          "macd_signal": -0.03435878995494247,
+          "macd_hist": -0.0032844066584223203,
+          "macd_cross": false
+        },
+        "weekly": {
+          "close_above_sma36": false,
+          "dist_to_36MA": -0.21516587677725113,
+          "rsi14": 28.84615384615391,
+          "macd": -0.003304466305302789,
+          "macd_signal": 0.02374822426891687,
+          "macd_hist": -0.02705269057421966,
+          "macd_cross": false
+        },
+        "monthly": {
+          "close_above_sma36": true,
+          "dist_to_36MA": 25.28571428571425,
+          "rsi14": 53.52112676056337,
+          "macd": 0.1865502284593537,
+          "macd_signal": 0.1897977493578271,
+          "macd_hist": -0.0032475208984733828,
+          "macd_cross": false
+        }
+      }
+    },
+    {
+      "ticker": "SCHP",
+      "display_name": "10-årig realrente",
+      "symbol_label": "SCHP",
+      "category_title": "2. Renter, kurve og finansielle forhold",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "BCOM",
+      "display_name": "Commodity",
+      "symbol_label": "BCOM",
+      "category_title": "3. Inflasjonssyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "USO",
+      "display_name": "Olje",
+      "symbol_label": "USO",
+      "category_title": "3. Inflasjonssyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "UNG",
+      "display_name": "Naturgass",
+      "symbol_label": "UNG",
+      "category_title": "3. Inflasjonssyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "COPX",
+      "display_name": "Kobber",
+      "symbol_label": "COPX",
+      "category_title": "3. Inflasjonssyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "HYG",
+      "display_name": "US High Yield OAS",
+      "symbol_label": "HYG",
+      "category_title": "4. Kredittsyklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "UUP",
+      "display_name": "DXY",
+      "symbol_label": "UUP",
+      "category_title": "5. Valuta- og dollar-syklusen",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "QQQ",
+      "display_name": "Nasdaq-100",
+      "symbol_label": "QQQ",
+      "category_title": "6. Lederskap innad i aksjemarkedet",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "SOXQ",
+      "display_name": "SOX / semiconductors",
+      "symbol_label": "SOXQ",
+      "category_title": "6. Lederskap innad i aksjemarkedet",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "VIXY",
+      "display_name": "VIX",
+      "symbol_label": "VIXY",
+      "category_title": "7. Volatilitet og risikovilje",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "BTC",
+      "display_name": "BTC",
+      "symbol_label": "BITO / IBIT",
+      "category_title": "7. Volatilitet og risikovilje",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "ETHA",
+      "display_name": "ETH",
+      "symbol_label": "ETHA",
+      "category_title": "7. Volatilitet og risikovilje",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "GLD",
+      "display_name": "Gull",
+      "symbol_label": "GLD",
+      "category_title": "8. Edelmetaller og nisjeråvarer",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "SLV",
+      "display_name": "Sølv",
+      "symbol_label": "SLV",
+      "category_title": "8. Edelmetaller og nisjeråvarer",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "URA",
+      "display_name": "Uranium",
+      "symbol_label": "URA",
+      "category_title": "8. Edelmetaller og nisjeråvarer",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "PLTM",
+      "display_name": "Platina",
+      "symbol_label": "PLTM",
+      "category_title": "8. Edelmetaller og nisjeråvarer",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    },
+    {
+      "ticker": "PALL",
+      "display_name": "Palladium",
+      "symbol_label": "PALL",
+      "category_title": "8. Edelmetaller og nisjeråvarer",
+      "is_52w_high": null,
+      "is_52w_low": null,
+      "52w_high": null,
+      "52w_low": null,
+      "dist_to_36WMA": null,
+      "dist_to_36MMA": null,
+      "weekly_close_count_above_36WMA": null,
+      "gdx_gld_ratio_vs_50dma": null,
+      "sil_slv_ratio_vs_50dma": null,
+      "vol20_up_ok": null,
+      "frames": {
+        "hourly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "daily": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "weekly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        },
+        "monthly": {
+          "close_above_sma36": null,
+          "dist_to_36MA": null,
+          "rsi14": null,
+          "macd": null,
+          "macd_signal": null,
+          "macd_hist": null,
+          "macd_cross": null
+        }
+      }
+    }
+  ],
   "news": [
     {
       "source": "NFTRH",
@@ -18,17 +1423,9 @@
       "image": "news/NFTRH_Oil_Economic_Deceleration_a_Crack-Up_Boom_.png"
     },
     {
-      "nftrh": [
-        {
-          "title": "Protected: NFTRH+; This is why there have been no updates or in-day notes this week (until now)",
-          "link": "",
-          "published": "2025-09-25T13:30:42+02:00"
-        }
-      ],
+      "nftrh": [],
       "northstar": []
     }
   ],
-  "missing": [
-    "postprocess: brukte speil for index.json (https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages/index.json?t=23747448004)"
-  ]
+  "missing": []
 }
