@@ -1,6 +1,6 @@
 {
   "spec": "chatgpt-feed-v2",
-  "generated_utc": "2026-03-30T13:54:31Z",
+  "generated_utc": "2026-03-30T16:50:22Z",
   "mirrors": {
     "primary": "https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages/chatgpt_feed.json",
     "jsdelivr": "https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages/chatgpt_feed.json",
@@ -13,19 +13,19 @@
       "ticker": "SPY",
       "display_name": "S&P 500",
       "symbol_label": "SPY",
-      "resolved_symbol": null,
+      "resolved_symbol": "SPY",
       "category": {
         "key": "vekstsyklusen",
         "title": "1. Vekstsyklusen",
         "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.04407422572124371,
+        "dist_36mma": 0.16241170153888126,
+        "weekly_rsi14": 37.02124689262756,
+        "monthly_rsi14": 60.270330171472686,
+        "weekly_macd": -0.11151198544962426,
+        "monthly_macd": 50.45495549595273
       },
       "charts": {
         "weekly": null,
@@ -36,19 +36,19 @@
       "ticker": "IWM",
       "display_name": "Russell 2000",
       "symbol_label": "IWM",
-      "resolved_symbol": null,
+      "resolved_symbol": "IWM",
       "category": {
         "key": "vekstsyklusen",
         "title": "1. Vekstsyklusen",
         "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.016448336094128768,
+        "dist_36mma": 0.1521130195023971,
+        "weekly_rsi14": 44.3551619485628,
+        "monthly_rsi14": 57.762921905628254,
+        "weekly_macd": 2.5440293012254074,
+        "monthly_macd": 14.783540107120274
       },
       "charts": {
         "weekly": null,
@@ -59,19 +59,19 @@
       "ticker": "EXSA",
       "display_name": "STOXX Europe 600",
       "symbol_label": "EXSA",
-      "resolved_symbol": null,
+      "resolved_symbol": "EXSA.DE",
       "category": {
         "key": "vekstsyklusen",
         "title": "1. Vekstsyklusen",
         "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.00673772272227704,
+        "dist_36mma": 0.15569590417863485,
+        "weekly_rsi14": 48.07696869655658,
+        "monthly_rsi14": 62.102528671797586,
+        "weekly_macd": 0.7054810584836275,
+        "monthly_macd": 3.6651055457075117
       },
       "charts": {
         "weekly": null,
@@ -82,19 +82,19 @@
       "ticker": "EEM",
       "display_name": "MSCI EM",
       "symbol_label": "EEM",
-      "resolved_symbol": null,
+      "resolved_symbol": "EEM",
       "category": {
         "key": "vekstsyklusen",
         "title": "1. Vekstsyklusen",
         "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.00847930756675473,
+        "dist_36mma": 0.2635569173134646,
+        "weekly_rsi14": 47.563063607431104,
+        "monthly_rsi14": 62.838326784038834,
+        "weekly_macd": 1.3459226456460698,
+        "monthly_macd": 4.772583056789486
       },
       "charts": {
         "weekly": null,
@@ -105,19 +105,19 @@
       "ticker": "VNQ",
       "display_name": "Housing US",
       "symbol_label": "VNQ",
-      "resolved_symbol": null,
+      "resolved_symbol": "VNQ",
       "category": {
         "key": "vekstsyklusen",
         "title": "1. Vekstsyklusen",
         "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.022492273413965282,
+        "dist_36mma": 0.05446940883212217,
+        "weekly_rsi14": 44.010599858700395,
+        "monthly_rsi14": 51.47892047505346,
+        "weekly_macd": 0.21269571373301233,
+        "monthly_macd": 2.471708315143232
       },
       "charts": {
         "weekly": null,
@@ -128,19 +128,19 @@
       "ticker": "TRET",
       "display_name": "Housing global",
       "symbol_label": "TRET",
-      "resolved_symbol": null,
+      "resolved_symbol": "REET",
       "category": {
         "key": "vekstsyklusen",
         "title": "1. Vekstsyklusen",
         "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.007118456533210301,
+        "dist_36mma": 0.08692819541994425,
+        "weekly_rsi14": 46.46023266432814,
+        "monthly_rsi14": 54.43530556097391,
+        "weekly_macd": 0.20081436372348094,
+        "monthly_macd": 0.8824285494908004
       },
       "charts": {
         "weekly": null,
@@ -151,19 +151,19 @@
       "ticker": "UTWO",
       "display_name": "2-årig UST",
       "symbol_label": "UTWO",
-      "resolved_symbol": null,
+      "resolved_symbol": "UTWO",
       "category": {
         "key": "renter_og_finansielle_forhold",
         "title": "2. Renter, kurve og finansielle forhold",
         "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.003389280800952669,
+        "dist_36mma": 0.053552228894239606,
+        "weekly_rsi14": 54.24998988836234,
+        "monthly_rsi14": 70.23202563019207,
+        "weekly_macd": 0.16367978022154972,
+        "monthly_macd": 0.9924254208538414
       },
       "charts": {
         "weekly": null,
@@ -174,19 +174,19 @@
       "ticker": "UTEN",
       "display_name": "10-årig UST",
       "symbol_label": "UTEN",
-      "resolved_symbol": null,
+      "resolved_symbol": "UTEN",
       "category": {
         "key": "renter_og_finansielle_forhold",
         "title": "2. Renter, kurve og finansielle forhold",
         "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.00273132259697998,
+        "dist_36mma": 0.045517501650753384,
+        "weekly_rsi14": 48.07146674312499,
+        "monthly_rsi14": 49.561680351882245,
+        "weekly_macd": 0.1212760865545448,
+        "monthly_macd": 0.7859699986394375
       },
       "charts": {
         "weekly": null,
@@ -220,19 +220,19 @@
       "ticker": "SCHP",
       "display_name": "10-årig realrente",
       "symbol_label": "SCHP",
-      "resolved_symbol": null,
+      "resolved_symbol": "SCHP",
       "category": {
         "key": "renter_og_finansielle_forhold",
         "title": "2. Renter, kurve og finansielle forhold",
         "description": "Dette er instrumenter som sier mest om pengepolitikk, rentekurve og finansielle forhold."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.003056716516541961,
+        "dist_36mma": 0.06117661755978064,
+        "weekly_rsi14": 53.37141931295634,
+        "monthly_rsi14": 63.95264791588633,
+        "weekly_macd": 0.08769811601869648,
+        "monthly_macd": 0.5679153326103332
       },
       "charts": {
         "weekly": null,
@@ -243,19 +243,19 @@
       "ticker": "BCOM",
       "display_name": "Commodity",
       "symbol_label": "BCOM",
-      "resolved_symbol": null,
+      "resolved_symbol": "PDBC",
       "category": {
         "key": "inflasjonssyklusen",
         "title": "3. Inflasjonssyklusen",
         "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.26591905880170624,
+        "dist_36mma": 0.3547365378407033,
+        "weekly_rsi14": 85.389500695684,
+        "monthly_rsi14": 82.2329062610365,
+        "weekly_macd": 1.1087175826256708,
+        "monthly_macd": 0.7155126524945334
       },
       "charts": {
         "weekly": null,
@@ -266,19 +266,19 @@
       "ticker": "USO",
       "display_name": "Olje",
       "symbol_label": "USO",
-      "resolved_symbol": null,
+      "resolved_symbol": "USO",
       "category": {
         "key": "inflasjonssyklusen",
         "title": "3. Inflasjonssyklusen",
         "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.6111516190654238,
+        "dist_36mma": 0.71412675924932,
+        "weekly_rsi14": 87.34688652654258,
+        "monthly_rsi14": 77.69614372129887,
+        "weekly_macd": 12.83508604288798,
+        "monthly_macd": 5.463086260766005
       },
       "charts": {
         "weekly": null,
@@ -289,19 +289,19 @@
       "ticker": "UNG",
       "display_name": "Naturgass",
       "symbol_label": "UNG",
-      "resolved_symbol": null,
+      "resolved_symbol": "UNG",
       "category": {
         "key": "inflasjonssyklusen",
         "title": "3. Inflasjonssyklusen",
         "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.1028371684497268,
+        "dist_36mma": -0.36038389639957685,
+        "weekly_rsi14": 44.42132219434861,
+        "monthly_rsi14": 40.00396342587844,
+        "weekly_macd": -0.49672979823646735,
+        "monthly_macd": -4.547981432438652
       },
       "charts": {
         "weekly": null,
@@ -312,19 +312,19 @@
       "ticker": "COPX",
       "display_name": "Kobber",
       "symbol_label": "COPX",
-      "resolved_symbol": null,
+      "resolved_symbol": "COPX",
       "category": {
         "key": "inflasjonssyklusen",
         "title": "3. Inflasjonssyklusen",
         "description": "Dette er instrumenter som typisk reagerer tidlig på inflasjonspress og råvaredrevet reflasjon."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.0784478846245728,
+        "dist_36mma": 0.571532803037218,
+        "weekly_rsi14": 49.80263139333778,
+        "monthly_rsi14": 61.74604735744636,
+        "weekly_macd": 4.8236819301226035,
+        "monthly_macd": 10.998521795807413
       },
       "charts": {
         "weekly": null,
@@ -335,19 +335,19 @@
       "ticker": "HYG",
       "display_name": "US High Yield OAS",
       "symbol_label": "HYG",
-      "resolved_symbol": null,
+      "resolved_symbol": "HYG",
       "category": {
         "key": "kredittsyklusen",
         "title": "4. Kredittsyklusen",
         "description": "Her følger du hvor mye stress eller lettelse det er i kredittmarkedet."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.0019931680186868936,
+        "dist_36mma": 0.09647295767766242,
+        "weekly_rsi14": 46.94936654529289,
+        "monthly_rsi14": 70.23459703780935,
+        "weekly_macd": 0.250005921799044,
+        "monthly_macd": 3.0353732057277085
       },
       "charts": {
         "weekly": null,
@@ -358,19 +358,19 @@
       "ticker": "UUP",
       "display_name": "DXY",
       "symbol_label": "UUP",
-      "resolved_symbol": null,
+      "resolved_symbol": "UUP",
       "category": {
         "key": "valuta_og_dollar",
         "title": "5. Valuta- og dollar-syklusen",
         "description": "Dette er hovedinstrumentet for dollarregimet og globalt finansielt press."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.03456988390448754,
+        "dist_36mma": 0.056357934838361,
+        "weekly_rsi14": 64.48184326896245,
+        "monthly_rsi14": 61.07259053519622,
+        "weekly_macd": 0.22283768398727233,
+        "monthly_macd": 0.400164008220262
       },
       "charts": {
         "weekly": null,
@@ -381,19 +381,19 @@
       "ticker": "QQQ",
       "display_name": "Nasdaq-100",
       "symbol_label": "QQQ",
-      "resolved_symbol": null,
+      "resolved_symbol": "QQQ",
       "category": {
         "key": "lederskap_i_aksjemarkedet",
         "title": "6. Lederskap innad i aksjemarkedet",
         "description": "Dette er instrumenter som sier noe om hvilke deler av aksjemarkedet som leder an."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.06181837735000086,
+        "dist_36mma": 0.17448614714334335,
+        "weekly_rsi14": 36.3110465929257,
+        "monthly_rsi14": 58.52054319181955,
+        "weekly_macd": -2.1472768263187163,
+        "monthly_macd": 51.12259348750683
       },
       "charts": {
         "weekly": null,
@@ -404,19 +404,19 @@
       "ticker": "SOXQ",
       "display_name": "SOX / semiconductors",
       "symbol_label": "SOXQ",
-      "resolved_symbol": null,
+      "resolved_symbol": "SOXQ",
       "category": {
         "key": "lederskap_i_aksjemarkedet",
         "title": "6. Lederskap innad i aksjemarkedet",
         "description": "Dette er instrumenter som sier noe om hvilke deler av aksjemarkedet som leder an."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.03150837288575864,
+        "dist_36mma": 0.4282978801012802,
+        "weekly_rsi14": 48.81576882471106,
+        "monthly_rsi14": 65.87477340975414,
+        "weekly_macd": 2.470911579375283,
+        "monthly_macd": 7.109121498853526
       },
       "charts": {
         "weekly": null,
@@ -427,19 +427,19 @@
       "ticker": "VIXY",
       "display_name": "VIX",
       "symbol_label": "VIXY",
-      "resolved_symbol": null,
+      "resolved_symbol": "VIXY",
       "category": {
         "key": "volatilitet_og_risikovilje",
         "title": "7. Volatilitet og risikovilje",
         "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.16502638971685143,
+        "dist_36mma": -0.34792660676477716,
+        "weekly_rsi14": 60.726581196203526,
+        "monthly_rsi14": 34.52692927078196,
+        "weekly_macd": -0.11216481969247383,
+        "monthly_macd": -41.4347999605974
       },
       "charts": {
         "weekly": null,
@@ -450,19 +450,19 @@
       "ticker": "BTC",
       "display_name": "BTC",
       "symbol_label": "BITO / IBIT",
-      "resolved_symbol": null,
+      "resolved_symbol": "BITO",
       "category": {
         "key": "volatilitet_og_risikovilje",
         "title": "7. Volatilitet og risikovilje",
         "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.2931004911663369,
+        "dist_36mma": -0.09653298524274177,
+        "weekly_rsi14": 32.778845456856104,
+        "monthly_rsi14": 41.60449217613934,
+        "weekly_macd": -1.3353192401469798,
+        "monthly_macd": 0.554375139481925
       },
       "charts": {
         "weekly": null,
@@ -473,19 +473,19 @@
       "ticker": "ETHA",
       "display_name": "ETH",
       "symbol_label": "ETHA",
-      "resolved_symbol": null,
+      "resolved_symbol": "ETHA",
       "category": {
         "key": "volatilitet_og_risikovilje",
         "title": "7. Volatilitet og risikovilje",
         "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet."
       },
       "metrics": {
-        "dist_36wma": null,
+        "dist_36wma": -0.3632224959496993,
         "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "weekly_rsi14": 36.57473054698042,
+        "monthly_rsi14": 26.373780293080088,
+        "weekly_macd": -2.785135531170546,
+        "monthly_macd": -1.0844100343805465
       },
       "charts": {
         "weekly": null,
@@ -496,19 +496,19 @@
       "ticker": "GLD",
       "display_name": "Gull",
       "symbol_label": "GLD",
-      "resolved_symbol": null,
+      "resolved_symbol": "GLD",
       "category": {
         "key": "edelmetaller_og_nisjeravarer",
         "title": "8. Edelmetaller og nisjeråvarer",
         "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.06764731247156398,
+        "dist_36mma": 0.5791677535102695,
+        "weekly_rsi14": 51.78127025630012,
+        "monthly_rsi14": 71.16151314779965,
+        "weekly_macd": 21.206312122551026,
+        "monthly_macd": 58.807965191251924
       },
       "charts": {
         "weekly": null,
@@ -519,19 +519,19 @@
       "ticker": "SLV",
       "display_name": "Sølv",
       "symbol_label": "SLV",
-      "resolved_symbol": null,
+      "resolved_symbol": "SLV",
       "category": {
         "key": "edelmetaller_og_nisjeravarer",
         "title": "8. Edelmetaller og nisjeråvarer",
         "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.1485796734492395,
+        "dist_36mma": 0.9538380478088102,
+        "weekly_rsi14": 51.132994573016994,
+        "monthly_rsi14": 66.53409347577704,
+        "weekly_macd": 5.721043575476067,
+        "monthly_macd": 11.83088344830248
       },
       "charts": {
         "weekly": null,
@@ -542,19 +542,19 @@
       "ticker": "URA",
       "display_name": "Uranium",
       "symbol_label": "URA",
-      "resolved_symbol": null,
+      "resolved_symbol": "URA",
       "category": {
         "key": "edelmetaller_og_nisjeravarer",
         "title": "8. Edelmetaller og nisjeråvarer",
         "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.010257346900416539,
+        "dist_36mma": 0.5066755715216517,
+        "weekly_rsi14": 47.511681970175374,
+        "monthly_rsi14": 59.76509278913396,
+        "weekly_macd": 1.5521626333715304,
+        "monthly_macd": 6.9880380561221145
       },
       "charts": {
         "weekly": null,
@@ -562,22 +562,22 @@
       }
     },
     {
-      "ticker": "PLTM",
+      "ticker": "PPLT",
       "display_name": "Platina",
-      "symbol_label": "PLTM",
-      "resolved_symbol": null,
+      "symbol_label": "PPLT",
+      "resolved_symbol": "PPLT",
       "category": {
         "key": "edelmetaller_og_nisjeravarer",
         "title": "8. Edelmetaller og nisjeråvarer",
         "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": 0.057107916527649204,
+        "dist_36mma": 0.6069420213842087,
+        "weekly_rsi14": 49.52763956667511,
+        "monthly_rsi14": 64.75846232963477,
+        "weekly_macd": 9.357168532938942,
+        "monthly_macd": 25.864368364665637
       },
       "charts": {
         "weekly": null,
@@ -588,19 +588,19 @@
       "ticker": "PALL",
       "display_name": "Palladium",
       "symbol_label": "PALL",
-      "resolved_symbol": null,
+      "resolved_symbol": "PALL",
       "category": {
         "key": "edelmetaller_og_nisjeravarer",
         "title": "8. Edelmetaller og nisjeråvarer",
         "description": "Dette er instrumenter som ofte fanger opp realrente, safe haven, industribruk og spesialsykluser."
       },
       "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": null,
-        "monthly_rsi14": null,
-        "weekly_macd": null,
-        "monthly_macd": null
+        "dist_36wma": -0.03255740401034386,
+        "dist_36mma": 0.2216496135011485,
+        "weekly_rsi14": 45.53984588139435,
+        "monthly_rsi14": 53.80476675566519,
+        "weekly_macd": 2.8815779722606294,
+        "monthly_macd": 7.793615166625415
       },
       "charts": {
         "weekly": null,
