@@ -47,9 +47,9 @@ FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 INSTRUMENT_GROUPS = [
     {
-        "key": "vekstsyklusen",
-        "title": "1. Vekstsyklusen",
-        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke og regional risikovilje.",
+        "key": "vekstsyklusen_og_volatilitet",
+        "title": "1. Vekstsyklusen og volatilitet",
+        "description": "Dette er instrumenter som sier mest om bred økonomisk aktivitet, syklisk styrke, regional risikovilje, spekulasjon og markedsstress.",
         "instruments": [
             {"id": "SPY", "label": "S&P 500", "symbol_label": "SPY", "source": "yf", "candidates": ["SPY", "VOO"]},
             {"id": "IWM", "label": "Russell 2000", "symbol_label": "IWM", "source": "yf", "candidates": ["IWM", "VTWO"]},
@@ -58,6 +58,9 @@ INSTRUMENT_GROUPS = [
             {"id": "VNQ", "label": "Housing US", "symbol_label": "VNQ", "source": "yf", "candidates": ["VNQ", "IYR", "SCHH"]},
             {"id": "TRET", "label": "Housing global", "symbol_label": "TRET", "source": "yf", "candidates": ["TRET", "REET", "VNQI"]},
             {"id": "QQQ", "label": "Nasdaq-100", "symbol_label": "QQQ", "source": "yf", "candidates": ["QQQ", "QQQM"]},
+            {"id": "VIXY", "label": "VIX", "symbol_label": "VIXY", "source": "yf", "candidates": ["VIXY", "^VIX"]},
+            {"id": "BTC", "label": "BTC", "symbol_label": "BITO / IBIT", "source": "yf", "candidates": ["BITO", "IBIT", "BTC-USD"]},
+            {"id": "ETHA", "label": "ETH", "symbol_label": "ETHA", "source": "yf", "candidates": ["ETHA", "ETH-USD"]},
         ],
     },
     {
@@ -72,34 +75,17 @@ INSTRUMENT_GROUPS = [
         ],
     },
     {
-        "key": "kredittsyklusen",
-        "title": "3. Kredittsyklusen",
-        "description": "Her følger du hvor mye stress eller lettelse det er i kredittmarkedet.",
+        "key": "kreditt_valuta_og_edelmetaller",
+        "title": "3. Kreditt, valuta, edelmetaller og nisjeråvarer",
+        "description": "Dette er instrumenter som fanger opp kredittstress, dollarregimet, globalt finansielt press, realrente, safe haven, industribruk og spesialsykluser.",
         "instruments": [
             {"id": "HYG", "label": "US High Yield OAS", "symbol_label": "HYG", "source": "yf", "candidates": ["HYG", "JNK"]},
-        ],
-    },
-    {
-        "key": "valuta_edelmetaller_og_nisjeravarer",
-        "title": "4. Valuta, edelmetaller og nisjeråvarer",
-        "description": "Dette er instrumenter som fanger opp dollarregimet, globalt finansielt press, realrente, safe haven, industribruk og spesialsykluser.",
-        "instruments": [
             {"id": "UUP", "label": "DXY", "symbol_label": "UUP", "source": "yf", "candidates": ["UUP", "USDU", "DX-Y.NYB"]},
             {"id": "GLD", "label": "Gull", "symbol_label": "GLD", "source": "yf", "candidates": ["GLD", "IAU"]},
             {"id": "SLV", "label": "Sølv", "symbol_label": "SLV", "source": "yf", "candidates": ["SLV", "SIVR"]},
             {"id": "URA", "label": "Uranium", "symbol_label": "URA", "source": "yf", "candidates": ["URA", "URNM"]},
             {"id": "PPLT", "label": "Platina", "symbol_label": "PPLT", "source": "yf", "candidates": ["PPLT", "PLTM", "PL=F"]},
             {"id": "PALL", "label": "Palladium", "symbol_label": "PALL", "source": "yf", "candidates": ["PALL", "PA=F"]},
-        ],
-    },
-    {
-        "key": "volatilitet_og_risikovilje",
-        "title": "5. Volatilitet og risikovilje",
-        "description": "Dette er instrumenter som sier mest om risikopåslag, spekulasjon og stress i markedet.",
-        "instruments": [
-            {"id": "VIXY", "label": "VIX", "symbol_label": "VIXY", "source": "yf", "candidates": ["VIXY", "^VIX"]},
-            {"id": "BTC", "label": "BTC", "symbol_label": "BITO / IBIT", "source": "yf", "candidates": ["BITO", "IBIT", "BTC-USD"]},
-            {"id": "ETHA", "label": "ETH", "symbol_label": "ETHA", "source": "yf", "candidates": ["ETHA", "ETH-USD"]},
         ],
     },
 ]
@@ -312,14 +298,14 @@ def build_homepage(index_data, filelist):
 <body>
   <div class="wrap">
     <h1>Market Daily Report</h1>
-    <p class="topnote">Forsiden viser kun weekly_compact.png og monthly_compact.png. Instrumentene er sortert innen hver kategori etter RSI(14) monthly fra lavest til høyest. Generert: {html.escape(str(generated))}</p>
+    <p class="topnote">Forsiden viser kun weekly_compact.png og monthly_compact.png. Instrumentene er sortert innen hver kategori etter RSI(14) weekly fra lavest til høyest, og viser både weekly og monthly RSI. Generert: {html.escape(str(generated))}</p>
 """]
     for category in categories:
         items = []
         for instrument_id in category.get("instrument_ids", []):
             asset = assets.get(instrument_id, {})
-            monthly_rsi = (((asset.get("frames") or {}).get("monthly") or {}).get("rsi14"))
-            sort_key = monthly_rsi if isinstance(monthly_rsi, (int, float)) and not math.isnan(monthly_rsi) else float("inf")
+            weekly_rsi = (((asset.get("frames") or {}).get("weekly") or {}).get("rsi14"))
+            sort_key = weekly_rsi if isinstance(weekly_rsi, (int, float)) and not math.isnan(weekly_rsi) else float("inf")
             items.append((sort_key, asset.get("display_name") or instrument_id, instrument_id, asset))
         items.sort(key=lambda x: (x[0], x[1]))
         parts.append(
@@ -330,8 +316,12 @@ def build_homepage(index_data, filelist):
             display_name = asset.get("display_name") or instrument_id
             symbol_label = asset.get("symbol_label") or asset.get("resolved_symbol") or instrument_id
             resolved = asset.get("resolved_symbol")
+            weekly_rsi = (((asset.get("frames") or {}).get("weekly") or {}).get("rsi14"))
             monthly_rsi = (((asset.get("frames") or {}).get("monthly") or {}).get("rsi14"))
-            meta_bits = [f"RSI(14) monthly: {fmt_rsi(monthly_rsi)}"]
+            meta_bits = [
+                f"RSI(14) weekly: {fmt_rsi(weekly_rsi)}",
+                f"RSI(14) monthly: {fmt_rsi(monthly_rsi)}",
+            ]
             if resolved and resolved != symbol_label:
                 meta_bits.append(f"data: {resolved}")
             weekly_path = f"charts/{instrument_id}_weekly_compact.png"
@@ -448,7 +438,7 @@ def main():
     idx["summary"] = summary
     idx["generated_local"] = pd.Timestamp.utcnow().isoformat()
     idx.setdefault("notes", {})
-    idx["notes"]["homepage"] = "Forsiden viser kun weekly_compact.png og monthly_compact.png gruppert etter kategori og sortert på RSI(14) monthly."
+    idx["notes"]["homepage"] = "Forsiden viser kun weekly_compact.png og monthly_compact.png gruppert etter kategori og sortert på RSI(14) weekly, med både weekly og monthly RSI vist per instrument."
     idx["notes"]["instrument_count"] = sum(len(g["instruments"]) for g in INSTRUMENT_GROUPS)
     save_json(INDEX, idx)
 
