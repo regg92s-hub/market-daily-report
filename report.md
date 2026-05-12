@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-11T20:27:30.880013+00:00
+# Daglig rapport – 2026-05-12T19:25:40.865733+00:00
 
 ## Manglet/feilet
 
@@ -6,24 +6,24 @@
 
 | Ticker | Navn | Kategori | Dist36WMA | Dist36MMA | M-RSI14 |
 |---|---|---|---:|---:|---:|
-| SPY | S&P 500 | 1. Vekstsyklusen og volatilitet | 8.87% | 30.78% | 75.12 | 
-| IWM | Russell 2000 | 1. Vekstsyklusen og volatilitet | 12.39% | 32.23% | 70.72 | 
-| EXSA | STOXX Europe 600 | 1. Vekstsyklusen og volatilitet | 4.9% | 20.51% | 68.35 | 
-| EEM | MSCI EM | 1. Vekstsyklusen og volatilitet | 18.79% | 50.12% | 76.99 | 
-| VNQ | Housing US | 1. Vekstsyklusen og volatilitet | 6.78% | 15.03% | 61.2 | 
-| TRET | Housing global | 1. Vekstsyklusen og volatilitet | 7.04% | 17.45% | 63.11 | 
-| QQQ | Nasdaq-100 | 1. Vekstsyklusen og volatilitet | 15.79% | 43.09% | 76.59 | 
-| VIXY | VIX | 1. Vekstsyklusen og volatilitet | -9.87% | -46.1% | 32.44 | 
-| BTC | BTC | 1. Vekstsyklusen og volatilitet | -8.03% | 6.02% | 48.55 | 
-| ETHA | ETH | 1. Vekstsyklusen og volatilitet | -19.86% | % | 29.33 | 
-| BCOM | Commodity | 2. Inflasjonssyklusen | 26.41% | 39.86% | 84.74 | 
-| USO | Olje | 2. Inflasjonssyklusen | 55.01% | 75.01% | 75.31 | 
-| UNG | Naturgass | 2. Inflasjonssyklusen | -10.59% | -34.98% | 40.08 | 
-| COPX | Kobber | 2. Inflasjonssyklusen | 20.66% | 81.55% | 70.5 | 
-| HYG | US High Yield OAS | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 1.39% | 10.58% | 76.92 | 
-| UUP | DXY | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 0.62% | 2.7% | 55.61 | 
-| GLD | Gull | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 5.8% | 56.33% | 74.14 | 
-| SLV | Sølv | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 25.93% | 118.5% | 73.75 | 
-| URA | Uranium | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 15.91% | 74.73% | 68.25 | 
-| PPLT | Platina | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 10.66% | 71.11% | 70.13 | 
-| PALL | Palladium | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | -1.82% | 28.99% | 56.51 | 
+| SPY | S&P 500 | 1. Vekstsyklusen og volatilitet | 8.54% | 30.38% | 74.91 | 
+| IWM | Russell 2000 | 1. Vekstsyklusen og volatilitet | 11.07% | 30.68% | 69.98 | 
+| EXSA | STOXX Europe 600 | 1. Vekstsyklusen og volatilitet | 3.84% | 19.3% | 66.92 | 
+| EEM | MSCI EM | 1. Vekstsyklusen og volatilitet | 15.17% | 45.59% | 75.48 | 
+| VNQ | Housing US | 1. Vekstsyklusen og volatilitet | 6.76% | 15.01% | 61.18 | 
+| TRET | Housing global | 1. Vekstsyklusen og volatilitet | 6.83% | 17.22% | 62.94 | 
+| QQQ | Nasdaq-100 | 1. Vekstsyklusen og volatilitet | 14.32% | 41.29% | 75.93 | 
+| VIXY | VIX | 1. Vekstsyklusen og volatilitet | -10.67% | -46.58% | 32.35 | 
+| BTC | BTC | 1. Vekstsyklusen og volatilitet | -9.35% | 4.5% | 48.01 | 
+| ETHA | ETH | 1. Vekstsyklusen og volatilitet | -21.83% | % | 28.68 | 
+| BCOM | Commodity | 2. Inflasjonssyklusen | 28.61% | 42.29% | 85.43 | 
+| USO | Olje | 2. Inflasjonssyklusen | 60.91% | 81.63% | 79.25 | 
+| UNG | Naturgass | 2. Inflasjonssyklusen | -12.92% | -36.68% | 39.58 | 
+| COPX | Kobber | 2. Inflasjonssyklusen | 24.26% | 86.86% | 71.48 | 
+| HYG | US High Yield OAS | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 1.22% | 10.39% | 75.95 | 
+| UUP | DXY | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 1.0% | 3.08% | 56.45 | 
+| GLD | Gull | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 5.14% | 55.37% | 73.82 | 
+| SLV | Sølv | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 25.99% | 118.6% | 73.76 | 
+| URA | Uranium | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 10.33% | 66.46% | 65.28 | 
+| PPLT | Platina | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 10.47% | 70.82% | 70.06 | 
+| PALL | Palladium | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | -3.08% | 27.35% | 55.71 | 
