@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-16T19:54:29.120962+00:00
+# Daglig rapport – 2026-05-17T18:48:00.390547+00:00
 
 ## Manglet/feilet
 
