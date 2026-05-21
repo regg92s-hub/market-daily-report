@@ -1,114 +1,114 @@
-2026-05-21T19:29:04.190636  yfinance error SPY try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:05.190855  yfinance error SPY try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:07.191136  yfinance error SPY try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:10.191278  missing data for SPY
-2026-05-21T19:29:10.191381  yfinance error IWM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:11.191601  yfinance error IWM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:13.191902  yfinance error IWM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:16.192055  missing data for IWM
-2026-05-21T19:29:16.192145  yfinance error EXSA try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:17.192351  yfinance error EXSA try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:19.192540  yfinance error EXSA try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:22.192741  yfinance error EXSA.DE try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:23.192938  yfinance error EXSA.DE try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:25.193149  yfinance error EXSA.DE try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:28.193302  missing data for EXSA
-2026-05-21T19:29:28.193384  yfinance error EEM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:29.193562  yfinance error EEM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:31.193765  yfinance error EEM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:34.193959  missing data for EEM
-2026-05-21T19:29:34.194062  yfinance error VNQ try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:35.194242  yfinance error VNQ try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:37.194432  yfinance error VNQ try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:40.194580  missing data for VNQ
-2026-05-21T19:29:40.194661  yfinance error TRET try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:41.194851  yfinance error TRET try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:43.195044  yfinance error TRET try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:46.195198  missing data for TRET
-2026-05-21T19:29:46.195288  yfinance error UTWO try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:47.195470  yfinance error UTWO try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:49.195665  yfinance error UTWO try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:52.195814  missing data for UTWO
-2026-05-21T19:29:52.196030  yfinance error UTEN try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:53.196220  yfinance error UTEN try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:55.196415  yfinance error UTEN try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:29:58.196559  missing data for UTEN
-2026-05-21T19:29:58.517411  fred ok DGS2
-2026-05-21T19:29:58.782220  fred ok DGS10
-2026-05-21T19:30:00.243073  yfinance error SCHP try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:01.243272  yfinance error SCHP try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:03.243459  yfinance error SCHP try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:06.243644  missing data for SCHP
-2026-05-21T19:30:06.243765  yfinance error BCOM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:07.243948  yfinance error BCOM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:09.244138  yfinance error BCOM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:12.244346  yfinance error PDBC try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:13.244540  yfinance error PDBC try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:15.244758  yfinance error PDBC try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:18.244936  missing data for BCOM
-2026-05-21T19:30:18.245016  yfinance error USO try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:19.245209  yfinance error USO try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:21.245402  yfinance error USO try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:24.245560  missing data for USO
-2026-05-21T19:30:24.245655  yfinance error UNG try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:25.245844  yfinance error UNG try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:27.245976  yfinance error UNG try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:30.246124  missing data for UNG
-2026-05-21T19:30:30.246210  yfinance error COPX try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:31.246404  yfinance error COPX try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:33.246604  yfinance error COPX try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:36.246759  missing data for COPX
-2026-05-21T19:30:36.246880  yfinance error HYG try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:37.247056  yfinance error HYG try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:39.247257  yfinance error HYG try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:42.247404  missing data for HYG
-2026-05-21T19:30:42.247485  yfinance error UUP try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:43.247673  yfinance error UUP try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:45.247896  yfinance error UUP try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:48.248024  missing data for UUP
-2026-05-21T19:30:48.248116  yfinance error QQQ try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:49.248298  yfinance error QQQ try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:51.248491  yfinance error QQQ try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:54.248648  missing data for QQQ
-2026-05-21T19:30:54.248764  yfinance error SOXQ try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:55.248955  yfinance error SOXQ try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:30:57.249155  yfinance error SOXQ try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:00.249301  missing data for SOXQ
-2026-05-21T19:31:00.249373  yfinance error VIXY try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:01.249564  yfinance error VIXY try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:03.249757  yfinance error VIXY try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:06.249900  missing data for VIXY
-2026-05-21T19:31:06.249986  yfinance error BITO try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:07.250174  yfinance error BITO try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:09.250372  yfinance error BITO try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:12.250576  yfinance error IBIT try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:13.250769  yfinance error IBIT try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:15.250973  yfinance error IBIT try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:18.251127  missing data for BTC
-2026-05-21T19:31:18.251204  yfinance error ETHA try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:19.251392  yfinance error ETHA try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:21.251592  yfinance error ETHA try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:24.251741  missing data for ETHA
-2026-05-21T19:31:24.251846  yfinance error GLD try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:25.251991  yfinance error GLD try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:27.252197  yfinance error GLD try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:30.252333  missing data for GLD
-2026-05-21T19:31:30.252399  yfinance error SLV try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:31.252557  yfinance error SLV try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:33.252718  yfinance error SLV try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:36.252867  missing data for SLV
-2026-05-21T19:31:36.252945  yfinance error URA try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:37.253135  yfinance error URA try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:39.253330  yfinance error URA try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:42.253476  missing data for URA
-2026-05-21T19:31:42.253551  yfinance error PLTM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:43.253735  yfinance error PLTM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:45.253930  yfinance error PLTM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:48.254079  missing data for PLTM
-2026-05-21T19:31:48.254152  yfinance error PALL try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:49.254337  yfinance error PALL try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:51.254531  yfinance error PALL try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
-2026-05-21T19:31:54.254677  missing data for PALL
-2026-05-21T19:31:54.387197  rss error https://nftrh.com/blog/feed/: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?
-2026-05-21T19:31:55.758757  rss error https://northstarbadcharts.com/feed/: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?
-2026-05-21T19:31:55.761312  SUMMARY instruments=26 charts=211 version=2026-03-30-cycles-homepage-2
+2026-05-21T20:26:28.884277  yfinance error SPY try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:29.884529  yfinance error SPY try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:31.884761  yfinance error SPY try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:34.884896  missing data for SPY
+2026-05-21T20:26:34.885011  yfinance error IWM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:35.885243  yfinance error IWM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:37.885504  yfinance error IWM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:40.885654  missing data for IWM
+2026-05-21T20:26:40.885774  yfinance error EXSA try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:41.885990  yfinance error EXSA try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:43.886223  yfinance error EXSA try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:46.886480  yfinance error EXSA.DE try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:47.886733  yfinance error EXSA.DE try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:49.886962  yfinance error EXSA.DE try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:52.887119  missing data for EXSA
+2026-05-21T20:26:52.887223  yfinance error EEM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:53.887479  yfinance error EEM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:55.887724  yfinance error EEM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:58.887877  missing data for EEM
+2026-05-21T20:26:58.887984  yfinance error VNQ try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:26:59.888202  yfinance error VNQ try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:01.888425  yfinance error VNQ try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:04.888580  missing data for VNQ
+2026-05-21T20:27:04.888688  yfinance error TRET try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:05.888929  yfinance error TRET try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:07.889173  yfinance error TRET try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:10.889354  missing data for TRET
+2026-05-21T20:27:10.889495  yfinance error UTWO try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:11.889687  yfinance error UTWO try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:13.889945  yfinance error UTWO try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:16.890132  missing data for UTWO
+2026-05-21T20:27:16.890365  yfinance error UTEN try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:17.890612  yfinance error UTEN try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:19.890864  yfinance error UTEN try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:22.891012  missing data for UTEN
+2026-05-21T20:27:23.389366  fred ok DGS2
+2026-05-21T20:27:23.819851  fred ok DGS10
+2026-05-21T20:27:24.790263  yfinance error SCHP try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:25.790558  yfinance error SCHP try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:27.790845  yfinance error SCHP try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:30.791049  missing data for SCHP
+2026-05-21T20:27:30.791154  yfinance error BCOM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:31.791454  yfinance error BCOM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:33.791732  yfinance error BCOM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:36.791994  yfinance error PDBC try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:37.792253  yfinance error PDBC try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:39.792511  yfinance error PDBC try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:42.792659  missing data for BCOM
+2026-05-21T20:27:42.792771  yfinance error USO try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:43.793012  yfinance error USO try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:45.793283  yfinance error USO try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:48.793476  missing data for USO
+2026-05-21T20:27:48.793589  yfinance error UNG try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:49.793847  yfinance error UNG try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:51.794120  yfinance error UNG try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:54.794271  missing data for UNG
+2026-05-21T20:27:54.794376  yfinance error COPX try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:55.794595  yfinance error COPX try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:27:57.794861  yfinance error COPX try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:00.795023  missing data for COPX
+2026-05-21T20:28:00.795130  yfinance error HYG try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:01.795346  yfinance error HYG try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:03.795606  yfinance error HYG try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:06.795783  missing data for HYG
+2026-05-21T20:28:06.795890  yfinance error UUP try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:07.796150  yfinance error UUP try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:09.796440  yfinance error UUP try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:12.796588  missing data for UUP
+2026-05-21T20:28:12.796727  yfinance error QQQ try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:13.796968  yfinance error QQQ try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:15.797222  yfinance error QQQ try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:18.797447  missing data for QQQ
+2026-05-21T20:28:18.797557  yfinance error SOXQ try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:19.797797  yfinance error SOXQ try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:21.798013  yfinance error SOXQ try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:24.798170  missing data for SOXQ
+2026-05-21T20:28:24.798280  yfinance error VIXY try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:25.798546  yfinance error VIXY try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:27.798751  yfinance error VIXY try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:30.798941  missing data for VIXY
+2026-05-21T20:28:30.799050  yfinance error BITO try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:31.799317  yfinance error BITO try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:33.799527  yfinance error BITO try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:36.799795  yfinance error IBIT try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:37.800029  yfinance error IBIT try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:39.800274  yfinance error IBIT try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:42.800450  missing data for BTC
+2026-05-21T20:28:42.800559  yfinance error ETHA try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:43.800798  yfinance error ETHA try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:45.801043  yfinance error ETHA try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:48.801232  missing data for ETHA
+2026-05-21T20:28:48.801338  yfinance error GLD try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:49.801583  yfinance error GLD try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:51.801857  yfinance error GLD try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:54.802044  missing data for GLD
+2026-05-21T20:28:54.802146  yfinance error SLV try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:55.802464  yfinance error SLV try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:28:57.802738  yfinance error SLV try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:00.802898  missing data for SLV
+2026-05-21T20:29:00.803002  yfinance error URA try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:01.803266  yfinance error URA try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:03.803525  yfinance error URA try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:06.803667  missing data for URA
+2026-05-21T20:29:06.803774  yfinance error PLTM try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:07.804024  yfinance error PLTM try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:09.804280  yfinance error PLTM try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:12.804452  missing data for PLTM
+2026-05-21T20:29:12.804556  yfinance error PALL try1: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:13.804807  yfinance error PALL try2: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:15.805078  yfinance error PALL try3: Yahoo API requires curl_cffi session not <class 'requests.sessions.Session'>. Solution: stop setting session, let YF handle.
+2026-05-21T20:29:18.805233  missing data for PALL
+2026-05-21T20:29:19.030970  rss error https://nftrh.com/blog/feed/: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?
+2026-05-21T20:29:20.621823  rss error https://northstarbadcharts.com/feed/: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?
+2026-05-21T20:29:20.624422  SUMMARY instruments=26 charts=211 version=2026-03-30-cycles-homepage-2
