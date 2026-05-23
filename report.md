@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-22T20:28:45.480553+00:00
+# Daglig rapport – 2026-05-23T18:44:36.991084+00:00
 
 ## Manglet/feilet
 
@@ -6,8 +6,8 @@
 
 | Ticker | Navn | Kategori | Dist36WMA | Dist36MMA | M-RSI14 |
 |---|---|---|---:|---:|---:|
-| SPY | S&P 500 | 1. Vekstsyklusen og volatilitet | 9.4% | 31.87% | 75.68 | 
-| IWM | Russell 2000 | 1. Vekstsyklusen og volatilitet | 11.78% | 32.1% | 70.65 | 
+| SPY | S&P 500 | 1. Vekstsyklusen og volatilitet | 9.39% | 31.86% | 75.68 | 
+| IWM | Russell 2000 | 1. Vekstsyklusen og volatilitet | 11.78% | 32.11% | 70.66 | 
 | EXSA | STOXX Europe 600 | 1. Vekstsyklusen og volatilitet | 7.07% | 23.35% | 70.37 | 
 | EEM | MSCI EM | 1. Vekstsyklusen og volatilitet | 14.63% | 45.86% | 75.58 | 
 | VNQ | Housing US | 1. Vekstsyklusen og volatilitet | 6.74% | 15.12% | 61.27 | 
@@ -23,7 +23,7 @@
 | HYG | US High Yield OAS | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 1.25% | 10.48% | 76.49 | 
 | UUP | DXY | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 1.99% | 4.23% | 58.72 | 
 | GLD | Gull | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 0.29% | 49.1% | 69.75 | 
-| SLV | Sølv | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 9.38% | 93.02% | 69.71 | 
+| SLV | Sølv | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | 9.33% | 92.94% | 69.69 | 
 | URA | Uranium | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | -0.93% | 50.54% | 59.44 | 
 | PPLT | Platina | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | -0.34% | 55.62% | 64.89 | 
 | PALL | Palladium | 3. Kreditt, valuta, edelmetaller og nisjeråvarer | -12.47% | 15.53% | 50.56 | 
