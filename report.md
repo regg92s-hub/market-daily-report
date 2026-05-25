@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-24T19:55:20.628009+00:00
+# Daglig rapport – 2026-05-25T19:09:00.036307+00:00
 
 ## Manglet/feilet
 
@@ -8,7 +8,7 @@
 |---|---|---|---:|---:|---:|
 | SPY | S&P 500 | 1. Vekstsyklusen og volatilitet | 9.39% | 31.86% | 75.68 | 
 | IWM | Russell 2000 | 1. Vekstsyklusen og volatilitet | 11.78% | 32.11% | 70.66 | 
-| EXSA | STOXX Europe 600 | 1. Vekstsyklusen og volatilitet | 7.07% | 23.35% | 70.37 | 
+| EXSA | STOXX Europe 600 | 1. Vekstsyklusen og volatilitet | 8.4% | 25.36% | 71.65 | 
 | EEM | MSCI EM | 1. Vekstsyklusen og volatilitet | 14.63% | 45.86% | 75.58 | 
 | VNQ | Housing US | 1. Vekstsyklusen og volatilitet | 6.74% | 15.12% | 61.27 | 
 | TRET | Housing global | 1. Vekstsyklusen og volatilitet | 6.88% | 17.49% | 63.14 | 
