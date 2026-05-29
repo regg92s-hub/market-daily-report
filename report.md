@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-28T23:01:41.092484+02:00
+# Daglig rapport – 2026-05-29T21:58:38.286103+02:00
 
 ## Manglet/feilet
 
@@ -6,44 +6,44 @@
 
 | Ticker | Navn | Kategori | Dist36WMA | Dist36MMA | M-RSI14 |
 |---|---|---|---:|---:|---:|
-| UTEN | 10-årig UST | 0. Makro & Renter | -0.83% | 4.01% | 48.85 | 
+| UTEN | 10-årig UST | 0. Makro & Renter | -0.45% | 4.41% | 49.8 | 
 | 2S10S | 2s10s kurve | 0. Makro & Renter | -16.48% | 468.42% | 55.54 | 
-| SCHP | 10yr realrente | 0. Makro & Renter | 1.02% | 6.68% | 66.93 | 
-| TLT | 20yr UST | 0. Makro & Renter | -1.17% | 0.09% | 47.49 | 
-| HYG | High Yield OAS | 0. Makro & Renter | 1.58% | 10.91% | 77.49 | 
-| LQD | IG Kreditt | 0. Makro & Renter | 0.47% | 7.2% | 62.07 | 
-| SPY | S&P 500 | 1. Vekstsyklusen | 10.28% | 33.38% | 76.43 | 
-| QQQ | Nasdaq-100 | 1. Vekstsyklusen | 17.99% | 47.38% | 78.03 | 
-| IWM | Russell 2000 | 1. Vekstsyklusen | 13.87% | 35.19% | 72.03 | 
-| ACWI | ACWI Global | 1. Vekstsyklusen | 10.23% | 34.27% | 76.97 | 
-| EXSA | STOXX Europe 600 | 1. Vekstsyklusen | 6.67% | 23.37% | 70.38 | 
-| EEM | MSCI EM | 1. Vekstsyklusen | 18.44% | 51.65% | 77.45 | 
-| SOXQ | Semiconductors | 1. Vekstsyklusen | 57.5% | 132.56% | 87.35 | 
-| IAI | Broker/Dealers | 1. Vekstsyklusen | 2.83% | 31.12% | 66.23 | 
-| VNQ | Housing US | 1. Vekstsyklusen | 6.25% | 14.87% | 61.08 | 
-| BCOM | Commodity bred | 2. Inflasjon & Råvarer | 18.42% | 33.83% | 75.96 | 
-| USO | Olje (WTI) | 2. Inflasjon & Råvarer | 40.34% | 65.52% | 70.33 | 
-| UNG | Naturgass | 2. Inflasjon & Råvarer | -4.8% | -31.17% | 41.15 | 
-| COPX | Kobber miners | 2. Inflasjon & Råvarer | 18.97% | 83.22% | 70.81 | 
-| XME | Metals & Mining | 2. Inflasjon & Råvarer | 15.74% | 76.01% | 77.14 | 
-| XLE | Energy sektor | 2. Inflasjon & Råvarer | 12.35% | 29.19% | 67.76 | 
-| DBA | Agri / mat | 2. Inflasjon & Råvarer | 5.19% | 16.35% | 68.05 | 
-| GLD | Gull | 3. Edelmetaller | -0.46% | 48.74% | 69.44 | 
-| SLV | Sølv | 3. Edelmetaller | 7.93% | 92.94% | 69.69 | 
-| GDX | Gull miners | 3. Edelmetaller | -1.49% | 75.15% | 64.05 | 
-| GDXJ | Junior gull | 3. Edelmetaller | -0.97% | 83.56% | 63.72 | 
-| SIL | Sølv miners | 3. Edelmetaller | 4.97% | 96.45% | 65.95 | 
-| SILJ | Junior sølv | 3. Edelmetaller | 5.01% | 98.75% | 65.47 | 
-| PPLT | Platina | 3. Edelmetaller | -1.18% | 55.45% | 64.8 | 
-| PALL | Palladium | 3. Edelmetaller | -11.56% | 17.12% | 51.2 | 
-| URA | Uranium ETF | 4. Uranium & Energiomstilling | 2.49% | 55.8% | 61.25 | 
-| URNM | Uranium miners | 4. Uranium & Energiomstilling | -1.11% | 29.82% | 56.92 | 
-| NLR | Nuclear energy | 4. Uranium & Energiomstilling | -3.01% | 42.34% | 59.49 | 
-| ICLN | Clean energy | 4. Uranium & Energiomstilling | 29.46% | 59.97% | 77.72 | 
-| UUP | DXY | 5. Valuta & Dollar | 1.61% | 3.98% | 58.23 | 
-| FXE | EUR/USD | 5. Valuta & Dollar | 0.02% | 6.67% | 59.23 | 
-| FXY | JPY | 5. Valuta & Dollar | -2.1% | -5.98% | 38.94 | 
-| CEW | EM Currencies | 5. Valuta & Dollar | 2.44% | 12.14% | 71.43 | 
-| VIXY | VIX | 6. Volatilitet & Risiko | -20.89% | -53.3% | 31.49 | 
-| BTC | Bitcoin | 6. Volatilitet & Risiko | -15.38% | -4.95% | 44.67 | 
-| ETHA | Ethereum | 6. Volatilitet & Risiko | -27.54% | % | 27.4 | 
+| SCHP | 10yr realrente | 0. Makro & Renter | 0.98% | 6.65% | 66.84 | 
+| TLT | 20yr UST | 0. Makro & Renter | -1.35% | -0.09% | 47.22 | 
+| HYG | High Yield OAS | 0. Makro & Renter | 1.71% | 11.05% | 77.72 | 
+| LQD | IG Kreditt | 0. Makro & Renter | 0.51% | 7.25% | 62.15 | 
+| SPY | S&P 500 | 1. Vekstsyklusen | 10.54% | 33.7% | 76.57 | 
+| QQQ | Nasdaq-100 | 1. Vekstsyklusen | 18.44% | 47.94% | 78.2 | 
+| IWM | Russell 2000 | 1. Vekstsyklusen | 13.19% | 34.39% | 71.69 | 
+| ACWI | ACWI Global | 1. Vekstsyklusen | 10.46% | 34.55% | 77.09 | 
+| EXSA | STOXX Europe 600 | 1. Vekstsyklusen | 6.7% | 23.41% | 70.41 | 
+| EEM | MSCI EM | 1. Vekstsyklusen | 18.56% | 51.79% | 77.5 | 
+| SOXQ | Semiconductors | 1. Vekstsyklusen | 57.56% | 132.64% | 87.35 | 
+| IAI | Broker/Dealers | 1. Vekstsyklusen | 4.47% | 33.2% | 67.32 | 
+| VNQ | Housing US | 1. Vekstsyklusen | 5.33% | 13.87% | 60.0 | 
+| BCOM | Commodity bred | 2. Inflasjon & Råvarer | 17.74% | 33.07% | 74.96 | 
+| USO | Olje (WTI) | 2. Inflasjon & Råvarer | 38.47% | 63.33% | 69.28 | 
+| UNG | Naturgass | 2. Inflasjon & Råvarer | -4.56% | -31.0% | 41.2 | 
+| COPX | Kobber miners | 2. Inflasjon & Råvarer | 18.69% | 82.79% | 70.73 | 
+| XME | Metals & Mining | 2. Inflasjon & Råvarer | 14.48% | 74.13% | 76.74 | 
+| XLE | Energy sektor | 2. Inflasjon & Råvarer | 11.12% | 27.79% | 66.43 | 
+| DBA | Agri / mat | 2. Inflasjon & Råvarer | 3.95% | 14.98% | 65.39 | 
+| GLD | Gull | 3. Edelmetaller | 0.54% | 50.22% | 70.73 | 
+| SLV | Sølv | 3. Edelmetaller | 7.81% | 92.74% | 69.66 | 
+| GDX | Gull miners | 3. Edelmetaller | 0.9% | 79.3% | 65.28 | 
+| GDXJ | Junior gull | 3. Edelmetaller | 2.54% | 89.9% | 65.22 | 
+| SIL | Sølv miners | 3. Edelmetaller | 8.02% | 102.01% | 66.86 | 
+| SILJ | Junior sølv | 3. Edelmetaller | 7.18% | 102.75% | 66.1 | 
+| PPLT | Platina | 3. Edelmetaller | -1.2% | 55.4% | 64.78 | 
+| PALL | Palladium | 3. Edelmetaller | -12.25% | 16.21% | 50.83 | 
+| URA | Uranium ETF | 4. Uranium & Energiomstilling | 2.37% | 55.63% | 61.19 | 
+| URNM | Uranium miners | 4. Uranium & Energiomstilling | -1.19% | 29.72% | 56.88 | 
+| NLR | Nuclear energy | 4. Uranium & Energiomstilling | -3.01% | 42.35% | 59.5 | 
+| ICLN | Clean energy | 4. Uranium & Energiomstilling | 30.28% | 60.98% | 77.96 | 
+| UUP | DXY | 5. Valuta & Dollar | 1.5% | 3.87% | 58.02 | 
+| FXE | EUR/USD | 5. Valuta & Dollar | 0.2% | 6.86% | 59.75 | 
+| FXY | JPY | 5. Valuta & Dollar | -2.14% | -6.02% | 38.89 | 
+| CEW | EM Currencies | 5. Valuta & Dollar | 2.46% | 12.17% | 71.47 | 
+| VIXY | VIX | 6. Volatilitet & Risiko | -22.49% | -54.25% | 31.39 | 
+| BTC | Bitcoin | 6. Volatilitet & Risiko | -15.24% | -4.79% | 44.72 | 
+| ETHA | Ethereum | 6. Volatilitet & Risiko | -27.43% | % | 27.41 | 
