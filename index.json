@@ -1,8 +1,8 @@
 {
-  "generated_local": "2026-05-30T16:54:45.299691+02:00",
+  "generated_local": "2026-05-30T17:00:13.371738+02:00",
   "version": "2026-05-30-northstar-v4",
   "summary": {
-    "generated_local": "2026-05-30T16:54:45.299691+02:00",
+    "generated_local": "2026-05-30T17:00:13.371738+02:00",
     "assets": {
       "UTEN": {
         "id": "UTEN",
@@ -16,112 +16,106 @@
         "frames": {
           "daily": {
             "last": 43.1510009765625,
-            "sma36": 43.15984503428141,
-            "sma156": 43.38844387347881,
+            "sma36": 43.1598449283176,
+            "sma156": 43.388443800119255,
             "close_above_sma36": false,
             "close_above_sma156": false,
-            "dist_to_36MA": -0.00020491402858109547,
+            "dist_to_36MA": -0.00020491157393603295,
             "dist_to_3yr_MA": null,
-            "rsi14": 53.722170557468665,
-            "macd": -0.07822039845508755,
-            "macd_signal": -0.1292559837491774,
-            "macd_hist": 0.05103558529408986,
+            "rsi14": 53.72216995492366,
+            "macd": -0.07822039252891955,
+            "macd_signal": -0.12925598849877395,
+            "macd_hist": 0.05103559596985441,
             "macd_cross": false,
-            "macd14": -0.08621067839715835,
-            "macd14_signal": -0.12408836290616448,
-            "macd14_hist": 0.03787768450900614,
+            "macd14": -0.08621067776904567,
+            "macd14_signal": -0.12408837357310185,
+            "macd14_hist": 0.03787769580405617,
             "macd14_cross": false
           },
           "weekly": {
             "last": 43.1510009765625,
-            "sma36": 43.35048156314426,
-            "sma156": 41.23624417720697,
+            "sma36": 43.3504827287462,
+            "sma156": 41.2362456933046,
             "close_above_sma36": false,
             "close_above_sma156": true,
-            "dist_to_36MA": -0.004601577177203756,
-            "dist_to_3yr_MA": 0.04643383114929506,
-            "rsi14": 49.324406426466275,
-            "macd": -0.024519009248969326,
-            "macd_signal": 0.07261968204767855,
-            "macd_hist": -0.09713869129664787,
+            "dist_to_36MA": -0.00460160394134255,
+            "dist_to_3yr_MA": 0.046433792675961025,
+            "rsi14": 49.324395702000224,
+            "macd": -0.024519342129032395,
+            "macd_signal": 0.07261950268957101,
+            "macd_hist": -0.09713884481860341,
             "macd_cross": false,
-            "macd14": 0.013660539346325606,
-            "macd14_signal": 0.10455943909632064,
-            "macd14_hist": -0.09089889974999503,
+            "macd14": 0.013660253504077957,
+            "macd14_signal": 0.1045592869229716,
+            "macd14_hist": -0.09089903341889365,
             "macd14_cross": false
           },
           "monthly": {
             "last": 43.1510009765625,
-            "sma36": 41.333432621426056,
+            "sma36": 41.33343272738986,
             "sma156": null,
             "close_above_sma36": true,
             "close_above_sma156": null,
-            "dist_to_36MA": 0.04397332231715663,
+            "dist_to_36MA": 0.0439733196407908,
             "dist_to_3yr_MA": null,
-            "rsi14": 49.77572365154527,
-            "macd": 0.713392728751117,
-            "macd_signal": 0.6695211207196756,
-            "macd_hist": 0.04387160803144141,
+            "rsi14": 49.77576604956861,
+            "macd": 0.7133933505681185,
+            "macd_signal": 0.6695214965651497,
+            "macd_hist": 0.04387185400296878,
             "macd_cross": false,
-            "macd14": 0.6643961837132224,
-            "macd14_signal": 0.5983315907047512,
-            "macd14_hist": 0.06606459300847123,
+            "macd14": 0.6643967327449047,
+            "macd14_signal": 0.5983319198611599,
+            "macd14_hist": 0.06606481288374488,
             "macd14_cross": false
           }
         },
         "missing_data": false,
-        "52w_high": 44.388824462890625,
-        "52w_low": 41.15134048461914,
-        "northstar_score": 70,
-        "northstar_score_label": "Noytral",
+        "52w_high": 44.38882827758789,
+        "52w_low": 41.151344299316406,
+        "northstar_score": 83,
+        "northstar_score_label": "Lavrisiko entry",
         "northstar_score_points": [
           [
             "3yr MA",
             25,
             25,
-            "Ideal entry - nær 3yr MA (4.6%)"
+            "Ideal — naer 3yr MA (4.6%)"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-0.5%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (53.7)"
+            "Noeytral (53.7)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (49.3)"
+            14,
+            20,
+            "Noeytral (49.3)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (49.8)"
+            20,
+            20,
+            "God (49.8)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0971)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0909)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (0.0661)"
           ]
         ]
       },
@@ -193,56 +187,50 @@
         "missing_data": false,
         "52w_high": 0.7399999999999998,
         "52w_low": 0.4299999999999997,
-        "northstar_score": 35,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 58,
+        "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (571.9%) - unnga entry"
+            "Ekstremt stretched (571.9%) — ikke entry"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            10,
+            15,
+            "Under 36WMA (-19.9%) — potensiale"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (44.0)"
+            "Lav/bra (44.0)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (41.3)"
+            20,
+            20,
+            "Lav/bra (41.3)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
+            14,
+            20,
             "Moderat (54.7)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0159)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.0154)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            2,
             5,
-            "Neg (-0.0111)"
+            "Neg (-0.0154)"
           ]
         ]
       },
@@ -259,111 +247,105 @@
           "daily": {
             "last": 26.829999923706055,
             "sma36": 26.740729173024494,
-            "sma156": 26.56447812838432,
+            "sma156": 26.56447809170454,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.003338381317275931,
             "dist_to_3yr_MA": null,
-            "rsi14": 59.24547616556711,
-            "macd": 0.00900374777541657,
-            "macd_signal": 0.0010296795875852612,
-            "macd_hist": 0.00797406818783131,
+            "rsi14": 59.24547290334521,
+            "macd": 0.00900374463995135,
+            "macd_signal": 0.001029675174210962,
+            "macd_hist": 0.007974069465740388,
             "macd_cross": false,
-            "macd14": 0.009374181173189555,
-            "macd14_signal": 0.004993209464305077,
-            "macd14_hist": 0.004380971708884478,
+            "macd14": 0.009374177532940564,
+            "macd14_signal": 0.004993204589562124,
+            "macd14_hist": 0.00438097294337844,
             "macd14_cross": true
           },
           "weekly": {
             "last": 26.829999923706055,
-            "sma36": 26.550726890563965,
-            "sma156": 25.07266687735533,
+            "sma36": 26.550727102491592,
+            "sma156": 25.072666950714893,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.010518470333907976,
-            "dist_to_3yr_MA": 0.07008959417627324,
-            "rsi14": 59.926287814122425,
-            "macd": 0.11145828699396887,
-            "macd_signal": 0.11661069382323622,
-            "macd_hist": -0.0051524068292673475,
+            "dist_to_36MA": 0.010518462267960061,
+            "dist_to_3yr_MA": 0.07008959104532175,
+            "rsi14": 59.92626277758825,
+            "macd": 0.11145821379592391,
+            "macd_signal": 0.1166106750615126,
+            "macd_hist": -0.005152461265588687,
             "macd_cross": false,
-            "macd14": 0.11538371594479813,
-            "macd14_signal": 0.1214849633828562,
-            "macd14_hist": -0.00610124743805808,
+            "macd14": 0.11538366730182403,
+            "macd14_signal": 0.12148496935408862,
+            "macd14_hist": -0.0061013020522645844,
             "macd14_cross": false
           },
           "monthly": {
             "last": 26.829999923706055,
-            "sma36": 25.139849768744575,
-            "sma156": 22.705284253144875,
+            "sma36": 25.139849556816948,
+            "sma156": 22.705284375410812,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.06722992263314075,
+            "dist_to_36MA": 0.06722993162983364,
             "dist_to_3yr_MA": null,
-            "rsi14": 67.03456227750156,
-            "macd": 0.5668334752910731,
-            "macd_signal": 0.5336529747797796,
-            "macd_hist": 0.03318050051129351,
+            "rsi14": 67.03452443513444,
+            "macd": 0.5668334020729695,
+            "macd_signal": 0.5336528886622884,
+            "macd_hist": 0.03318051341068107,
             "macd_cross": false,
-            "macd14": 0.5389846138896068,
-            "macd14_signal": 0.49642793057806445,
-            "macd14_hist": 0.04255668331154239,
+            "macd14": 0.5389845384359724,
+            "macd14_signal": 0.4964278453350162,
+            "macd14_hist": 0.04255669310095617,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 26.860000610351562,
         "52w_low": 25.403005599975586,
-        "northstar_score": 58,
+        "northstar_score": 66,
         "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (7.0%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (1.1%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (59.2)"
+            "Noeytral (59.2)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (59.9)"
+            14,
+            20,
+            "Noeytral (59.9)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (67.0)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.0052)"
+            4,
+            5,
+            "Nær null neg (-0.0052) — mulig snu"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.0061)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (0.0426)"
+            "Nær null neg (-0.0061)"
           ]
         ]
       },
@@ -380,111 +362,105 @@
           "daily": {
             "last": 85.76000213623047,
             "sma36": 85.52374543084039,
-            "sma156": 86.79032849042844,
+            "sma156": 86.79032805027106,
             "close_above_sma36": true,
             "close_above_sma156": false,
             "dist_to_36MA": 0.0027624691154473284,
             "dist_to_3yr_MA": null,
-            "rsi14": 55.244688221762445,
-            "macd": -0.18865295764277334,
-            "macd_signal": -0.3936503816083463,
-            "macd_hist": 0.20499742396557297,
+            "rsi14": 55.244688620086315,
+            "macd": -0.18865294507730823,
+            "macd_signal": -0.39365036317647767,
+            "macd_hist": 0.20499741809916944,
             "macd_cross": false,
-            "macd14": -0.22882854329104418,
-            "macd14_signal": -0.38761914215595583,
-            "macd14_hist": 0.15879059886491165,
+            "macd14": -0.22882852601075854,
+            "macd14_signal": -0.38761911777977964,
+            "macd14_hist": 0.1587905917690211,
             "macd14_cross": false
           },
           "weekly": {
             "last": 85.76000213623047,
-            "sma36": 86.75891749064128,
-            "sma156": 85.51626293475812,
+            "sma36": 86.75891982184515,
+            "sma156": 85.51626273913261,
             "close_above_sma36": false,
             "close_above_sma156": true,
-            "dist_to_36MA": -0.011513690849341975,
-            "dist_to_3yr_MA": 0.0028502087568805993,
-            "rsi14": 48.59538926418472,
-            "macd": -0.34827265387444584,
-            "macd_signal": -0.12813074860525858,
-            "macd_hist": -0.22014190526918725,
+            "dist_to_36MA": -0.011513717409874513,
+            "dist_to_3yr_MA": 0.0028502110509831544,
+            "rsi14": 48.59538810837272,
+            "macd": -0.34827321051062654,
+            "macd_signal": -0.1281312263151999,
+            "macd_hist": -0.22014198419542663,
             "macd_cross": false,
-            "macd14": -0.26303164329549134,
-            "macd14_signal": -0.05683623306190557,
-            "macd14_hist": -0.20619541023358576,
+            "macd14": -0.2630321204572539,
+            "macd14_signal": -0.05683659587662405,
+            "macd14_hist": -0.20619552458062984,
             "macd14_cross": false
           },
           "monthly": {
             "last": 85.76000213623047,
-            "sma36": 85.66768497890897,
-            "sma156": 98.03139657240648,
+            "sma36": 85.66768476698134,
+            "sma156": 98.03139696365747,
             "close_above_sma36": true,
             "close_above_sma156": false,
-            "dist_to_36MA": 0.0010776193770641873,
+            "dist_to_36MA": 0.001077621853563994,
             "dist_to_3yr_MA": null,
-            "rsi14": 47.52573377921601,
-            "macd": -0.8146326353739965,
-            "macd_signal": -1.2730810891727065,
-            "macd_hist": 0.4584484537987099,
+            "rsi14": 47.525738198408014,
+            "macd": -0.8146319791262897,
+            "macd_signal": -1.2730804472831714,
+            "macd_hist": 0.45844846815688167,
             "macd_cross": false,
-            "macd14": -1.0862864224127264,
-            "macd14_signal": -1.5875618229513262,
-            "macd14_hist": 0.5012754005385998,
+            "macd14": -1.0862858299016835,
+            "macd14_signal": -1.5875612935170138,
+            "macd14_hist": 0.5012754636153303,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 89.82706451416016,
-        "52w_low": 81.62165069580078,
-        "northstar_score": 70,
-        "northstar_score_label": "Noytral",
+        "52w_low": 81.62165832519531,
+        "northstar_score": 83,
+        "northstar_score_label": "Lavrisiko entry",
         "northstar_score_points": [
           [
             "3yr MA",
             25,
             25,
-            "Ideal entry - nær 3yr MA (0.3%)"
+            "Ideal — naer 3yr MA (0.3%)"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-1.2%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (55.2)"
+            "Noeytral (55.2)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (48.6)"
+            14,
+            20,
+            "Noeytral (48.6)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (47.5)"
+            20,
+            20,
+            "God (47.5)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.2201)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.2062)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (0.5013)"
           ]
         ]
       },
@@ -501,117 +477,105 @@
           "daily": {
             "last": 80.30999755859375,
             "sma36": 79.94154209560818,
-            "sma156": 79.10963821411133,
+            "sma156": 79.10963782286032,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.004609061238084467,
             "dist_to_3yr_MA": null,
-            "rsi14": 59.83750667878321,
-            "macd": 0.11426754195512956,
-            "macd_signal": 0.07540603720849057,
-            "macd_hist": 0.03886150474663899,
+            "rsi14": 59.83750762130112,
+            "macd": 0.11426753854745186,
+            "macd_signal": 0.0754060322599811,
+            "macd_hist": 0.03886150628747076,
             "macd_cross": false,
-            "macd14": 0.10923307427285067,
-            "macd14_signal": 0.08174382573654343,
-            "macd14_hist": 0.027489248536307243,
+            "macd14": 0.1092330701552271,
+            "macd14_signal": 0.08174382002312203,
+            "macd14_hist": 0.02748925013210507,
             "macd14_cross": false
           },
           "weekly": {
             "last": 80.30999755859375,
-            "sma36": 78.98345481024847,
-            "sma156": 72.11352067115979,
+            "sma36": 78.9834541744656,
+            "sma156": 72.11352089123848,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.016795197823799804,
-            "dist_to_3yr_MA": 0.1136607505936395,
-            "rsi14": 63.09781132401559,
-            "macd": 0.4933263252038671,
-            "macd_signal": 0.4867471110222975,
-            "macd_hist": 0.006579214181569593,
+            "dist_to_36MA": 0.016795206008564247,
+            "dist_to_3yr_MA": 0.11366074719492876,
+            "rsi14": 63.097811253419295,
+            "macd": 0.4933265156897022,
+            "macd_signal": 0.48674743111252716,
+            "macd_hist": 0.006579084577175043,
             "macd_cross": true,
-            "macd14": 0.5063709882905272,
-            "macd14_signal": 0.5122612703488976,
-            "macd14_hist": -0.0058902820583703885,
+            "macd14": 0.5063712091736505,
+            "macd14_signal": 0.5122615990107683,
+            "macd14_hist": -0.00589038983711776,
             "macd14_cross": false
           },
           "monthly": {
             "last": 80.30999755859375,
-            "sma36": 72.3394889831543,
-            "sma156": 60.0026581348517,
+            "sma36": 72.33949089050293,
+            "sma156": 60.002660849155525,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.11018198618040481,
+            "dist_to_36MA": 0.1101819569086465,
             "dist_to_3yr_MA": null,
-            "rsi14": 77.66755841118123,
-            "macd": 2.9932315106931924,
-            "macd_signal": 3.0206677252944023,
-            "macd_hist": -0.02743621460120993,
+            "rsi14": 77.6674345401685,
+            "macd": 2.9932311153088023,
+            "macd_signal": 3.020667090409509,
+            "macd_hist": -0.027435975100706944,
             "macd_cross": false,
-            "macd14": 2.936015540096534,
-            "macd14_signal": 2.9127180850084815,
-            "macd14_hist": 0.023297455088052477,
+            "macd14": 2.9360150492668993,
+            "macd14_signal": 2.912717360345871,
+            "macd14_hist": 0.023297688921028126,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 80.30999755859375,
-        "52w_low": 74.99906921386719,
-        "northstar_score": 56,
-        "northstar_score_label": "Noytral",
+        "52w_low": 74.99903869628906,
+        "northstar_score": 54,
+        "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (11.4%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (1.7%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (59.8)"
+            "Noeytral (59.8)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (63.1)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (77.7)"
+            2,
+            20,
+            "Klart hoey (77.7)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0066)"
+            5,
+            5,
+            "Bullish cross (0.0066) — momentum snur"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.0059)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (0.0233)"
-          ],
-          [
-            "Cross bonus",
-            3,
-            3,
-            "Bullish cross denne uka"
+            "Nær null neg (-0.0059)"
           ]
         ]
       },
@@ -628,111 +592,105 @@
           "daily": {
             "last": 109.36000061035156,
             "sma36": 108.78881814744737,
-            "sma156": 108.85389054127229,
+            "sma156": 108.85389039455316,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.005250378417844704,
             "dist_to_3yr_MA": null,
-            "rsi14": 58.74177985814266,
-            "macd": 0.04241657725191317,
-            "macd_signal": -0.09266534658577538,
-            "macd_hist": 0.13508192383768855,
+            "rsi14": 58.741778865305704,
+            "macd": 0.04241656118878723,
+            "macd_signal": -0.09266536909090771,
+            "macd_hist": 0.13508193027969495,
             "macd_cross": false,
-            "macd14": 0.015501758301113,
-            "macd14_signal": -0.08891395932452739,
-            "macd14_hist": 0.10441571762564039,
+            "macd14": 0.015501740671581388,
+            "macd14_signal": -0.08891398269847357,
+            "macd14_hist": 0.10441572337005496,
             "macd14_cross": false
           },
           "weekly": {
             "last": 109.36000061035156,
-            "sma36": 108.75681071811252,
-            "sma156": 101.67982541597806,
+            "sma36": 108.7568096584744,
+            "sma156": 101.67982370425493,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.005546226376594067,
-            "dist_to_3yr_MA": 0.07553293057844526,
-            "rsi14": 54.84794908565948,
-            "macd": 0.21658857946161447,
-            "macd_signal": 0.30080872204107806,
-            "macd_hist": -0.08422014257946359,
+            "dist_to_36MA": 0.005546236173820735,
+            "dist_to_3yr_MA": 0.07553294868444237,
+            "rsi14": 54.84795351910276,
+            "macd": 0.21658901638689088,
+            "macd_signal": 0.300809011698128,
+            "macd_hist": -0.08421999531123714,
             "macd_cross": false,
-            "macd14": 0.2722016083256875,
-            "macd14_signal": 0.36889070881027636,
-            "macd14_hist": -0.09668910048458884,
+            "macd14": 0.2722019847548438,
+            "macd14_signal": 0.3688909427175078,
+            "macd14_hist": -0.09668895796266397,
             "macd14_cross": false
           },
           "monthly": {
             "last": 109.36000061035156,
-            "sma36": 101.92148017883301,
-            "sma156": 93.60742045671512,
+            "sma36": 101.92148039076064,
+            "sma156": 93.60741869608562,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.07298285325592614,
+            "dist_to_36MA": 0.07298285102484875,
             "dist_to_3yr_MA": null,
-            "rsi14": 62.259889424642495,
-            "macd": 2.577401562080098,
-            "macd_signal": 2.4711245623518843,
-            "macd_hist": 0.1062769997282138,
+            "rsi14": 62.25987260806933,
+            "macd": 2.5774020397468576,
+            "macd_signal": 2.471124844384807,
+            "macd_hist": 0.10627719536205049,
             "macd_cross": false,
-            "macd14": 2.4350893527317794,
-            "macd14_signal": 2.259718274670429,
-            "macd14_hist": 0.17537107806135044,
+            "macd14": 2.4350897579322464,
+            "macd14_signal": 2.2597184979855625,
+            "macd14_hist": 0.1753712599466839,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 110.4483413696289,
-        "52w_low": 102.59319305419922,
-        "northstar_score": 63,
+        "52w_low": 102.59318542480469,
+        "northstar_score": 62,
         "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (7.6%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (0.6%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (58.7)"
+            "Noeytral (58.7)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (54.8)"
+            14,
+            20,
+            "Noeytral (54.8)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
-            "Moderat (62.3)"
+            6,
+            20,
+            "Hoey (62.3)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0842)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0967)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (0.1754)"
           ]
         ]
       },
@@ -754,70 +712,70 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.04574935802518109,
             "dist_to_3yr_MA": null,
-            "rsi14": 74.18586631591872,
-            "macd": 12.74067288432559,
-            "macd_signal": 12.934644010265961,
-            "macd_hist": -0.19397112594037047,
+            "rsi14": 74.18586631590111,
+            "macd": 12.740672884327978,
+            "macd_signal": 12.934644010269363,
+            "macd_hist": -0.19397112594138477,
             "macd_cross": false,
-            "macd14": 12.646791404249939,
-            "macd14_signal": 12.740388495725892,
-            "macd14_hist": -0.09359709147595296,
+            "macd14": 12.646791404253463,
+            "macd14_signal": 12.740388495730882,
+            "macd14_hist": -0.09359709147741846,
             "macd14_cross": false
           },
           "weekly": {
             "last": 756.47998046875,
             "sma36": 684.3245595296224,
-            "sma156": 561.4559515928611,
+            "sma156": 561.4559470934746,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.10544034980817339,
-            "dist_to_3yr_MA": 0.34735410377715664,
-            "rsi14": 73.62381918703903,
-            "macd": 21.549523914071187,
-            "macd_signal": 14.330072863109764,
-            "macd_hist": 7.219451050961423,
+            "dist_to_3yr_MA": 0.34735411457456095,
+            "rsi14": 73.62382111475664,
+            "macd": 21.549524017376257,
+            "macd_signal": 14.330072983513293,
+            "macd_hist": 7.219451033862963,
             "macd_cross": false,
-            "macd14": 19.804557750566573,
-            "macd14_signal": 13.929416195950393,
-            "macd14_hist": 5.87514155461618,
+            "macd14": 19.804557849624416,
+            "macd14_signal": 13.92941630150329,
+            "macd14_hist": 5.875141548121126,
             "macd14_cross": false
           },
           "monthly": {
             "last": 756.47998046875,
-            "sma36": 565.7839847140842,
-            "sma156": 327.4709675128643,
+            "sma36": 565.7839745415581,
+            "sma156": 327.47096389379254,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.3370473553630772,
+            "dist_to_36MA": 0.3370473794025512,
             "dist_to_3yr_MA": null,
-            "rsi14": 76.57610029341438,
-            "macd": 57.558958788496625,
-            "macd_signal": 53.117259664714275,
-            "macd_hist": 4.4416991237823495,
+            "rsi14": 76.57611123466512,
+            "macd": 57.55896159204508,
+            "macd_signal": 53.11726093180106,
+            "macd_hist": 4.441700660244017,
             "macd_cross": false,
-            "macd14": 55.586502643860285,
-            "macd14_signal": 51.33189283839154,
-            "macd14_hist": 4.254609805468746,
+            "macd14": 55.586504813253555,
+            "macd14_signal": 51.3318935458776,
+            "macd14_hist": 4.254611267375957,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 756.47998046875,
         "52w_low": 582.7101440429688,
-        "northstar_score": 27,
+        "northstar_score": 13,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (34.7%) - unnga entry"
+            "Klart stretched (34.7%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (10.5%) — ok"
           ],
           [
             "RSI daily",
@@ -828,32 +786,26 @@
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (73.6)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (76.6)"
+            2,
+            20,
+            "Klart hoey (76.6)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (7.2195)"
+            1,
+            5,
+            "Pos men hoyt (7.2195) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (5.8751)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (4.2546)"
+            "Svakt pos (5.8751)"
           ]
         ]
       },
@@ -870,75 +822,75 @@
           "daily": {
             "last": 738.3099975585938,
             "sma36": 680.2049984402126,
-            "sma156": 625.7254071357922,
+            "sma156": 625.7254090920472,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.0854227758567233,
             "dist_to_3yr_MA": null,
-            "rsi14": 77.19758582855872,
-            "macd": 21.488428774053887,
-            "macd_signal": 21.46525652865382,
-            "macd_hist": 0.02317224540006535,
+            "rsi14": 77.19758582641678,
+            "macd": 21.488428771013787,
+            "macd_signal": 21.46525652418318,
+            "macd_hist": 0.023172246830608145,
             "macd_cross": true,
-            "macd14": 21.177147277689983,
-            "macd14_signal": 20.98515589004362,
-            "macd14_hist": 0.19199138764636103,
+            "macd14": 21.177147272236084,
+            "macd14_signal": 20.985155882295686,
+            "macd14_hist": 0.191991389940398,
             "macd14_cross": false
           },
           "weekly": {
             "last": 738.3099975585938,
             "sma36": 623.5250227186415,
-            "sma156": 495.27966210781,
+            "sma156": 495.27966054280597,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.18409040641140023,
-            "dist_to_3yr_MA": 0.49069314580068935,
-            "rsi14": 77.40953679042303,
-            "macd": 31.89184979580932,
-            "macd_signal": 19.05224190489223,
-            "macd_hist": 12.83960789091709,
+            "dist_to_3yr_MA": 0.4906931505110398,
+            "rsi14": 77.40954202833419,
+            "macd": 31.891849768391012,
+            "macd_signal": 19.052241902144452,
+            "macd_hist": 12.83960786624656,
             "macd_cross": false,
-            "macd14": 28.486381402733855,
-            "macd14_signal": 17.787923292195583,
-            "macd14_hist": 10.698458110538272,
+            "macd14": 28.48638140369394,
+            "macd14_signal": 17.78792332976736,
+            "macd14_hist": 10.69845807392658,
             "macd14_cross": false
           },
           "monthly": {
             "last": 738.3099975585938,
-            "sma36": 499.1833945380317,
-            "sma156": 255.78799140147675,
+            "sma36": 499.1833996242947,
+            "sma156": 255.78799365116998,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.4790355721705473,
+            "dist_to_36MA": 0.47903555710040696,
             "dist_to_3yr_MA": null,
-            "rsi14": 78.19060442002319,
-            "macd": 63.33551797048074,
-            "macd_signal": 55.37268141433256,
-            "macd_hist": 7.962836556148176,
+            "rsi14": 78.19060772622375,
+            "macd": 63.335517491219434,
+            "macd_signal": 55.37268313337738,
+            "macd_hist": 7.9628343578420555,
             "macd_cross": false,
-            "macd14": 60.415259389112634,
-            "macd14_signal": 53.23851179106073,
-            "macd14_hist": 7.176747598051904,
+            "macd14": 60.415259406883365,
+            "macd14_signal": 53.23851358291866,
+            "macd14_hist": 7.176745823964708,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 738.3099975585938,
         "52w_low": 516.609375,
-        "northstar_score": 27,
+        "northstar_score": 9,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (49.1%) - unnga entry"
+            "Klart stretched (49.1%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (18.4%) — ok"
           ],
           [
             "RSI daily",
@@ -949,32 +901,26 @@
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (77.4)"
           ],
           [
             "RSI monthly",
             0,
-            15,
+            20,
             "Overbought (78.2)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (12.8396)"
+            1,
+            5,
+            "Pos men hoyt (12.8396) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (10.6985)"
-          ],
-          [
-            "MACD14 M",
+            1,
             5,
-            5,
-            "Pos (7.1767)"
+            "Pos men hoyt (10.6985)"
           ]
         ]
       },
@@ -1009,93 +955,87 @@
           "weekly": {
             "last": 290.42999267578125,
             "sma36": 256.41687817043726,
-            "sma156": 214.32939294668344,
+            "sma156": 214.3293932401217,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.13264772096139427,
-            "dist_to_3yr_MA": 0.35506375809139995,
-            "rsi14": 70.37205038655564,
-            "macd": 10.67110991854156,
-            "macd_signal": 8.304446379982501,
-            "macd_hist": 2.3666635385590595,
+            "dist_to_3yr_MA": 0.35506375623618286,
+            "rsi14": 70.37205046414604,
+            "macd": 10.67110993304334,
+            "macd_signal": 8.304446401144329,
+            "macd_hist": 2.366663531899011,
             "macd_cross": false,
-            "macd14": 10.018509158739676,
-            "macd14_signal": 8.039974498325796,
-            "macd14_hist": 1.9785346604138798,
+            "macd14": 10.01850917793746,
+            "macd14_signal": 8.039974525223341,
+            "macd14_hist": 1.978534652714119,
             "macd14_cross": false
           },
           "monthly": {
             "last": 290.42999267578125,
-            "sma36": 215.97076882256403,
-            "sma156": 155.27117308592184,
+            "sma36": 215.97077051798502,
+            "sma156": 155.271175188896,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.34476528587251076,
+            "dist_to_36MA": 0.3447652753157892,
             "dist_to_3yr_MA": null,
-            "rsi14": 71.72457318171465,
-            "macd": 19.619583458693796,
-            "macd_signal": 14.766259616183989,
-            "macd_hist": 4.853323842509807,
+            "rsi14": 71.7245695445252,
+            "macd": 19.619582447059685,
+            "macd_signal": 14.766258849975413,
+            "macd_hist": 4.853323597084271,
             "macd_cross": false,
-            "macd14": 17.995837843681443,
-            "macd14_signal": 13.702030298252549,
-            "macd14_hist": 4.293807545428894,
+            "macd14": 17.995836953840524,
+            "macd14_signal": 13.702029665246172,
+            "macd14_hist": 4.293807288594351,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 292.0299987792969,
         "52w_low": 202.88365173339844,
-        "northstar_score": 38,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 18,
+        "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (35.5%) - unnga entry"
+            "Klart stretched (35.5%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (13.3%) — ok"
           ],
           [
             "RSI daily",
-            6,
+            3,
             10,
             "Hoey (64.1)"
           ],
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (70.4)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
-            "Hoey (71.7)"
+            2,
+            20,
+            "Klart hoey (71.7)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (2.3667)"
+            3,
+            5,
+            "Svakt pos (2.3667) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (1.9785)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (4.2938)"
+            "Svakt pos (1.9785)"
           ]
         ]
       },
@@ -1117,106 +1057,100 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.04039107333050506,
             "dist_to_3yr_MA": null,
-            "rsi14": 67.95486480519037,
+            "rsi14": 67.95486480518946,
             "macd": 2.3769827170639246,
             "macd_signal": 2.337703589097452,
             "macd_hist": 0.03927912796647259,
             "macd_cross": false,
             "macd14": 2.345546736396699,
-            "macd14_signal": 2.3049879688114836,
-            "macd14_hist": 0.04055876758521526,
+            "macd14_signal": 2.304987968811483,
+            "macd14_hist": 0.040558767585215705,
             "macd14_cross": false
           },
           "weekly": {
             "last": 158.5399932861328,
             "sma36": 143.5674875047472,
-            "sma156": 117.00013141143016,
+            "sma156": 117.00013150924292,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.104288972674893,
-            "dist_to_3yr_MA": 0.35504115571142403,
-            "rsi14": 71.66050382989032,
-            "macd": 4.616392559968574,
-            "macd_signal": 3.4619441491180947,
-            "macd_hist": 1.1544484108504793,
+            "dist_to_3yr_MA": 0.35504115457860214,
+            "rsi14": 71.66050410554749,
+            "macd": 4.6163925869510365,
+            "macd_signal": 3.4619441880285877,
+            "macd_hist": 1.1544483989224488,
             "macd_cross": false,
-            "macd14": 4.341540566445872,
-            "macd14_signal": 3.407319514809492,
-            "macd14_hist": 0.9342210516363796,
+            "macd14": 4.341540599957142,
+            "macd14_signal": 3.407319561039066,
+            "macd14_hist": 0.9342210389180758,
             "macd14_cross": false
           },
           "monthly": {
             "last": 158.5399932861328,
-            "sma36": 117.86491415235731,
-            "sma156": 75.85637968014449,
+            "sma36": 117.86491521199544,
+            "sma156": 75.85637911772116,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.34509912832242107,
+            "dist_to_36MA": 0.3450991162296086,
             "dist_to_3yr_MA": null,
-            "rsi14": 77.07601372269482,
-            "macd": 12.353107620553459,
-            "macd_signal": 10.907625590920235,
-            "macd_hist": 1.445482029633224,
+            "rsi14": 77.07601230134708,
+            "macd": 12.353107321945998,
+            "macd_signal": 10.907625374962688,
+            "macd_hist": 1.4454819469833105,
             "macd_cross": false,
-            "macd14": 11.739746896553129,
-            "macd14_signal": 10.36575782505833,
-            "macd14_hist": 1.3739890714947993,
+            "macd14": 11.739746651227748,
+            "macd14_signal": 10.365757673320537,
+            "macd14_hist": 1.37398897790721,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 158.5399932861328,
         "52w_low": 121.63367462158203,
-        "northstar_score": 33,
+        "northstar_score": 18,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (35.5%) - unnga entry"
+            "Klart stretched (35.5%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (10.4%) — ok"
           ],
           [
             "RSI daily",
-            6,
+            3,
             10,
             "Hoey (68.0)"
           ],
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (71.7)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (77.1)"
+            2,
+            20,
+            "Klart hoey (77.1)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (1.1544)"
+            3,
+            5,
+            "Svakt pos (1.1544) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.9342)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (1.3740)"
+            "Svakt pos (0.9342)"
           ]
         ]
       },
@@ -1233,111 +1167,105 @@
           "daily": {
             "last": 62.90999984741211,
             "sma36": 61.59416675567627,
-            "sma156": 59.284735239469086,
+            "sma156": 59.284735190562714,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.02136294978963374,
             "dist_to_3yr_MA": null,
-            "rsi14": 58.4611604270824,
-            "macd": 0.6402217504796113,
-            "macd_signal": 0.5439923237056138,
-            "macd_hist": 0.09622942677399748,
+            "rsi14": 58.461160429785245,
+            "macd": 0.6402217506428158,
+            "macd_signal": 0.5439923239455944,
+            "macd_hist": 0.09622942669722145,
             "macd_cross": false,
-            "macd14": 0.599089331435934,
-            "macd14_signal": 0.50690331627458,
-            "macd14_hist": 0.09218601516135405,
+            "macd14": 0.5990893317162147,
+            "macd14_signal": 0.5069033166726745,
+            "macd14_hist": 0.09218601504354018,
             "macd14_cross": false
           },
           "weekly": {
             "last": 62.90999984741211,
-            "sma36": 58.95702966054281,
-            "sma156": 50.654508639604614,
+            "sma36": 58.95702976650662,
+            "sma156": 50.65450854179187,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.06704832671573412,
-            "dist_to_3yr_MA": 0.2419427517302072,
-            "rsi14": 62.8220051579147,
-            "macd": 1.2614712277042557,
-            "macd_signal": 1.1681807087312543,
-            "macd_hist": 0.09329051897300134,
+            "dist_to_36MA": 0.06704832479792193,
+            "dist_to_3yr_MA": 0.2419427541283714,
+            "rsi14": 62.82200611302723,
+            "macd": 1.2614711835337076,
+            "macd_signal": 1.1681806530576835,
+            "macd_hist": 0.09329053047602409,
             "macd_cross": false,
-            "macd14": 1.247563167601875,
-            "macd14_signal": 1.1815070723582022,
-            "macd14_hist": 0.06605609524367284,
+            "macd14": 1.2475631224502166,
+            "macd14_signal": 1.1815070188261823,
+            "macd14_hist": 0.06605610362403436,
             "macd14_cross": false
           },
           "monthly": {
             "last": 62.90999984741211,
-            "sma36": 50.9757604598999,
-            "sma156": 35.64589530993731,
+            "sma36": 50.97576035393609,
+            "sma156": 35.64589500427246,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.23411596570295956,
+            "dist_to_36MA": 0.23411596826832853,
             "dist_to_3yr_MA": null,
-            "rsi14": 70.4088253344971,
-            "macd": 3.936945381655079,
-            "macd_signal": 3.5108729983678653,
-            "macd_hist": 0.42607238328721353,
+            "rsi14": 70.40882457833928,
+            "macd": 3.936945322339625,
+            "macd_signal": 3.510873065939405,
+            "macd_hist": 0.42607225640021973,
             "macd_cross": false,
-            "macd14": 3.7660906083086445,
-            "macd14_signal": 3.368033950253005,
-            "macd14_hist": 0.3980566580556397,
+            "macd14": 3.76609058198553,
+            "macd14_signal": 3.3680340298889506,
+            "macd14_hist": 0.39805655209657953,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 63.939998626708984,
-        "52w_low": 52.40556335449219,
-        "northstar_score": 55,
-        "northstar_score_label": "Noytral",
+        "52w_low": 52.40557098388672,
+        "northstar_score": 37,
+        "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            5,
+            7,
             25,
-            "Stretched (24.2%) - forsiktig"
+            "Stretched (24.2%) — forsiktig"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (6.7%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (58.5)"
+            "Noeytral (58.5)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (62.8)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
-            "Hoey (70.4)"
+            2,
+            20,
+            "Klart hoey (70.4)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0933)"
+            3,
+            5,
+            "Svakt pos (0.0933) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0661)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (0.3981)"
+            "Svakt pos (0.0661)"
           ]
         ]
       },
@@ -1364,101 +1292,95 @@
             "macd_signal": 1.327883350955317,
             "macd_hist": 0.07723700385319998,
             "macd_cross": false,
-            "macd14": 1.3837662688713124,
-            "macd14_signal": 1.3246203424490766,
-            "macd14_hist": 0.05914592642223582,
+            "macd14": 1.3837662688713408,
+            "macd14_signal": 1.324620342449101,
+            "macd14_hist": 0.059145926422239814,
             "macd14_cross": false
           },
           "weekly": {
             "last": 68.5999984741211,
             "sma36": 57.92689482371012,
-            "sma156": 44.94131687359932,
+            "sma156": 44.9413169225057,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.1842512650279737,
-            "dist_to_3yr_MA": 0.5264349878100705,
-            "rsi14": 70.7867264719358,
-            "macd": 3.292299093607056,
-            "macd_signal": 2.6917488587235012,
-            "macd_hist": 0.600550234883555,
+            "dist_to_3yr_MA": 0.5264349861489619,
+            "rsi14": 70.78672648084677,
+            "macd": 3.2922990993964163,
+            "macd_signal": 2.6917488670047396,
+            "macd_hist": 0.6005502323916767,
             "macd_cross": false,
-            "macd14": 3.1156161901899395,
-            "macd14_signal": 2.604861571142401,
-            "macd14_hist": 0.5107546190475385,
+            "macd14": 3.1156161969293663,
+            "macd14_signal": 2.604861580315701,
+            "macd14_hist": 0.5107546166136654,
             "macd14_cross": false
           },
           "monthly": {
             "last": 68.5999984741211,
-            "sma36": 45.2432288063897,
-            "sma156": 37.52661779599312,
+            "sma36": 45.243228912353516,
+            "sma156": 37.52661753923465,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.5162489566711188,
+            "dist_to_36MA": 0.5162489531199239,
             "dist_to_3yr_MA": null,
-            "rsi14": 77.44858223303073,
-            "macd": 6.119242086756046,
-            "macd_signal": 4.437026470113857,
-            "macd_hist": 1.682215616642189,
+            "rsi14": 77.44858099528912,
+            "macd": 6.119242046624493,
+            "macd_signal": 4.4370264921418645,
+            "macd_hist": 1.682215554482628,
             "macd_cross": false,
-            "macd14": 5.497830644663679,
-            "macd14_signal": 3.961690299482669,
-            "macd14_hist": 1.5361403451810105,
+            "macd14": 5.497830627467337,
+            "macd14_signal": 3.961690340811408,
+            "macd14_hist": 1.5361402866559293,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 68.61000061035156,
         "52w_low": 44.44718933105469,
-        "northstar_score": 33,
+        "northstar_score": 16,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (52.6%) - unnga entry"
+            "Ekstremt stretched (52.6%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (18.4%) — ok"
           ],
           [
             "RSI daily",
-            6,
+            3,
             10,
             "Hoey (64.8)"
           ],
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (70.8)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (77.4)"
+            2,
+            20,
+            "Klart hoey (77.4)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.6006)"
+            3,
+            5,
+            "Svakt pos (0.6006) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.5108)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (1.5361)"
+            "Svakt pos (0.5108)"
           ]
         ]
       },
@@ -1480,106 +1402,100 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.001150714462587214,
             "dist_to_3yr_MA": null,
-            "rsi14": 50.578556750495956,
-            "macd": 0.5577904587297127,
-            "macd_signal": 0.6606377937659271,
-            "macd_hist": -0.10284733503621446,
+            "rsi14": 50.578556750486825,
+            "macd": 0.5577904587289737,
+            "macd_signal": 0.6606377937648316,
+            "macd_hist": -0.10284733503585786,
             "macd_cross": false,
-            "macd14": 0.5931392749343445,
-            "macd14_signal": 0.6875500240952718,
-            "macd14_hist": -0.09441074916092729,
+            "macd14": 0.5931392749324402,
+            "macd14_signal": 0.6875500240925694,
+            "macd14_hist": -0.09441074916012915,
             "macd14_cross": false
           },
           "weekly": {
             "last": 95.69999694824219,
             "sma36": 90.84539604187012,
-            "sma156": 83.58050835438264,
+            "sma156": 83.58050859891452,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.05343805099528228,
-            "dist_to_3yr_MA": 0.14500376741515766,
-            "rsi14": 57.65054548294717,
-            "macd": 1.80557958947783,
-            "macd_signal": 1.4802873327800428,
-            "macd_hist": 0.32529225669778716,
+            "dist_to_3yr_MA": 0.14500376406521492,
+            "rsi14": 57.65054601443008,
+            "macd": 1.8055795316209782,
+            "macd_signal": 1.4802872531608777,
+            "macd_hist": 0.32529227846010045,
             "macd_cross": false,
-            "macd14": 1.677525913549104,
-            "macd14_signal": 1.373243386823995,
-            "macd14_hist": 0.304282526725109,
+            "macd14": 1.677525848838556,
+            "macd14_signal": 1.3732433023279662,
+            "macd14_hist": 0.30428254651058984,
             "macd14_cross": false
           },
           "monthly": {
             "last": 95.69999694824219,
-            "sma36": 84.02863375345866,
-            "sma156": 67.56353561694806,
+            "sma36": 84.02863311767578,
+            "sma156": 67.56353622827774,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.13889745284955468,
+            "dist_to_36MA": 0.1388974614667543,
             "dist_to_3yr_MA": null,
-            "rsi14": 60.01724696407458,
-            "macd": 3.214659925390521,
-            "macd_signal": 2.7678791080613494,
-            "macd_hist": 0.4467808173291714,
+            "rsi14": 60.017248822082486,
+            "macd": 3.2146600569141697,
+            "macd_signal": 2.767879413709044,
+            "macd_hist": 0.44678064320512556,
             "macd_cross": false,
-            "macd14": 3.05566092076576,
-            "macd14_signal": 2.65785756622284,
-            "macd14_hist": 0.39780335454292004,
+            "macd14": 3.055661077104432,
+            "macd14_signal": 2.6578578523659426,
+            "macd14_hist": 0.3978032247384893,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 97.22000122070312,
         "52w_low": 85.7279052734375,
-        "northstar_score": 77,
-        "northstar_score_label": "Lavrisiko entry",
+        "northstar_score": 59,
+        "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (14.5%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (5.3%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (50.6)"
+            "Noeytral (50.6)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (57.7)"
+            14,
+            20,
+            "Noeytral (57.7)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
-            "Moderat (60.0)"
+            6,
+            20,
+            "Hoey (60.0)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.3253)"
+            3,
+            5,
+            "Svakt pos (0.3253) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.3043)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (0.3978)"
+            "Svakt pos (0.3043)"
           ]
         ]
       },
@@ -1596,111 +1512,105 @@
           "daily": {
             "last": 182.7899932861328,
             "sma36": 177.45944425794812,
-            "sma156": 174.94726953751,
+            "sma156": 174.94726963532275,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.030038125333224946,
             "dist_to_3yr_MA": null,
-            "rsi14": 63.06727605942801,
-            "macd": 1.4840640774987435,
-            "macd_signal": 1.4332574081072698,
-            "macd_hist": 0.05080666939147371,
+            "rsi14": 63.06727605871093,
+            "macd": 1.4840640774266376,
+            "macd_signal": 1.4332574080012486,
+            "macd_hist": 0.05080666942538903,
             "macd_cross": true,
-            "macd14": 1.4797369705411825,
-            "macd14_signal": 1.4542072370793566,
-            "macd14_hist": 0.025529733461825854,
+            "macd14": 1.4797369704201913,
+            "macd14_signal": 1.4542072369075918,
+            "macd14_hist": 0.025529733512599462,
             "macd14_cross": true
           },
           "weekly": {
             "last": 182.7899932861328,
-            "sma36": 174.72365781995984,
-            "sma156": 135.68262701768143,
+            "sma36": 174.7236573961046,
+            "sma156": 135.6826274578388,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.04616624655651813,
-            "dist_to_3yr_MA": 0.34718789946713374,
-            "rsi14": 60.21004097530969,
-            "macd": 1.8691075664805794,
-            "macd_signal": 0.7610290349198079,
-            "macd_hist": 1.1080785315607715,
+            "dist_to_36MA": 0.046166249094371545,
+            "dist_to_3yr_MA": 0.34718789509682707,
+            "rsi14": 60.21004109341575,
+            "macd": 1.8691074291678262,
+            "macd_signal": 0.761028874911306,
+            "macd_hist": 1.1080785542565201,
             "macd_cross": false,
-            "macd14": 1.7649993168109575,
-            "macd14_signal": 0.9862609999214764,
-            "macd14_hist": 0.778738316889481,
+            "macd14": 1.7649991704219303,
+            "macd14_signal": 0.9862608329312521,
+            "macd14_hist": 0.7787383374906782,
             "macd14_cross": false
           },
           "monthly": {
             "last": 182.7899932861328,
-            "sma36": 137.04541566636829,
-            "sma156": 74.50417757034302,
+            "sma36": 137.04541757371692,
+            "sma156": 74.50417670225485,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.3337913741757544,
+            "dist_to_36MA": 0.3337913556125277,
             "dist_to_3yr_MA": null,
-            "rsi14": 67.40801938638054,
-            "macd": 16.113155809882613,
-            "macd_signal": 16.986840080080967,
-            "macd_hist": -0.8736842701983534,
+            "rsi14": 67.40801650799074,
+            "macd": 16.11315532902364,
+            "macd_signal": 16.986840066265604,
+            "macd_hist": -0.8736847372419625,
             "macd_cross": false,
-            "macd14": 15.965370450624476,
-            "macd14_signal": 16.412790272316215,
-            "macd14_hist": -0.44741982169173866,
+            "macd14": 15.965370152268576,
+            "macd14_signal": 16.41279041697627,
+            "macd14_hist": -0.447420264707695,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 189.59327697753906,
-        "52w_low": 152.2912139892578,
-        "northstar_score": 41,
-        "northstar_score_label": "Avvent",
+        "52w_low": 152.29119873046875,
+        "northstar_score": 28,
+        "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (34.7%) - unnga entry"
+            "Klart stretched (34.7%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (4.6%)"
           ],
           [
             "RSI daily",
-            6,
+            3,
             10,
             "Hoey (63.1)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (60.2)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (67.4)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (1.1081)"
+            1,
+            5,
+            "Pos men hoyt (1.1081) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.7787)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            1,
             5,
-            "Neg (-0.4474)"
+            "Pos men hoyt (0.7787)"
           ]
         ]
       },
@@ -1722,70 +1632,70 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.18254410391149795,
             "dist_to_3yr_MA": null,
-            "rsi14": 72.21914055893794,
-            "macd": 5.9141376332422055,
-            "macd_signal": 5.684354052283186,
-            "macd_hist": 0.22978358095901985,
+            "rsi14": 72.21914055895894,
+            "macd": 5.914137633243101,
+            "macd_signal": 5.684354052284505,
+            "macd_hist": 0.2297835809585962,
             "macd_cross": false,
-            "macd14": 5.787720914093185,
-            "macd14_signal": 5.559572471231987,
-            "macd14_hist": 0.2281484428611984,
+            "macd14": 5.787720914095502,
+            "macd14_signal": 5.559572471235272,
+            "macd14_hist": 0.2281484428602294,
             "macd14_cross": false
           },
           "weekly": {
             "last": 101.02999877929688,
             "sma36": 64.12695609198676,
-            "sma156": 42.73162922492394,
+            "sma156": 42.731629371643066,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.5754684915088538,
-            "dist_to_3yr_MA": 1.3642908218526202,
-            "rsi14": 86.26474001801763,
-            "macd": 10.614790609653369,
-            "macd_signal": 7.380042770528959,
-            "macd_hist": 3.2347478391244096,
+            "dist_to_3yr_MA": 1.3642908137348235,
+            "rsi14": 86.26473960762578,
+            "macd": 10.61479064593118,
+            "macd_signal": 7.380042819910903,
+            "macd_hist": 3.2347478260202767,
             "macd_cross": false,
-            "macd14": 9.602280160111206,
-            "macd14_signal": 6.792875240126972,
-            "macd14_hist": 2.8094049199842344,
+            "macd14": 9.602280199841758,
+            "macd14_signal": 6.792875291311416,
+            "macd14_hist": 2.8094049085303414,
             "macd14_cross": false
           },
           "monthly": {
             "last": 101.02999877929688,
-            "sma36": 43.430728594462074,
+            "sma36": 43.43072827657064,
             "sma156": null,
             "close_above_sma36": true,
             "close_above_sma156": null,
-            "dist_to_36MA": 1.326233108421289,
+            "dist_to_36MA": 1.326233125448164,
             "dist_to_3yr_MA": null,
-            "rsi14": 87.35211253973556,
-            "macd": 11.981146210812327,
-            "macd_signal": 7.46089364573546,
-            "macd_hist": 4.520252565076866,
+            "rsi14": 87.35211141036915,
+            "macd": 11.981146245615179,
+            "macd_signal": 7.460893612808274,
+            "macd_hist": 4.520252632806905,
             "macd_cross": false,
-            "macd14": 10.63074392321154,
-            "macd14_signal": 6.766409800143635,
-            "macd14_hist": 3.8643341230679047,
+            "macd14": 10.630743955902645,
+            "macd14_signal": 6.766409788240868,
+            "macd14_hist": 3.8643341676617773,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 101.33000183105469,
-        "52w_low": 37.26066589355469,
-        "northstar_score": 27,
+        "52w_low": 37.26066970825195,
+        "northstar_score": 4,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (136.4%) - unnga entry"
+            "Ekstremt stretched (136.4%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            0,
+            15,
+            "Langt over 36WMA (57.5%) — ikke entry"
           ],
           [
             "RSI daily",
@@ -1796,32 +1706,26 @@
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (86.3)"
           ],
           [
             "RSI monthly",
             0,
-            15,
+            20,
             "Overbought (87.4)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (3.2347)"
+            1,
+            5,
+            "Pos men hoyt (3.2347) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (2.8094)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (3.8643)"
+            "Svakt pos (2.8094)"
           ]
         ]
       },
@@ -1856,57 +1760,57 @@
           "weekly": {
             "last": 99.3499984741211,
             "sma36": 81.70958285861545,
-            "sma156": 70.28806705963918,
+            "sma156": 70.28806679065411,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.21589163716610069,
-            "dist_to_3yr_MA": 0.4134689233924013,
-            "rsi14": 71.5324232166658,
-            "macd": 2.798121846127273,
-            "macd_signal": 0.1622894242073678,
-            "macd_hist": 2.6358324219199054,
+            "dist_to_3yr_MA": 0.4134689288015987,
+            "rsi14": 71.53242321194921,
+            "macd": 2.7981218472723697,
+            "macd_signal": 0.162289425890564,
+            "macd_hist": 2.6358324213818056,
             "macd_cross": false,
-            "macd14": 2.145020788393211,
-            "macd14_signal": -0.016750723610239215,
-            "macd14_hist": 2.16177151200345,
+            "macd14": 2.145020790229978,
+            "macd14_signal": -0.016750721003781555,
+            "macd14_hist": 2.1617715112337597,
             "macd14_cross": false
           },
           "monthly": {
             "last": 99.3499984741211,
-            "sma36": 70.8170043097602,
+            "sma36": 70.81700409783258,
             "sma156": null,
             "close_above_sma36": true,
             "close_above_sma156": null,
-            "dist_to_36MA": 0.4029116233094938,
+            "dist_to_36MA": 0.40291162750785997,
             "dist_to_3yr_MA": null,
-            "rsi14": 71.93891940542039,
-            "macd": 5.52793983339842,
-            "macd_signal": 5.656317556735646,
-            "macd_hist": -0.1283777233372252,
+            "rsi14": 71.93892051707942,
+            "macd": 5.527939941232148,
+            "macd_signal": 5.656317641527414,
+            "macd_hist": -0.12837770029526574,
             "macd_cross": false,
-            "macd14": 5.518029466189944,
-            "macd14_signal": 5.612826319809907,
-            "macd14_hist": -0.09479685361996282,
+            "macd14": 5.518029555027326,
+            "macd14_signal": 5.6128263785522545,
+            "macd14_hist": -0.0947968235249288,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 99.3499984741211,
         "52w_low": 70.69000244140625,
-        "northstar_score": 27,
+        "northstar_score": 8,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (41.3%) - unnga entry"
+            "Klart stretched (41.3%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            2,
+            15,
+            "Klart over 36WMA (21.6%) — forsiktig"
           ],
           [
             "RSI daily",
@@ -1917,32 +1821,26 @@
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (71.5)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
-            "Hoey (71.9)"
+            2,
+            20,
+            "Klart hoey (71.9)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (2.6358)"
+            1,
+            5,
+            "Pos men hoyt (2.6358) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (2.1618)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            1,
             5,
-            "Neg (-0.0948)"
+            "Pos men hoyt (2.1618)"
           ]
         ]
       },
@@ -1982,52 +1880,52 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.15835937824196547,
             "dist_to_3yr_MA": 0.36875914045133407,
-            "rsi14": 68.30057618563875,
-            "macd": 2.46456430366176,
-            "macd_signal": -1.0318207550691447,
-            "macd_hist": 3.4963850587309047,
+            "rsi14": 68.3005761856399,
+            "macd": 2.464564303661817,
+            "macd_signal": -1.0318207550690635,
+            "macd_hist": 3.4963850587308802,
             "macd_cross": false,
-            "macd14": 1.694897842654754,
-            "macd14_signal": -1.0987253409962543,
-            "macd14_hist": 2.7936231836510084,
+            "macd14": 1.6948978426548962,
+            "macd14_signal": -1.0987253409960613,
+            "macd14_hist": 2.7936231836509577,
             "macd14_cross": false
           },
           "monthly": {
             "last": 144.57000732421875,
             "sma36": 106.39055591159396,
-            "sma156": 64.72036365362314,
+            "sma156": 64.72036364139655,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.3588612831795925,
             "dist_to_3yr_MA": null,
-            "rsi14": 64.85818867496154,
-            "macd": 8.136384042070972,
-            "macd_signal": 8.865357748592775,
-            "macd_hist": -0.7289737065218027,
+            "rsi14": 64.85818868420807,
+            "macd": 8.13638401923285,
+            "macd_signal": 8.865357716200496,
+            "macd_hist": -0.7289736969676461,
             "macd_cross": false,
-            "macd14": 8.195905411858789,
-            "macd14_signal": 8.727436807286495,
-            "macd14_hist": -0.5315313954277059,
+            "macd14": 8.19590538565754,
+            "macd14_signal": 8.72743677201398,
+            "macd14_hist": -0.5315313863564413,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 144.57000732421875,
         "52w_low": 104.16000366210938,
-        "northstar_score": 40,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 20,
+        "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (36.9%) - unnga entry"
+            "Klart stretched (36.9%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (15.8%) — ok"
           ],
           [
             "RSI daily",
@@ -2037,33 +1935,27 @@
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (68.3)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
-            "Moderat (64.9)"
+            6,
+            20,
+            "Hoey (64.9)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (3.4964)"
+            1,
+            5,
+            "Pos men hoyt (3.4964) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (2.7936)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            1,
             5,
-            "Neg (-0.5315)"
+            "Pos men hoyt (2.7936)"
           ]
         ]
       },
@@ -2085,106 +1977,100 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.037966895047555196,
             "dist_to_3yr_MA": null,
-            "rsi14": 55.87983890591217,
-            "macd": 0.7043300626524669,
-            "macd_signal": 0.8594938958796233,
-            "macd_hist": -0.15516383322715643,
+            "rsi14": 55.87983890591223,
+            "macd": 0.7043300626524811,
+            "macd_signal": 0.8594938958796424,
+            "macd_hist": -0.15516383322716132,
             "macd_cross": false,
-            "macd14": 0.7318234524408211,
-            "macd14_signal": 0.8547615246733471,
-            "macd14_hist": -0.12293807223252595,
+            "macd14": 0.731823452440878,
+            "macd14_signal": 0.8547615246734075,
+            "macd14_hist": -0.1229380722325295,
             "macd14_cross": false
           },
           "weekly": {
             "last": 40.150001525878906,
             "sma36": 36.8261538611518,
-            "sma156": 31.540159983512684,
+            "sma156": 31.540159885699932,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.09025780094384109,
-            "dist_to_3yr_MA": 0.2729802748897575,
-            "rsi14": 61.302847204971954,
-            "macd": 1.1476562065047489,
-            "macd_signal": 0.7259424430720189,
-            "macd_hist": 0.4217137634327299,
+            "dist_to_3yr_MA": 0.2729802788375404,
+            "rsi14": 61.3028474064888,
+            "macd": 1.1476562133662185,
+            "macd_signal": 0.7259424529920957,
+            "macd_hist": 0.4217137603741228,
             "macd_cross": false,
-            "macd14": 1.0517323639377167,
-            "macd14_signal": 0.7147452596713146,
-            "macd14_hist": 0.3369871042664021,
+            "macd14": 1.0517323726538876,
+            "macd14_signal": 0.7147452717409881,
+            "macd14_hist": 0.3369871009128995,
             "macd14_cross": false
           },
           "monthly": {
             "last": 40.150001525878906,
-            "sma36": 31.698818842569988,
+            "sma36": 31.698818895551895,
             "sma156": null,
             "close_above_sma36": true,
             "close_above_sma156": null,
-            "dist_to_36MA": 0.26660875678936613,
+            "dist_to_36MA": 0.26660875467233625,
             "dist_to_3yr_MA": null,
-            "rsi14": 62.71696307120856,
-            "macd": 2.3854861803163985,
-            "macd_signal": 2.0043201456692716,
-            "macd_hist": 0.38116603464712684,
+            "rsi14": 62.7169621702491,
+            "macd": 2.385486143258319,
+            "macd_signal": 2.0043201397208046,
+            "macd_hist": 0.3811660035375146,
             "macd_cross": false,
-            "macd14": 2.2337916539921636,
-            "macd14_signal": 1.878963378563724,
-            "macd14_hist": 0.35482827542843953,
+            "macd14": 2.233791630882102,
+            "macd14_signal": 1.878963386324132,
+            "macd14_hist": 0.35482824455797024,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 41.630001068115234,
         "52w_low": 30.24488639831543,
-        "northstar_score": 60,
-        "northstar_score_label": "Noytral",
+        "northstar_score": 37,
+        "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            5,
+            7,
             25,
-            "Stretched (27.3%) - forsiktig"
+            "Stretched (27.3%) — forsiktig"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (9.0%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (55.9)"
+            "Noeytral (55.9)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (61.3)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
-            "Moderat (62.7)"
+            6,
+            20,
+            "Hoey (62.7)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.4217)"
+            1,
+            5,
+            "Pos men hoyt (0.4217) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.3370)"
-          ],
-          [
-            "MACD14 M",
+            1,
             5,
-            5,
-            "Pos (0.3548)"
+            "Pos men hoyt (0.3370)"
           ]
         ]
       },
@@ -2224,7 +2110,7 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.1777419415122035,
             "dist_to_3yr_MA": 0.33618954285647745,
-            "rsi14": 64.6506066223265,
+            "rsi14": 64.65060662232642,
             "macd": 1.1963552650687035,
             "macd_signal": 1.1374385703752912,
             "macd_hist": 0.05891669469341232,
@@ -2242,70 +2128,64 @@
             "close_above_sma156": null,
             "dist_to_36MA": 0.33107394509840765,
             "dist_to_3yr_MA": null,
-            "rsi14": 75.00650695466753,
-            "macd": 1.1694356934421464,
-            "macd_signal": 0.5950987996976933,
-            "macd_hist": 0.5743368937444531,
+            "rsi14": 75.00650690901045,
+            "macd": 1.1694356927308736,
+            "macd_signal": 0.595098798668023,
+            "macd_hist": 0.5743368940628506,
             "macd_cross": false,
-            "macd14": 1.012945294036026,
-            "macd14_signal": 0.5306664629804959,
-            "macd14_hist": 0.48227883105553004,
+            "macd14": 1.0129452931449165,
+            "macd14_signal": 0.5306664617458927,
+            "macd14_hist": 0.48227883139902383,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 18.90999984741211,
         "52w_low": 12.071361541748047,
-        "northstar_score": 45,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 30,
+        "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (33.6%) - unnga entry"
+            "Klart stretched (33.6%) — unnga entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (17.8%) — ok"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (41.8)"
+            "Lav/bra (41.8)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (64.7)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (75.0)"
+            2,
+            20,
+            "Klart hoey (75.0)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0589)"
+            3,
+            5,
+            "Svakt pos (0.0589) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0847)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (0.4823)"
+            "Svakt pos (0.0847)"
           ]
         ]
       },
@@ -2377,56 +2257,50 @@
         "missing_data": false,
         "52w_high": 152.9600067138672,
         "52w_low": 66.16999816894531,
-        "northstar_score": 57,
-        "northstar_score_label": "Noytral",
+        "northstar_score": 36,
+        "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (65.2%) - unnga entry"
+            "Ekstremt stretched (65.2%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            0,
+            15,
+            "Langt over 36WMA (38.6%) — ikke entry"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (41.9)"
+            "Lav/bra (41.9)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (59.8)"
+            14,
+            20,
+            "Noeytral (59.8)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (69.3)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (1.6630)"
+            3,
+            5,
+            "Svakt pos (1.6630) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (1.9761)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (5.8496)"
+            "Svakt pos (1.9761)"
           ]
         ]
       },
@@ -2503,57 +2377,45 @@
         "northstar_score_points": [
           [
             "3yr MA",
-            10,
+            8,
             25,
-            "Under 3yr MA (-31.5%) - potensiale"
+            "Langt under 3yr MA (-31.5%) — konsoliderer"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-4.5%)"
           ],
           [
             "RSI daily",
-            6,
+            3,
             10,
             "Hoey (61.0)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (49.2)"
+            14,
+            20,
+            "Noeytral (49.2)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (41.2)"
+            20,
+            20,
+            "God (41.2)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0467)"
+            5,
+            5,
+            "Bullish cross (0.0467) — momentum snur"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0292)"
-          ],
-          [
-            "MACD14 M",
             5,
             5,
-            "Pos (0.8668)"
-          ],
-          [
-            "Cross bonus",
-            3,
-            3,
-            "Bullish cross denne uka"
+            "Bullish cross (0.0292)"
           ]
         ]
       },
@@ -2575,106 +2437,100 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.05071723806803197,
             "dist_to_3yr_MA": null,
-            "rsi14": 57.332673093832625,
-            "macd": 1.275006142809758,
-            "macd_signal": 0.9691978120064325,
-            "macd_hist": 0.3058083308033256,
+            "rsi14": 57.33267309383259,
+            "macd": 1.2750061428097723,
+            "macd_signal": 0.9691978120064519,
+            "macd_hist": 0.30580833080332037,
             "macd_cross": false,
-            "macd14": 1.1780506040516912,
-            "macd14_signal": 0.9168608838021807,
-            "macd14_hist": 0.2611897202495105,
+            "macd14": 1.178050604051748,
+            "macd14_signal": 0.9168608838022543,
+            "macd14_hist": 0.2611897202494937,
             "macd14_cross": false
           },
           "weekly": {
             "last": 88.13999938964844,
             "sma36": 74.32664818233914,
-            "sma156": 47.491100299052704,
+            "sma156": 47.49110054358458,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.18584655093583927,
-            "dist_to_3yr_MA": 0.8559266648830739,
-            "rsi14": 60.62122954939487,
-            "macd": 4.821068943340379,
-            "macd_signal": 5.356379413451459,
-            "macd_hist": -0.5353104701110807,
+            "dist_to_3yr_MA": 0.8559266553268997,
+            "rsi14": 60.62122963267411,
+            "macd": 4.8210689426029205,
+            "macd_signal": 5.356379412306927,
+            "macd_hist": -0.5353104697040063,
             "macd_cross": false,
-            "macd14": 5.025505776365179,
-            "macd14_signal": 5.5432131680349,
-            "macd14_hist": -0.5177073916697212,
+            "macd14": 5.025505775054469,
+            "macd14_signal": 5.543213166094095,
+            "macd14_hist": -0.5177073910396253,
             "macd14_cross": false
           },
           "monthly": {
             "last": 88.13999938964844,
             "sma36": 48.261885854933,
-            "sma156": 27.738525720743034,
+            "sma156": 27.738525604590393,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.8262858532835259,
             "dist_to_3yr_MA": null,
-            "rsi14": 70.7018081929565,
-            "macd": 12.466491614893258,
-            "macd_signal": 8.927617974034481,
-            "macd_hist": 3.5388736408587764,
+            "rsi14": 70.70180906630455,
+            "macd": 12.46649163616047,
+            "macd_signal": 8.927618007512024,
+            "macd_hist": 3.538873628648446,
             "macd_cross": false,
-            "macd14": 11.186344517212312,
-            "macd14_signal": 7.956081459240322,
-            "macd14_hist": 3.2302630579719898,
+            "macd14": 11.18634454188392,
+            "macd14_signal": 7.956081494632766,
+            "macd14_hist": 3.230263047251153,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 95.69999694824219,
         "52w_low": 39.938167572021484,
-        "northstar_score": 36,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 27,
+        "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (85.6%) - unnga entry"
+            "Ekstremt stretched (85.6%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (18.6%) — ok"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (57.3)"
+            "Noeytral (57.3)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (60.6)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
-            "Hoey (70.7)"
+            2,
+            20,
+            "Klart hoey (70.7)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.5353)"
+            4,
+            5,
+            "Nær null neg (-0.5353) — mulig snu"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.5177)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (3.2303)"
+            "Nær null neg (-0.5177)"
           ]
         ]
       },
@@ -2691,111 +2547,105 @@
           "daily": {
             "last": 125.20999908447266,
             "sma36": 118.45444382561578,
-            "sma156": 110.55930142524915,
+            "sma156": 110.55930127853003,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.05703083008689948,
             "dist_to_3yr_MA": null,
-            "rsi14": 60.10758392103451,
-            "macd": 1.593031383770679,
-            "macd_signal": 0.9085933197053615,
-            "macd_hist": 0.6844380640653176,
+            "rsi14": 60.10758392079636,
+            "macd": 1.593031383745938,
+            "macd_signal": 0.9085933196690101,
+            "macd_hist": 0.6844380640769279,
             "macd_cross": false,
-            "macd14": 1.4591110555009834,
-            "macd14_signal": 0.9407597067169274,
-            "macd14_hist": 0.518351348784056,
+            "macd14": 1.4591110554730164,
+            "macd14_signal": 0.9407597066772291,
+            "macd14_hist": 0.5183513487957874,
             "macd14_cross": false
           },
           "weekly": {
             "last": 125.20999908447266,
-            "sma36": 109.21970579359267,
-            "sma156": 70.98387346512231,
+            "sma36": 109.21970536973741,
+            "sma156": 70.98387314723088,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.14640483761326936,
-            "dist_to_3yr_MA": 0.7639217609897573,
-            "rsi14": 63.847253115076334,
-            "macd": 5.27497775131684,
-            "macd_signal": 5.551604541824585,
-            "macd_hist": -0.27662679050774575,
+            "dist_to_36MA": 0.1464048420621892,
+            "dist_to_3yr_MA": 0.7639217688892364,
+            "rsi14": 63.847253137808146,
+            "macd": 5.2749778926942525,
+            "macd_signal": 5.55160470875405,
+            "macd_hist": -0.2766268160597978,
             "macd_cross": false,
-            "macd14": 5.492307807899124,
-            "macd14_signal": 5.855775382608234,
-            "macd14_hist": -0.3634675747091105,
+            "macd14": 5.49230795104495,
+            "macd14_signal": 5.855775543443842,
+            "macd14_hist": -0.3634675923988926,
             "macd14_cross": false
           },
           "monthly": {
             "last": 125.20999908447266,
-            "sma36": 71.80721696217854,
-            "sma156": 40.30577246348063,
+            "sma36": 71.80721759796143,
+            "sma156": 40.30577217615568,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.7436965862417674,
+            "dist_to_36MA": 0.7436965708030345,
             "dist_to_3yr_MA": null,
-            "rsi14": 76.79391668149621,
-            "macd": 16.80677859154288,
-            "macd_signal": 12.691746262965669,
-            "macd_hist": 4.115032328577211,
+            "rsi14": 76.79391485454602,
+            "macd": 16.806778470516832,
+            "macd_signal": 12.691746084762451,
+            "macd_hist": 4.115032385754381,
             "macd_cross": false,
-            "macd14": 15.274515118402789,
-            "macd14_signal": 11.485733044111416,
-            "macd14_hist": 3.7887820742913725,
+            "macd14": 15.274514997766161,
+            "macd14_signal": 11.485732888653569,
+            "macd14_hist": 3.788782109112592,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 131.3585968017578,
         "52w_low": 59.83977508544922,
-        "northstar_score": 27,
+        "northstar_score": 23,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (76.4%) - unnga entry"
+            "Ekstremt stretched (76.4%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (14.6%) — ok"
           ],
           [
             "RSI daily",
-            6,
+            3,
             10,
             "Hoey (60.1)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (63.8)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (76.8)"
+            2,
+            20,
+            "Klart hoey (76.8)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.2766)"
+            4,
+            5,
+            "Nær null neg (-0.2766) — mulig snu"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.3635)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (3.7888)"
+            "Nær null neg (-0.3635)"
           ]
         ]
       },
@@ -2817,106 +2667,100 @@
             "close_above_sma156": true,
             "dist_to_36MA": -0.02282315358789336,
             "dist_to_3yr_MA": null,
-            "rsi14": 41.39102034965238,
-            "macd": -0.041376230038416395,
-            "macd_signal": 0.25674079305189856,
-            "macd_hist": -0.29811702309031496,
+            "rsi14": 41.39102034967783,
+            "macd": -0.04137623003830271,
+            "macd_signal": 0.2567407930520726,
+            "macd_hist": -0.2981170230903753,
             "macd_cross": false,
-            "macd14": 0.026585840532540317,
-            "macd14_signal": 0.2612967371538239,
-            "macd14_hist": -0.23471089662128358,
+            "macd14": 0.026585840532874272,
+            "macd14_signal": 0.26129673715429436,
+            "macd14_hist": -0.23471089662142008,
             "macd14_cross": false
           },
           "weekly": {
             "last": 56.290000915527344,
             "sma36": 50.67311880323622,
-            "sma156": 43.65732845893273,
+            "sma156": 43.65732841002635,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.11084539978882062,
-            "dist_to_3yr_MA": 0.28935972269759536,
-            "rsi14": 55.24923202907104,
-            "macd": 2.9366776921901305,
-            "macd_signal": 3.2733898752704285,
-            "macd_hist": -0.33671218308029793,
+            "dist_to_3yr_MA": 0.28935972414197864,
+            "rsi14": 55.24923195234434,
+            "macd": 2.9366777039594893,
+            "macd_signal": 3.2733898903724508,
+            "macd_hist": -0.3367121864129614,
             "macd_cross": false,
-            "macd14": 2.9260500486876495,
-            "macd14_signal": 3.132424079517774,
-            "macd14_hist": -0.2063740308301245,
+            "macd14": 2.926050060928361,
+            "macd14_signal": 3.132424094301988,
+            "macd14_hist": -0.2063740333736268,
             "macd14_cross": false
           },
           "monthly": {
             "last": 56.290000915527344,
             "sma36": 44.06257311503092,
-            "sma156": 29.215632518132526,
+            "sma156": 29.215632499792637,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.2775014470574647,
             "dist_to_3yr_MA": null,
-            "rsi14": 66.39305217980295,
-            "macd": 4.489841428499119,
-            "macd_signal": 3.0120732568376805,
-            "macd_hist": 1.4777681716614386,
+            "rsi14": 66.39305529465783,
+            "macd": 4.489841322006384,
+            "macd_signal": 3.0120730532988684,
+            "macd_hist": 1.477768268707516,
             "macd_cross": false,
-            "macd14": 4.097149446967315,
-            "macd14_signal": 2.8645923714610815,
-            "macd14_hist": 1.2325570755062332,
+            "macd14": 4.0971493205814795,
+            "macd14_signal": 2.8645921679048265,
+            "macd14_hist": 1.232557152676653,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 62.560001373291016,
-        "52w_low": 39.49696731567383,
-        "northstar_score": 48,
+        "52w_low": 39.49696350097656,
+        "northstar_score": 50,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            5,
+            7,
             25,
-            "Stretched (28.9%) - forsiktig"
+            "Stretched (28.9%) — forsiktig"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            5,
+            15,
+            "Over 36WMA (11.1%) — ok"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (41.4)"
+            "Lav/bra (41.4)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (55.2)"
+            14,
+            20,
+            "Noeytral (55.2)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (66.4)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.3367)"
+            4,
+            5,
+            "Nær null neg (-0.3367) — mulig snu"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.2064)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (1.2326)"
+            "Nær null neg (-0.2064)"
           ]
         ]
       },
@@ -2951,93 +2795,87 @@
           "weekly": {
             "last": 27.25,
             "sma36": 26.20888927247789,
-            "sma156": 23.624879995981853,
+            "sma156": 23.624880008208446,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.039723573047995835,
-            "dist_to_3yr_MA": 0.15344501240364866,
-            "rsi14": 58.311580486727756,
-            "macd": 0.5042735148434652,
-            "macd_signal": 0.4476763841120932,
-            "macd_hist": 0.05659713073137196,
+            "dist_to_3yr_MA": 0.15344501180670583,
+            "rsi14": 58.3115804858282,
+            "macd": 0.5042735148375641,
+            "macd_signal": 0.4476763841034162,
+            "macd_hist": 0.056597130734147905,
             "macd_cross": false,
-            "macd14": 0.46847375572745875,
-            "macd14_signal": 0.4036891183044118,
-            "macd14_hist": 0.06478463742304696,
+            "macd14": 0.46847375571497096,
+            "macd14_signal": 0.4036891182866659,
+            "macd14_hist": 0.06478463742830504,
             "macd14_cross": false
           },
           "monthly": {
             "last": 27.25,
-            "sma36": 23.69457017050849,
-            "sma156": 18.79186108173468,
+            "sma36": 23.694570117526585,
+            "sma156": 18.791861075621384,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.15005251430628538,
+            "dist_to_36MA": 0.150052516877844,
             "dist_to_3yr_MA": null,
-            "rsi14": 65.43281089437636,
-            "macd": 1.3848141750784073,
-            "macd_signal": 1.4246890542968966,
-            "macd_hist": -0.03987487921848931,
+            "rsi14": 65.43281109064318,
+            "macd": 1.3848141808973402,
+            "macd_signal": 1.4246890593081707,
+            "macd_hist": -0.03987487841083048,
             "macd_cross": false,
-            "macd14": 1.3954748575526246,
-            "macd14_signal": 1.4329685524111084,
-            "macd14_hist": -0.03749369485848386,
+            "macd14": 1.395474861526413,
+            "macd14_signal": 1.432968554425406,
+            "macd14_hist": -0.03749369289899307,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 28.729999542236328,
         "52w_low": 24.72818946838379,
-        "northstar_score": 57,
-        "northstar_score_label": "Noytral",
+        "northstar_score": 53,
+        "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            5,
+            7,
             25,
-            "Stretched (15.3%) - forsiktig"
+            "Stretched (15.3%) — forsiktig"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (4.0%)"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (40.8)"
+            "Lav/bra (40.8)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (58.3)"
+            14,
+            20,
+            "Noeytral (58.3)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (65.4)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0566)"
+            3,
+            5,
+            "Svakt pos (0.0566) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0648)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            3,
             5,
-            "Neg (-0.0375)"
+            "Svakt pos (0.0648)"
           ]
         ]
       },
@@ -3109,56 +2947,50 @@
         "missing_data": false,
         "52w_high": 495.8999938964844,
         "52w_low": 300.9599914550781,
-        "northstar_score": 43,
+        "northstar_score": 42,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (51.2%) - unnga entry"
+            "Ekstremt stretched (51.2%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (0.6%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (45.3)"
+            "Noeytral (45.3)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (49.5)"
+            14,
+            20,
+            "Noeytral (49.5)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
-            "Hoey (70.8)"
+            2,
+            20,
+            "Klart hoey (70.8)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-7.3815)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-6.5612)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (7.0870)"
           ]
         ]
       },
@@ -3230,56 +3062,50 @@
         "missing_data": false,
         "52w_high": 105.5999984741211,
         "52w_low": 30.0,
-        "northstar_score": 43,
+        "northstar_score": 41,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (94.9%) - unnga entry"
+            "Ekstremt stretched (94.9%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (7.9%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (46.7)"
+            "Noeytral (46.7)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (52.4)"
+            14,
+            20,
+            "Noeytral (52.4)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (69.7)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.5273)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.3773)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (2.8055)"
           ]
         ]
       },
@@ -3314,93 +3140,87 @@
           "weekly": {
             "last": 89.48999786376953,
             "sma36": 88.55969089931912,
-            "sma156": 49.283947296631645,
+            "sma156": 49.283947149912514,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.01050485785353573,
-            "dist_to_3yr_MA": 0.8158041872162664,
-            "rsi14": 50.236877838738415,
-            "macd": 2.0199329047749757,
-            "macd_signal": 4.297270610928458,
-            "macd_hist": -2.2773377061534825,
+            "dist_to_3yr_MA": 0.8158041926219456,
+            "rsi14": 50.23687784020139,
+            "macd": 2.019932906634935,
+            "macd_signal": 4.297270613657726,
+            "macd_hist": -2.2773377070227907,
             "macd_cross": false,
-            "macd14": 2.795441729669051,
-            "macd14_signal": 4.845504053280808,
-            "macd14_hist": -2.0500623236117574,
+            "macd14": 2.7954417323803114,
+            "macd14_signal": 4.845504057114659,
+            "macd14_hist": -2.0500623247343475,
             "macd14_cross": false
           },
           "monthly": {
             "last": 89.48999786376953,
-            "sma36": 49.839289877149795,
-            "sma156": 29.69209914941054,
+            "sma36": 49.83929008907742,
+            "sma156": 29.692099259449886,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.795571286917527,
+            "dist_to_36MA": 0.7955712792823627,
             "dist_to_3yr_MA": null,
-            "rsi14": 65.33258297971898,
-            "macd": 15.883265847585832,
-            "macd_signal": 13.31929111162437,
-            "macd_hist": 2.5639747359614624,
+            "rsi14": 65.33258288821077,
+            "macd": 15.883265764391354,
+            "macd_signal": 13.319291024174209,
+            "macd_hist": 2.5639747402171444,
             "macd_cross": false,
-            "macd14": 14.591512586673566,
-            "macd14_signal": 11.957339114602153,
-            "macd14_hist": 2.6341734720714136,
+            "macd14": 14.591512507361259,
+            "macd14_signal": 11.957339035629449,
+            "macd14_hist": 2.6341734717318097,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 115.83999633789062,
         "52w_low": 49.91746139526367,
-        "northstar_score": 43,
+        "northstar_score": 46,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (81.6%) - unnga entry"
+            "Ekstremt stretched (81.6%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (1.1%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (49.3)"
+            "Noeytral (49.3)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (50.2)"
+            14,
+            20,
+            "Noeytral (50.2)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (65.3)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-2.2773)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-2.0501)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (2.6342)"
           ]
         ]
       },
@@ -3440,14 +3260,14 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.02762200465855213,
             "dist_to_3yr_MA": 0.9284376929167523,
-            "rsi14": 50.92951475266165,
-            "macd": 3.1479117531581124,
-            "macd_signal": 6.168872233160002,
-            "macd_hist": -3.0209604800018894,
+            "rsi14": 50.92951475266232,
+            "macd": 3.147911753159164,
+            "macd_signal": 6.168872233161541,
+            "macd_hist": -3.020960480002377,
             "macd_cross": false,
-            "macd14": 4.187617885269631,
-            "macd14_signal": 6.919515471623005,
-            "macd14_hist": -2.731897586353374,
+            "macd14": 4.187617885272246,
+            "macd14_signal": 6.919515471626726,
+            "macd14_hist": -2.7318975863544797,
             "macd14_cross": false
           },
           "monthly": {
@@ -3458,70 +3278,64 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.9031181008168253,
             "dist_to_3yr_MA": null,
-            "rsi14": 65.29231946105185,
-            "macd": 22.056204468721162,
-            "macd_signal": 18.205731827882797,
-            "macd_hist": 3.8504726408383654,
+            "rsi14": 65.29231946580911,
+            "macd": 22.056204471966126,
+            "macd_signal": 18.205731832985865,
+            "macd_hist": 3.8504726389802606,
             "macd_cross": false,
-            "macd14": 20.169765501639148,
-            "macd14_signal": 16.258921190969875,
-            "macd14_hist": 3.9108443106692725,
+            "macd14": 20.169765506706042,
+            "macd14_signal": 16.258921198531183,
+            "macd14_hist": 3.910844308174859,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 156.19000244140625,
         "52w_low": 62.773780822753906,
-        "northstar_score": 43,
+        "northstar_score": 46,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (92.8%) - unnga entry"
+            "Ekstremt stretched (92.8%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (2.8%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (50.6)"
+            "Noeytral (50.6)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (50.9)"
+            14,
+            20,
+            "Noeytral (50.9)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (65.3)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-3.0210)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-2.7319)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (3.9108)"
           ]
         ]
       },
@@ -3556,93 +3370,87 @@
           "weekly": {
             "last": 93.7300033569336,
             "sma36": 86.74952655368381,
-            "sma156": 45.76092750598223,
+            "sma156": 45.76092754266201,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.08046703054834553,
-            "dist_to_3yr_MA": 1.0482540119992205,
-            "rsi14": 52.84268426919264,
-            "macd": 3.690910043991252,
-            "macd_signal": 5.64784928143869,
-            "macd_hist": -1.956939237447438,
+            "dist_to_3yr_MA": 1.0482540103574378,
+            "rsi14": 52.8426842684535,
+            "macd": 3.6909100444582776,
+            "macd_signal": 5.647849282121248,
+            "macd_hist": -1.9569392376629704,
             "macd_cross": false,
-            "macd14": 4.356961479271973,
-            "macd14_signal": 6.126302563204687,
-            "macd14_hist": -1.769341083932714,
+            "macd14": 4.356961479846348,
+            "macd14_signal": 6.126302564009422,
+            "macd14_hist": -1.7693410841630746,
             "macd14_cross": false
           },
           "monthly": {
             "last": 93.7300033569336,
-            "sma36": 46.38869460423788,
-            "sma156": 33.37182087164659,
+            "sma36": 46.388694551255966,
+            "sma156": 33.37182071881416,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 1.0205354808231835,
+            "dist_to_36MA": 1.0205354831308973,
             "dist_to_3yr_MA": null,
-            "rsi14": 66.86971652362624,
-            "macd": 16.97603756325193,
-            "macd_signal": 13.383221572704178,
-            "macd_hist": 3.5928159905477504,
+            "rsi14": 66.86971723088077,
+            "macd": 16.976037578876863,
+            "macd_signal": 13.383221589445544,
+            "macd_hist": 3.592815989431319,
             "macd_cross": false,
-            "macd14": 15.363122993181769,
-            "macd14_signal": 11.834641042860952,
-            "macd14_hist": 3.528481950320817,
+            "macd14": 15.363123011156553,
+            "macd14_signal": 11.834641062990972,
+            "macd14_hist": 3.528481948165581,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 118.02999877929688,
         "52w_low": 42.4125862121582,
-        "northstar_score": 43,
+        "northstar_score": 41,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (104.8%) - unnga entry"
+            "Ekstremt stretched (104.8%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (8.0%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (51.7)"
+            "Noeytral (51.7)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (52.8)"
+            14,
+            20,
+            "Noeytral (52.8)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (66.9)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.9569)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.7693)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (3.5285)"
           ]
         ]
       },
@@ -3682,88 +3490,82 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.0713208717085227,
             "dist_to_3yr_MA": 1.0567043126138795,
-            "rsi14": 52.644830842092595,
-            "macd": 1.1462149846553977,
-            "macd_signal": 1.868076505972477,
-            "macd_hist": -0.7218615213170794,
+            "rsi14": 52.64483084350254,
+            "macd": 1.1462149850825902,
+            "macd_signal": 1.8680765065990301,
+            "macd_hist": -0.7218615215164399,
             "macd_cross": false,
-            "macd14": 1.399767969892661,
-            "macd14_signal": 2.0594650240785386,
-            "macd14_hist": -0.6596970541858775,
+            "macd14": 1.3997679704989885,
+            "macd14_signal": 2.0594650249350517,
+            "macd14_hist": -0.6596970544360632,
             "macd14_cross": false
           },
           "monthly": {
             "last": 30.90999984741211,
-            "sma36": 15.252369191911486,
-            "sma156": 10.965298099395556,
+            "sma36": 15.252369337611729,
+            "sma156": 10.965298160528524,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 1.026570394309892,
+            "dist_to_36MA": 1.0265703749508146,
             "dist_to_3yr_MA": null,
-            "rsi14": 66.08816362221019,
-            "macd": 5.682683559874921,
-            "macd_signal": 4.385950324630481,
-            "macd_hist": 1.2967332352444396,
+            "rsi14": 66.08816354463976,
+            "macd": 5.68268350654488,
+            "macd_signal": 4.385950266476541,
+            "macd_hist": 1.2967332400683391,
             "macd_cross": false,
-            "macd14": 5.11456787193578,
-            "macd14_signal": 3.8508392671125105,
-            "macd14_hist": 1.2637286048232692,
+            "macd14": 5.114567820473209,
+            "macd14_signal": 3.8508392139978262,
+            "macd14_hist": 1.2637286064753823,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 40.29999923706055,
         "52w_low": 12.77956485748291,
-        "northstar_score": 43,
+        "northstar_score": 41,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (105.7%) - unnga entry"
+            "Ekstremt stretched (105.7%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (7.1%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (51.8)"
+            "Noeytral (51.8)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (52.6)"
+            14,
+            20,
+            "Noeytral (52.6)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (66.1)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.7219)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.6597)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (1.2637)"
           ]
         ]
       },
@@ -3835,56 +3637,50 @@
         "missing_data": false,
         "52w_high": 25.225000381469727,
         "52w_low": 9.675000190734863,
-        "northstar_score": 40,
+        "northstar_score": 47,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (56.4%) - unnga entry"
+            "Ekstremt stretched (56.4%) — ikke entry"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-1.2%)"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (42.9)"
+            "Lav/bra (42.9)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (48.7)"
+            14,
+            20,
+            "Noeytral (48.7)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
-            "Moderat (64.8)"
+            6,
+            20,
+            "Hoey (64.8)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.3963)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.3647)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (0.5392)"
           ]
         ]
       },
@@ -3956,56 +3752,50 @@
         "missing_data": false,
         "52w_high": 37.18199920654297,
         "52w_low": 17.756000518798828,
-        "northstar_score": 40,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 65,
+        "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
-            5,
+            7,
             25,
-            "Stretched (15.8%) - forsiktig"
+            "Stretched (15.8%) — forsiktig"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            10,
+            15,
+            "Under 36WMA (-12.2%) — potensiale"
           ],
           [
             "RSI daily",
-            5,
             10,
-            "Lav (38.4)"
+            10,
+            "Lav/bra (38.4)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (42.4)"
+            20,
+            20,
+            "Lav/bra (42.4)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
+            14,
+            20,
             "Moderat (50.9)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.7279)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.6765)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (0.8996)"
           ]
         ]
       },
@@ -4045,32 +3835,32 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.025105786433909497,
             "dist_to_3yr_MA": 0.5787440008121446,
-            "rsi14": 51.87628589374888,
-            "macd": 1.5914340382883054,
-            "macd_signal": 2.1691429240295386,
-            "macd_hist": -0.5777088857412331,
+            "rsi14": 51.876285893761946,
+            "macd": 1.5914340383030634,
+            "macd_signal": 2.169142924051254,
+            "macd_hist": -0.5777088857481907,
             "macd_cross": false,
-            "macd14": 1.7835528784005632,
-            "macd14_signal": 2.2954980631783357,
-            "macd14_hist": -0.5119451847777725,
+            "macd14": 1.7835528784281465,
+            "macd14_signal": 2.295498063217567,
+            "macd14_hist": -0.5119451847894205,
             "macd14_cross": false
           },
           "monthly": {
             "last": 50.7599983215332,
             "sma36": 32.57365979088677,
-            "sma156": 18.123006340784904,
+            "sma156": 18.123006353011498,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.5583142529085564,
             "dist_to_3yr_MA": null,
-            "rsi14": 61.25886999373527,
-            "macd": 7.523219604177825,
-            "macd_signal": 6.301687788190655,
-            "macd_hist": 1.22153181598717,
+            "rsi14": 61.25886999580407,
+            "macd": 7.523219598122374,
+            "macd_signal": 6.301687777933015,
+            "macd_hist": 1.2215318201893588,
             "macd_cross": false,
-            "macd14": 6.974323985958662,
-            "macd14_signal": 5.772647168387322,
-            "macd14_hist": 1.2016768175713404,
+            "macd14": 6.974323978755187,
+            "macd14_signal": 5.772647157471653,
+            "macd14_hist": 1.2016768212835345,
             "macd14_cross": false
           }
         },
@@ -4084,49 +3874,43 @@
             "3yr MA",
             0,
             25,
-            "Svært stretched (57.9%) - unnga entry"
+            "Ekstremt stretched (57.9%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (2.5%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (46.9)"
+            "Noeytral (46.9)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (51.9)"
+            14,
+            20,
+            "Noeytral (51.9)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
-            "Moderat (61.3)"
+            6,
+            20,
+            "Hoey (61.3)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.5777)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.5119)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (1.2017)"
+            "Nær null neg (-0.5119)"
           ]
         ]
       },
@@ -4161,93 +3945,87 @@
           "weekly": {
             "last": 61.279998779296875,
             "sma36": 62.038328912523056,
-            "sma156": 46.649272441864014,
+            "sma156": 46.64927224623851,
             "close_above_sma36": false,
             "close_above_sma156": true,
             "dist_to_36MA": -0.012223574466286191,
-            "dist_to_3yr_MA": 0.3136324656652726,
-            "rsi14": 48.83229898683441,
-            "macd": 0.9586071021936178,
-            "macd_signal": 2.2606008355753002,
-            "macd_hist": -1.3019937333816824,
+            "dist_to_3yr_MA": 0.3136324711740405,
+            "rsi14": 48.83229898696139,
+            "macd": 0.9586071022531257,
+            "macd_signal": 2.2606008356628102,
+            "macd_hist": -1.3019937334096845,
             "macd_cross": false,
-            "macd14": 1.3744798706157155,
-            "macd14_signal": 2.523318771795201,
-            "macd14_hist": -1.1488389011794853,
+            "macd14": 1.3744798707318466,
+            "macd14_signal": 2.523318771960216,
+            "macd14_hist": -1.1488389012283693,
             "macd14_cross": false
           },
           "monthly": {
             "last": 61.279998779296875,
-            "sma36": 47.25501728057861,
+            "sma36": 47.2550171746148,
             "sma156": null,
             "close_above_sma36": true,
             "close_above_sma156": null,
-            "dist_to_36MA": 0.29679349000010635,
+            "dist_to_36MA": 0.2967934929080131,
             "dist_to_3yr_MA": null,
-            "rsi14": 56.8681788302038,
-            "macd": 7.274562214841318,
-            "macd_signal": 5.8559655050869885,
-            "macd_hist": 1.418596709754329,
+            "rsi14": 56.86817880728297,
+            "macd": 7.274562226696943,
+            "macd_signal": 5.855965518011602,
+            "macd_hist": 1.4185967086853415,
             "macd_cross": false,
-            "macd14": 6.729053025773737,
-            "macd14_signal": 5.398252395473934,
-            "macd14_hist": 1.3308006302998034,
+            "macd14": 6.729053036500417,
+            "macd14_signal": 5.3982524061138335,
+            "macd14_hist": 1.3308006303865838,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 83.98999786376953,
         "52w_low": 38.17708206176758,
-        "northstar_score": 40,
+        "northstar_score": 54,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (31.4%) - unnga entry"
+            "Klart stretched (31.4%) — unnga entry"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-1.2%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (46.3)"
+            "Noeytral (46.3)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (48.8)"
+            14,
+            20,
+            "Noeytral (48.8)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
+            14,
+            20,
             "Moderat (56.9)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.3020)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.1488)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (1.3308)"
           ]
         ]
       },
@@ -4282,93 +4060,87 @@
           "weekly": {
             "last": 133.3000030517578,
             "sma36": 137.4512293073866,
-            "sma156": 92.71437784341666,
+            "sma156": 92.71437823466765,
             "close_above_sma36": false,
             "close_above_sma156": true,
             "dist_to_36MA": -0.030201448736011407,
-            "dist_to_3yr_MA": 0.4377489894489219,
-            "rsi14": 48.41709204315786,
-            "macd": 1.200246272525817,
-            "macd_signal": 2.9186298894894227,
-            "macd_hist": -1.7183836169636058,
+            "dist_to_3yr_MA": 0.4377489833816783,
+            "rsi14": 48.417092039434905,
+            "macd": 1.2002462697338103,
+            "macd_signal": 2.9186298853883086,
+            "macd_hist": -1.7183836156544983,
             "macd_cross": false,
-            "macd14": 1.8610642582766843,
-            "macd14_signal": 3.453228535955555,
-            "macd14_hist": -1.5921642776788705,
+            "macd14": 1.8610642540400022,
+            "macd14_signal": 3.453228529953086,
+            "macd14_hist": -1.5921642759130838,
             "macd14_cross": false
           },
           "monthly": {
             "last": 133.3000030517578,
-            "sma36": 93.65722348954942,
-            "sma156": 53.02544086407392,
+            "sma36": 93.65722317165799,
+            "sma156": 53.025440888527115,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.42327519528306173,
+            "dist_to_36MA": 0.4232752001139437,
             "dist_to_3yr_MA": null,
-            "rsi14": 59.48861827151961,
-            "macd": 18.406394085776682,
-            "macd_signal": 17.08916704957302,
-            "macd_hist": 1.3172270362036613,
+            "rsi14": 59.48861822229968,
+            "macd": 18.406394151105317,
+            "macd_signal": 17.089167103501488,
+            "macd_hist": 1.3172270476038292,
             "macd_cross": false,
-            "macd14": 17.46683837054995,
-            "macd14_signal": 15.894898418209559,
-            "macd14_hist": 1.5719399523403919,
+            "macd14": 17.46683842749981,
+            "macd14_signal": 15.894898461081745,
+            "macd14_hist": 1.5719399664180642,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 164.3699951171875,
         "52w_low": 94.6313705444336,
-        "northstar_score": 40,
+        "northstar_score": 54,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            0,
+            2,
             25,
-            "Svært stretched (43.8%) - unnga entry"
+            "Klart stretched (43.8%) — unnga entry"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-3.0%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (46.5)"
+            "Noeytral (46.5)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (48.4)"
+            14,
+            20,
+            "Noeytral (48.4)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
+            14,
+            20,
             "Moderat (59.5)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.7184)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-1.5922)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (1.5719)"
           ]
         ]
       },
@@ -4390,70 +4162,70 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.12944745937565982,
             "dist_to_3yr_MA": null,
-            "rsi14": 72.70280270225575,
+            "rsi14": 72.70280270225567,
             "macd": 0.8628102078511652,
-            "macd_signal": 0.7325906609230823,
-            "macd_hist": 0.1302195469280829,
+            "macd_signal": 0.7325906609230826,
+            "macd_hist": 0.13021954692808269,
             "macd_cross": false,
             "macd14": 0.8171742820555998,
-            "macd14_signal": 0.7017860638027942,
-            "macd14_hist": 0.11538821825280565,
+            "macd14_signal": 0.7017860638027976,
+            "macd14_hist": 0.11538821825280221,
             "macd14_cross": false
           },
           "weekly": {
             "last": 23.56999969482422,
             "sma36": 18.08044234911601,
-            "sma156": 14.52770988146464,
+            "sma156": 14.527709875351343,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.30361853099111846,
-            "dist_to_3yr_MA": 0.6224167392615885,
-            "rsi14": 82.4583886713965,
-            "macd": 1.5475263649369246,
-            "macd_signal": 1.1659920323820279,
-            "macd_hist": 0.38153433255489677,
+            "dist_to_3yr_MA": 0.6224167399443055,
+            "rsi14": 82.45838896541906,
+            "macd": 1.5475263606318457,
+            "macd_signal": 1.1659920261749843,
+            "macd_hist": 0.38153433445686136,
             "macd_cross": false,
-            "macd14": 1.438203330354078,
-            "macd14_signal": 1.1162498404461403,
-            "macd14_hist": 0.3219534899079377,
+            "macd14": 1.4382033249655244,
+            "macd14_signal": 1.1162498330109025,
+            "macd14_hist": 0.32195349195462186,
             "macd14_cross": false
           },
           "monthly": {
             "last": 23.56999969482422,
-            "sma36": 14.632453229692247,
-            "sma156": 12.520664416826689,
+            "sma36": 14.6324532561832,
+            "sma156": 12.520664447393173,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.610803009231279,
+            "dist_to_36MA": 0.6108030063150416,
             "dist_to_3yr_MA": null,
-            "rsi14": 77.9864342500961,
-            "macd": 1.6233263785729193,
-            "macd_signal": 0.5607027953142356,
-            "macd_hist": 1.0626235832586837,
+            "rsi14": 77.98643478959106,
+            "macd": 1.6233263867593202,
+            "macd_signal": 0.5607027941252405,
+            "macd_hist": 1.0626235926340797,
             "macd_cross": false,
-            "macd14": 1.2815860403710886,
-            "macd14_signal": 0.34413926667113304,
-            "macd14_hist": 0.9374467736999555,
+            "macd14": 1.2815860427740802,
+            "macd14_signal": 0.3441392585859441,
+            "macd14_hist": 0.9374467841881361,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 23.56999969482422,
-        "52w_low": 12.361300468444824,
-        "northstar_score": 27,
+        "52w_low": 12.361299514770508,
+        "northstar_score": 10,
         "northstar_score_label": "Unnga/trim",
         "northstar_score_points": [
           [
             "3yr MA",
             0,
             25,
-            "Svært stretched (62.2%) - unnga entry"
+            "Ekstremt stretched (62.2%) — ikke entry"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            2,
+            15,
+            "Klart over 36WMA (30.4%) — forsiktig"
           ],
           [
             "RSI daily",
@@ -4464,32 +4236,26 @@
           [
             "RSI weekly",
             0,
-            15,
+            20,
             "Overbought (82.5)"
           ],
           [
             "RSI monthly",
-            0,
-            15,
-            "Overbought (78.0)"
+            2,
+            20,
+            "Klart hoey (78.0)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.3815)"
+            3,
+            5,
+            "Svakt pos (0.3815) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.3220)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (0.9374)"
+            "Svakt pos (0.3220)"
           ]
         ]
       },
@@ -4511,7 +4277,7 @@
             "close_above_sma156": true,
             "dist_to_36MA": 0.005168363332306378,
             "dist_to_3yr_MA": null,
-            "rsi14": 53.29505466660533,
+            "rsi14": 53.29505466660534,
             "macd": 0.06518588827055538,
             "macd_signal": 0.056014795375172524,
             "macd_hist": 0.009171092895382857,
@@ -4524,93 +4290,87 @@
           "weekly": {
             "last": 27.65999984741211,
             "sma36": 27.260416242811417,
-            "sma156": 26.589946551200672,
+            "sma156": 26.589946441161327,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.014658015528506952,
-            "dist_to_3yr_MA": 0.04024277725233408,
-            "rsi14": 56.38772534348928,
-            "macd": 0.16048766525288016,
-            "macd_signal": 0.15379725989433557,
-            "macd_hist": 0.006690405358544593,
+            "dist_to_3yr_MA": 0.04024278155725563,
+            "rsi14": 56.38772536174315,
+            "macd": 0.16048766560813021,
+            "macd_signal": 0.15379726041556938,
+            "macd_hist": 0.006690405192560839,
             "macd_cross": false,
-            "macd14": 0.15394383927113608,
-            "macd14_signal": 0.1450910000647399,
-            "macd14_hist": 0.00885283920639618,
+            "macd14": 0.15394383980694926,
+            "macd14_signal": 0.14509100082273102,
+            "macd14_hist": 0.008852838984218236,
             "macd14_cross": false
           },
           "monthly": {
             "last": 27.65999984741211,
-            "sma36": 26.63927671644423,
-            "sma156": 22.538267221206272,
+            "sma36": 26.639276610480415,
+            "sma156": 22.538267257886055,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.03831647314725311,
+            "dist_to_36MA": 0.03831647727739429,
             "dist_to_3yr_MA": null,
-            "rsi14": 57.951904562646334,
-            "macd": 0.39254371888041817,
-            "macd_signal": 0.42598865369131256,
-            "macd_hist": -0.03344493481089439,
+            "rsi14": 57.95190465698018,
+            "macd": 0.39254373470767945,
+            "macd_signal": 0.4259886645052745,
+            "macd_hist": -0.03344492979759506,
             "macd_cross": false,
-            "macd14": 0.4179698711807731,
-            "macd14_signal": 0.46021501474336546,
-            "macd14_hist": -0.04224514356259235,
+            "macd14": 0.41796988355501696,
+            "macd14_signal": 0.4602150211435209,
+            "macd14_hist": -0.042245137588503956,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 27.979999542236328,
         "52w_low": 25.963289260864258,
-        "northstar_score": 82,
+        "northstar_score": 81,
         "northstar_score_label": "Lavrisiko entry",
         "northstar_score_points": [
           [
             "3yr MA",
             25,
             25,
-            "Ideal entry - nær 3yr MA (4.0%)"
+            "Ideal — naer 3yr MA (4.0%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (1.5%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (53.3)"
+            "Noeytral (53.3)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (56.4)"
+            14,
+            20,
+            "Noeytral (56.4)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
+            14,
+            20,
             "Moderat (58.0)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0067)"
+            3,
+            5,
+            "Svakt pos (0.0067) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0089)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            3,
             5,
-            "Neg (-0.0422)"
+            "Svakt pos (0.0089)"
           ]
         ]
       },
@@ -4627,111 +4387,105 @@
           "daily": {
             "last": 107.69999694824219,
             "sma36": 107.98321384853787,
-            "sma156": 107.53495822808681,
+            "sma156": 107.53495817918044,
             "close_above_sma36": false,
             "close_above_sma156": true,
             "dist_to_36MA": -0.0026227863591181625,
             "dist_to_3yr_MA": null,
-            "rsi14": 50.56124948785828,
-            "macd": -0.1309476716984932,
-            "macd_signal": -0.09601327793323279,
-            "macd_hist": -0.034934393765260405,
+            "rsi14": 50.56124963425886,
+            "macd": -0.1309476662504494,
+            "macd_signal": -0.09601326995868513,
+            "macd_hist": -0.03493439629176427,
             "macd_cross": false,
-            "macd14": -0.10754563323781952,
-            "macd14_signal": -0.0656807712621506,
-            "macd14_hist": -0.04186486197566891,
+            "macd14": -0.10754562555088398,
+            "macd14_signal": -0.06568076043265844,
+            "macd14_hist": -0.04186486511822554,
             "macd14_cross": false
           },
           "weekly": {
             "last": 107.69999694824219,
-            "sma36": 107.48610708448622,
-            "sma156": 100.77219249040652,
+            "sma36": 107.48610835605197,
+            "sma156": 100.77219278384477,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.0019899303226959797,
-            "dist_to_3yr_MA": 0.06874718398624886,
-            "rsi14": 51.43168788166615,
-            "macd": 0.18957133836158846,
-            "macd_signal": 0.2699970470658374,
-            "macd_hist": -0.08042570870424892,
+            "dist_to_36MA": 0.001989918469107668,
+            "dist_to_3yr_MA": 0.06874718087416712,
+            "rsi14": 51.431688617908456,
+            "macd": 0.18957119374046272,
+            "macd_signal": 0.26999680576207186,
+            "macd_hist": -0.08042561202160914,
             "macd_cross": false,
-            "macd14": 0.24073938885064194,
-            "macd14_signal": 0.3290781599178015,
-            "macd14_hist": -0.08833877106715954,
+            "macd14": 0.24073923889066862,
+            "macd14_signal": 0.32907794298139975,
+            "macd14_hist": -0.08833870409073113,
             "macd14_cross": false
           },
           "monthly": {
             "last": 107.69999694824219,
-            "sma36": 100.7877017127143,
-            "sma156": 104.50409840314816,
+            "sma36": 100.78770298428006,
+            "sma156": 104.50409987033942,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.06858272505539147,
+            "dist_to_36MA": 0.06858271157385384,
             "dist_to_3yr_MA": null,
-            "rsi14": 59.747127494911155,
-            "macd": 2.789563806813476,
-            "macd_signal": 2.6445457576618314,
-            "macd_hist": 0.1450180491516444,
+            "rsi14": 59.74712471306849,
+            "macd": 2.789563217320662,
+            "macd_signal": 2.644546019202523,
+            "macd_hist": 0.14501719811813896,
             "macd_cross": false,
-            "macd14": 2.609844187688381,
-            "macd14_signal": 2.3799160926034686,
-            "macd14_hist": 0.22992809508491252,
+            "macd14": 2.609843849416265,
+            "macd14_signal": 2.379916496755546,
+            "macd14_hist": 0.22992735266071884,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 110.82169342041016,
-        "52w_low": 104.09228515625,
-        "northstar_score": 63,
+        "52w_low": 104.0923080444336,
+        "northstar_score": 70,
         "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (6.9%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (0.2%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (50.6)"
+            "Noeytral (50.6)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (51.4)"
+            14,
+            20,
+            "Noeytral (51.4)"
           ],
           [
             "RSI monthly",
-            10,
-            15,
+            14,
+            20,
             "Moderat (59.7)"
           ],
           [
             "MACD W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0804)"
           ],
           [
             "MACD14 W",
-            0,
-            7,
+            2,
+            5,
             "Neg (-0.0883)"
-          ],
-          [
-            "MACD14 M",
-            5,
-            5,
-            "Pos (0.2299)"
           ]
         ]
       },
@@ -4803,56 +4557,50 @@
         "missing_data": false,
         "52w_high": 64.58000183105469,
         "52w_low": 57.2599983215332,
-        "northstar_score": 64,
-        "northstar_score_label": "Noytral",
+        "northstar_score": 87,
+        "northstar_score_label": "Lavrisiko entry",
         "northstar_score_points": [
           [
             "3yr MA",
-            10,
+            18,
             25,
-            "Under 3yr MA (-6.2%) - potensiale"
+            "Under 3yr MA (-6.2%) — potensiale"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            13,
+            15,
+            "Rett under 36WMA (-2.2%)"
           ],
           [
             "RSI daily",
             10,
             10,
-            "Ideal (42.7)"
+            "Lav/bra (42.7)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (41.4)"
+            20,
+            20,
+            "Lav/bra (41.4)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (38.9)"
+            20,
+            20,
+            "God (38.9)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.0866)"
+            3,
+            5,
+            "Svakt pos (0.0866) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0739)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            3,
             5,
-            "Neg (-0.0052)"
+            "Svakt pos (0.0739)"
           ]
         ]
       },
@@ -4887,93 +4635,87 @@
           "weekly": {
             "last": 19.450000762939453,
             "sma36": 18.99215767118666,
-            "sma156": 17.32330961105151,
+            "sma156": 17.323309763883934,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.024106955074798812,
-            "dist_to_3yr_MA": 0.12276471411278177,
-            "rsi14": 60.10434787428235,
-            "macd": 0.19122852611233299,
-            "macd_signal": 0.2056238361303778,
-            "macd_hist": -0.01439531001804481,
+            "dist_to_3yr_MA": 0.12276470420735057,
+            "rsi14": 60.10434781787692,
+            "macd": 0.1912285237965925,
+            "macd_signal": 0.20562383273244228,
+            "macd_hist": -0.014395308935849782,
             "macd_cross": false,
-            "macd14": 0.19750885756014114,
-            "macd14_signal": 0.2115740924723561,
-            "macd14_hist": -0.014065234912214952,
+            "macd14": 0.19750885419282582,
+            "macd14_signal": 0.21157408771117814,
+            "macd14_hist": -0.014065233518352316,
             "macd14_cross": false
           },
           "monthly": {
             "last": 19.450000762939453,
-            "sma36": 17.348080502616035,
-            "sma156": 16.295821966269077,
+            "sma36": 17.34808071454366,
+            "sma156": 16.29582196015578,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.12116154637433547,
+            "dist_to_36MA": 0.12116153267800177,
             "dist_to_3yr_MA": null,
-            "rsi14": 71.39123517564886,
-            "macd": 0.7579527087977596,
-            "macd_signal": 0.6717936754132322,
-            "macd_hist": 0.08615903338452735,
+            "rsi14": 71.39122685748032,
+            "macd": 0.7579526459785342,
+            "macd_signal": 0.6717936270278572,
+            "macd_hist": 0.08615901895067701,
             "macd_cross": false,
-            "macd14": 0.7128152232230178,
-            "macd14_signal": 0.6240571387757063,
-            "macd14_hist": 0.08875808444731148,
+            "macd14": 0.7128151724487424,
+            "macd14_signal": 0.6240571067889008,
+            "macd14_hist": 0.08875806565984157,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 19.59000015258789,
         "52w_low": 17.86878204345703,
-        "northstar_score": 51,
+        "northstar_score": 53,
         "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (12.3%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            15,
+            15,
+            "Naer 36WMA (2.4%) — god entry"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (54.4)"
+            "Noeytral (54.4)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (60.1)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
-            "Hoey (71.4)"
+            2,
+            20,
+            "Klart hoey (71.4)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.0144)"
+            4,
+            5,
+            "Nær null neg (-0.0144) — mulig snu"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.0141)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (0.0888)"
+            "Nær null neg (-0.0141)"
           ]
         ]
       },
@@ -4990,111 +4732,105 @@
           "daily": {
             "last": 71.20999908447266,
             "sma36": 70.97738520304362,
-            "sma156": 67.89057408846341,
+            "sma156": 67.8905739417443,
             "close_above_sma36": true,
             "close_above_sma156": true,
             "dist_to_36MA": 0.003277295729669355,
             "dist_to_3yr_MA": null,
-            "rsi14": 54.00220776515913,
-            "macd": 0.08683766742571208,
-            "macd_signal": 0.16043775569782187,
-            "macd_hist": -0.07360008827210979,
+            "rsi14": 54.002207768004055,
+            "macd": 0.0868376677803866,
+            "macd_signal": 0.16043775621925577,
+            "macd_hist": -0.07360008843886917,
             "macd_cross": false,
-            "macd14": 0.11792965094844021,
-            "macd14_signal": 0.1898067993133556,
-            "macd14_hist": -0.07187714836491538,
+            "macd14": 0.11792965152882573,
+            "macd14_signal": 0.18980680013733392,
+            "macd14_hist": -0.07187714860850819,
             "macd14_cross": false
           },
           "weekly": {
             "last": 71.20999908447266,
-            "sma36": 67.56026819017198,
-            "sma156": 64.23973508981558,
+            "sma36": 67.56026797824435,
+            "sma156": 64.23973482083052,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.05402185325888925,
-            "dist_to_3yr_MA": 0.10850393428478075,
-            "rsi14": 64.81316910242512,
-            "macd": 1.3572812177405353,
-            "macd_signal": 1.3654392957277675,
-            "macd_hist": -0.008158077987232115,
+            "dist_to_36MA": 0.054021856565216436,
+            "dist_to_3yr_MA": 0.10850393892631609,
+            "rsi14": 64.81318091162844,
+            "macd": 1.357281387105843,
+            "macd_signal": 1.365439542108257,
+            "macd_hist": -0.008158155002414125,
             "macd_cross": false,
-            "macd14": 1.3285256735293132,
-            "macd14_signal": 1.312987661089219,
-            "macd14_hist": 0.015538012440094118,
+            "macd14": 1.3285258744175934,
+            "macd14_signal": 1.3129879371977637,
+            "macd14_hist": 0.015537937219829656,
             "macd14_cross": false
           },
           "monthly": {
             "last": 71.20999908447266,
-            "sma36": 64.33152357737224,
-            "sma156": 69.23729982131567,
+            "sma36": 64.33152590857611,
+            "sma156": 69.23729840303079,
             "close_above_sma36": true,
             "close_above_sma156": true,
-            "dist_to_36MA": 0.10692231622382765,
+            "dist_to_36MA": 0.10692227611189878,
             "dist_to_3yr_MA": null,
-            "rsi14": 65.08345248653549,
-            "macd": 1.6665819278572513,
-            "macd_signal": 0.7809903380040171,
-            "macd_hist": 0.8855915898532343,
+            "rsi14": 65.08342902732181,
+            "macd": 1.6665811732925562,
+            "macd_signal": 0.7809897147196938,
+            "macd_hist": 0.8855914585728624,
             "macd_cross": false,
-            "macd14": 1.36525582840585,
-            "macd14_signal": 0.5752865455052936,
-            "macd14_hist": 0.7899692829005565,
+            "macd14": 1.3652551510373598,
+            "macd14_signal": 0.5752860103855781,
+            "macd14_hist": 0.7899691406517817,
             "macd14_cross": false
           }
         },
         "missing_data": false,
         "52w_high": 71.81999969482422,
-        "52w_low": 63.152587890625,
-        "northstar_score": 58,
-        "northstar_score_label": "Noytral",
+        "52w_low": 63.15259552001953,
+        "northstar_score": 51,
+        "northstar_score_label": "Avvent",
         "northstar_score_points": [
           [
             "3yr MA",
-            15,
+            16,
             25,
             "Moderat over 3yr MA (10.9%)"
           ],
           [
             "36WMA",
-            8,
-            8,
-            "Over 36WMA"
+            10,
+            15,
+            "Litt over 36WMA (5.4%)"
           ],
           [
             "RSI daily",
+            7,
             10,
-            10,
-            "Ideal (54.0)"
+            "Noeytral (54.0)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
+            5,
+            20,
             "Hoey (64.8)"
           ],
           [
             "RSI monthly",
-            5,
-            15,
+            6,
+            20,
             "Hoey (65.1)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.0082)"
+            4,
+            5,
+            "Nær null neg (-0.0082) — mulig snu"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.0155)"
-          ],
-          [
-            "MACD14 M",
+            3,
             5,
-            5,
-            "Pos (0.7900)"
+            "Svakt pos (0.0155)"
           ]
         ]
       },
@@ -5111,111 +4847,105 @@
           "daily": {
             "last": 10.020000457763672,
             "sma36": 10.557667043473986,
-            "sma156": 11.489831783832647,
+            "sma156": 11.489831814399132,
             "close_above_sma36": false,
             "close_above_sma156": false,
             "dist_to_36MA": -0.05092664728830048,
             "dist_to_3yr_MA": null,
-            "rsi14": 38.32626472645121,
-            "macd": -0.0733021743358222,
-            "macd_signal": 0.05261247419086937,
-            "macd_hist": -0.12591464852669157,
+            "rsi14": 38.326265681101425,
+            "macd": -0.07330216784569288,
+            "macd_signal": 0.052612483345912404,
+            "macd_hist": -0.12591465119160528,
             "macd_cross": false,
-            "macd14": -0.03530647235892559,
-            "macd14_signal": 0.07444885393648536,
-            "macd14_hist": -0.10975532629541095,
+            "macd14": -0.03530646473696919,
+            "macd14_signal": 0.07444886418725603,
+            "macd14_hist": -0.10975532892422522,
             "macd14_cross": false
           },
           "weekly": {
             "last": 10.020000457763672,
-            "sma36": 11.830223427878487,
-            "sma156": 10.596501873089718,
+            "sma36": 11.830223772260878,
+            "sma156": 10.59650198312906,
             "close_above_sma36": false,
             "close_above_sma156": false,
-            "dist_to_36MA": -0.15301680320330535,
-            "dist_to_3yr_MA": -0.05440488023600473,
-            "rsi14": 40.516293842919616,
-            "macd": -0.6243204635374582,
-            "macd_signal": -0.8423908312650338,
-            "macd_hist": 0.2180703677275756,
+            "dist_to_36MA": -0.1530168278593139,
+            "dist_to_3yr_MA": -0.05440489005553441,
+            "rsi14": 40.51629246818053,
+            "macd": -0.6243205605418645,
+            "macd_signal": -0.8423909384468333,
+            "macd_hist": 0.21807037790496886,
             "macd_cross": false,
-            "macd14": -0.6673386727986212,
-            "macd14_signal": -0.8425994976183588,
-            "macd14_hist": 0.1752608248197376,
+            "macd14": -0.6673387657963268,
+            "macd14_signal": -0.8425995939997277,
+            "macd14_hist": 0.17526082820340094,
             "macd14_cross": false
           },
           "monthly": {
             "last": 10.020000457763672,
-            "sma36": 10.531403872701857,
+            "sma36": 10.531403991911146,
             "sma156": null,
             "close_above_sma36": false,
             "close_above_sma156": null,
-            "dist_to_36MA": -0.04855985214504768,
+            "dist_to_36MA": -0.048559862914789705,
             "dist_to_3yr_MA": null,
-            "rsi14": 44.70226395245634,
-            "macd": 0.20970736912259547,
-            "macd_signal": 0.9875404881976125,
-            "macd_hist": -0.7778331190750171,
+            "rsi14": 44.7022628721546,
+            "macd": 0.2097072834201139,
+            "macd_signal": 0.9875404403007446,
+            "macd_hist": -0.7778331568806307,
             "macd_cross": false,
-            "macd14": 0.3974939700850282,
-            "macd14_signal": 1.038311265524634,
-            "macd14_hist": -0.6408172954396059,
+            "macd14": 0.3974938844271083,
+            "macd14_signal": 1.0383112043235663,
+            "macd14_hist": -0.640817319896458,
             "macd14_cross": false
           }
         },
         "missing_data": false,
-        "52w_high": 17.55045509338379,
-        "52w_low": 8.76732063293457,
-        "northstar_score": 59,
-        "northstar_score_label": "Noytral",
+        "52w_high": 17.550453186035156,
+        "52w_low": 8.767321586608887,
+        "northstar_score": 82,
+        "northstar_score_label": "Lavrisiko entry",
         "northstar_score_points": [
           [
             "3yr MA",
-            10,
+            18,
             25,
-            "Under 3yr MA (-5.4%) - potensiale"
+            "Under 3yr MA (-5.4%) — potensiale"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            10,
+            15,
+            "Under 36WMA (-15.3%) — potensiale"
           ],
           [
             "RSI daily",
-            5,
             10,
-            "Lav (38.3)"
+            10,
+            "Lav/bra (38.3)"
           ],
           [
             "RSI weekly",
-            15,
-            15,
-            "Ideal (40.5)"
+            20,
+            20,
+            "Lav/bra (40.5)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (44.7)"
+            20,
+            20,
+            "God (44.7)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.2181)"
+            1,
+            5,
+            "Pos men hoyt (0.2181) — allerede loept"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.1753)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            3,
             5,
-            "Neg (-0.6408)"
+            "Svakt pos (0.1753)"
           ]
         ]
       },
@@ -5287,8 +5017,8 @@
         "missing_data": false,
         "52w_high": 36.59000015258789,
         "52w_low": 14.029999732971191,
-        "northstar_score": 42,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 62,
+        "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
@@ -5298,45 +5028,39 @@
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            10,
+            15,
+            "Under 36WMA (-27.5%) — potensiale"
           ],
           [
             "RSI daily",
-            5,
             10,
-            "Lav (33.4)"
+            10,
+            "Lav/bra (33.4)"
           ],
           [
             "RSI weekly",
-            8,
-            15,
-            "Lav (37.4)"
+            20,
+            20,
+            "Lav/bra (37.4)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (27.4)"
+            16,
+            20,
+            "Lav/bra (27.4)"
           ],
           [
             "MACD W",
-            7,
-            7,
-            "Pos (0.2134)"
+            3,
+            5,
+            "Svakt pos (0.2134) — tidlig"
           ],
           [
             "MACD14 W",
-            7,
-            7,
-            "Pos (0.1374)"
-          ],
-          [
-            "MACD14 M",
-            0,
+            3,
             5,
-            "Neg (-0.7733)"
+            "Svakt pos (0.1374)"
           ]
         ]
       },
@@ -5408,56 +5132,50 @@
         "missing_data": false,
         "52w_high": 53.810001373291016,
         "52w_low": 23.290000915527344,
-        "northstar_score": 43,
-        "northstar_score_label": "Avvent",
+        "northstar_score": 70,
+        "northstar_score_label": "Noytral",
         "northstar_score_points": [
           [
             "3yr MA",
-            10,
+            8,
             25,
-            "Under 3yr MA (-55.8%) - potensiale"
+            "Langt under 3yr MA (-55.8%) — konsoliderer"
           ],
           [
             "36WMA",
-            0,
-            8,
-            "Under 36WMA"
+            10,
+            15,
+            "Under 36WMA (-22.2%) — potensiale"
           ],
           [
             "RSI daily",
-            5,
+            8,
             10,
-            "Lav (26.7)"
+            "Oversold (26.7) — bounce-fare"
           ],
           [
             "RSI weekly",
-            8,
-            15,
-            "Lav (35.1)"
+            20,
+            20,
+            "Lav/bra (35.1)"
           ],
           [
             "RSI monthly",
-            15,
-            15,
-            "Lav/god (31.4)"
+            16,
+            20,
+            "Lav/bra (31.4)"
           ],
           [
             "MACD W",
-            0,
-            7,
-            "Neg (-0.4119)"
+            4,
+            5,
+            "Nær null neg (-0.4119) — mulig snu"
           ],
           [
             "MACD14 W",
-            0,
-            7,
-            "Neg (-0.2540)"
-          ],
-          [
-            "MACD14 M",
+            4,
             5,
-            5,
-            "Pos (15.4053)"
+            "Nær null neg (-0.2540)"
           ]
         ]
       }
@@ -5576,38 +5294,38 @@
   },
   "sector_summary": {
     "Renter": {
-      "avg_score": 58.7,
+      "avg_score": 67.7,
       "label": "Noytral",
       "n": 6
     },
     "Aksjer": {
-      "avg_score": 41.4,
-      "label": "Avvent",
+      "avg_score": 24.8,
+      "label": "Unnga/trim",
       "n": 8
     },
     "Tech": {
-      "avg_score": 38.5,
-      "label": "Avvent",
+      "avg_score": 17.2,
+      "label": "Unnga/trim",
       "n": 4
     },
     "Rawarer": {
-      "avg_score": 44.8,
+      "avg_score": 41.2,
       "label": "Avvent",
       "n": 11
     },
     "Edelmetaller": {
-      "avg_score": 42.2,
+      "avg_score": 46.1,
       "label": "Avvent",
       "n": 8
     },
     "Valuta": {
-      "avg_score": 63.6,
+      "avg_score": 68.4,
       "label": "Noytral",
       "n": 5
     },
     "Crypto": {
-      "avg_score": 48.0,
-      "label": "Avvent",
+      "avg_score": 71.3,
+      "label": "Noytral",
       "n": 3
     }
   },
