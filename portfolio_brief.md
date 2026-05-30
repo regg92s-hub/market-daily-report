@@ -1,68 +1,82 @@
-## 📊 Ukentlig Portfolio-Brief – 29. May 2026
+## Ukentlig Portfolio-Brief - 30. May 2026
 
-_Basert på Northstar-metodikk: 3yr MA avstand, RSI timeframes, MACD momentum._
+### Sektorscore
 
-### 🟢 Lavrisiko entry
-_Pris nær 3yr MA, RSI ikke overbought, trend intakt. Beste entry-sone._
+| Sektor | Score | Signal | n |
+|---|---:|---|---:|
+| Aksjer | 41.4 | Avvent | 8 |
+| Tech | 38.5 | Avvent | 4 |
+| Edelmetaller | 42.2 | Avvent | 8 |
+| Rawarer | 44.8 | Avvent | 11 |
+| Valuta | 63.6 | Noytral | 5 |
+| Crypto | 48.0 | Avvent | 3 |
+| Renter | 58.7 | Noytral | 6 |
 
-| Instrument | Score | W-RSI | M-RSI | Dist 3yr MA | Northstar-signal |
-|---|---:|---:|---:|---:|---|
-| DXY | 90 | 56.4 | 58.0 | 4.0% | ✓ Over 3yr MA |
+### Lavrisiko entry
+_Near 3yr MA, RSI ok, momentum positivt._
 
-### 🟡 Nøytral – hold
-_Trend OK men ikke perfekt entry. Hold eksisterende, vent på bedre punkt._
+| Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
+|---|---:|---:|---:|---:|---:|---:|
+| DXY | **82** | 53.3 | 56.4 | 58.0 | 4.0% | 1.5% |
+| Housing US | **77** | 50.6 | 57.7 | 60.0 | 14.5% | 5.3% |
 
-| Instrument | Score | W-RSI | M-RSI | Dist 3yr MA | Northstar-signal |
-|---|---:|---:|---:|---:|---|
-| Housing US | 74 | 57.7 | 60.0 | 14.5% | ✓ Over 3yr MA |
-| EUR/USD | 72 | 51.4 | 59.7 | 6.9% | ✓ Over 3yr MA |
-| Naturgass | 70 | 49.2 | 41.2 | -31.5% | ✗ Under 3yr MA |
-| JPY | 70 | 41.4 | 38.9 | -6.2% | ✗ Under 3yr MA |
-| Bitcoin | 70 | 40.5 | 44.7 | -5.4% | ✗ Under 3yr MA |
-| 10yr realrente | 64 | 59.9 | 67.0 | 7.0% | ✓ Over 3yr MA |
-| IG Kreditt | 64 | 54.8 | 62.3 | 7.6% | ✓ Over 3yr MA |
-| Olje (WTI) | 62 | 59.8 | 69.3 | 65.2% | ✓ Over 3yr MA |
-| Agri / mat | 62 | 58.3 | 65.4 | 15.3% | ✓ Over 3yr MA |
-| 10-årig UST | 60 | 49.3 | 49.8 | 4.6% | ✗ Under 3yr MA |
-| 20yr UST | 60 | 48.6 | 47.5 | 0.3% | ✗ Under 3yr MA |
-| Energy sektor | 52 | 55.2 | 66.4 | 28.9% | ✓ Over 3yr MA |
-| Sølv | 52 | 52.4 | 69.7 | 94.9% | ✓ Over 3yr MA |
-| Gull miners | 52 | 50.2 | 65.3 | 81.6% | ✓ Over 3yr MA |
-| Junior gull | 52 | 50.9 | 65.3 | 92.8% | ✓ Over 3yr MA |
-| Sølv miners | 52 | 52.8 | 66.9 | 104.8% | ✓ Over 3yr MA |
-| Junior sølv | 52 | 52.6 | 66.1 | 105.7% | ✓ Over 3yr MA |
-| Uranium ETF | 52 | 51.9 | 61.3 | 57.9% | ✓ Over 3yr MA |
-| High Yield OAS | 50 | 63.1 | 77.7 | 11.4% | ✓ Over 3yr MA |
+### Noytral - hold
+_Trend OK men ikke ideal entry._
 
-### 🟠 Avvent – ikke legg til
-_Stretched eller svak momentum. Ikke legg til. Overvåk._
+| Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
+|---|---:|---:|---:|---:|---:|---:|
+| 10yr UST | **70** | 53.7 | 49.3 | 49.8 | 4.6% | -0.5% |
+| 20yr UST | **70** | 55.2 | 48.6 | 47.5 | 0.3% | -1.2% |
+| Naturgass | **68** | 61.0 | 49.2 | 41.2 | -31.5% | -4.5% |
+| JPY | **64** | 42.7 | 41.4 | 38.9 | -6.2% | -2.2% |
+| IG Kreditt | **63** | 58.7 | 54.8 | 62.3 | 7.6% | 0.6% |
+| EUR/USD | **63** | 50.6 | 51.4 | 59.7 | 6.9% | 0.2% |
+| Robotics/AI | **60** | 55.9 | 61.3 | 62.7 | 27.3% | 9.0% |
+| Bitcoin | **59** | 38.3 | 40.5 | 44.7 | -5.4% | -15.3% |
+| 10yr realrente | **58** | 59.2 | 59.9 | 67.0 | 7.0% | 1.1% |
+| AUD | **58** | 54.0 | 64.8 | 65.1 | 10.9% | 5.4% |
+| Olje (WTI) | **57** | 41.9 | 59.8 | 69.3 | 65.2% | 38.6% |
+| Agri/mat | **57** | 40.8 | 58.3 | 65.4 | 15.3% | 4.0% |
+| High Yield | **56** | 59.8 | 63.1 | 77.7 | 11.4% | 1.7% |
+| STOXX Europe 600 | **55** | 58.5 | 62.8 | 70.4 | 24.2% | 6.7% |
 
-| Instrument | Score | W-RSI | M-RSI | Dist 3yr MA | Northstar-signal |
-|---|---:|---:|---:|---:|---|
-| Broker/Dealers | 45 | 60.2 | 67.4 | 34.7% | ✓ Over 3yr MA |
-| Gull | 45 | 49.5 | 70.8 | 51.2% | ✓ Over 3yr MA |
-| VIX | 45 | 35.1 | 31.4 | -55.8% | ✗ Under 3yr MA |
-| 2s10s kurve | 40 | 41.3 | 54.7 | 571.9% | ✗ Under 3yr MA |
-| Palladium | 40 | 42.4 | 50.9 | 15.8% | ✗ Under 3yr MA |
-| Uranium miners | 40 | 48.8 | 56.9 | 31.4% | ✗ Under 3yr MA |
-| Nuclear energy | 40 | 48.4 | 59.5 | 43.8% | ✗ Under 3yr MA |
-| EM Currencies | 40 | 60.1 | 71.4 | 12.3% | ✓ Over 3yr MA |
-| STOXX Europe 600 | 38 | 62.8 | 70.4 | 24.2% | ✓ Over 3yr MA |
-| Commodity bred | 38 | 64.7 | 75.0 | 33.6% | ✓ Over 3yr MA |
-| Ethereum | 35 | 37.4 | 27.4 | – | ✗ Under 3yr MA |
-| Platina | 32 | 48.7 | 64.8 | 56.4% | ✗ Under 3yr MA |
-| S&P 500 | 30 | 73.6 | 76.6 | 34.7% | ✓ Over 3yr MA |
-| Nasdaq-100 | 30 | 77.4 | 78.2 | 49.1% | ✓ Over 3yr MA |
-| Russell 2000 | 30 | 70.4 | 71.7 | 35.5% | ✓ Over 3yr MA |
-| ACWI Global | 30 | 71.7 | 77.1 | 35.5% | ✓ Over 3yr MA |
-| MSCI EM | 30 | 70.8 | 77.4 | 52.6% | ✓ Over 3yr MA |
-| Semiconductors | 30 | 86.3 | 87.4 | 136.4% | ✓ Over 3yr MA |
-| Clean energy | 30 | 82.5 | 78.0 | 62.2% | ✓ Over 3yr MA |
+### Avvent
+_Stretched eller svak momentum._
 
-### 🔴 Unngå / trim
-_Overbought, under MA, eller mangler bekreftelse. Trim eller stå unna._
+| Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
+|---|---:|---:|---:|---:|---:|---:|
+| EM Currencies | **51** | 54.4 | 60.1 | 71.4 | 12.3% | 2.4% |
+| Energy | **48** | 41.4 | 55.2 | 66.4 | 28.9% | 11.1% |
+| Uranium ETF | **48** | 46.9 | 51.9 | 61.3 | 57.9% | 2.5% |
+| Commodity bred | **45** | 41.8 | 64.7 | 75.0 | 33.6% | 17.8% |
+| Gull | **43** | 45.3 | 49.5 | 70.8 | 51.2% | 0.6% |
+| Solv | **43** | 46.7 | 52.4 | 69.7 | 94.9% | 7.9% |
+| Gull miners | **43** | 49.3 | 50.2 | 65.3 | 81.6% | 1.1% |
+| Junior gull | **43** | 50.6 | 50.9 | 65.3 | 92.8% | 2.8% |
+| Solv miners | **43** | 51.7 | 52.8 | 66.9 | 104.8% | 8.0% |
+| Junior solv | **43** | 51.8 | 52.6 | 66.1 | 105.7% | 7.1% |
+| VIX | **43** | 26.7 | 35.1 | 31.4 | -55.8% | -22.2% |
+| Ethereum | **42** | 33.4 | 37.4 | 27.4 | - | -27.5% |
+| Broker/Dealers | **41** | 63.1 | 60.2 | 67.4 | 34.7% | 4.6% |
+| Cloud | **40** | 79.8 | 68.3 | 64.9 | 36.9% | 15.8% |
+| Platina | **40** | 42.9 | 48.7 | 64.8 | 56.4% | -1.2% |
+| Palladium | **40** | 38.4 | 42.4 | 50.9 | 15.8% | -12.2% |
+| Uranium miners | **40** | 46.3 | 48.8 | 56.9 | 31.4% | -1.2% |
+| Nuclear energy | **40** | 46.5 | 48.4 | 59.5 | 43.8% | -3.0% |
+| Russell 2000 | **38** | 64.1 | 70.4 | 71.7 | 35.5% | 13.3% |
+| Kobber miners | **36** | 57.3 | 60.6 | 70.7 | 85.6% | 18.6% |
+| 2s10s kurve | **35** | 44.0 | 41.3 | 54.7 | 571.9% | -19.9% |
 
-| Instrument | Score | W-RSI | M-RSI | Dist 3yr MA | Northstar-signal |
-|---|---:|---:|---:|---:|---|
-| Kobber miners | 28 | 60.6 | 70.7 | 85.6% | ✓ Over 3yr MA |
-| Metals & Mining | 28 | 63.8 | 76.8 | 76.4% | ✓ Over 3yr MA |
+### Unnga/trim
+_Overbought, under MA, eller ingen bekreftelse._
+
+| Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
+|---|---:|---:|---:|---:|---:|---:|
+| ACWI Global | **33** | 68.0 | 71.7 | 77.1 | 35.5% | 10.4% |
+| MSCI EM | **33** | 64.8 | 70.8 | 77.4 | 52.6% | 18.4% |
+| S&P 500 | **27** | 74.2 | 73.6 | 76.6 | 34.7% | 10.5% |
+| Nasdaq-100 | **27** | 77.2 | 77.4 | 78.2 | 49.1% | 18.4% |
+| Semiconductors | **27** | 72.2 | 86.3 | 87.4 | 136.4% | 57.5% |
+| Cybersecurity | **27** | 75.6 | 71.5 | 71.9 | 41.3% | 21.6% |
+| Metals/Mining | **27** | 60.1 | 63.8 | 76.8 | 76.4% | 14.6% |
+| Clean energy | **27** | 72.7 | 82.5 | 78.0 | 62.2% | 30.4% |
