@@ -344,10 +344,19 @@ def frame_summary(df, is_weekly=False):
 def northstar_score(entry):
     """
     Score 0-100. Hoeyere = lavrisiko entry.
-    Max points breakdown:
-      3yr MA avstand (25) + 36WMA (8) + RSI daily (10) +
-      RSI weekly (15) + RSI monthly (15) + MACD weekly (7) +
-      MACD14 weekly (7) + MACD14 monthly (5) + cross bonus (3) = max 95
+
+    Grunnprinsipp: lav RSI, nær/under MA, MACD nær null eller snur opp = bra.
+    Hoey RSI, langt over MA, MACD hoyt og fallende = darlig entry.
+
+    Max points:
+      3yr MA avstand  (25) — under/naer = bra, langt over = 0
+      36WMA avstand   (15) — under eller naer = bra, langt over = 0
+      RSI daily       (10) — lav = bra, hoey = darlig
+      RSI weekly      (20) — lav = bra, hoey = darlig
+      RSI monthly     (20) — lav = bra, hoey = darlig
+      MACD weekly     ( 5) — nær null eller snur = bra, hoyt = darlig
+      MACD14 weekly   ( 5) — samme logikk
+    Total max: 100
     """
     score  = 0
     points = []   # (label, pts, max_pts, note)
@@ -356,92 +365,146 @@ def northstar_score(entry):
     w = entry.get("frames",{}).get("weekly")  or {}
     m = entry.get("frames",{}).get("monthly") or {}
 
-    # 3yr MA distance (weekly SMA156)
+    # ── 3yr MA avstand (weekly SMA156) ──────────────────────────
+    # Under = potensiale (10p), naer = ideal (25p), langt over = 0p
     dist3yr = w.get("dist_to_3yr_MA")
     if dist3yr is not None:
         p3 = dist3yr * 100
-        if p3 < 0:
-            pts = 10; note = f"Under 3yr MA ({p3:.1f}%) - potensiale"
+        if p3 < -15:
+            pts = 8;  note = f"Langt under 3yr MA ({p3:.1f}%) — konsoliderer"
+        elif p3 < 0:
+            pts = 18; note = f"Under 3yr MA ({p3:.1f}%) — potensiale"
         elif p3 < 5:
-            pts = 25; note = f"Ideal entry - nær 3yr MA ({p3:.1f}%)"
+            pts = 25; note = f"Ideal — naer 3yr MA ({p3:.1f}%)"
         elif p3 < 15:
-            pts = 15; note = f"Moderat over 3yr MA ({p3:.1f}%)"
+            pts = 16; note = f"Moderat over 3yr MA ({p3:.1f}%)"
         elif p3 < 30:
-            pts = 5;  note = f"Stretched ({p3:.1f}%) - forsiktig"
+            pts = 7;  note = f"Stretched ({p3:.1f}%) — forsiktig"
+        elif p3 < 50:
+            pts = 2;  note = f"Klart stretched ({p3:.1f}%) — unnga entry"
         else:
-            pts = 0;  note = f"Svært stretched ({p3:.1f}%) - unnga entry"
+            pts = 0;  note = f"Ekstremt stretched ({p3:.1f}%) — ikke entry"
         score += pts
         points.append(("3yr MA", pts, 25, note))
     else:
         points.append(("3yr MA", 0, 25, "ingen data"))
 
-    # 36WMA (weekly)
-    above36 = w.get("close_above_sma36")
-    pts = 8 if above36 is True else 0
-    points.append(("36WMA", pts, 8, "Over 36WMA" if above36 else "Under 36WMA"))
-    score += pts
+    # ── 36WMA avstand ────────────────────────────────────────────
+    # Under eller naer = bra. Langt over = darlig entry.
+    dist36 = w.get("dist_to_36MA")
+    if dist36 is not None:
+        p36 = dist36 * 100
+        if p36 < -10:
+            pts = 10; note = f"Under 36WMA ({p36:.1f}%) — potensiale"
+        elif p36 < 0:
+            pts = 13; note = f"Rett under 36WMA ({p36:.1f}%)"
+        elif p36 < 3:
+            pts = 15; note = f"Naer 36WMA ({p36:.1f}%) — god entry"
+        elif p36 < 10:
+            pts = 10; note = f"Litt over 36WMA ({p36:.1f}%)"
+        elif p36 < 20:
+            pts = 5;  note = f"Over 36WMA ({p36:.1f}%) — ok"
+        elif p36 < 35:
+            pts = 2;  note = f"Klart over 36WMA ({p36:.1f}%) — forsiktig"
+        else:
+            pts = 0;  note = f"Langt over 36WMA ({p36:.1f}%) — ikke entry"
+        score += pts
+        points.append(("36WMA", pts, 15, note))
+    else:
+        points.append(("36WMA", 0, 15, "ingen data"))
 
-    # RSI daily
+    # ── RSI daily (10p) ──────────────────────────────────────────
+    # < 30 = oversold (8p), 30-45 = lav/bra (10p), 45-60 = ok (7p),
+    # 60-70 = hoey (3p), > 70 = overbought (0p)
     drsi = d.get("rsi14")
     if drsi is not None:
-        if 40 <= drsi <= 60:   pts = 10; note = f"Ideal ({drsi:.1f})"
-        elif drsi < 40:        pts = 5;  note = f"Lav ({drsi:.1f})"
-        elif drsi <= 70:       pts = 6;  note = f"Hoey ({drsi:.1f})"
+        if drsi < 30:          pts = 8;  note = f"Oversold ({drsi:.1f}) — bounce-fare"
+        elif drsi < 45:        pts = 10; note = f"Lav/bra ({drsi:.1f})"
+        elif drsi < 60:        pts = 7;  note = f"Noeytral ({drsi:.1f})"
+        elif drsi < 70:        pts = 3;  note = f"Hoey ({drsi:.1f})"
         else:                  pts = 0;  note = f"Overbought ({drsi:.1f})"
         score += pts
         points.append(("RSI daily", pts, 10, note))
     else:
         points.append(("RSI daily", 0, 10, "ingen data"))
 
-    # RSI weekly
+    # ── RSI weekly (20p) ─────────────────────────────────────────
     wrsi = w.get("rsi14")
     if wrsi is not None:
-        if 40 <= wrsi <= 60:   pts = 15; note = f"Ideal ({wrsi:.1f})"
-        elif wrsi < 40:        pts = 8;  note = f"Lav ({wrsi:.1f})"
-        elif wrsi <= 70:       pts = 8;  note = f"Hoey ({wrsi:.1f})"
+        if wrsi < 30:          pts = 14; note = f"Oversold ({wrsi:.1f})"
+        elif wrsi < 45:        pts = 20; note = f"Lav/bra ({wrsi:.1f})"
+        elif wrsi < 60:        pts = 14; note = f"Noeytral ({wrsi:.1f})"
+        elif wrsi < 70:        pts = 5;  note = f"Hoey ({wrsi:.1f})"
         else:                  pts = 0;  note = f"Overbought ({wrsi:.1f})"
         score += pts
-        points.append(("RSI weekly", pts, 15, note))
+        points.append(("RSI weekly", pts, 20, note))
     else:
-        points.append(("RSI weekly", 0, 15, "ingen data"))
+        points.append(("RSI weekly", 0, 20, "ingen data"))
 
-    # RSI monthly
+    # ── RSI monthly (20p) ────────────────────────────────────────
     mrsi = m.get("rsi14")
     if mrsi is not None:
-        if mrsi < 50:          pts = 15; note = f"Lav/god ({mrsi:.1f})"
-        elif mrsi < 65:        pts = 10; note = f"Moderat ({mrsi:.1f})"
-        elif mrsi < 75:        pts = 5;  note = f"Hoey ({mrsi:.1f})"
+        if mrsi < 35:          pts = 16; note = f"Lav/bra ({mrsi:.1f})"
+        elif mrsi < 50:        pts = 20; note = f"God ({mrsi:.1f})"
+        elif mrsi < 60:        pts = 14; note = f"Moderat ({mrsi:.1f})"
+        elif mrsi < 70:        pts = 6;  note = f"Hoey ({mrsi:.1f})"
+        elif mrsi < 78:        pts = 2;  note = f"Klart hoey ({mrsi:.1f})"
         else:                  pts = 0;  note = f"Overbought ({mrsi:.1f})"
         score += pts
-        points.append(("RSI monthly", pts, 15, note))
+        points.append(("RSI monthly", pts, 20, note))
     else:
-        points.append(("RSI monthly", 0, 15, "ingen data"))
+        points.append(("RSI monthly", 0, 20, "ingen data"))
 
-    # MACD weekly hist
+    # ── MACD weekly (5p) ─────────────────────────────────────────
+    # Nær null og snur opp = bra. Hoyt positivt og faller = darlig.
     wh = w.get("macd_hist")
-    pts = 7 if (wh is not None and wh > 0) else 0
-    note = f"Pos ({wh:.4f})" if (wh and wh > 0) else (f"Neg ({wh:.4f})" if wh is not None else "ingen data")
-    score += pts
-    points.append(("MACD W", pts, 7, note))
+    wm = w.get("macd")
+    if wh is not None and wm is not None and wm != 0:
+        normalized = abs(wh / wm) if wm else 0   # hist relativt til MACD-linjen
+        cross = w.get("macd_cross")
+        if cross:
+            pts = 5; note = f"Bullish cross ({wh:.4f}) — momentum snur"
+        elif wh < 0 and wh > -abs(wm)*0.3:
+            pts = 4; note = f"Nær null neg ({wh:.4f}) — mulig snu"
+        elif wh > 0 and normalized < 0.3:
+            pts = 3; note = f"Svakt pos ({wh:.4f}) — tidlig"
+        elif wh < 0:
+            pts = 2; note = f"Neg ({wh:.4f})"
+        else:
+            pts = 1; note = f"Pos men hoyt ({wh:.4f}) — allerede loept"
+        score += pts
+        points.append(("MACD W", pts, 5, note))
+    elif wh is not None:
+        pts = 3 if wh < 0 else 1
+        note = f"{'Neg' if wh < 0 else 'Pos'} ({wh:.4f})"
+        score += pts
+        points.append(("MACD W", pts, 5, note))
+    else:
+        points.append(("MACD W", 0, 5, "ingen data"))
 
-    # MACD14 weekly hist
+    # ── MACD14 weekly (5p) ───────────────────────────────────────
     wh14 = w.get("macd14_hist")
-    pts = 7 if (wh14 is not None and wh14 > 0) else 0
-    note = f"Pos ({wh14:.4f})" if (wh14 and wh14 > 0) else (f"Neg ({wh14:.4f})" if wh14 is not None else "ingen data")
-    score += pts
-    points.append(("MACD14 W", pts, 7, note))
-
-    # MACD14 monthly hist
-    mh14 = m.get("macd14_hist")
-    pts = 5 if (mh14 is not None and mh14 > 0) else 0
-    note = f"Pos ({mh14:.4f})" if (mh14 and mh14 > 0) else (f"Neg ({mh14:.4f})" if mh14 is not None else "ingen data")
-    score += pts
-    points.append(("MACD14 M", pts, 5, note))
-
-    # Bullish cross bonus
-    if w.get("macd_cross"):
-        score += 3
-        points.append(("Cross bonus", 3, 3, "Bullish cross denne uka"))
+    wm14 = w.get("macd14")
+    if wh14 is not None and wm14 is not None and wm14 != 0:
+        cross14 = w.get("macd14_cross")
+        if cross14:
+            pts = 5; note = f"Bullish cross ({wh14:.4f})"
+        elif wh14 < 0 and wh14 > -abs(wm14)*0.3:
+            pts = 4; note = f"Nær null neg ({wh14:.4f})"
+        elif wh14 > 0 and abs(wh14/wm14) < 0.3:
+            pts = 3; note = f"Svakt pos ({wh14:.4f})"
+        elif wh14 < 0:
+            pts = 2; note = f"Neg ({wh14:.4f})"
+        else:
+            pts = 1; note = f"Pos men hoyt ({wh14:.4f})"
+        score += pts
+        points.append(("MACD14 W", pts, 5, note))
+    elif wh14 is not None:
+        pts = 3 if wh14 < 0 else 1
+        score += pts
+        points.append(("MACD14 W", pts, 5, f"{'Neg' if wh14 < 0 else 'Pos'} ({wh14:.4f})"))
+    else:
+        points.append(("MACD14 W", 0, 5, "ingen data"))
 
     return min(score, 100), points
 
@@ -688,10 +751,9 @@ def build_portfolio_brief(assets_dict, sector_sum):
 
     lines = [f"## Ukentlig Portfolio-Brief - {NOW.strftime('%d. %B %Y')}","",
              "### Sektorscore","","| Sektor | Score | Signal | n |","|---|---:|---|---:|"]
-    for sec in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"]:
-        if sec in sector_sum:
-            ss = sector_sum[sec]
-            lines.append(f"| {sec} | {ss['avg_score']} | {ss['label']} | {ss['n']} |")
+    for sec in sorted([s for s in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"] if s in sector_sum], key=lambda s:-sector_sum[s]["avg_score"]):
+        ss = sector_sum[sec]
+        lines.append(f"| {sec} | {ss['avg_score']} | {ss['label']} | {ss['n']} |")
     lines.append("")
 
     for key, title, desc in [
@@ -781,15 +843,14 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
     parts.append('<section class="section"><h2>&#128202; Sektorscore</h2>'
                  '<p style="color:var(--muted);font-size:12px">Snitt Northstar-score. Hoeyere = lavrisiko entry.</p>'
                  '<div class="sector-grid">')
-    for sec in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"]:
-        if sec in sec_sum:
-            ss = sec_sum[sec]; avg = ss["avg_score"]; c = score_color(avg)
-            parts.append(
-                f'<div class="sc" style="border-color:{c}50">'
-                f'<div class="sc-name">{html.escape(sec)}</div>'
-                f'<div class="sc-score" style="color:{c}">{avg}</div>'
-                f'<div class="sc-label" style="color:{c}">{html.escape(ss["label"])}</div>'
-                f'<div class="sc-n">{ss["n"]} instr.</div></div>')
+    for sec in sorted([s for s in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"] if s in sec_sum], key=lambda s:-sec_sum[s]["avg_score"]):
+        ss = sec_sum[sec]; avg = ss["avg_score"]; c = score_color(avg)
+        parts.append(
+            f'<div class="sc" style="border-color:{c}50">'
+            f'<div class="sc-name">{html.escape(sec)}</div>'
+            f'<div class="sc-score" style="color:{c}">{avg}</div>'
+            f'<div class="sc-label" style="color:{c}">{html.escape(ss["label"])}</div>'
+            f'<div class="sc-n">{ss["n"]} instr.</div></div>')
     parts.append('</div></section>')
 
     # Portfolio brief
