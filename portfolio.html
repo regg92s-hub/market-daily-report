@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Portef&oslash;lje</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#0b0d10;--panel:#12161c;--panel2:#171c23;--text:#e7edf3;--muted:#9aa7b5;--border:#27313d;--accent:#5aa9ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+.wrap{max-width:1600px;margin:0 auto;padding:20px 16px 40px}
+h1{margin:0 0 4px;font-size:24px}h2{margin:0 0 6px;font-size:18px}
+.topnote{color:var(--muted);margin:0 0 18px;font-size:13px}
+.tabs{display:flex;gap:8px;margin:0 0 18px;border-bottom:1px solid var(--border)}
+.tab{padding:10px 18px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--text)}.tab.active{color:var(--text);border-bottom-color:var(--accent)}
+.section{margin:0 0 22px;padding:16px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+.disclaimer{font-size:12px;color:var(--muted);background:#1a1407;border:1px solid #3a2e10;border-radius:10px;padding:10px 14px;margin-bottom:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.cap-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-top:10px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;color:var(--muted)}
+.field input{background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:8px 10px;font-size:14px;width:160px}
+.field input:focus{outline:none;border-color:var(--accent)}
+.btn{background:var(--accent);color:#06121f;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.kpi{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+.kpi .k{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;min-width:130px}
+.kpi .k .lbl{font-size:11px;color:var(--muted)}
+.kpi .k .val{font-size:20px;font-weight:700;margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+th{background:var(--panel2);padding:7px 9px;text-align:left;border-bottom:1px solid var(--border);color:var(--muted);font-weight:600}
+td{padding:6px 9px;border-bottom:1px solid #1e2530;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:2px 8px;border-radius:7px;font-size:12px;font-weight:700}
+.rec{font-weight:700}
+.rec.buy{color:#50c878}.rec.add{color:#7ec88a}.rec.hold{color:#9aa7b5}.rec.trim{color:#f0a500}.rec.sell{color:#e05050}
+.posinput{width:80px;background:var(--panel2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:4px 6px;font-size:12px}
+.legend{font-size:11px;color:var(--muted);line-height:1.7;margin-top:10px}
+.legend code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--text)}
+.hist{max-height:280px;overflow-y:auto;margin-top:10px}
+.hist .h{padding:8px 10px;border-bottom:1px solid #1e2530;font-size:12px}
+.hist .h .t{color:var(--muted);font-size:11px}
+.muted{color:var(--muted)}
+svg.pie{display:block;margin:0 auto}
+.legend-pie{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.legend-pie .li{display:flex;align-items:center;gap:8px;font-size:12px}
+.legend-pie .sw{width:12px;height:12px;border-radius:3px;flex:none}
+footer{margin-top:18px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="tabs">
+  <a class="tab" href="index.html">&#128200; Trend-oversikt</a>
+  <a class="tab" href="report.html">&#128202; Market Daily Report</a>
+  <a class="tab active" href="portfolio.html">&#128188; Portef&oslash;lje</a>
+</nav>
+<h1>Portef&oslash;lje</h1>
+<p class="topnote" id="topnote">Laster data&hellip;</p>
+
+<div class="disclaimer">
+<strong>Ditt eget rammeverk &mdash; ikke finansr&aring;dgivning.</strong>
+Dette verkt&oslash;yet viser hva din Northstar-metodikk tilsier basert p&aring; trend-score, ikke en anbefaling.
+All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutninger selv.
+</div>
+
+<div class="section">
+  <h2>&#128176; Kapital</h2>
+  <div class="cap-row">
+    <div class="field">
+      <label>Startkapital (kr)</label>
+      <input type="number" id="startCap" placeholder="100000" step="1000">
+    </div>
+    <div class="field">
+      <label>Nytt innskudd (kr)</label>
+      <input type="number" id="addCap" placeholder="0" step="1000">
+    </div>
+    <button class="btn" id="applyCap">Oppdater kapital</button>
+    <button class="btn secondary" id="rebalance">Omfordel n&aring; (ukentlig)</button>
+  </div>
+  <div class="kpi">
+    <div class="k"><div class="lbl">Total kapital</div><div class="val" id="kTotal">&ndash;</div></div>
+    <div class="k"><div class="lbl">Investert</div><div class="val" id="kInvested">&ndash;</div></div>
+    <div class="k"><div class="lbl">Cash</div><div class="val" id="kCash">&ndash;</div></div>
+    <div class="k"><div class="lbl">Cash %</div><div class="val" id="kCashPct">&ndash;</div></div>
+  </div>
+  <div class="cap-row" style="margin-top:14px">
+    <div class="field">
+      <label>M&aring;l cash-buffer (%)</label>
+      <input type="number" id="cashTarget" value="15" min="0" max="100" step="5">
+    </div>
+    <div class="field">
+      <label>Maks vekt per posisjon (%)</label>
+      <input type="number" id="maxPos" value="25" min="5" max="100" step="5">
+    </div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="section">
+    <h2>&#129518; Anbefalt fordeling</h2>
+    <p class="muted" style="font-size:12px">Vektet etter trend-score. H&oslash;yere score = st&oslash;rre tillatt vekt. Cash-buffer holdes igjen.</p>
+    <div id="pieWrap"></div>
+    <div class="legend-pie" id="pieLegend"></div>
+  </div>
+  <div class="section">
+    <h2>&#128221; Posisjoner &amp; anbefaling</h2>
+    <p class="muted" style="font-size:12px">Skriv inn n&aring;v&aelig;rende vekt (%) du allerede eier. Anbefalingen tar hensyn til eksisterende posisjoner.</p>
+    <table id="posTable"><thead><tr>
+      <th>Ratio/Instrument</th><th>Score</th><th>Eier %</th><th>M&aring;l %</th><th>Anbefaling</th>
+    </tr></thead><tbody id="posBody"></tbody></table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>&#128202; Endringslogg</h2>
+  <p class="muted" style="font-size:12px">Hver omfordeling og kapitalendring logges her (lagret lokalt i nettleseren).</p>
+  <div class="hist" id="histBox"></div>
+  <button class="btn secondary" id="clearHist" style="margin-top:10px">T&oslash;m logg</button>
+</div>
+
+<div class="section">
+  <h2>&#8505;&#65039; Slik fungerer modellen</h2>
+  <div class="legend">
+  <code>M&aring;l %</code> beregnes fra trend-score: kun ratioer/instrumenter med score &ge; 55 f&aring;r tildelt vekt. Vekt er proporsjonal med score over terskelen.<br>
+  <code>Cash-buffer</code> (standard 15%) holdes alltid igjen f&oslash;r fordeling &mdash; du tar kun posisjoner n&aring;r noe ser lovende ut.<br>
+  <code>Maks vekt</code> per posisjon hindrer at alt samles i &eacute;n id&eacute;.<br>
+  <code>KJ&Oslash;P</code>: score &ge; 55 og du eier mindre enn m&aring;l. <code>LEGG TIL</code>: god score, litt under m&aring;l.<br>
+  <code>HOLD</code>: posisjon tatt, ikke overkj&oslash;pt enn&aring; &mdash; beholdes selv om score faller, til den blir <em>veldig</em> overkj&oslash;pt.<br>
+  <code>SKALER AV</code>: kun n&aring;r RSI &ge; 65 OG MACD-hist &ge; 2 OG strukket langt over 36WMA/3yr MA &mdash; eller n&aring;r du trenger cash til klart bedre muligheter.<br>
+  <code>Full portef&oslash;lje</code>: hvis alt er fullt og cash er under m&aring;l, foresl&aring;s kun skifte n&aring;r en svakere posisjon kan vike for en klart sterkere.
+  </div>
+</div>
+
+<footer>Data: <a href="index.json" style="color:var(--muted)">index.json</a> &bull; Lagres lokalt i din nettleser (localStorage)</footer>
+</div>
+
+<script>
+const LS_KEY = "ns_portfolio_v1";
+const CASH_THRESHOLD = 55;     // min score for å få tildelt vekt
+const OVERBOUGHT_RSI = 65;
+const OVERBOUGHT_MACD = 2;
+const STRETCH_36 = 0.20;       // 20% over 36MA
+const STRETCH_3YR = 0.30;      // 30% over 3yr
+
+let STATE = loadState();
+let DATA = null;
+
+function loadState(){
+  try{ const s = JSON.parse(localStorage.getItem(LS_KEY)); if(s) return s; }catch(e){}
+  return { startCap: 100000, cash: 100000, invested: 0, positions: {}, history: [], cashTarget: 15, maxPos: 25 };
+}
+function saveState(){ localStorage.setItem(LS_KEY, JSON.stringify(STATE)); }
+function kr(n){ return (Math.round(n)).toLocaleString("no-NO") + " kr"; }
+function pct(n){ return (n).toFixed(1) + "%"; }
+function now(){ return new Date().toLocaleString("no-NO"); }
+
+function logHist(msg){
+  STATE.history.unshift({ t: now(), msg });
+  if(STATE.history.length > 200) STATE.history.pop();
+}
+
+async function init(){
+  try{
+    const r = await fetch("index.json", {cache:"no-store"});
+    DATA = await r.json();
+    document.getElementById("topnote").innerHTML =
+      "Trend-data generert: " + (DATA.generated_local||"") + " &bull; " + (DATA.version||"");
+  }catch(e){
+    document.getElementById("topnote").textContent = "Kunne ikke laste index.json: " + e;
+    return;
+  }
+  // init capital inputs
+  document.getElementById("startCap").value = STATE.startCap;
+  document.getElementById("cashTarget").value = STATE.cashTarget;
+  document.getElementById("maxPos").value = STATE.maxPos;
+  render();
+}
+
+// Bygg kandidatliste fra trend_ratios + instrument-scores
+function candidates(){
+  const out = [];
+  (DATA.trend_ratios||[]).forEach(t=>{
+    out.push({ id: t.rid, label: t.label, score: t.score,
+      rsi: t.qrsi ?? t.mrsi, macd: t.macd_q ?? t.macd_m,
+      d36: t.dist36q ?? t.dist36m, d3yr: null, kind:"ratio" });
+  });
+  return out;
+}
+
+// Beregn mål-vekter fra score
+function targetWeights(cands){
+  const cashTarget = clamp(parseFloat(document.getElementById("cashTarget").value)||15, 0, 100);
+  const maxPos = clamp(parseFloat(document.getElementById("maxPos").value)||25, 5, 100);
+  const investable = 100 - cashTarget;
+  const elig = cands.filter(c => c.score >= CASH_THRESHOLD);
+  const sumExcess = elig.reduce((a,c)=>a+(c.score-CASH_THRESHOLD),0);
+  const weights = {};
+  if(sumExcess > 0){
+    elig.forEach(c=>{
+      let w = investable * (c.score-CASH_THRESHOLD)/sumExcess;
+      weights[c.id] = Math.min(w, maxPos);
+    });
+    // re-normaliser hvis maxPos kuttet noe
+    let tot = Object.values(weights).reduce((a,b)=>a+b,0);
+    if(tot>0 && tot < investable){
+      // fordel resten på de som ikke er capped
+      // enkel tilnærming: skaler opp proporsjonalt innenfor maxPos
+      let room = elig.filter(c=>weights[c.id] < maxPos);
+      let deficit = investable - tot;
+      let roomSum = room.reduce((a,c)=>a+(maxPos-weights[c.id]),0);
+      if(roomSum>0) room.forEach(c=>{ weights[c.id]+= deficit*(maxPos-weights[c.id])/roomSum; });
+    }
+  }
+  return { weights, cashTarget, maxPos };
+}
+
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+// Returnerer code (stabil) + label (visning) + cls + why
+function recommendation(c, ownPct, targetPct){
+  const rsi = c.rsi ?? 50;
+  const macd = c.macd ?? 0;
+  const d36 = c.d36 ?? 0;
+  const veryOverbought = (rsi >= OVERBOUGHT_RSI) && (macd >= OVERBOUGHT_MACD) && (d36 >= STRETCH_36);
+  if(ownPct > 0){
+    if(veryOverbought) return {code:"SCALE", label:"SKALER AV", cls:"sell", why:`Veldig overkj&oslash;pt (RSI ${Math.round(rsi)}, MACD h&oslash;y, strukket ${(d36*100).toFixed(0)}%)`};
+    if(c.score < 35) return {code:"SCALE", label:"SKALER AV", cls:"trim", why:"Score brutt ned i negativ sone"};
+    if(ownPct < targetPct - 3) return {code:"ADD", label:"LEGG TIL", cls:"add", why:"Under m&aring;lvekt, trend intakt"};
+    return {code:"HOLD", label:"HOLD", cls:"hold", why:"Posisjon tatt, ikke overkj&oslash;pt &mdash; behold"};
+  } else {
+    if(c.score >= CASH_THRESHOLD && targetPct > 0) return {code:"BUY", label:"KJ&Oslash;P", cls:"buy", why:`Score ${c.score} &ge; ${CASH_THRESHOLD}, lovende entry`};
+    return {code:"WAIT", label:"AVVENT", cls:"hold", why:`Score ${c.score} under terskel ${CASH_THRESHOLD}`};
+  }
+}
+
+function render(){
+  const cands = candidates();
+  const { weights, cashTarget } = targetWeights(cands);
+
+  // KPIs
+  document.getElementById("kTotal").textContent = kr(STATE.cash + STATE.invested);
+  document.getElementById("kInvested").textContent = kr(STATE.invested);
+  document.getElementById("kCash").textContent = kr(STATE.cash);
+  const total = STATE.cash + STATE.invested;
+  document.getElementById("kCashPct").textContent = total>0 ? pct(STATE.cash/total*100) : "–";
+
+  // Posisjonstabell
+  const body = document.getElementById("posBody");
+  body.innerHTML = "";
+  cands.sort((a,b)=>b.score-a.score).forEach(c=>{
+    const own = STATE.positions[c.id] || 0;
+    const tgt = weights[c.id] || 0;
+    const rec = recommendation(c, own, tgt);
+    const sc = scoreColor(c.score);
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      `<td><strong>${c.label}</strong></td>`+
+      `<td><span class="pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40">${c.score}</span></td>`+
+      `<td><input class="posinput" type="number" min="0" max="100" step="1" value="${own}" data-id="${c.id}"></td>`+
+      `<td>${tgt>0?tgt.toFixed(1)+"%":"&ndash;"}</td>`+
+      `<td><span class="rec ${rec.cls}">${rec.label}</span><br><span class="muted" style="font-size:11px">${rec.why}</span></td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll(".posinput").forEach(inp=>{
+    inp.addEventListener("change", e=>{
+      const id = e.target.dataset.id;
+      const v = clamp(parseFloat(e.target.value)||0, 0, 100);
+      STATE.positions[id] = v;
+      recalcInvested();
+      saveState(); render();
+    });
+  });
+
+  // Pie: faktisk fordeling (eide posisjoner + cash)
+  drawPie(cands);
+
+  // Historikk
+  renderHist();
+  saveState();
+}
+
+function recalcInvested(){
+  const total = STATE.cash + STATE.invested;
+  const ownSum = Object.values(STATE.positions).reduce((a,b)=>a+b,0);
+  STATE.invested = total * Math.min(ownSum,100)/100;
+  STATE.cash = total - STATE.invested;
+}
+
+function scoreColor(s){
+  if(s>=75) return "#50c878"; if(s>=55) return "#f0a500";
+  if(s>=35) return "#e08030"; return "#e05050";
+}
+
+function drawPie(cands){
+  const total = STATE.cash + STATE.invested;
+  const slices = [];
+  cands.forEach(c=>{
+    const own = STATE.positions[c.id]||0;
+    if(own>0) slices.push({label:c.label, pct:own, val: total*own/100, col: scoreColor(c.score)});
+  });
+  const cashPct = total>0 ? STATE.cash/total*100 : 100;
+  slices.push({label:"Cash", pct:cashPct, val:STATE.cash, col:"#3a4452"});
+
+  const size=240, r=110, cx=size/2, cy=size/2;
+  let ang=-Math.PI/2;
+  let paths="";
+  slices.forEach(s=>{
+    const a2 = ang + (s.pct/100)*Math.PI*2;
+    const x1=cx+r*Math.cos(ang), y1=cy+r*Math.sin(ang);
+    const x2=cx+r*Math.cos(a2), y2=cy+r*Math.sin(a2);
+    const large = (a2-ang)>Math.PI?1:0;
+    if(s.pct>0.01) paths += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${s.col}" stroke="#0b0d10" stroke-width="2"></path>`;
+    ang=a2;
+  });
+  document.getElementById("pieWrap").innerHTML =
+    `<svg class="pie" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${paths}</svg>`;
+  const leg = document.getElementById("pieLegend");
+  leg.innerHTML = "";
+  slices.filter(s=>s.pct>0.01).forEach(s=>{
+    const d=document.createElement("div"); d.className="li";
+    d.innerHTML=`<span class="sw" style="background:${s.col}"></span>`+
+      `<span>${s.label}: <strong>${s.pct.toFixed(1)}%</strong> <span class="muted">(${kr(s.val)})</span></span>`;
+    leg.appendChild(d);
+  });
+}
+
+function renderHist(){
+  const box=document.getElementById("histBox");
+  if(!STATE.history.length){ box.innerHTML='<div class="muted" style="font-size:12px">Ingen endringer enn&aring;.</div>'; return; }
+  box.innerHTML = STATE.history.map(h=>`<div class="h"><div class="t">${h.t}</div>${h.msg}</div>`).join("");
+}
+
+// --- Kapital-handlinger ---
+document.getElementById("applyCap").addEventListener("click", ()=>{
+  const start = parseFloat(document.getElementById("startCap").value)||0;
+  const add = parseFloat(document.getElementById("addCap").value)||0;
+  const oldTotal = STATE.cash + STATE.invested;
+  if(start !== STATE.startCap && oldTotal === STATE.startCap){
+    // første gang / justering av startkapital
+    STATE.startCap = start; STATE.cash = start - STATE.invested;
+    logHist(`Startkapital satt til ${kr(start)}`);
+  }
+  if(add>0){
+    STATE.cash += add;
+    logHist(`Nytt innskudd: ${kr(add)} (total: ${kr(STATE.cash+STATE.invested)})`);
+    document.getElementById("addCap").value="";
+  }
+  STATE.cashTarget = clamp(parseFloat(document.getElementById("cashTarget").value)||15,0,100);
+  STATE.maxPos = clamp(parseFloat(document.getElementById("maxPos").value)||25,5,100);
+  saveState(); render();
+});
+
+document.getElementById("rebalance").addEventListener("click", ()=>{
+  const cands = candidates();
+  const { weights } = targetWeights(cands);
+  let changes=[];
+  cands.forEach(c=>{
+    const own = STATE.positions[c.id]||0;
+    const tgt = weights[c.id]||0;
+    const rec = recommendation(c, own, tgt);
+    if(rec.code==="BUY"){ if(tgt>0 && own<tgt){ STATE.positions[c.id]=parseFloat(tgt.toFixed(1)); changes.push(`KJ&Oslash;P ${c.label} &rarr; ${tgt.toFixed(1)}%`);} }
+    else if(rec.code==="ADD"){ STATE.positions[c.id]=parseFloat(tgt.toFixed(1)); changes.push(`LEGG TIL ${c.label} &rarr; ${tgt.toFixed(1)}%`); }
+    else if(rec.code==="SCALE"){ if(own>0){ STATE.positions[c.id]=0; changes.push(`SKALER AV ${c.label} (fra ${own}%)`);} }
+  });
+  recalcInvested();
+  if(changes.length) logHist("Omfordeling: " + changes.join(", "));
+  else logHist("Omfordeling: ingen endringer anbefalt");
+  saveState(); render();
+});
+
+document.getElementById("clearHist").addEventListener("click", ()=>{
+  if(confirm("T&oslash;mme hele endringsloggen?")){ STATE.history=[]; saveState(); renderHist(); }
+});
+
+init();
+</script>
+</body>
+</html>
