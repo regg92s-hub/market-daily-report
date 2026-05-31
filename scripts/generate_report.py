@@ -95,7 +95,7 @@ INSTRUMENT_GROUPS = [
             {"id": "SPY",  "label": "S&P 500",          "symbol_label": "SPY",   "source": "yf", "candidates": ["SPY"]},
             {"id": "QQQ",  "label": "Nasdaq-100",        "symbol_label": "QQQ",   "source": "yf", "candidates": ["QQQ"]},
             {"id": "IWM",  "label": "Russell 2000",      "symbol_label": "IWM",   "source": "yf", "candidates": ["IWM"]},
-            {"id": "ACWI", "label": "ACWI Global",       "symbol_label": "ACWI",  "source": "yf", "candidates": ["ACWI"]},
+            {"id": "ACWI", "label": "ACWI",              "symbol_label": "ACWI",  "source": "yf", "candidates": ["ACWI"]},
             {"id": "EXSA", "label": "STOXX Europe 600",  "symbol_label": "EXSA",  "source": "yf", "candidates": ["EXSA.DE","EXSA","MEUD"]},
             {"id": "EEM",  "label": "MSCI EM",           "symbol_label": "EEM",   "source": "yf", "candidates": ["EEM","VWO"]},
             {"id": "VNQ",  "label": "Housing US",        "symbol_label": "VNQ",   "source": "yf", "candidates": ["VNQ"]},
@@ -164,8 +164,8 @@ INSTRUMENT_GROUPS = [
         "key": "crypto", "title": "7. Crypto & Volatilitet", "sector": "Crypto",
         "description": "Risiko-on spekulasjon og likviditetsindikator.",
         "instruments": [
-            {"id": "BTC",  "label": "Bitcoin",           "symbol_label": "BITO",  "source": "yf", "candidates": ["BITO","IBIT","BTC-USD"]},
-            {"id": "ETHA", "label": "Ethereum",          "symbol_label": "ETHA",  "source": "yf", "candidates": ["ETHA","ETH-USD"]},
+            {"id": "BTC",  "label": "BTC",               "symbol_label": "BTC",   "source": "yf", "candidates": ["BTC-USD","BITO","IBIT"]},
+            {"id": "ETHA", "label": "ETH",               "symbol_label": "ETH",   "source": "yf", "candidates": ["ETH-USD","ETHA"]},
             {"id": "VIXY", "label": "VIX",               "symbol_label": "VIXY",  "source": "yf", "candidates": ["VIXY"]},
         ],
     },
@@ -181,9 +181,9 @@ RATIO_PAIRS = [
     ("IWM",  "SPY",  "IWM/SPY"),
     ("COPX", "SPY",  "COPX/SPY"),
     ("GDX",  "SPY",  "GDX/SPY"),
-    ("USO",  "ACWI", "Olje/Global aksjer"),
-    ("GLD",  "ACWI", "Gull/Global aksjer"),
-    ("BTC",  "ACWI", "Crypto/Global aksjer"),
+    ("USO",  "ACWI", "USO/ACWI"),
+    ("GLD",  "ACWI", "GLD/ACWI"),
+    ("BTC",  "ACWI", "BTC/ACWI"),
 ]
 
 ALL_IDS = [i["id"] for g in INSTRUMENT_GROUPS for i in g["instruments"]]
@@ -192,26 +192,26 @@ ALL_IDS = [i["id"] for g in INSTRUMENT_GROUPS for i in g["instruments"]]
 TREND_TICKERS = {
     "GULL":    ["GLD", "IAU"],
     "GLOBAL":  ["ACWI"],
-    "URAN":    ["URA"],
+    "URAN":    ["URNM", "URA"],
     "OLJE":    ["USO", "BNO"],
     "DBA":     ["DBA"],
-    "CRYPTO":  ["BITO", "IBIT", "BTC-USD"],
+    "CRYPTO":  ["BTC-USD", "BITO", "IBIT"],
     "NOK":     ["NOK=X"],
     "EIENDOM": ["CAST.ST", "TRET.AS"],
 }
 NOK_INVERT = True
 
 TREND_RATIOS = [
-    ("GULL",   "GLOBAL",  "Gull / Globale aksjer"),
-    ("NOK",    "GLOBAL",  "NOK / Globale aksjer"),
-    ("URAN",   "GLOBAL",  "Uran / Globale aksjer"),
-    ("OLJE",   "GLOBAL",  "Olje / Globale aksjer"),
-    ("DBA",    "GLOBAL",  "Mat (DBA) / Globale aksjer"),
-    ("CRYPTO", "GLOBAL",  "Crypto / Globale aksjer"),
-    ("GULL",   "URAN",    "Gull / Uran"),
-    ("GULL",   "CRYPTO",  "Gull / Crypto"),
-    ("GULL",   "OLJE",    "Gull / Olje"),
-    ("GULL",   "EIENDOM", "Gull / Skand. eiendom"),
+    ("GULL",   "GLOBAL",  "GLD / ACWI"),
+    ("NOK",    "GLOBAL",  "NOK / ACWI"),
+    ("URAN",   "GLOBAL",  "URNM / ACWI"),
+    ("OLJE",   "GLOBAL",  "USO / ACWI"),
+    ("DBA",    "GLOBAL",  "DBA / ACWI"),
+    ("CRYPTO", "GLOBAL",  "BTC / ACWI"),
+    ("GULL",   "URAN",    "GLD / URNM"),
+    ("GULL",   "CRYPTO",  "GLD / BTC"),
+    ("GULL",   "OLJE",    "GLD / USO"),
+    ("GULL",   "EIENDOM", "GLD / CAST.ST"),
 ]
 
 # ─── MATH ──────────────────────────────────────────────────────
@@ -409,172 +409,112 @@ def trend_label(w):
         return ("Topper ut", "#e08030")
     return ("Noeytral", "#9aa7b5")
 
-# ─── NORTHSTAR SCORE ───────────────────────────────────────────
+# ─── NORTHSTAR SCORE (dynamisk, vektet 33/33/33) ───────────────
+def _rsi_subscore(rsi):
+    """RSI -> 0..1. Lavere RSI = bedre (dynamisk, ikke bøtter).
+    RSI 30 -> ~1.0, RSI 50 -> ~0.6, RSI 70 -> ~0.2, RSI 85+ -> ~0."""
+    if rsi is None:
+        return None
+    # lineær rampe: 30 og lavere = 1.0, 85 og høyere = 0.0
+    x = (85.0 - rsi) / (85.0 - 30.0)
+    return max(0.0, min(1.0, x))
+
+def _macd_subscore(hist, macd_line):
+    """MACD -> 0..1. Lavere/mer negativ histogram = bedre entry (dynamisk).
+    Normaliserer histogram mot MACD-linjens størrelse for å være skala-uavhengig."""
+    if hist is None:
+        return None
+    scale = abs(macd_line) if (macd_line not in (None, 0)) else None
+    if scale and scale > 0:
+        norm = hist / scale          # typisk -1..+1+
+    else:
+        norm = hist
+    # norm <= -0.5 (sterkt negativ, mulig bunn) -> 1.0
+    # norm  =  0.0 (nær null)                   -> 0.6
+    # norm >= +1.0 (høyt positivt, allerede løpt)-> 0.0
+    if norm <= -0.5:
+        return 1.0
+    if norm <= 0:
+        return 0.6 + (abs(norm) / 0.5) * 0.4      # 0 -> 0.6, -0.5 -> 1.0
+    # positiv: faller fra 0.6 mot 0 ved norm=1.0
+    return max(0.0, 0.6 - (norm / 1.0) * 0.6)
+
+def _ma_subscore(dist):
+    """Avstand til MA (fraksjon) -> 0..1. Nær eller under = bedre (dynamisk).
+    Under MA -> opp mot 1.0, ved MA -> ~0.9, +15% -> ~0.5, +40%+ -> ~0."""
+    if dist is None:
+        return None
+    p = dist * 100.0
+    if p <= -20:
+        return 0.85                    # langt under: konsoliderer, fortsatt bra
+    if p <= 0:
+        # -20%..0% -> 0.85..1.0
+        return 0.85 + (abs(p) / 20.0) * 0.0 + (1.0 - 0.85) * (1 - abs(p)/20.0)
+    # over MA: faller fra 1.0 ved 0% mot 0 ved +45%
+    return max(0.0, 1.0 - (p / 45.0))
+
+def _fmt_sub(frac):
+    return f"{frac*100:.0f}%" if frac is not None else "–"
+
 def northstar_score(entry):
     """
-    Score 0-100. Hoeyere = lavrisiko entry.
-
-    Grunnprinsipp: lav RSI, nær/under MA, MACD nær null eller snur opp = bra.
-    Hoey RSI, langt over MA, MACD hoyt og fallende = darlig entry.
-
-    Max points:
-      3yr MA avstand  (25) — under/naer = bra, langt over = 0
-      36WMA avstand   (15) — under eller naer = bra, langt over = 0
-      RSI daily       (10) — lav = bra, hoey = darlig
-      RSI weekly      (20) — lav = bra, hoey = darlig
-      RSI monthly     (20) — lav = bra, hoey = darlig
-      MACD weekly     ( 5) — nær null eller snur = bra, hoyt = darlig
-      MACD14 weekly   ( 5) — samme logikk
-    Total max: 100
+    Vektet score 0-100. Hoeyere = lavrisiko entry.
+    Tre like hovedkomponenter (hver 33.3%):
+      RSI   : weekly (13%) + monthly (20%)   [hoeyere tidsramme vektes mer]
+      MACD  : weekly (13%) + monthly (20%)
+      MA    : 36WMA (13%) + 3yr MA (20%)
+    Alle delscorer er dynamiske funksjoner av verdien (ikke boetter).
     """
-    score  = 0
-    points = []   # (label, pts, max_pts, note)
-
-    d = entry.get("frames",{}).get("daily")   or {}
     w = entry.get("frames",{}).get("weekly")  or {}
     m = entry.get("frames",{}).get("monthly") or {}
 
-    # ── 3yr MA avstand (weekly SMA156) ──────────────────────────
-    # Under = potensiale (10p), naer = ideal (25p), langt over = 0p
-    dist3yr = w.get("dist_to_3yr_MA")
-    if dist3yr is not None:
-        p3 = dist3yr * 100
-        if p3 < -15:
-            pts = 8;  note = f"Langt under 3yr MA ({p3:.1f}%) — konsoliderer"
-        elif p3 < 0:
-            pts = 18; note = f"Under 3yr MA ({p3:.1f}%) — potensiale"
-        elif p3 < 5:
-            pts = 25; note = f"Ideal — naer 3yr MA ({p3:.1f}%)"
-        elif p3 < 15:
-            pts = 16; note = f"Moderat over 3yr MA ({p3:.1f}%)"
-        elif p3 < 30:
-            pts = 7;  note = f"Stretched ({p3:.1f}%) — forsiktig"
-        elif p3 < 50:
-            pts = 2;  note = f"Klart stretched ({p3:.1f}%) — unnga entry"
-        else:
-            pts = 0;  note = f"Ekstremt stretched ({p3:.1f}%) — ikke entry"
-        score += pts
-        points.append(("3yr MA", pts, 25, note))
-    else:
-        points.append(("3yr MA", 0, 25, "ingen data"))
+    # delvekter (sum = 100)
+    W_RSI_W, W_RSI_M   = 13.0, 20.0
+    W_MACD_W, W_MACD_M = 13.0, 20.0
+    W_MA_36,  W_MA_3YR = 13.0, 20.0
 
-    # ── 36WMA avstand ────────────────────────────────────────────
-    # Under eller naer = bra. Langt over = darlig entry.
-    dist36 = w.get("dist_to_36MA")
-    if dist36 is not None:
-        p36 = dist36 * 100
-        if p36 < -10:
-            pts = 10; note = f"Under 36WMA ({p36:.1f}%) — potensiale"
-        elif p36 < 0:
-            pts = 13; note = f"Rett under 36WMA ({p36:.1f}%)"
-        elif p36 < 3:
-            pts = 15; note = f"Naer 36WMA ({p36:.1f}%) — god entry"
-        elif p36 < 10:
-            pts = 10; note = f"Litt over 36WMA ({p36:.1f}%)"
-        elif p36 < 20:
-            pts = 5;  note = f"Over 36WMA ({p36:.1f}%) — ok"
-        elif p36 < 35:
-            pts = 2;  note = f"Klart over 36WMA ({p36:.1f}%) — forsiktig"
-        else:
-            pts = 0;  note = f"Langt over 36WMA ({p36:.1f}%) — ikke entry"
-        score += pts
-        points.append(("36WMA", pts, 15, note))
-    else:
-        points.append(("36WMA", 0, 15, "ingen data"))
+    points = []
+    total  = 0.0
+    maxtot = 0.0
 
-    # ── RSI daily (10p) ──────────────────────────────────────────
-    # < 30 = oversold (8p), 30-45 = lav/bra (10p), 45-60 = ok (7p),
-    # 60-70 = hoey (3p), > 70 = overbought (0p)
-    drsi = d.get("rsi14")
-    if drsi is not None:
-        if drsi < 30:          pts = 8;  note = f"Oversold ({drsi:.1f}) — bounce-fare"
-        elif drsi < 45:        pts = 10; note = f"Lav/bra ({drsi:.1f})"
-        elif drsi < 60:        pts = 7;  note = f"Noeytral ({drsi:.1f})"
-        elif drsi < 70:        pts = 3;  note = f"Hoey ({drsi:.1f})"
-        else:                  pts = 0;  note = f"Overbought ({drsi:.1f})"
-        score += pts
-        points.append(("RSI daily", pts, 10, note))
-    else:
-        points.append(("RSI daily", 0, 10, "ingen data"))
+    def add(label, frac, weight, raw_note):
+        nonlocal total, maxtot
+        maxtot += weight
+        if frac is None:
+            points.append((label, 0, round(weight), "ingen data"))
+            return
+        pts = frac * weight
+        total += pts
+        points.append((label, round(pts), round(weight), raw_note))
 
-    # ── RSI weekly (20p) ─────────────────────────────────────────
-    wrsi = w.get("rsi14")
-    if wrsi is not None:
-        if wrsi < 30:          pts = 14; note = f"Oversold ({wrsi:.1f})"
-        elif wrsi < 45:        pts = 20; note = f"Lav/bra ({wrsi:.1f})"
-        elif wrsi < 60:        pts = 14; note = f"Noeytral ({wrsi:.1f})"
-        elif wrsi < 70:        pts = 5;  note = f"Hoey ({wrsi:.1f})"
-        else:                  pts = 0;  note = f"Overbought ({wrsi:.1f})"
-        score += pts
-        points.append(("RSI weekly", pts, 20, note))
-    else:
-        points.append(("RSI weekly", 0, 20, "ingen data"))
+    # ── RSI (33%) ──
+    rsi_w = w.get("rsi14"); rsi_m = m.get("rsi14")
+    add("RSI W",  _rsi_subscore(rsi_w), W_RSI_W,
+        f"{rsi_w:.1f} ({_fmt_sub(_rsi_subscore(rsi_w))})" if rsi_w is not None else "ingen data")
+    add("RSI M",  _rsi_subscore(rsi_m), W_RSI_M,
+        f"{rsi_m:.1f} ({_fmt_sub(_rsi_subscore(rsi_m))})" if rsi_m is not None else "ingen data")
 
-    # ── RSI monthly (20p) ────────────────────────────────────────
-    mrsi = m.get("rsi14")
-    if mrsi is not None:
-        if mrsi < 35:          pts = 16; note = f"Lav/bra ({mrsi:.1f})"
-        elif mrsi < 50:        pts = 20; note = f"God ({mrsi:.1f})"
-        elif mrsi < 60:        pts = 14; note = f"Moderat ({mrsi:.1f})"
-        elif mrsi < 70:        pts = 6;  note = f"Hoey ({mrsi:.1f})"
-        elif mrsi < 78:        pts = 2;  note = f"Klart hoey ({mrsi:.1f})"
-        else:                  pts = 0;  note = f"Overbought ({mrsi:.1f})"
-        score += pts
-        points.append(("RSI monthly", pts, 20, note))
-    else:
-        points.append(("RSI monthly", 0, 20, "ingen data"))
+    # ── MACD (33%) ──
+    mh_w = w.get("macd_hist"); ml_w = w.get("macd")
+    mh_m = m.get("macd_hist"); ml_m = m.get("macd")
+    add("MACD W", _macd_subscore(mh_w, ml_w), W_MACD_W,
+        f"hist {mh_w:.4f} ({_fmt_sub(_macd_subscore(mh_w, ml_w))})" if mh_w is not None else "ingen data")
+    add("MACD M", _macd_subscore(mh_m, ml_m), W_MACD_M,
+        f"hist {mh_m:.4f} ({_fmt_sub(_macd_subscore(mh_m, ml_m))})" if mh_m is not None else "ingen data")
 
-    # ── MACD weekly (5p) ─────────────────────────────────────────
-    # Nær null og snur opp = bra. Hoyt positivt og faller = darlig.
-    wh = w.get("macd_hist")
-    wm = w.get("macd")
-    if wh is not None and wm is not None and wm != 0:
-        normalized = abs(wh / wm) if wm else 0   # hist relativt til MACD-linjen
-        cross = w.get("macd_cross")
-        if cross:
-            pts = 5; note = f"Bullish cross ({wh:.4f}) — momentum snur"
-        elif wh < 0 and wh > -abs(wm)*0.3:
-            pts = 4; note = f"Nær null neg ({wh:.4f}) — mulig snu"
-        elif wh > 0 and normalized < 0.3:
-            pts = 3; note = f"Svakt pos ({wh:.4f}) — tidlig"
-        elif wh < 0:
-            pts = 2; note = f"Neg ({wh:.4f})"
-        else:
-            pts = 1; note = f"Pos men hoyt ({wh:.4f}) — allerede loept"
-        score += pts
-        points.append(("MACD W", pts, 5, note))
-    elif wh is not None:
-        pts = 3 if wh < 0 else 1
-        note = f"{'Neg' if wh < 0 else 'Pos'} ({wh:.4f})"
-        score += pts
-        points.append(("MACD W", pts, 5, note))
-    else:
-        points.append(("MACD W", 0, 5, "ingen data"))
+    # ── MA (33%) ──
+    d36  = w.get("dist_to_36MA")
+    d3yr = w.get("dist_to_3yr_MA")
+    add("36WMA", _ma_subscore(d36),  W_MA_36,
+        f"{d36*100:+.1f}% ({_fmt_sub(_ma_subscore(d36))})" if d36 is not None else "ingen data")
+    add("3yr MA", _ma_subscore(d3yr), W_MA_3YR,
+        f"{d3yr*100:+.1f}% ({_fmt_sub(_ma_subscore(d3yr))})" if d3yr is not None else "ingen data")
 
-    # ── MACD14 weekly (5p) ───────────────────────────────────────
-    wh14 = w.get("macd14_hist")
-    wm14 = w.get("macd14")
-    if wh14 is not None and wm14 is not None and wm14 != 0:
-        cross14 = w.get("macd14_cross")
-        if cross14:
-            pts = 5; note = f"Bullish cross ({wh14:.4f})"
-        elif wh14 < 0 and wh14 > -abs(wm14)*0.3:
-            pts = 4; note = f"Nær null neg ({wh14:.4f})"
-        elif wh14 > 0 and abs(wh14/wm14) < 0.3:
-            pts = 3; note = f"Svakt pos ({wh14:.4f})"
-        elif wh14 < 0:
-            pts = 2; note = f"Neg ({wh14:.4f})"
-        else:
-            pts = 1; note = f"Pos men hoyt ({wh14:.4f})"
-        score += pts
-        points.append(("MACD14 W", pts, 5, note))
-    elif wh14 is not None:
-        pts = 3 if wh14 < 0 else 1
-        score += pts
-        points.append(("MACD14 W", pts, 5, f"{'Neg' if wh14 < 0 else 'Pos'} ({wh14:.4f})"))
+    # normaliser til 0-100 selv om noen komponenter mangler data
+    if maxtot > 0:
+        score = round(total / maxtot * 100)
     else:
-        points.append(("MACD14 W", 0, 5, "ingen data"))
-
+        score = 0
     return min(score, 100), points
 
 def score_synthetic_series(price_series):
@@ -893,6 +833,42 @@ for group in INSTRUMENT_GROUPS:
         summary["assets"][iid] = entry
         log(f"  OK: {iid} score={score}")
 
+# ─── VS GULL: relativ styrke mot gull per instrument ───────────
+# Northstar: vurder alt mot gull, ikke bare egen MA. Beregner hver
+# instrument-ratio mot GLD: over stigende 36W-MA = slaar gull.
+gold_df = raw_cache.get("GLD")
+for iid, a in summary["assets"].items():
+    if a.get("missing_data") or iid == "GLD" or gold_df is None:
+        a["vs_gold"] = None
+        continue
+    inst_df = raw_cache.get(iid)
+    if inst_df is None:
+        a["vs_gold"] = None
+        continue
+    try:
+        comb = pd.DataFrame({"i": inst_df["close_use"], "g": gold_df["close_use"]}).dropna()
+        if len(comb) < 60:
+            a["vs_gold"] = None
+            continue
+        ratio = (comb["i"]/comb["g"]).resample("W-FRI").last().dropna()
+        if len(ratio) < 40:
+            a["vs_gold"] = None
+            continue
+        ma = ratio.rolling(36).mean()
+        last = float(ratio.iloc[-1])
+        ma_now = float(ma.iloc[-1]) if pd.notna(ma.iloc[-1]) else None
+        ma_prev = float(ma.iloc[-9]) if (len(ma) >= 9 and pd.notna(ma.iloc[-9])) else None
+        above = (last > ma_now) if ma_now else None
+        rising = (ma_now > ma_prev) if (ma_now and ma_prev) else None
+        dist = ((last-ma_now)/ma_now) if ma_now else None
+        if above and rising:   vstate, vcol = "Slaar gull", "#50c878"
+        elif above:            vstate, vcol = "Over gull-MA", "#7ec88a"
+        elif rising:           vstate, vcol = "Snur vs gull", "#f0a500"
+        else:                  vstate, vcol = "Taper mot gull", "#e05050"
+        a["vs_gold"] = {"state": vstate, "col": vcol, "dist": dist}
+    except Exception:
+        a["vs_gold"] = None
+
 # Sector scores
 sector_scores = {}
 for iid, a in summary["assets"].items():
@@ -905,6 +881,77 @@ for sec, scores in sector_scores.items():
     avg = round(sum(scores)/len(scores), 1)
     emoji, label = score_label(avg)
     sector_summary[sec] = {"avg_score": avg, "label": label, "n": len(scores)}
+
+# ─── MAKRO-REGIME (NFTRH-stil): yield-kurve + Fed-likviditet ───
+log("Makro-regime...")
+regime = {}
+
+# 1) Yield-kurve 2s10s: invertert (< 0) vs un-invertert (> 0)
+yc_df = raw_cache.get("2S10S")
+if yc_df is not None and not yc_df.empty:
+    yc_last = float(yc_df["close_use"].iloc[-1])
+    yc_3m_ago = float(yc_df["close_use"].iloc[-63]) if len(yc_df) >= 63 else yc_last
+    yc_dir = "stiler" if yc_last > yc_3m_ago else "flater"
+    if yc_last < 0:
+        regime["yield_curve"] = {"label": f"Invertert ({yc_last:.2f})", "col": "#e05050",
+                                 "note": f"Resesjonsvarsel aktivt, {yc_dir}"}
+    elif yc_last < 0.5:
+        regime["yield_curve"] = {"label": f"Un-invertering ({yc_last:.2f})", "col": "#f0a500",
+                                 "note": f"Hoey resesjonsrisiko etter un-invertering, {yc_dir}"}
+    else:
+        regime["yield_curve"] = {"label": f"Normal ({yc_last:.2f})", "col": "#50c878",
+                                 "note": f"Kurven {yc_dir}"}
+else:
+    regime["yield_curve"] = {"label": "ingen data", "col": "#9aa7b5", "note": "FRED-noekkel mangler?"}
+
+# 2) Fed-balanse (WALCL): stigende = stimulativt, fallende = QT
+fed_df = fred_series("WALCL")
+if fed_df is not None and not fed_df.empty:
+    fed_last = float(fed_df["close_use"].iloc[-1])
+    fed_3m   = float(fed_df["close_use"].iloc[-63]) if len(fed_df) >= 63 else fed_last
+    fed_12m  = float(fed_df["close_use"].iloc[-252]) if len(fed_df) >= 252 else fed_last
+    chg_3m = (fed_last/fed_3m - 1)*100 if fed_3m else 0
+    if fed_last > fed_3m:
+        regime["fed_liquidity"] = {"label": f"Stigende ({chg_3m:+.1f}% 3m)", "col": "#50c878",
+                                   "note": "Stimulativ fase - likviditet inn (NFTRH: QE-naer)"}
+    elif fed_last > fed_12m * 0.98:
+        regime["fed_liquidity"] = {"label": f"Baser seg ({chg_3m:+.1f}% 3m)", "col": "#f0a500",
+                                   "note": "Balanse baser seg - mulig vending mot stimulering"}
+    else:
+        regime["fed_liquidity"] = {"label": f"Fallende ({chg_3m:+.1f}% 3m)", "col": "#e05050",
+                                   "note": "QT paagaar - likviditet ut"}
+else:
+    regime["fed_liquidity"] = {"label": "ingen data", "col": "#9aa7b5", "note": "FRED-noekkel mangler?"}
+
+# 3) 10yr yield-retning (Continuum): over/under stigende?
+ten_df = raw_cache.get("UTEN")
+if ten_df is not None and not ten_df.empty:
+    ten_last = float(ten_df["close_use"].iloc[-1])
+    ten_ma = ten_df["close_use"].rolling(200).mean()
+    ten_ma_last = float(ten_ma.iloc[-1]) if pd.notna(ten_ma.iloc[-1]) else None
+    if ten_ma_last:
+        if ten_last > ten_ma_last:
+            regime["yields"] = {"label": f"Stigende ({ten_last:.2f})", "col": "#e05050",
+                                "note": "10yr over 200d MA - rentepress oppover"}
+        else:
+            regime["yields"] = {"label": f"Fallende ({ten_last:.2f})", "col": "#50c878",
+                                "note": "10yr under 200d MA"}
+
+# Stock-vs-gold regime (Northstar kapitalrotasjon): hvor mange aksjer slaar gull?
+equity_ids = [i["id"] for g in INSTRUMENT_GROUPS if g["sector"] in ("Aksjer","Tech") for i in g["instruments"]]
+beat_gold = sum(1 for iid in equity_ids
+                if (summary["assets"].get(iid,{}).get("vs_gold") or {}).get("state","").startswith("Slaar"))
+total_eq = sum(1 for iid in equity_ids if summary["assets"].get(iid,{}).get("vs_gold"))
+if total_eq > 0:
+    if beat_gold == 0:
+        regime["rotation"] = {"label": f"0 av {total_eq} slaar gull", "col": "#e05050",
+                              "note": "Northstar: alle aksjer i bear market vs gull - kapitalrotasjon paagaar"}
+    elif beat_gold < total_eq/2:
+        regime["rotation"] = {"label": f"{beat_gold} av {total_eq} slaar gull", "col": "#f0a500",
+                              "note": "Faa aksjer slaar gull - rotasjon mot hard assets"}
+    else:
+        regime["rotation"] = {"label": f"{beat_gold} av {total_eq} slaar gull", "col": "#50c878",
+                              "note": "Aksjer holder foelge med gull"}
 
 # Ratio charts + ratio scoring
 log("Ratio charts...")
@@ -1148,7 +1195,7 @@ log(f"Trend-oversikt: {len(trend_ratios)} ratioer scoret")
 index = {"generated_local": NOW.isoformat(), "version": VERSION, "summary": summary,
          "sector_summary": sector_summary, "sector_trend": sector_trend,
          "ratio_charts": ratio_results, "rotation": rotation,
-         "trend_ratios": trend_ratios,
+         "trend_ratios": trend_ratios, "regime": regime,
          "notes": {"instrument_count": len(ALL_IDS)}}
 with open(DOCS/"index.json","w",encoding="utf-8") as f:
     json.dump(index, f, ensure_ascii=False, indent=2)
@@ -1200,6 +1247,33 @@ SECTOR_ANCHORS = {
     "Renter": "sec-renter",
 }
 
+def regime_stripe_html(regime):
+    """Makro-regime stripe (NFTRH-stil): yield-kurve, Fed-likviditet, 10yr, rotasjon."""
+    if not regime:
+        return ""
+    cards = [
+        ("Yield-kurve (2s10s)", regime.get("yield_curve")),
+        ("Fed-likviditet",      regime.get("fed_liquidity")),
+        ("10yr yield",          regime.get("yields")),
+        ("Aksjer vs gull",      regime.get("rotation")),
+    ]
+    out = ['<section class="section"><h2>&#127760; Makro-regime</h2>'
+           '<p style="color:var(--muted);font-size:12px">NFTRH/Northstar makro-kontekst: '
+           'renteregime, Fed-likviditet og kapitalrotasjon mot gull. Setter rammen for alt under.</p>'
+           '<div class="sector-grid">']
+    for name, r in cards:
+        if not r:
+            continue
+        c = r.get("col", "#9aa7b5")
+        out.append(
+            f'<div class="sc" style="border-color:{c}50;cursor:default;text-align:left">'
+            f'<div class="sc-name" style="min-height:auto">{html.escape(name)}</div>'
+            f'<div style="font-size:15px;font-weight:700;color:{c};margin:3px 0">{html.escape(r.get("label",""))}</div>'
+            f'<div style="font-size:11px;color:var(--muted);line-height:1.4">{html.escape(r.get("note",""))}</div>'
+            f'</div>')
+    out.append('</div></section>')
+    return "".join(out)
+
 def build_homepage(index_data, filelist, brief_md_text):
     assets      = index_data.get("summary",{}).get("assets",{})
     categories  = index_data.get("summary",{}).get("categories",[])
@@ -1207,6 +1281,7 @@ def build_homepage(index_data, filelist, brief_md_text):
     sec_trend   = index_data.get("sector_trend",{})
     rotation    = index_data.get("rotation",[])
     ratios      = index_data.get("ratio_charts",{})
+    regime      = index_data.get("regime",{})
     generated   = index_data.get("generated_local") or NOW.isoformat()
     file_set    = set(filelist)
 
@@ -1228,7 +1303,13 @@ h1{margin:0 0 4px;font-size:24px}h2{margin:0 0 6px;font-size:18px}
 .pts-bar{display:flex;gap:2px;flex-wrap:wrap;margin-top:3px}
 .pt{font-size:10px;padding:1px 4px;border-radius:3px;background:#1e2530;color:var(--muted)}
 .pt.ok{background:#0d2a1a;color:#50c878}.pt.mid{background:#2a2000;color:#f0a500}.pt.bad{background:#2a0d0d;color:#e05050}
-.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:10px;margin-top:10px}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:12px;margin-top:10px}
+.inst-block{margin:0 0 18px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel2)}
+.inst-block:last-child{margin-bottom:0}
+.inst-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;margin-bottom:6px}
+.inst-head h3{margin:0;font-size:17px}
+.ticker{color:var(--muted);font-weight:600;font-size:13px}
+.delta{color:var(--muted);font-size:12px}
 figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#0f141a}
 img{display:block;width:100%;height:auto}figcaption{padding:5px 10px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
 .missing{padding:12px;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:12px}
@@ -1262,6 +1343,9 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 </nav>
 <h1>Market Daily Report</h1>
 <p class="topnote">Generert: {html.escape(str(generated))} &nbsp;&bull;&nbsp; {VERSION}</p>"""]
+
+    # Makro-regime stripe (NFTRH-stil) — setter rammen for alt
+    parts.append(regime_stripe_html(regime))
 
     # Sector overview — klikkbare kort med sparkline + score-endring
     parts.append('<section class="section"><h2>&#128202; Sektorscore</h2>'
@@ -1338,18 +1422,11 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                      f'<h2>{html.escape(category.get("title",""))}</h2>'
                      f'<p style="color:var(--muted);font-size:12px">{html.escape(category.get("description",""))}</p>')
 
-        parts.append('<table class="inst-table"><thead><tr>'
-                     '<th>Instrument</th><th>Score</th><th>&#916; uke</th><th>Trend</th>'
-                     '<th>D-RSI</th><th>W-RSI</th><th>M-RSI</th>'
-                     '<th>Dist 3yr MA</th><th>Dist 36WMA</th>'
-                     '<th>MACD W</th><th>MACD14 W</th>'
-                     '<th>Vol</th><th>52w</th></tr></thead><tbody>')
-
-        chart_items = []
         for _, _, iid, a in items:
             if a.get("missing_data"):
-                parts.append(f'<tr><td colspan="13" style="color:var(--muted)">'
-                              f'{html.escape(a.get("display_name") or iid)} - ingen data</td></tr>')
+                parts.append(f'<div class="inst-block"><div class="inst-head">'
+                             f'<h3>{html.escape(a.get("display_name") or iid)}</h3>'
+                             f'<span class="meta">ingen data</span></div></div>')
                 continue
             d_ = (a.get("frames") or {}).get("daily")   or {}
             w_ = (a.get("frames") or {}).get("weekly")  or {}
@@ -1360,62 +1437,51 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
             c = score_color(sc)
 
             # score point pills
-            pills = '<div class="pts-bar">'
+            pills = '<div class="pts-bar" style="justify-content:flex-start">'
             for (plabel, pts, maxpts, pnote) in spoints:
                 r = pts/maxpts if maxpts>0 else 0
                 cls = "ok" if r>=0.8 else ("mid" if r>=0.4 else "bad")
                 pills += f'<span class="pt {cls}" title="{html.escape(pnote)}">{html.escape(plabel)}: {pts}/{maxpts}</span>'
             pills += '</div>'
 
-            high52 = ""
-            if a.get("52w_high") and d_.get("last") and d_["last"] >= a["52w_high"]*0.999:
-                high52 = '<span style="color:#f0a500">52H</span>'
-
-            # trend badge
             tlabel, tcol = trend_label(w_)
-            trend_cell = f'<span class="trend-badge" style="background:{tcol}20;color:{tcol}">{html.escape(tlabel)}</span>'
-
-            # volume confirmation
             vc = w_.get("vol_confirm")
-            if vc is None:
-                vol_cell = "-"
-            elif vc >= 1.3:
-                vol_cell = f'<span style="color:#50c878">&#9650; {vc:.1f}x</span>'
-            elif vc >= 0.8:
-                vol_cell = f'<span style="color:var(--muted)">{vc:.1f}x</span>'
-            else:
-                vol_cell = f'<span style="color:#e08030">{vc:.1f}x</span>'
+            if vc is None:           vol_s = "vol –"
+            elif vc >= 1.3:          vol_s = f'<span style="color:#50c878">vol &#9650;{vc:.1f}x</span>'
+            elif vc >= 0.8:          vol_s = f'vol {vc:.1f}x'
+            else:                    vol_s = f'<span style="color:#e08030">vol {vc:.1f}x</span>'
+            high52 = ' &bull; <span style="color:#f0a500">52u-topp</span>' if (a.get("52w_high") and d_.get("last") and d_["last"] >= a["52w_high"]*0.999) else ""
+
+            vg = a.get("vs_gold")
+            vg_badge = ""
+            if vg:
+                vg_dist = f' {vg["dist"]*100:+.0f}%' if isinstance(vg.get("dist"),(int,float)) else ""
+                vg_badge = f' &bull; <span class="trend-badge" style="background:{vg["col"]}20;color:{vg["col"]}">{html.escape(vg["state"])}{vg_dist}</span>'
+            meta = (f'<span class="trend-badge" style="background:{tcol}20;color:{tcol}">{html.escape(tlabel)}</span>{vg_badge} &bull; '
+                    f'D-RSI {fmt(d_.get("rsi14"))} &bull; W-RSI {fmt(w_.get("rsi14"))} &bull; M-RSI {fmt(m_.get("rsi14"))} &bull; '
+                    f'3yr MA {fmt_pct(w_.get("dist_to_3yr_MA"))} &bull; 36WMA {fmt_pct(w_.get("dist_to_36MA"))} &bull; '
+                    f'MACD W {macd_html(w_.get("macd_hist"))} &bull; {vol_s}{high52}')
 
             parts.append(
-                f'<tr>'
-                f'<td><strong style="font-size:12px">{html.escape(a.get("display_name") or iid)}</strong>'
-                f'<br><span style="color:var(--muted);font-size:10px">{html.escape(a.get("symbol_label") or iid)}</span></td>'
-                f'<td><span class="pill" style="background:{c}20;color:{c};border:1px solid {c}40">{sc}</span>'
-                f'<br><span style="font-size:10px;color:{c}">{html.escape(slabel)}</span>{pills}</td>'
-                f'<td>{delta_html(a.get("score_delta"))}</td>'
-                f'<td>{trend_cell}</td>'
-                f'<td>{fmt(d_.get("rsi14"))}</td>'
-                f'<td>{fmt(w_.get("rsi14"))}</td>'
-                f'<td>{fmt(m_.get("rsi14"))}</td>'
-                f'<td>{fmt_pct(w_.get("dist_to_3yr_MA"))}</td>'
-                f'<td>{fmt_pct(w_.get("dist_to_36MA"))}</td>'
-                f'<td>{macd_html(w_.get("macd_hist"))}</td>'
-                f'<td>{macd_html(w_.get("macd14_hist"))}</td>'
-                f'<td>{vol_cell}</td>'
-                f'<td>{high52}</td></tr>')
-            chart_items.append((iid, a))
-
-        parts.append('</tbody></table>')
-
-        parts.append('<div class="charts-grid">')
-        for iid, a in chart_items:
+                f'<div class="inst-block">'
+                f'<div class="inst-head">'
+                f'<h3>{html.escape(a.get("display_name") or iid)}</h3>'
+                f'<span class="ticker">{html.escape(a.get("symbol_label") or iid)}</span>'
+                f'<span class="pill" style="background:{c}20;color:{c};border:1px solid {c}40">Score {sc} &bull; {html.escape(slabel)}</span>'
+                f'<span class="delta">{delta_html(a.get("score_delta"))} vs forrige uke</span>'
+                f'</div>'
+                f'<div class="meta">{meta}</div>'
+                f'{pills}'
+                f'<div class="charts-grid">')
             dname = a.get("display_name") or iid
             for suffix, cap in [("weekly_compact","weekly"),("monthly_compact","monthly")]:
                 path = f"charts/{iid}_{suffix}.png"
                 if path in file_set:
                     parts.append(f'<figure><img src="{html.escape(path)}" alt="{html.escape(dname)} {cap}" loading="lazy">'
                                   f'<figcaption>{html.escape(dname)} - {cap}</figcaption></figure>')
-        parts.append('</div></section>')
+            parts.append('</div></div>')
+
+        parts.append('</section>')
 
     # Ratio charts
     ratio_files = [(rid,r) for rid,r in ratios.items() if r.get("chart_weekly") in file_set]
@@ -1453,6 +1519,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 def build_trend_page(index_data, filelist):
     """Ny hovedside: trend-oversikt for makro-ratioer med Northstar-score."""
     trend_ratios = index_data.get("trend_ratios", [])
+    regime       = index_data.get("regime", {})
     generated    = index_data.get("generated_local") or NOW.isoformat()
     file_set     = set(filelist)
 
@@ -1499,6 +1566,8 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 </nav>
 <h1>Trend-oversikt</h1>
 <p class="topnote">Generert: {html.escape(str(generated))} &nbsp;&bull;&nbsp; {VERSION} &nbsp;&bull;&nbsp; Makro-ratioer scoret med samme Northstar-modell</p>"""]
+
+    parts.append(regime_stripe_html(regime))
 
     if not trend_ratios:
         parts.append('<section class="section"><p>Ingen trend-data ennaa. '
