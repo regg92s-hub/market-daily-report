@@ -188,6 +188,32 @@ RATIO_PAIRS = [
 
 ALL_IDS = [i["id"] for g in INSTRUMENT_GROUPS for i in g["instruments"]]
 
+# ─── TREND-OVERSIKT RATIOER (ny hovedside) ─────────────────────
+TREND_TICKERS = {
+    "GULL":    ["GLD", "IAU"],
+    "GLOBAL":  ["ACWI"],
+    "URAN":    ["URA"],
+    "OLJE":    ["USO", "BNO"],
+    "DBA":     ["DBA"],
+    "CRYPTO":  ["BITO", "IBIT", "BTC-USD"],
+    "NOK":     ["NOK=X"],
+    "EIENDOM": ["CAST.ST", "TRET.AS"],
+}
+NOK_INVERT = True
+
+TREND_RATIOS = [
+    ("GULL",   "GLOBAL",  "Gull / Globale aksjer"),
+    ("NOK",    "GLOBAL",  "NOK / Globale aksjer"),
+    ("URAN",   "GLOBAL",  "Uran / Globale aksjer"),
+    ("OLJE",   "GLOBAL",  "Olje / Globale aksjer"),
+    ("DBA",    "GLOBAL",  "Mat (DBA) / Globale aksjer"),
+    ("CRYPTO", "GLOBAL",  "Crypto / Globale aksjer"),
+    ("GULL",   "URAN",    "Gull / Uran"),
+    ("GULL",   "CRYPTO",  "Gull / Crypto"),
+    ("GULL",   "OLJE",    "Gull / Olje"),
+    ("GULL",   "EIENDOM", "Gull / Skand. eiendom"),
+]
+
 # ─── MATH ──────────────────────────────────────────────────────
 def SMA(s, n):
     return s.rolling(n).mean()
@@ -551,6 +577,53 @@ def northstar_score(entry):
 
     return min(score, 100), points
 
+def score_synthetic_series(price_series):
+    """
+    Beregn Northstar-score for en syntetisk prisserie (f.eks. en ratio).
+    Bruker EKSAKT samme scoremodell som northstar_score.
+    Returnerer (score, points, frames-dict).
+    """
+    df = pd.DataFrame({"close_use": price_series, "volume": np.nan}).dropna(subset=["close_use"])
+    if len(df) < 200:
+        return None, None, None
+    daily, weekly, monthly = resample_frames(df)
+    entry = {"frames": {
+        "daily":   frame_summary(daily,   is_weekly=False),
+        "weekly":  frame_summary(weekly,  is_weekly=True),
+        "monthly": frame_summary(monthly, is_weekly=False),
+    }}
+    score, points = northstar_score(entry)
+    return score, points, entry["frames"]
+
+def weekly_score_history(price_series, weeks=26):
+    """Score per uke bakover (default 26 uker = 6 mnd) for sparkline/trend."""
+    out = []
+    s = price_series.dropna()
+    if len(s) < 200:
+        return out
+    # ukentlige fredager
+    weekly_idx = s.resample("W-FRI").last().dropna().index
+    for ts in weekly_idx[-weeks:]:
+        sub = s[s.index <= ts]
+        sc, _, _ = score_synthetic_series(sub)
+        if sc is not None:
+            out.append(sc)
+    return out
+
+def monthly_score_history(price_series, months=6):
+    """Score per maaned bakover (default 6 mnd) for trendgraf paa hovedside."""
+    out = []
+    s = price_series.dropna()
+    if len(s) < 200:
+        return out
+    monthly_idx = s.resample("ME").last().dropna().index
+    for ts in monthly_idx[-months:]:
+        sub = s[s.index <= ts]
+        sc, _, _ = score_synthetic_series(sub)
+        if sc is not None:
+            out.append(sc)
+    return out
+
 def score_label(s):
     if s >= 75: return ("groen",  "Lavrisiko entry")
     if s >= 55: return ("gul",    "Noytral")
@@ -565,67 +638,146 @@ def score_color(s):
     return              "#e05050"
 
 # ─── PLOTTING ──────────────────────────────────────────────────
-BG="#0b0d10"; FG="#e7edf3"; GRID="#27313d"
-C_PRICE="#4a9eff"; C_SMA36="#f0a500"; C_SMA156="#e05050"
-C_RSI="#7ec8e3"; C_SIG="#f0a500"; C_MACD="#4a9eff"; C_MACD14="#c084fc"
+BG="#0b0d10"; FG="#e7edf3"; GRID="#27313d"; PANEL="#12161c"
+C_PRICE="#5aa9ff"; C_SMA36="#f5b324"; C_SMA156="#ff6b6b"
+C_RSI="#7ec8e3"; C_SIG="#f5b324"; C_MACD="#5aa9ff"; C_MACD14="#c084fc"
 
 def _style_ax(ax):
     ax.set_facecolor(BG)
-    ax.tick_params(colors=FG, labelsize=8)
+    ax.tick_params(colors=FG, labelsize=9)
     for sp in ax.spines.values(): sp.set_color(GRID)
     ax.yaxis.label.set_color(FG)
-    ax.grid(True, color=GRID, linewidth=0.4, linestyle=":")
+    ax.grid(True, color=GRID, linewidth=0.5, linestyle=":", alpha=0.6)
 
-def plot_compact(df, title, out_path):
+def plot_compact(df, title, out_path, ma_label_long="SMA156 (3yr)"):
+    """Forbedret 4-panel chart: pris+MA, RSI (sonet), MACD, MACD14.
+    Tydeligere fonter, fyllte RSI-soner, naa-verdi-etiketter til hoeyre."""
     try:
-        fig, axes = plt.subplots(4, 1, sharex=True, figsize=(11,10),
-                                 facecolor=BG, gridspec_kw={"height_ratios":[3,1,1,1]})
+        s = df["close_use"].dropna()
+        if len(s) < 2:
+            return
+        fig, axes = plt.subplots(4, 1, sharex=True, figsize=(12, 10.5),
+                                 facecolor=BG, gridspec_kw={"height_ratios":[3.2,1,1,1], "hspace":0.12})
         for ax in axes: _style_ax(ax)
 
-        s = df["close_use"]
-        axes[0].plot(df.index, s, color=C_PRICE, lw=1.2, label="Close")
-        axes[0].plot(df.index, SMA(s,36),  color=C_SMA36,  lw=1.0, label="SMA36")
+        # ── Panel 0: Pris + MA ──
+        sma36  = SMA(s,36)
         sma156 = SMA(s,156)
+        axes[0].plot(s.index, s, color=C_PRICE, lw=1.6, label="Close")
+        axes[0].plot(s.index, sma36, color=C_SMA36, lw=1.2, label="SMA36")
         if sma156.notna().any():
-            axes[0].plot(df.index, sma156, color=C_SMA156, lw=0.9, ls="--", label="SMA156 (3yr)")
-        axes[0].set_title(title, fontsize=10, color=FG)
-        axes[0].legend(loc="upper left", fontsize=7, facecolor=BG, labelcolor=FG, framealpha=0.7)
+            axes[0].plot(s.index, sma156, color=C_SMA156, lw=1.1, ls="--", label=ma_label_long)
+        # naa-verdi markoer
+        last_v = s.iloc[-1]
+        axes[0].scatter([s.index[-1]], [last_v], color=C_PRICE, s=28, zorder=5)
+        axes[0].annotate(f"{last_v:,.2f}", xy=(s.index[-1], last_v),
+                         xytext=(6,0), textcoords="offset points",
+                         color=C_PRICE, fontsize=9, fontweight="bold", va="center")
+        axes[0].set_title(title, fontsize=12, color=FG, fontweight="bold", pad=8)
+        axes[0].legend(loc="upper left", fontsize=8.5, facecolor=PANEL,
+                       labelcolor=FG, framealpha=0.85, edgecolor=GRID)
 
+        # ── Panel 1: RSI med fyllte soner ──
         rsi = RSI(s)
-        axes[1].plot(df.index, rsi, color=C_RSI, lw=1.0, label="RSI(14)")
-        axes[1].axhline(70, color="#e05050", ls="--", lw=0.7)
-        axes[1].axhline(50, color=GRID,      ls=":",  lw=0.5)
-        axes[1].axhline(30, color="#50c878", ls="--", lw=0.7)
+        axes[1].axhspan(70, 100, color="#e05050", alpha=0.08)
+        axes[1].axhspan(0, 30,   color="#50c878", alpha=0.08)
+        axes[1].plot(s.index, rsi, color=C_RSI, lw=1.3)
+        axes[1].axhline(70, color="#e05050", ls="--", lw=0.8, alpha=0.7)
+        axes[1].axhline(50, color=GRID,      ls=":",  lw=0.6)
+        axes[1].axhline(30, color="#50c878", ls="--", lw=0.8, alpha=0.7)
         axes[1].set_ylim(0, 100)
-        axes[1].set_ylabel("RSI", color=FG, fontsize=8)
-        axes[1].legend(loc="upper left", fontsize=7, facecolor=BG, labelcolor=FG, framealpha=0.7)
+        axes[1].set_yticks([30,50,70])
+        axes[1].set_ylabel("RSI 14", color=FG, fontsize=9)
+        if rsi.notna().any():
+            rv = rsi.iloc[-1]
+            axes[1].annotate(f"{rv:.0f}", xy=(s.index[-1], rv), xytext=(6,0),
+                             textcoords="offset points", color=C_RSI, fontsize=9,
+                             fontweight="bold", va="center")
 
+        # ── Panel 2: MACD 12/26/9 ──
         m, sig, hist = MACD_calc(s, 12, 26, 9)
         colors2 = ["#50c878" if v >= 0 else "#e05050" for v in hist.fillna(0)]
-        axes[2].bar(df.index, hist, color=colors2, alpha=0.55, width=5)
-        axes[2].plot(df.index, m,   color=C_MACD, lw=0.9, label="MACD")
-        axes[2].plot(df.index, sig, color=C_SIG,  lw=0.9, label="Signal")
-        axes[2].axhline(0, color=GRID, lw=0.5)
-        axes[2].set_ylabel("MACD", color=FG, fontsize=8)
-        axes[2].legend(loc="upper left", fontsize=7, facecolor=BG, labelcolor=FG, framealpha=0.7)
+        bw = max(2, (s.index[-1]-s.index[0]).days/len(s)*0.7) if len(s)>1 else 3
+        axes[2].bar(s.index, hist, color=colors2, alpha=0.5, width=bw)
+        axes[2].plot(s.index, m,   color=C_MACD, lw=1.1, label="MACD")
+        axes[2].plot(s.index, sig, color=C_SIG,  lw=1.0, label="Signal")
+        axes[2].axhline(0, color=GRID, lw=0.6)
+        axes[2].set_ylabel("MACD", color=FG, fontsize=9)
+        axes[2].legend(loc="upper left", fontsize=8, facecolor=PANEL,
+                       labelcolor=FG, framealpha=0.85, edgecolor=GRID)
 
+        # ── Panel 3: MACD14 14/28/9 ──
         m14, sig14, hist14 = MACD_calc(s, 14, 28, 9)
         colors3 = ["#50c878" if v >= 0 else "#e05050" for v in hist14.fillna(0)]
-        axes[3].bar(df.index, hist14, color=colors3, alpha=0.55, width=5)
-        axes[3].plot(df.index, m14,   color=C_MACD14, lw=0.9, label="MACD14")
-        axes[3].plot(df.index, sig14, color=C_SIG,    lw=0.9, label="Signal")
-        axes[3].axhline(0, color=GRID, lw=0.5)
-        axes[3].set_ylabel("MACD14", color=FG, fontsize=8)
+        axes[3].bar(s.index, hist14, color=colors3, alpha=0.5, width=bw)
+        axes[3].plot(s.index, m14,   color=C_MACD14, lw=1.1, label="MACD14")
+        axes[3].plot(s.index, sig14, color=C_SIG,    lw=1.0, label="Signal")
+        axes[3].axhline(0, color=GRID, lw=0.6)
+        axes[3].set_ylabel("MACD14", color=FG, fontsize=9)
+        axes[3].legend(loc="upper left", fontsize=8, facecolor=PANEL,
+                       labelcolor=FG, framealpha=0.85, edgecolor=GRID)
         locator = mdates.AutoDateLocator()
         axes[3].xaxis.set_major_locator(locator)
         axes[3].xaxis.set_major_formatter(mdates.ConciseDateFormatter(locator))
-        axes[3].legend(loc="upper left", fontsize=7, facecolor=BG, labelcolor=FG, framealpha=0.7)
 
-        plt.tight_layout(pad=0.7)
-        plt.savefig(out_path, dpi=120, facecolor=BG)
+        plt.tight_layout(pad=0.8)
+        plt.savefig(out_path, dpi=125, facecolor=BG, bbox_inches="tight")
         plt.close(fig)
     except Exception as e:
         log(f"plot error {title}: {e}")
+
+def plot_series_3panel(series, title, out_path, ma_n=36, ma_label="36"):
+    """3-panel chart for en (allerede resamplet) serie: pris+36MA, RSI, MACD.
+    Brukes for trend-ratioenes maanedlige og 3-maaneders charts."""
+    try:
+        s = series.dropna()
+        if len(s) < 5:
+            return
+        fig, axes = plt.subplots(3, 1, sharex=True, figsize=(12, 8),
+                                 facecolor=BG, gridspec_kw={"height_ratios":[3,1,1], "hspace":0.12})
+        for ax in axes: _style_ax(ax)
+
+        ma = SMA(s, ma_n)
+        axes[0].plot(s.index, s, color=C_PRICE, lw=1.6, label="Ratio")
+        if ma.notna().any():
+            axes[0].plot(s.index, ma, color=C_SMA36, lw=1.2, label=f"SMA{ma_label}")
+        last_v = s.iloc[-1]
+        axes[0].scatter([s.index[-1]], [last_v], color=C_PRICE, s=28, zorder=5)
+        axes[0].annotate(f"{last_v:,.3f}", xy=(s.index[-1], last_v), xytext=(6,0),
+                         textcoords="offset points", color=C_PRICE, fontsize=9,
+                         fontweight="bold", va="center")
+        axes[0].set_title(title, fontsize=12, color=FG, fontweight="bold", pad=8)
+        axes[0].legend(loc="upper left", fontsize=8.5, facecolor=PANEL,
+                       labelcolor=FG, framealpha=0.85, edgecolor=GRID)
+
+        rsi = RSI(s)
+        axes[1].axhspan(70,100, color="#e05050", alpha=0.08)
+        axes[1].axhspan(0,30,   color="#50c878", alpha=0.08)
+        axes[1].plot(s.index, rsi, color=C_RSI, lw=1.3)
+        axes[1].axhline(70, color="#e05050", ls="--", lw=0.8, alpha=0.7)
+        axes[1].axhline(30, color="#50c878", ls="--", lw=0.8, alpha=0.7)
+        axes[1].set_ylim(0,100); axes[1].set_yticks([30,50,70])
+        axes[1].set_ylabel("RSI 14", color=FG, fontsize=9)
+
+        m, sig, hist = MACD_calc(s, 12, 26, 9)
+        colors2 = ["#50c878" if v>=0 else "#e05050" for v in hist.fillna(0)]
+        bw = max(5, (s.index[-1]-s.index[0]).days/len(s)*0.7) if len(s)>1 else 8
+        axes[2].bar(s.index, hist, color=colors2, alpha=0.5, width=bw)
+        axes[2].plot(s.index, m,   color=C_MACD, lw=1.1, label="MACD")
+        axes[2].plot(s.index, sig, color=C_SIG,  lw=1.0, label="Signal")
+        axes[2].axhline(0, color=GRID, lw=0.6)
+        axes[2].set_ylabel("MACD", color=FG, fontsize=9)
+        axes[2].legend(loc="upper left", fontsize=8, facecolor=PANEL,
+                       labelcolor=FG, framealpha=0.85, edgecolor=GRID)
+        locator = mdates.AutoDateLocator()
+        axes[2].xaxis.set_major_locator(locator)
+        axes[2].xaxis.set_major_formatter(mdates.ConciseDateFormatter(locator))
+
+        plt.tight_layout(pad=0.8)
+        plt.savefig(out_path, dpi=125, facecolor=BG, bbox_inches="tight")
+        plt.close(fig)
+    except Exception as e:
+        log(f"plot_series_3panel error {title}: {e}")
 
 def plot_ratio(df_num, df_den, label, out_path):
     try:
@@ -759,39 +911,26 @@ log("Ratio charts...")
 ratio_results = {}
 
 def ratio_metrics(df_num, df_den):
-    """Beregn om ratio er over egen 36-ukers MA og stigende, + 12-ukers trend."""
+    """Northstar-score for ratio (samme modell), + ukentlig score-historikk."""
     try:
         combined = pd.DataFrame({"num": df_num["close_use"], "den": df_den["close_use"]}).dropna()
-        if len(combined) < 60:
+        if len(combined) < 200:
             return None
-        ratio  = (combined["num"] / combined["den"]).resample("W-FRI").last().dropna()
-        if len(ratio) < 40:
+        ratio = (combined["num"] / combined["den"])
+        score, points, frames = score_synthetic_series(ratio)
+        if score is None:
             return None
-        ma36   = ratio.rolling(36).mean()
-        last   = float(ratio.iloc[-1])
-        ma_now = float(ma36.iloc[-1]) if pd.notna(ma36.iloc[-1]) else None
-        ma_prev= float(ma36.iloc[-9]) if (len(ma36) >= 9 and pd.notna(ma36.iloc[-9])) else None
-        above  = (last > ma_now) if ma_now else None
-        rising = (ma_now > ma_prev) if (ma_now and ma_prev) else None
-        dist   = ((last - ma_now)/ma_now) if ma_now else None
-        # outperform-score: over MA og stigende = sterkest
-        if above and rising:    rscore, rlabel, rcol = 3, "Outperformer",       "#50c878"
-        elif above:             rscore, rlabel, rcol = 2, "Over MA",            "#7ec88a"
-        elif rising:            rscore, rlabel, rcol = 1, "Snur opp",           "#f0a500"
-        else:                   rscore, rlabel, rcol = 0, "Underperformer",     "#e05050"
-        # 12-ukers trend i dist-til-MA (direkte fra pris, ingen ventetid)
-        trend_series = []
-        for k in range(12, 0, -1):
-            idx = -k
-            if abs(idx) <= len(ratio) and abs(idx) <= len(ma36):
-                rv = ratio.iloc[idx]
-                mv = ma36.iloc[idx]
-                if pd.notna(rv) and pd.notna(mv) and mv:
-                    trend_series.append(round(float((rv - mv)/mv)*100, 2))
-        return {"dist_to_ma": dist, "above_ma": above, "rising": rising,
-                "rscore": rscore, "rlabel": rlabel, "rcol": rcol,
-                "trend_series": trend_series}
-    except Exception:
+        w = frames.get("weekly", {})
+        emoji, slabel = score_label(score)
+        rcol = score_color(score)
+        # ukentlig score-historikk (12 uker for rotasjon-sparkline)
+        wk_hist = weekly_score_history(ratio, weeks=12)
+        return {"score": score, "points": points, "label": slabel, "rcol": rcol,
+                "dist_to_36MA": w.get("dist_to_36MA"),
+                "dist_to_3yr_MA": w.get("dist_to_3yr_MA"),
+                "score_series": wk_hist}
+    except Exception as e:
+        log(f"  ratio_metrics error: {e}")
         return None
 
 for (num_id, den_id, label) in RATIO_PAIRS:
@@ -946,21 +1085,70 @@ for sec in sector_summary:
             seen_dates.add(d)
     sector_trend[sec] = series[-30:]   # opptil 30 datapunkter
 
-# ─── SEKTOR-ROTASJON (ratio outperform-sammendrag) ─────────────
+# ─── SEKTOR-ROTASJON (ratio Northstar-score) ───────────────────
 rotation = []
 for rid, r in ratio_results.items():
     m = r.get("metrics")
     if m:
-        rotation.append({"label": r["label"], "rscore": m["rscore"],
-                         "rlabel": m["rlabel"], "rcol": m["rcol"],
-                         "dist": m.get("dist_to_ma"),
-                         "trend_series": m.get("trend_series", [])})
-rotation.sort(key=lambda x: -x["rscore"])
+        rotation.append({"label": r["label"], "score": m["score"],
+                         "rlabel": m["label"], "rcol": m["rcol"],
+                         "dist36": m.get("dist_to_36MA"),
+                         "score_series": m.get("score_series", [])})
+rotation.sort(key=lambda x: -x["score"])
+
+# ─── TREND-OVERSIKT: hent tickere, bygg ratioer, score + charts ──
+log("Trend-oversikt: henter tickere...")
+trend_price = {}
+for key, candidates in TREND_TICKERS.items():
+    df, resolved = yf_series_from_candidates(candidates)
+    if df is not None and not df.empty:
+        s = df["close_use"].copy()
+        if key == "NOK" and NOK_INVERT:
+            s = 1.0 / s
+        trend_price[key] = s
+        log(f"  trend ok: {key} ({resolved})")
+    else:
+        log(f"  trend MANGLER: {key}")
+
+trend_ratios = []
+for (num_key, den_key, label) in TREND_RATIOS:
+    if num_key not in trend_price or den_key not in trend_price:
+        log(f"  hopper over {label} (mangler data)")
+        continue
+    combined = pd.DataFrame({"num": trend_price[num_key], "den": trend_price[den_key]}).dropna()
+    if len(combined) < 200:
+        continue
+    ratio = (combined["num"] / combined["den"]).dropna()
+    score, points, frames = score_synthetic_series(ratio)
+    if score is None:
+        continue
+    emoji, slabel = score_label(score)
+    rid = f"TREND_{num_key}_{den_key}"
+    m_hist = monthly_score_history(ratio, months=6)
+    monthly_s = ratio.resample("ME").last().dropna()
+    q_s       = ratio.resample("QE").last().dropna()
+    plot_series_3panel(monthly_s.tail(120), f"{label} - maanedlig",
+                       CHARTS / f"{rid}_monthly.png", ma_n=36, ma_label="36M")
+    plot_series_3panel(q_s.tail(60), f"{label} - 3-maaneders",
+                       CHARTS / f"{rid}_quarterly.png", ma_n=12, ma_label="12 (3aar)")
+    w = frames.get("weekly", {}); m = frames.get("monthly", {}); d = frames.get("daily", {})
+    trend_ratios.append({
+        "rid": rid, "label": label, "score": score, "label_txt": slabel,
+        "points": points, "score_series_monthly": m_hist,
+        "chart_monthly": f"charts/{rid}_monthly.png",
+        "chart_quarterly": f"charts/{rid}_quarterly.png",
+        "wrsi": w.get("rsi14"), "mrsi": m.get("rsi14"), "drsi": d.get("rsi14"),
+        "dist36w": w.get("dist_to_36MA"), "dist36m": m.get("dist_to_36MA"),
+        "macd_w": w.get("macd_hist"), "macd_m": m.get("macd_hist"),
+    })
+trend_ratios.sort(key=lambda x: -x["score"])
+log(f"Trend-oversikt: {len(trend_ratios)} ratioer scoret")
 
 # Index.json
 index = {"generated_local": NOW.isoformat(), "version": VERSION, "summary": summary,
          "sector_summary": sector_summary, "sector_trend": sector_trend,
          "ratio_charts": ratio_results, "rotation": rotation,
+         "trend_ratios": trend_ratios,
          "notes": {"instrument_count": len(ALL_IDS)}}
 with open(DOCS/"index.json","w",encoding="utf-8") as f:
     json.dump(index, f, ensure_ascii=False, indent=2)
@@ -1056,6 +1244,10 @@ details>summary{cursor:pointer;color:var(--muted);font-size:13px;padding:4px 0}
 .delta-up{color:#50c878}.delta-dn{color:#e05050}.delta-flat{color:#9aa7b5}
 html{scroll-behavior:smooth}
 section[id]{scroll-margin-top:12px}
+.tabs{display:flex;gap:8px;margin:0 0 18px;border-bottom:1px solid var(--border)}
+.tab{padding:10px 18px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .1s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--text);border-bottom-color:#5aa9ff}
 .legend{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.7}
 .legend code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--text)}
 footer{margin-top:18px;color:var(--muted);font-size:12px}"""
@@ -1064,13 +1256,18 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 <meta charset="utf-8"><title>Market Daily Report</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>{CSS}</style></head><body><div class="wrap">
+<nav class="tabs">
+  <a class="tab" href="index.html">&#128200; Trend-oversikt</a>
+  <a class="tab active" href="report.html">&#128202; Market Daily Report</a>
+</nav>
 <h1>Market Daily Report</h1>
 <p class="topnote">Generert: {html.escape(str(generated))} &nbsp;&bull;&nbsp; {VERSION}</p>"""]
 
     # Sector overview — klikkbare kort med sparkline + score-endring
     parts.append('<section class="section"><h2>&#128202; Sektorscore</h2>'
                  '<p style="color:var(--muted);font-size:12px">Snitt Northstar-score (hoeyere = lavrisiko entry). '
-                 'Graf = siste ukers trend. Pil = endring vs forrige uke. Klikk for aa hoppe til sektoren.</p>'
+                 'Grafen viser <strong>sektor-score per uke</strong> &mdash; ett datapunkt per uke. '
+                 'Pil = endring vs forrige uke. Klikk for aa hoppe til sektoren.</p>'
                  '<div class="sector-grid">')
     for sec in sorted([s for s in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"] if s in sec_sum],
                       key=lambda s:-sec_sum[s]["avg_score"]):
@@ -1091,35 +1288,38 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
             f'<div class="sc-n">{ss["n"]} instr.</div></a>')
     parts.append('</div></section>')
 
-    # Sektor-rotasjon (ratio outperform med trend)
+    # Sektor-rotasjon (ratio Northstar-score)
     if rotation:
-        outperf = [r for r in rotation if r["rscore"] >= 2]
-        underperf = [r for r in rotation if r["rscore"] == 0]
+        outperf   = [r for r in rotation if r["score"] >= 55]
+        underperf = [r for r in rotation if r["score"] < 35]
         parts.append('<section class="section"><h2>&#128260; Sektor-rotasjon</h2>'
-                     '<p style="color:var(--muted);font-size:12px">Ratio vs egen 36-ukers MA (avstand i %). '
-                     'Over 0 = outperformer = kapital flyter inn. Graf = siste 12 uker. '
-                     'Northstar sitt viktigste sektorvalg-signal.</p>'
+                     '<p style="color:var(--muted);font-size:12px">'
+                     'Northstar-score for hver ratio (samme 0-100 modell som ellers). '
+                     'Hoeyere = ratioen er i lavrisiko-sone (teller outperformer / god entry). '
+                     'Grafen viser <strong>score per uke</strong> siste 12 uker.</p>'
                      '<div class="sector-grid">')
         for r in rotation:
-            dist = r.get("dist")
-            dist_s = f'{dist*100:+.0f}%' if isinstance(dist,(int,float)) else "-"
-            c = r["rcol"]
-            spark = sparkline_svg(r.get("trend_series", []), color=c)
+            sc = r.get("score", 0)
+            c = score_color(sc)
+            spark = sparkline_svg(r.get("score_series", []), color=c)
+            d36 = r.get("dist36")
+            d36s = f'{d36*100:+.0f}% vs 36WMA' if isinstance(d36,(int,float)) else ""
             parts.append(
                 f'<div class="sc" style="border-color:{c}50;cursor:default">'
                 f'<div class="sc-name">{html.escape(r["label"])}</div>'
-                f'<div class="sc-score" style="color:{c};font-size:18px">{dist_s}</div>'
+                f'<div class="sc-score" style="color:{c}">{sc}</div>'
                 f'<div class="sc-label" style="color:{c}">{html.escape(r["rlabel"])}</div>'
+                f'<div class="sc-n">{d36s}</div>'
                 f'{spark}</div>')
         parts.append('</div>')
         if outperf:
             names = ", ".join(html.escape(r["label"]) for r in outperf)
             parts.append(f'<p style="color:#50c878;font-size:13px;margin-top:10px">'
-                         f'&#9650; Outperformer naa: {names}</p>')
+                         f'&#9650; Sterkest naa: {names}</p>')
         if underperf:
             names = ", ".join(html.escape(r["label"]) for r in underperf)
             parts.append(f'<p style="color:#e05050;font-size:13px;margin-top:4px">'
-                         f'&#9660; Underperformer: {names}</p>')
+                         f'&#9660; Svakest: {names}</p>')
         parts.append('</section>')
 
     # Instrument categories — sortert etter sektorscore (beste sektor foerst)
@@ -1250,8 +1450,128 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                  '</div></body></html>')
     return "".join(parts)
 
+def build_trend_page(index_data, filelist):
+    """Ny hovedside: trend-oversikt for makro-ratioer med Northstar-score."""
+    trend_ratios = index_data.get("trend_ratios", [])
+    generated    = index_data.get("generated_local") or NOW.isoformat()
+    file_set     = set(filelist)
+
+    CSS = """:root{--bg:#0b0d10;--panel:#12161c;--panel2:#171c23;--text:#e7edf3;--muted:#9aa7b5;--border:#27313d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+.wrap{max-width:1600px;margin:0 auto;padding:20px 16px 40px}
+h1{margin:0 0 4px;font-size:24px}h2{margin:0 0 6px;font-size:18px}
+.topnote{color:var(--muted);margin:0 0 18px;font-size:13px}
+.tabs{display:flex;gap:8px;margin:0 0 18px;border-bottom:1px solid var(--border)}
+.tab{padding:10px 18px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .1s}
+.tab:hover{color:var(--text)}.tab.active{color:var(--text);border-bottom-color:#5aa9ff}
+.section{margin:0 0 22px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+.sector-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.sc{cursor:pointer;text-decoration:none;display:block;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--panel2);text-align:center;transition:transform .1s}
+.sc:hover{transform:translateY(-2px)}
+.sc-name{font-size:11px;color:var(--muted);min-height:26px;display:flex;align-items:center;justify-content:center}
+.sc-score{font-size:24px;font-weight:700;margin:2px 0}.sc-label{font-size:10px}
+.sc-spark{margin-top:6px;height:34px;width:100%}
+.pts-bar{display:flex;gap:2px;flex-wrap:wrap;margin-top:6px;justify-content:center}
+.pt{font-size:9px;padding:1px 4px;border-radius:3px;background:#1e2530;color:var(--muted)}
+.pt.ok{background:#0d2a1a;color:#50c878}.pt.mid{background:#2a2000;color:#f0a500}.pt.bad{background:#2a0d0d;color:#e05050}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:12px;margin-top:10px}
+figure{margin:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#0f141a}
+img{display:block;width:100%;height:auto}
+figcaption{padding:6px 10px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+.ratio-block{margin:0 0 22px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+.ratio-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:baseline;margin-bottom:6px}
+.ratio-head h2{margin:0}.pill{display:inline-block;padding:2px 8px;border-radius:7px;font-size:13px;font-weight:700}
+.meta{color:var(--muted);font-size:12px}
+html{scroll-behavior:smooth}section[id]{scroll-margin-top:12px}
+.legend{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.7}
+.legend code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--text)}
+footer{margin-top:18px;color:var(--muted);font-size:12px}"""
+
+    def anchor(rid): return f"r-{rid.lower()}"
+
+    parts = [f"""<!doctype html><html lang="no"><head>
+<meta charset="utf-8"><title>Trend-oversikt</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>{CSS}</style></head><body><div class="wrap">
+<nav class="tabs">
+  <a class="tab active" href="index.html">&#128200; Trend-oversikt</a>
+  <a class="tab" href="report.html">&#128202; Market Daily Report</a>
+</nav>
+<h1>Trend-oversikt</h1>
+<p class="topnote">Generert: {html.escape(str(generated))} &nbsp;&bull;&nbsp; {VERSION} &nbsp;&bull;&nbsp; Makro-ratioer scoret med samme Northstar-modell</p>"""]
+
+    if not trend_ratios:
+        parts.append('<section class="section"><p>Ingen trend-data ennaa. '
+                     'Sjekk at tickerne er tilgjengelige.</p></section>')
+    else:
+        # Score-oversikt (kort med 6-mnd maanedlig score-graf)
+        parts.append('<section class="section"><h2>&#128200; Ratio-score</h2>'
+                     '<p style="color:var(--muted);font-size:12px">'
+                     'Northstar-score (0-100, hoeyere = lavrisiko / teller-aktiva er sterkest). '
+                     'Grafen viser <strong>score per maaned siste 6 mnd</strong>. '
+                     'Klikk for aa hoppe til chartene.</p>'
+                     '<div class="sector-grid">')
+        for r in trend_ratios:
+            sc = r["score"]; c = score_color(sc)
+            spark = sparkline_svg(r.get("score_series_monthly", []), color=c)
+            parts.append(
+                f'<a class="sc" href="#{anchor(r["rid"])}" style="border-color:{c}50">'
+                f'<div class="sc-name">{html.escape(r["label"])}</div>'
+                f'<div class="sc-score" style="color:{c}">{sc}</div>'
+                f'<div class="sc-label" style="color:{c}">{html.escape(r["label_txt"])}</div>'
+                f'{spark}</a>')
+        parts.append('</div></section>')
+
+        # Per ratio: maanedlig + 3-maaneders chart, sortert etter score
+        for r in trend_ratios:
+            sc = r["score"]; c = score_color(sc)
+            pills = '<div class="pts-bar" style="justify-content:flex-start">'
+            for (plabel, pts, maxpts, pnote) in r.get("points", []):
+                ratio_pt = pts/maxpts if maxpts>0 else 0
+                cls = "ok" if ratio_pt>=0.8 else ("mid" if ratio_pt>=0.4 else "bad")
+                pills += f'<span class="pt {cls}" title="{html.escape(pnote)}">{html.escape(plabel)}: {pts}/{maxpts}</span>'
+            pills += '</div>'
+            meta = (f'W-RSI {fmt(r.get("wrsi"))} &bull; M-RSI {fmt(r.get("mrsi"))} &bull; '
+                    f'36WMA {fmt_pct(r.get("dist36w"))} &bull; 36MMA {fmt_pct(r.get("dist36m"))} &bull; '
+                    f'MACD W {macd_html(r.get("macd_w"))}')
+            parts.append(
+                f'<section class="ratio-block" id="{anchor(r["rid"])}">'
+                f'<div class="ratio-head"><h2>{html.escape(r["label"])}</h2>'
+                f'<span class="pill" style="background:{c}20;color:{c};border:1px solid {c}40">Score {sc} &bull; {html.escape(r["label_txt"])}</span></div>'
+                f'<div class="meta">{meta}</div>'
+                f'{pills}'
+                f'<div class="charts-grid">')
+            for path, cap in [(r["chart_monthly"], "Maanedlig (36M MA)"),
+                              (r["chart_quarterly"], "3-maaneders (3-aars MA)")]:
+                if path in file_set:
+                    parts.append(f'<figure><img src="{html.escape(path)}" alt="{html.escape(cap)}" loading="lazy">'
+                                  f'<figcaption>{html.escape(cap)}</figcaption></figure>')
+                else:
+                    parts.append(f'<div style="padding:14px;color:var(--muted);font-size:12px">{html.escape(cap)} mangler</div>')
+            parts.append('</div></section>')
+
+    parts.append('<section class="section"><h2>&#8505;&#65039; Om denne siden</h2>'
+                 '<div class="legend">'
+                 '<code>Ratio-score</code> bruker samme 0-100 Northstar-modell som Market Daily Report: '
+                 'RSI (daily/weekly/monthly), MACD + MACD14, avstand til 36-ukers og 3-aars MA, trend og volum.<br>'
+                 '<code>Hoey score</code> = teller-aktivaet (f.eks. Gull i Gull/Olje) er i lavrisiko-sone og relativt sterkest.<br>'
+                 '<code>Maanedsgraf</code> viser hvordan ratioens score har utviklet seg siste 6 maaneder.<br>'
+                 '<code>Charts</code> maanedlig + 3-maaneders tidsramme med 36-MA, RSI og MACD.'
+                 '</div></section>')
+
+    parts.append('<footer>Data: <a href="index.json" style="color:var(--muted)">index.json</a> &bull; '
+                 '<a href="report.html" style="color:var(--muted)">Market Daily Report</a></footer>'
+                 '</div></body></html>')
+
+    with open(DOCS/"index.html","w",encoding="utf-8") as f:
+        f.write("".join(parts))
+    log("Trend-side skrevet til index.html")
+
 html_doc = build_homepage(index, files, brief_md)
-with open(DOCS/"index.html","w",encoding="utf-8") as f: f.write(html_doc)
+with open(DOCS/"report.html","w",encoding="utf-8") as f: f.write(html_doc)
+
+# ─── TREND-OVERSIKT (ny hovedside: index.html) ─────────────────
+build_trend_page(index, files)
 
 log(f"DONE - {len(summary['assets'])} instruments, {len(files)} charts, version={VERSION}")
 flush_log()
