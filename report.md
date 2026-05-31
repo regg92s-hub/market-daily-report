@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-31T14:59:39.735993+02:00
+# Daglig rapport – 2026-05-31T15:43:19.051423+02:00
 
 ## Manglet/feilet
 
@@ -15,7 +15,7 @@
 | SPY | S&P 500 | 1. Aksjer | % | % | 76.58 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 78.19 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 71.72 | 
-| ACWI | ACWI Global | 1. Aksjer | % | % | 77.08 | 
+| ACWI | ACWI | 1. Aksjer | % | % | 77.08 | 
 | EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 70.41 | 
 | EEM | MSCI EM | 1. Aksjer | % | % | 77.45 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 60.02 | 
@@ -48,6 +48,6 @@
 | FXY | JPY | 6. Valuta & Dollar | % | % | 38.88 | 
 | CEW | EM Currencies | 6. Valuta & Dollar | % | % | 71.39 | 
 | FXA | AUD | 6. Valuta & Dollar | % | % | 65.08 | 
-| BTC | Bitcoin | 7. Crypto & Volatilitet | % | % | 44.7 | 
-| ETHA | Ethereum | 7. Crypto & Volatilitet | % | % | 27.4 | 
+| BTC | BTC | 7. Crypto & Volatilitet | % | % | 47.38 | 
+| ETHA | ETH | 7. Crypto & Volatilitet | % | % | 43.56 | 
 | VIXY | VIX | 7. Crypto & Volatilitet | % | % | 31.4 | 
