@@ -325,12 +325,34 @@ def frame_summary(df, is_weekly=False):
         pd14  = df["macd14"].iloc[-2]   - df["macd14_signal"].iloc[-2]
         macd14_cross = bool(ld14 > 0 and pd14 <= 0)
 
+    # Trend: er MA stigende? (sammenlign MA naa vs 8 perioder siden)
+    sma36_rising = sma156_rising = None
+    if "sma36" in df.columns and len(df) >= 10:
+        prev = df["sma36"].iloc[-9]
+        if pd.notna(prev) and pd.notna(sma36):
+            sma36_rising = bool(sma36 > prev)
+    if "sma156" in df.columns and len(df) >= 10:
+        prev = df["sma156"].iloc[-9]
+        if pd.notna(prev) and pd.notna(sma156):
+            sma156_rising = bool(sma156 > prev)
+
+    # Volum-bekreftelse: siste volum vs 20-perioders snitt
+    vol_confirm = None
+    if "volume" in df.columns:
+        recent_vol = df["volume"].iloc[-1]
+        avg_vol    = df["volume"].tail(20).mean()
+        if pd.notna(recent_vol) and pd.notna(avg_vol) and avg_vol > 0:
+            vol_confirm = float(recent_vol / avg_vol)
+
     return {
         "last":               last,
         "sma36":              float(sma36)  if pd.notna(sma36)  else None,
         "sma156":             float(sma156) if pd.notna(sma156) else None,
         "close_above_sma36":  bool(last > float(sma36))  if pd.notna(sma36)  else None,
         "close_above_sma156": bool(last > float(sma156)) if pd.notna(sma156) else None,
+        "sma36_rising":       sma36_rising,
+        "sma156_rising":      sma156_rising,
+        "vol_confirm":        vol_confirm,
         "dist_to_36MA":       float(pct_dist(last, float(sma36)))  if pd.notna(sma36)  else None,
         "dist_to_3yr_MA":     float(pct_dist(last, float(sma156))) if (pd.notna(sma156) and is_weekly) else None,
         "rsi14":              fv("rsi14"),
@@ -339,6 +361,24 @@ def frame_summary(df, is_weekly=False):
         "macd14":             fv("macd14"),    "macd14_signal":fv("macd14_signal"),
         "macd14_hist":        fv("macd14_hist"),"macd14_cross":macd14_cross,
     }
+
+def trend_label(w):
+    """Klassifiser trend basert paa pris vs MA + MA-retning."""
+    above36  = w.get("close_above_sma36")
+    above156 = w.get("close_above_sma156")
+    rising36 = w.get("sma36_rising")
+    rising156= w.get("sma156_rising")
+    if above36 and above156 and rising36:
+        return ("Opptrend", "#50c878")
+    if above36 and rising36:
+        return ("Stigende", "#7ec88a")
+    if (not above36) and rising36:
+        return ("Dip i trend", "#f0a500")
+    if (not above36) and (rising36 is False):
+        return ("Nedtrend", "#e05050")
+    if above36 and (rising36 is False):
+        return ("Topper ut", "#e08030")
+    return ("Noeytral", "#9aa7b5")
 
 # ─── NORTHSTAR SCORE ───────────────────────────────────────────
 def northstar_score(entry):
@@ -711,16 +751,45 @@ for sec, scores in sector_scores.items():
     emoji, label = score_label(avg)
     sector_summary[sec] = {"avg_score": avg, "label": label, "n": len(scores)}
 
-# Ratio charts
+# Ratio charts + ratio scoring
 log("Ratio charts...")
 ratio_results = {}
+
+def ratio_metrics(df_num, df_den):
+    """Beregn om ratio er over egen 36-ukers MA og stigende."""
+    try:
+        combined = pd.DataFrame({"num": df_num["close_use"], "den": df_den["close_use"]}).dropna()
+        if len(combined) < 60:
+            return None
+        ratio  = (combined["num"] / combined["den"]).resample("W-FRI").last().dropna()
+        if len(ratio) < 40:
+            return None
+        ma36   = ratio.rolling(36).mean()
+        last   = float(ratio.iloc[-1])
+        ma_now = float(ma36.iloc[-1]) if pd.notna(ma36.iloc[-1]) else None
+        ma_prev= float(ma36.iloc[-9]) if (len(ma36) >= 9 and pd.notna(ma36.iloc[-9])) else None
+        above  = (last > ma_now) if ma_now else None
+        rising = (ma_now > ma_prev) if (ma_now and ma_prev) else None
+        dist   = ((last - ma_now)/ma_now) if ma_now else None
+        # outperform-score: over MA og stigende = sterkest
+        if above and rising:    rscore, rlabel, rcol = 3, "Outperformer",       "#50c878"
+        elif above:             rscore, rlabel, rcol = 2, "Over MA",            "#7ec88a"
+        elif rising:            rscore, rlabel, rcol = 1, "Snur opp",           "#f0a500"
+        else:                   rscore, rlabel, rcol = 0, "Underperformer",     "#e05050"
+        return {"dist_to_ma": dist, "above_ma": above, "rising": rising,
+                "rscore": rscore, "rlabel": rlabel, "rcol": rcol}
+    except Exception:
+        return None
+
 for (num_id, den_id, label) in RATIO_PAIRS:
     if num_id in raw_cache and den_id in raw_cache:
         rid = f"RATIO_{num_id}_{den_id}"
         out_path = CHARTS / f"{rid}_weekly_compact.png"
         plot_ratio(raw_cache[num_id], raw_cache[den_id], label, out_path)
+        rm = ratio_metrics(raw_cache[num_id], raw_cache[den_id])
         ratio_results[rid] = {"label": label, "numerator": num_id, "denominator": den_id,
-                              "chart_weekly": f"charts/{rid}_weekly_compact.png"}
+                              "chart_weekly": f"charts/{rid}_weekly_compact.png",
+                              "metrics": rm}
 
 # News
 log("News...")
@@ -777,9 +846,107 @@ def build_portfolio_brief(assets_dict, sector_sum):
 brief_md = build_portfolio_brief(summary["assets"], sector_summary)
 with open(DOCS/"portfolio_brief.md","w",encoding="utf-8") as f: f.write(brief_md)
 
+# ─── HISTORIKK & SCORE-ENDRING ─────────────────────────────────
+# Arkiver dagens score per instrument, og les historikk for trend over tid.
+# Historikk hentes fra live gh-pages slik at den overlever mellom kjoeringer
+# (main-checkout har ikke docs/history fra forrige run).
+HIST_DIR = DOCS / "history"
+HIST_DIR.mkdir(exist_ok=True)
+
+PAGES_HIST_BASE = "https://regg92s-hub.github.io/market-daily-report/history"
+
+def bootstrap_history_from_pages():
+    """Hent index over historikk-filer fra live site hvis lokal mappe er tom."""
+    existing = list(HIST_DIR.glob("*.json"))
+    if existing:
+        return  # allerede lokal historikk
+    try:
+        # hent manifest hvis det finnes
+        r = requests.get(f"{PAGES_HIST_BASE}/manifest.json", timeout=20)
+        if r.status_code == 200:
+            dates = r.json().get("dates", [])
+            for d in dates[-42:]:
+                rr = requests.get(f"{PAGES_HIST_BASE}/{d}.json", timeout=15)
+                if rr.status_code == 200:
+                    (HIST_DIR / f"{d}.json").write_bytes(rr.content)
+            log(f"  bootstrapped {len(dates[-42:])} history files from pages")
+    except Exception as e:
+        log(f"  history bootstrap skipped: {e}")
+
+bootstrap_history_from_pages()
+
+today_snapshot = {
+    "date": NOW.strftime("%Y-%m-%d"),
+    "generated": NOW.isoformat(),
+    "scores": {iid: a.get("northstar_score")
+               for iid, a in summary["assets"].items()
+               if not a.get("missing_data") and a.get("northstar_score") is not None},
+    "sector_scores": {sec: ss["avg_score"] for sec, ss in sector_summary.items()},
+}
+with open(HIST_DIR / f"{NOW.strftime('%Y-%m-%d')}.json", "w", encoding="utf-8") as f:
+    json.dump(today_snapshot, f, ensure_ascii=False, indent=2)
+
+# Skriv manifest over alle historikk-datoer
+all_dates = sorted([p.stem for p in HIST_DIR.glob("*.json") if p.stem != "manifest"])
+with open(HIST_DIR / "manifest.json", "w", encoding="utf-8") as f:
+    json.dump({"dates": all_dates}, f, ensure_ascii=False, indent=2)
+
+# Les siste 42 dager (ca 6 uker) historikk
+history_files = sorted(HIST_DIR.glob("*.json"))
+history = []
+for hf in history_files[-42:]:
+    try:
+        history.append(json.loads(hf.read_text(encoding="utf-8")))
+    except Exception:
+        pass
+
+# Score-endring: naa vs ca 7 dager siden (forrige uke)
+def score_delta(iid):
+    cur = today_snapshot["scores"].get(iid)
+    if cur is None or len(history) < 2:
+        return None, None
+    # finn snapshot naermest 7 dager tilbake
+    week_ago = None
+    for h in history[:-1]:
+        if iid in h.get("scores", {}):
+            week_ago = h["scores"][iid]
+    if week_ago is None:
+        return None, None
+    return cur - week_ago, week_ago
+
+for iid, a in summary["assets"].items():
+    if a.get("missing_data"): continue
+    delta, prev = score_delta(iid)
+    a["score_delta"] = delta
+    a["score_prev"]  = prev
+
+# Sektor-trend sparkline-data (siste 6 ukers sektor-snitt)
+sector_trend = {}
+for sec in sector_summary:
+    series = []
+    seen_dates = set()
+    for h in history:
+        d = h.get("date")
+        v = h.get("sector_scores", {}).get(sec)
+        if v is not None and d not in seen_dates:
+            series.append(v)
+            seen_dates.add(d)
+    sector_trend[sec] = series[-30:]   # opptil 30 datapunkter
+
+# ─── SEKTOR-ROTASJON (ratio outperform-sammendrag) ─────────────
+rotation = []
+for rid, r in ratio_results.items():
+    m = r.get("metrics")
+    if m:
+        rotation.append({"label": r["label"], "rscore": m["rscore"],
+                         "rlabel": m["rlabel"], "rcol": m["rcol"],
+                         "dist": m.get("dist_to_ma")})
+rotation.sort(key=lambda x: -x["rscore"])
+
 # Index.json
 index = {"generated_local": NOW.isoformat(), "version": VERSION, "summary": summary,
-         "sector_summary": sector_summary, "ratio_charts": ratio_results,
+         "sector_summary": sector_summary, "sector_trend": sector_trend,
+         "ratio_charts": ratio_results, "rotation": rotation,
          "notes": {"instrument_count": len(ALL_IDS)}}
 with open(DOCS/"index.json","w",encoding="utf-8") as f:
     json.dump(index, f, ensure_ascii=False, indent=2)
@@ -798,13 +965,48 @@ def macd_html(v):
     arr = "&#9650;" if v>0 else "&#9660;"
     return f'<span style="color:{c}">{arr} {abs(v):.4f}</span>'
 
+def sparkline_svg(values, color="#7ec8e3", w=120, h=32):
+    """Liten inline SVG trend-graf."""
+    if not values or len(values) < 2:
+        return '<svg class="sc-spark"></svg>'
+    vmin, vmax = min(values), max(values)
+    rng = (vmax - vmin) or 1
+    n = len(values)
+    pts = []
+    for i, v in enumerate(values):
+        x = (i / (n - 1)) * w
+        y = h - ((v - vmin) / rng) * (h - 4) - 2
+        pts.append(f"{x:.1f},{y:.1f}")
+    polyline = " ".join(pts)
+    last_x, last_y = pts[-1].split(",")
+    return (f'<svg class="sc-spark" viewBox="0 0 {w} {h}" preserveAspectRatio="none">'
+            f'<polyline points="{polyline}" fill="none" stroke="{color}" stroke-width="1.5"/>'
+            f'<circle cx="{last_x}" cy="{last_y}" r="2" fill="{color}"/></svg>')
+
+def delta_html(delta):
+    if delta is None:
+        return '<span class="delta-flat">–</span>'
+    if delta > 0.5:
+        return f'<span class="delta-up">&#9650; +{delta:.0f}</span>'
+    if delta < -0.5:
+        return f'<span class="delta-dn">&#9660; {delta:.0f}</span>'
+    return '<span class="delta-flat">&#8226; 0</span>'
+
+SECTOR_ANCHORS = {
+    "Aksjer": "sec-aksjer", "Tech": "sec-tech", "Edelmetaller": "sec-edelmetaller",
+    "Rawarer": "sec-rawarer", "Valuta": "sec-valuta", "Crypto": "sec-crypto",
+    "Renter": "sec-renter",
+}
+
 def build_homepage(index_data, filelist, brief_md_text):
-    assets     = index_data.get("summary",{}).get("assets",{})
-    categories = index_data.get("summary",{}).get("categories",[])
-    sec_sum    = index_data.get("sector_summary",{})
-    ratios     = index_data.get("ratio_charts",{})
-    generated  = index_data.get("generated_local") or NOW.isoformat()
-    file_set   = set(filelist)
+    assets      = index_data.get("summary",{}).get("assets",{})
+    categories  = index_data.get("summary",{}).get("categories",[])
+    sec_sum     = index_data.get("sector_summary",{})
+    sec_trend   = index_data.get("sector_trend",{})
+    rotation    = index_data.get("rotation",[])
+    ratios      = index_data.get("ratio_charts",{})
+    generated   = index_data.get("generated_local") or NOW.isoformat()
+    file_set    = set(filelist)
 
     CSS = """:root{--bg:#0b0d10;--panel:#12161c;--panel2:#171c23;--text:#e7edf3;--muted:#9aa7b5;--border:#27313d}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
@@ -830,6 +1032,18 @@ img{display:block;width:100%;height:auto}figcaption{padding:5px 10px;border-top:
 .missing{padding:12px;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:12px}
 details>summary{cursor:pointer;color:var(--muted);font-size:13px;padding:4px 0}
 .brief-pre{white-space:pre-wrap;font-size:11px;color:var(--muted);font-family:monospace;margin-top:8px;background:var(--panel2);padding:10px;border-radius:8px;max-height:350px;overflow-y:auto}
+.sc{cursor:pointer;transition:transform .1s,border-color .1s;text-decoration:none;display:block}
+.sc:hover{transform:translateY(-2px)}
+.sc-spark{margin-top:6px;height:32px;width:100%}
+.sc-delta{font-size:11px;font-weight:700;margin-top:2px}
+.rotation{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.rot-pill{padding:5px 10px;border-radius:8px;font-size:12px;border:1px solid var(--border)}
+.trend-badge{display:inline-block;padding:1px 6px;border-radius:5px;font-size:10px;font-weight:600}
+.delta-up{color:#50c878}.delta-dn{color:#e05050}.delta-flat{color:#9aa7b5}
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:12px}
+.legend{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.7}
+.legend code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--text)}
 footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 
     parts = [f"""<!doctype html><html lang="no"><head>
@@ -839,28 +1053,59 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 <h1>Market Daily Report</h1>
 <p class="topnote">Generert: {html.escape(str(generated))} &nbsp;&bull;&nbsp; {VERSION}</p>"""]
 
-    # Sector overview
+    # Sector overview — klikkbare kort med sparkline + score-endring
     parts.append('<section class="section"><h2>&#128202; Sektorscore</h2>'
-                 '<p style="color:var(--muted);font-size:12px">Snitt Northstar-score. Hoeyere = lavrisiko entry.</p>'
+                 '<p style="color:var(--muted);font-size:12px">Snitt Northstar-score (hoeyere = lavrisiko entry). '
+                 'Graf = siste ukers trend. Pil = endring vs forrige uke. Klikk for aa hoppe til sektoren.</p>'
                  '<div class="sector-grid">')
-    for sec in sorted([s for s in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"] if s in sec_sum], key=lambda s:-sec_sum[s]["avg_score"]):
+    for sec in sorted([s for s in ["Aksjer","Tech","Edelmetaller","Rawarer","Valuta","Crypto","Renter"] if s in sec_sum],
+                      key=lambda s:-sec_sum[s]["avg_score"]):
         ss = sec_sum[sec]; avg = ss["avg_score"]; c = score_color(avg)
+        anchor = SECTOR_ANCHORS.get(sec, "")
+        spark = sparkline_svg(sec_trend.get(sec, []), color=c)
+        # sektor delta
+        trend_vals = sec_trend.get(sec, [])
+        sdelta = (trend_vals[-1] - trend_vals[0]) if len(trend_vals) >= 2 else None
         parts.append(
-            f'<div class="sc" style="border-color:{c}50">'
+            f'<a class="sc" href="#{anchor}" style="border-color:{c}50">'
             f'<div class="sc-name">{html.escape(sec)}</div>'
             f'<div class="sc-score" style="color:{c}">{avg}</div>'
             f'<div class="sc-label" style="color:{c}">{html.escape(ss["label"])}</div>'
-            f'<div class="sc-n">{ss["n"]} instr.</div></div>')
+            f'<div class="sc-delta">{delta_html(sdelta)}</div>'
+            f'{spark}'
+            f'<div class="sc-n">{ss["n"]} instr.</div></a>')
     parts.append('</div></section>')
 
-    # Portfolio brief
-    parts.append('<section class="section"><h2>&#128203; Ukentlig Portfolio-Brief</h2>'
-                 '<details><summary>Vis full analyse (klikk)</summary>'
-                 f'<div class="brief-pre">{html.escape(brief_md_text)}</div>'
-                 '</details></section>')
+    # Sektor-rotasjon (ratio outperform-sammendrag)
+    if rotation:
+        outperf = [r for r in rotation if r["rscore"] >= 2]
+        underperf = [r for r in rotation if r["rscore"] == 0]
+        parts.append('<section class="section"><h2>&#128260; Sektor-rotasjon</h2>'
+                     '<p style="color:var(--muted);font-size:12px">Ratio vs egen 36-ukers MA. '
+                     'Outperformer = kapital flyter inn. Northstar sitt viktigste sektorvalg-signal.</p>'
+                     '<div class="rotation">')
+        for r in rotation:
+            dist = r.get("dist")
+            dist_s = f' ({dist*100:+.0f}%)' if isinstance(dist,(int,float)) else ""
+            parts.append(
+                f'<span class="rot-pill" style="background:{r["rcol"]}18;color:{r["rcol"]};border-color:{r["rcol"]}40">'
+                f'{html.escape(r["label"])}: {html.escape(r["rlabel"])}{dist_s}</span>')
+        parts.append('</div>')
+        if outperf:
+            names = ", ".join(html.escape(r["label"]) for r in outperf)
+            parts.append(f'<p style="color:#50c878;font-size:13px;margin-top:10px">'
+                         f'&#9650; Outperformer naa: {names}</p>')
+        if underperf:
+            names = ", ".join(html.escape(r["label"]) for r in underperf)
+            parts.append(f'<p style="color:#e05050;font-size:13px;margin-top:4px">'
+                         f'&#9660; Underperformer: {names}</p>')
+        parts.append('</section>')
 
-    # Instrument categories
-    for category in categories:
+    # Instrument categories — sortert etter sektorscore (beste sektor foerst)
+    def cat_sort_key(cat):
+        sec = cat.get("sector", "")
+        return -sec_sum.get(sec, {}).get("avg_score", -1)
+    for category in sorted(categories, key=cat_sort_key):
         items = []
         for iid in category.get("instrument_ids",[]):
             a = assets.get(iid,{})
@@ -868,20 +1113,21 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
             items.append((score, a.get("display_name") or iid, iid, a))
         items.sort(key=lambda x:-x[0])
 
-        parts.append(f'<section class="section"><h2>{html.escape(category.get("title",""))}</h2>'
+        parts.append(f'<section class="section" id="{SECTOR_ANCHORS.get(category.get("sector",""),"")}">'
+                     f'<h2>{html.escape(category.get("title",""))}</h2>'
                      f'<p style="color:var(--muted);font-size:12px">{html.escape(category.get("description",""))}</p>')
 
         parts.append('<table class="inst-table"><thead><tr>'
-                     '<th>Instrument</th><th>Score</th>'
+                     '<th>Instrument</th><th>Score</th><th>&#916; uke</th><th>Trend</th>'
                      '<th>D-RSI</th><th>W-RSI</th><th>M-RSI</th>'
                      '<th>Dist 3yr MA</th><th>Dist 36WMA</th>'
                      '<th>MACD W</th><th>MACD14 W</th>'
-                     '<th>52w</th></tr></thead><tbody>')
+                     '<th>Vol</th><th>52w</th></tr></thead><tbody>')
 
         chart_items = []
         for _, _, iid, a in items:
             if a.get("missing_data"):
-                parts.append(f'<tr><td colspan="10" style="color:var(--muted)">'
+                parts.append(f'<tr><td colspan="13" style="color:var(--muted)">'
                               f'{html.escape(a.get("display_name") or iid)} - ingen data</td></tr>')
                 continue
             d_ = (a.get("frames") or {}).get("daily")   or {}
@@ -904,12 +1150,29 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
             if a.get("52w_high") and d_.get("last") and d_["last"] >= a["52w_high"]*0.999:
                 high52 = '<span style="color:#f0a500">52H</span>'
 
+            # trend badge
+            tlabel, tcol = trend_label(w_)
+            trend_cell = f'<span class="trend-badge" style="background:{tcol}20;color:{tcol}">{html.escape(tlabel)}</span>'
+
+            # volume confirmation
+            vc = w_.get("vol_confirm")
+            if vc is None:
+                vol_cell = "-"
+            elif vc >= 1.3:
+                vol_cell = f'<span style="color:#50c878">&#9650; {vc:.1f}x</span>'
+            elif vc >= 0.8:
+                vol_cell = f'<span style="color:var(--muted)">{vc:.1f}x</span>'
+            else:
+                vol_cell = f'<span style="color:#e08030">{vc:.1f}x</span>'
+
             parts.append(
                 f'<tr>'
                 f'<td><strong style="font-size:12px">{html.escape(a.get("display_name") or iid)}</strong>'
                 f'<br><span style="color:var(--muted);font-size:10px">{html.escape(a.get("symbol_label") or iid)}</span></td>'
                 f'<td><span class="pill" style="background:{c}20;color:{c};border:1px solid {c}40">{sc}</span>'
                 f'<br><span style="font-size:10px;color:{c}">{html.escape(slabel)}</span>{pills}</td>'
+                f'<td>{delta_html(a.get("score_delta"))}</td>'
+                f'<td>{trend_cell}</td>'
                 f'<td>{fmt(d_.get("rsi14"))}</td>'
                 f'<td>{fmt(w_.get("rsi14"))}</td>'
                 f'<td>{fmt(m_.get("rsi14"))}</td>'
@@ -917,6 +1180,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                 f'<td>{fmt_pct(w_.get("dist_to_36MA"))}</td>'
                 f'<td>{macd_html(w_.get("macd_hist"))}</td>'
                 f'<td>{macd_html(w_.get("macd14_hist"))}</td>'
+                f'<td>{vol_cell}</td>'
                 f'<td>{high52}</td></tr>')
             chart_items.append((iid, a))
 
@@ -939,9 +1203,25 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                      '<p style="color:var(--muted);font-size:12px">Over SMA36 = outperformer. Northstar sektor-screening.</p>'
                      '<div class="charts-grid">')
         for rid, r in ratio_files:
+            m = r.get("metrics") or {}
+            cap = html.escape(r["label"])
+            if m.get("rlabel"):
+                cap += f' &mdash; <span style="color:{m["rcol"]}">{html.escape(m["rlabel"])}</span>'
             parts.append(f'<figure><img src="{html.escape(r["chart_weekly"])}" alt="{html.escape(r["label"])}" loading="lazy">'
-                          f'<figcaption>{html.escape(r["label"])}</figcaption></figure>')
+                          f'<figcaption>{cap}</figcaption></figure>')
         parts.append('</div></section>')
+
+    # Legend / forklaring
+    parts.append('<section class="section"><h2>&#8505;&#65039; Slik leser du rapporten</h2>'
+                 '<div class="legend">'
+                 '<code>Score 0-100</code> hoeyere = lavrisiko entry (naer/under MA, lav RSI, MACD snur opp).<br>'
+                 '<code>&#916; uke</code> endring i score vs forrige uke &mdash; fanger sektorrotasjon foer den er aapenbar.<br>'
+                 '<code>Trend</code> Opptrend = over stigende MA. Dip i trend = under MA men MA stiger (Northstar lavrisiko-dip). Nedtrend = fallende kniv, unngaa.<br>'
+                 '<code>Dist 3yr MA</code> Northstar-filter: naer/under = potensiale, langt over = stretched.<br>'
+                 '<code>Dist 36WMA</code> kortere MA-filter, samme logikk.<br>'
+                 '<code>Vol</code> volum vs 20-snitt. &#9650;1.3x+ = breakout bekreftet av volum.<br>'
+                 '<code>Sektor-rotasjon</code> hvilke sektorer kapital flyter inn i akkurat naa.'
+                 '</div></section>')
 
     parts.append('<footer>Data: <a href="index.json" style="color:var(--muted)">index.json</a> &bull; '
                  '<a href="portfolio_brief.md" style="color:var(--muted)">portfolio_brief.md</a> &bull; '
