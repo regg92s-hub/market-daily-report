@@ -4,7 +4,7 @@
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 80.3 | Lavrisiko entry | 3 |
+| Crypto | 80.7 | Lavrisiko entry | 3 |
 | Renter | 66.3 | Noytral | 6 |
 | Valuta | 65.8 | Noytral | 5 |
 | Edelmetaller | 51.8 | Avvent | 8 |
@@ -17,8 +17,8 @@ _Near 3yr MA, RSI ok, momentum positivt._
 
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
-| ETH | **82** | 33.0 | 37.7 | 43.6 | -25.8% | -25.5% |
-| BTC | **81** | 37.5 | 41.8 | 47.4 | 1.1% | -12.8% |
+| BTC | **82** | 36.5 | 41.4 | 47.3 | 0.7% | -13.1% |
+| ETH | **82** | 31.1 | 37.2 | 43.4 | -26.6% | -26.3% |
 | JPY | **79** | 42.7 | 41.4 | 38.9 | -6.2% | -2.2% |
 | VIX | **78** | 26.7 | 35.1 | 31.4 | -55.8% | -22.2% |
 | 10yr UST | **77** | 53.7 | 49.3 | 49.8 | 4.6% | -0.5% |
