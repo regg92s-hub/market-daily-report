@@ -440,18 +440,28 @@ def _macd_subscore(hist, macd_line):
     return max(0.0, 0.6 - (norm / 1.0) * 0.6)
 
 def _ma_subscore(dist):
-    """Avstand til MA (fraksjon) -> 0..1. Nær eller under = bedre (dynamisk).
-    Under MA -> opp mot 1.0, ved MA -> ~0.9, +15% -> ~0.5, +40%+ -> ~0."""
+    """Avstand til MA (fraksjon) -> 0..1. Naer eller rett under = best (dynamisk).
+    Mer enn 3% UNDER MA teller negativt: instrumentet faller inn i negativ
+    makrotrend, ikke bare en lavrisiko-dip.
+
+    Profil:
+      0%..+45% over  -> 0.92 ned mot 0   (stretched over MA = darlig entry)
+      -3%..0%        -> 0.92..1.0          (ideal sone)
+      -15%..-3%      -> 0.30..0.92         (begynnende svakhet under MA)
+      < -15%         -> 0.1                (klart i negativ trend)
+    """
     if dist is None:
         return None
     p = dist * 100.0
-    if p <= -20:
-        return 0.85                    # langt under: konsoliderer, fortsatt bra
-    if p <= 0:
-        # -20%..0% -> 0.85..1.0
-        return 0.85 + (abs(p) / 20.0) * 0.0 + (1.0 - 0.85) * (1 - abs(p)/20.0)
-    # over MA: faller fra 1.0 ved 0% mot 0 ved +45%
-    return max(0.0, 1.0 - (p / 45.0))
+    if p >= 0:
+        return max(0.0, 0.92 - (p / 45.0) * 0.92)
+    if p >= -3:
+        return 1.0 + (p / 3.0) * 0.08        # 0% ->1.0, -3% ->0.92
+    if p >= -15:
+        # lineaer 0.92 (ved -3%) ned til 0.30 (ved -15%)
+        frac = (abs(p) - 3) / (15 - 3)
+        return 0.92 - frac * (0.92 - 0.30)
+    return 0.1
 
 def _fmt_sub(frac):
     return f"{frac*100:.0f}%" if frac is not None else "–"
@@ -534,6 +544,64 @@ def score_synthetic_series(price_series):
     }}
     score, points = northstar_score(entry)
     return score, points, entry["frames"]
+
+def score_ratio_series(price_series):
+    """
+    Score for en makro-ratio. Bruker MAANEDLIG + 3-MAANEDERS (kvartal) tidsramme,
+    50/50 vekt per komponent (ikke weekly/monthly som instrumentene).
+    Egnet for langsiktige makro-trender der ukentlig stoey er irrelevant.
+    Tre like hovedkomponenter (RSI / MACD / MA), hver delt 50/50 M og Q.
+    """
+    df = pd.DataFrame({"close_use": price_series, "volume": np.nan}).dropna(subset=["close_use"])
+    if len(df) < 200:
+        return None, None, None
+    monthly   = with_indicators(df.resample("ME").last().dropna(how="all"))
+    quarterly = with_indicators(df.resample("QE").last().dropna(how="all"))
+    fm = frame_summary(monthly,   is_weekly=False)
+    fq = frame_summary(quarterly, is_weekly=False)
+    # For ratioer bruker vi 36-perioders MA paa hver tidsramme som "trend-MA".
+    # dist_to_36MA finnes paa begge. 3yr-MA er ikke meningsfull paa kvartal.
+    points = []
+    total = 0.0; maxtot = 0.0
+    def add(label, frac, weight, note):
+        nonlocal total, maxtot
+        maxtot += weight
+        if frac is None:
+            points.append((label, 0, round(weight), "ingen data")); return
+        total += frac*weight
+        points.append((label, round(frac*weight), round(weight), note))
+
+    W = 16.67  # 33.3% delt 50/50
+
+    rm = fm.get("rsi14"); rq = fq.get("rsi14")
+    add("RSI M", _rsi_subscore(rm), W, f"{rm:.1f} ({_fmt_sub(_rsi_subscore(rm))})" if rm else "ingen data")
+    add("RSI 3M", _rsi_subscore(rq), W, f"{rq:.1f} ({_fmt_sub(_rsi_subscore(rq))})" if rq else "ingen data")
+
+    hm = fm.get("macd_hist"); lm = fm.get("macd")
+    hq = fq.get("macd_hist"); lq = fq.get("macd")
+    add("MACD M", _macd_subscore(hm, lm), W, f"hist {hm:.4f}" if hm is not None else "ingen data")
+    add("MACD 3M", _macd_subscore(hq, lq), W, f"hist {hq:.4f}" if hq is not None else "ingen data")
+
+    dm = fm.get("dist_to_36MA"); dq = fq.get("dist_to_36MA")
+    add("36M MA", _ma_subscore(dm), W, f"{dm*100:+.1f}%" if dm is not None else "ingen data")
+    add("36Q MA", _ma_subscore(dq), W, f"{dq*100:+.1f}%" if dq is not None else "ingen data")
+
+    score = round(total/maxtot*100) if maxtot > 0 else 0
+    return min(score,100), points, {"monthly": fm, "quarterly": fq}
+
+def monthly_ratio_score_history(price_series, months=6):
+    """Ratio-score per maaned bakover (bruker score_ratio_series)."""
+    out = []
+    s = price_series.dropna()
+    if len(s) < 200:
+        return out
+    midx = s.resample("ME").last().dropna().index
+    for ts in midx[-months:]:
+        sub = s[s.index <= ts]
+        sc, _, _ = score_ratio_series(sub)
+        if sc is not None:
+            out.append(sc)
+    return out
 
 def weekly_score_history(price_series, weeks=26):
     """Score per uke bakover (default 26 uker = 6 mnd) for sparkline/trend."""
@@ -939,19 +1007,74 @@ if ten_df is not None and not ten_df.empty:
 
 # Stock-vs-gold regime (Northstar kapitalrotasjon): hvor mange aksjer slaar gull?
 equity_ids = [i["id"] for g in INSTRUMENT_GROUPS if g["sector"] in ("Aksjer","Tech") for i in g["instruments"]]
-beat_gold = sum(1 for iid in equity_ids
-                if (summary["assets"].get(iid,{}).get("vs_gold") or {}).get("state","").startswith("Slaar"))
-total_eq = sum(1 for iid in equity_ids if summary["assets"].get(iid,{}).get("vs_gold"))
-if total_eq > 0:
-    if beat_gold == 0:
-        regime["rotation"] = {"label": f"0 av {total_eq} slaar gull", "col": "#e05050",
-                              "note": "Northstar: alle aksjer i bear market vs gull - kapitalrotasjon paagaar"}
-    elif beat_gold < total_eq/2:
-        regime["rotation"] = {"label": f"{beat_gold} av {total_eq} slaar gull", "col": "#f0a500",
-                              "note": "Faa aksjer slaar gull - rotasjon mot hard assets"}
+beats = []; loses = []
+for iid in equity_ids:
+    vg = summary["assets"].get(iid,{}).get("vs_gold")
+    if not vg:
+        continue
+    sym = summary["assets"].get(iid,{}).get("symbol_label", iid)
+    if vg.get("state","").startswith("Slaar"):
+        beats.append(sym)
     else:
-        regime["rotation"] = {"label": f"{beat_gold} av {total_eq} slaar gull", "col": "#50c878",
-                              "note": "Aksjer holder foelge med gull"}
+        loses.append(sym)
+total_eq = len(beats) + len(loses)
+if total_eq > 0:
+    beat_str = ", ".join(beats) if beats else "ingen"
+    lose_str = ", ".join(loses) if loses else "ingen"
+    detail = f"Slaar gull: {beat_str}. Taper: {lose_str}."
+    if len(beats) == 0:
+        regime["rotation"] = {"label": f"0 av {total_eq} slaar gull", "col": "#e05050",
+                              "note": f"Alle aksjer i bear market vs gull - kapitalrotasjon paagaar. {detail}"}
+    elif len(beats) < total_eq/2:
+        regime["rotation"] = {"label": f"{len(beats)} av {total_eq} slaar gull", "col": "#f0a500",
+                              "note": f"Faa aksjer slaar gull - rotasjon mot hard assets. {detail}"}
+    else:
+        regime["rotation"] = {"label": f"{len(beats)} av {total_eq} slaar gull", "col": "#50c878",
+                              "note": f"Aksjer holder foelge med gull. {detail}"}
+
+# ─── MAKRO-REGIME CHARTS (3-maaneders) ─────────────────────────
+def plot_macro_3m(series, title, out_path, zero_line=False):
+    """Enkelt 3-maaneders linjechart for makro-serie (yield-kurve, Fed, yield)."""
+    try:
+        q = series.resample("QE").last().dropna()
+        if len(q) < 4:
+            return False
+        fig, ax = plt.subplots(figsize=(11, 4.5), facecolor=BG)
+        _style_ax(ax)
+        ax.plot(q.index, q.values, color=C_PRICE, lw=1.8)
+        ma = q.rolling(8).mean()
+        if ma.notna().any():
+            ax.plot(q.index, ma.values, color=C_SMA36, lw=1.1, ls="--", label="8Q MA")
+        if zero_line:
+            ax.axhline(0, color="#e05050", lw=1.0, ls="--", alpha=0.7)
+        last_v = q.iloc[-1]
+        ax.scatter([q.index[-1]], [last_v], color=C_PRICE, s=30, zorder=5)
+        ax.annotate(f"{last_v:,.2f}", xy=(q.index[-1], last_v), xytext=(6,0),
+                    textcoords="offset points", color=C_PRICE, fontsize=10,
+                    fontweight="bold", va="center")
+        ax.set_title(title, fontsize=12, color=FG, fontweight="bold", pad=8)
+        ax.legend(loc="upper left", fontsize=8.5, facecolor=PANEL, labelcolor=FG,
+                  framealpha=0.85, edgecolor=GRID)
+        locator = mdates.AutoDateLocator()
+        ax.xaxis.set_major_locator(locator)
+        ax.xaxis.set_major_formatter(mdates.ConciseDateFormatter(locator))
+        plt.tight_layout(pad=0.8)
+        plt.savefig(out_path, dpi=125, facecolor=BG, bbox_inches="tight")
+        plt.close(fig)
+        return True
+    except Exception as e:
+        log(f"macro chart error {title}: {e}")
+        return False
+
+if yc_df is not None and not yc_df.empty:
+    if plot_macro_3m(yc_df["close_use"], "Yield-kurve 2s10s - 3-maaneders", CHARTS/"macro_2s10s.png", zero_line=True):
+        regime.setdefault("yield_curve",{})["chart"] = "charts/macro_2s10s.png"
+if fed_df is not None and not fed_df.empty:
+    if plot_macro_3m(fed_df["close_use"], "Fed-balanse (WALCL) - 3-maaneders", CHARTS/"macro_fed.png"):
+        regime.setdefault("fed_liquidity",{})["chart"] = "charts/macro_fed.png"
+if ten_df is not None and not ten_df.empty:
+    if plot_macro_3m(ten_df["close_use"], "10yr yield - 3-maaneders", CHARTS/"macro_10yr.png"):
+        regime.setdefault("yields",{})["chart"] = "charts/macro_10yr.png"
 
 # Ratio charts + ratio scoring
 log("Ratio charts...")
@@ -1166,27 +1289,30 @@ for (num_key, den_key, label) in TREND_RATIOS:
     if len(combined) < 200:
         continue
     ratio = (combined["num"] / combined["den"]).dropna()
-    score, points, frames = score_synthetic_series(ratio)
+    score, points, frames = score_ratio_series(ratio)
     if score is None:
         continue
     emoji, slabel = score_label(score)
     rid = f"TREND_{num_key}_{den_key}"
-    m_hist = monthly_score_history(ratio, months=6)
+    m_hist = monthly_ratio_score_history(ratio, months=6)
+    # Tydelige charts (samme stil som Market Daily Report): bygg df og bruk plot_compact
     monthly_s = ratio.resample("ME").last().dropna()
     q_s       = ratio.resample("QE").last().dropna()
-    plot_series_3panel(monthly_s.tail(120), f"{label} - maanedlig",
-                       CHARTS / f"{rid}_monthly.png", ma_n=36, ma_label="36M")
-    plot_series_3panel(q_s.tail(60), f"{label} - 3-maaneders",
-                       CHARTS / f"{rid}_quarterly.png", ma_n=12, ma_label="12 (3aar)")
-    w = frames.get("weekly", {}); m = frames.get("monthly", {}); d = frames.get("daily", {})
+    mdf = pd.DataFrame({"close_use": monthly_s, "volume": np.nan})
+    qdf = pd.DataFrame({"close_use": q_s,       "volume": np.nan})
+    plot_compact(mdf.tail(120), f"{label} - maanedlig",
+                 CHARTS / f"{rid}_monthly.png", ma_label_long="SMA156")
+    plot_compact(qdf.tail(80), f"{label} - 3-maaneders",
+                 CHARTS / f"{rid}_quarterly.png", ma_label_long="SMA156")
+    m = frames.get("monthly", {}); q = frames.get("quarterly", {})
     trend_ratios.append({
         "rid": rid, "label": label, "score": score, "label_txt": slabel,
         "points": points, "score_series_monthly": m_hist,
         "chart_monthly": f"charts/{rid}_monthly.png",
         "chart_quarterly": f"charts/{rid}_quarterly.png",
-        "wrsi": w.get("rsi14"), "mrsi": m.get("rsi14"), "drsi": d.get("rsi14"),
-        "dist36w": w.get("dist_to_36MA"), "dist36m": m.get("dist_to_36MA"),
-        "macd_w": w.get("macd_hist"), "macd_m": m.get("macd_hist"),
+        "mrsi": m.get("rsi14"), "qrsi": q.get("rsi14"),
+        "dist36m": m.get("dist_to_36MA"), "dist36q": q.get("dist_to_36MA"),
+        "macd_m": m.get("macd_hist"), "macd_q": q.get("macd_hist"),
     })
 trend_ratios.sort(key=lambda x: -x["score"])
 log(f"Trend-oversikt: {len(trend_ratios)} ratioer scoret")
@@ -1271,7 +1397,20 @@ def regime_stripe_html(regime):
             f'<div style="font-size:15px;font-weight:700;color:{c};margin:3px 0">{html.escape(r.get("label",""))}</div>'
             f'<div style="font-size:11px;color:var(--muted);line-height:1.4">{html.escape(r.get("note",""))}</div>'
             f'</div>')
-    out.append('</div></section>')
+    out.append('</div>')
+    # 3-maaneders charts under kortene
+    chart_cards = [("Yield-kurve 2s10s", regime.get("yield_curve")),
+                   ("Fed-balanse",       regime.get("fed_liquidity")),
+                   ("10yr yield",        regime.get("yields"))]
+    chart_figs = []
+    for cname, r in chart_cards:
+        if r and r.get("chart"):
+            chart_figs.append(
+                f'<figure><img src="{html.escape(r["chart"])}" alt="{html.escape(cname)}" loading="lazy">'
+                f'<figcaption>{html.escape(cname)} (3-maaneders)</figcaption></figure>')
+    if chart_figs:
+        out.append('<div class="charts-grid" style="margin-top:12px">' + "".join(chart_figs) + '</div>')
+    out.append('</section>')
     return "".join(out)
 
 def build_homepage(index_data, filelist, brief_md_text):
@@ -1371,40 +1510,6 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
             f'{spark}'
             f'<div class="sc-n">{ss["n"]} instr.</div></a>')
     parts.append('</div></section>')
-
-    # Sektor-rotasjon (ratio Northstar-score)
-    if rotation:
-        outperf   = [r for r in rotation if r["score"] >= 55]
-        underperf = [r for r in rotation if r["score"] < 35]
-        parts.append('<section class="section"><h2>&#128260; Sektor-rotasjon</h2>'
-                     '<p style="color:var(--muted);font-size:12px">'
-                     'Northstar-score for hver ratio (samme 0-100 modell som ellers). '
-                     'Hoeyere = ratioen er i lavrisiko-sone (teller outperformer / god entry). '
-                     'Grafen viser <strong>score per uke</strong> siste 12 uker.</p>'
-                     '<div class="sector-grid">')
-        for r in rotation:
-            sc = r.get("score", 0)
-            c = score_color(sc)
-            spark = sparkline_svg(r.get("score_series", []), color=c)
-            d36 = r.get("dist36")
-            d36s = f'{d36*100:+.0f}% vs 36WMA' if isinstance(d36,(int,float)) else ""
-            parts.append(
-                f'<div class="sc" style="border-color:{c}50;cursor:default">'
-                f'<div class="sc-name">{html.escape(r["label"])}</div>'
-                f'<div class="sc-score" style="color:{c}">{sc}</div>'
-                f'<div class="sc-label" style="color:{c}">{html.escape(r["rlabel"])}</div>'
-                f'<div class="sc-n">{d36s}</div>'
-                f'{spark}</div>')
-        parts.append('</div>')
-        if outperf:
-            names = ", ".join(html.escape(r["label"]) for r in outperf)
-            parts.append(f'<p style="color:#50c878;font-size:13px;margin-top:10px">'
-                         f'&#9650; Sterkest naa: {names}</p>')
-        if underperf:
-            names = ", ".join(html.escape(r["label"]) for r in underperf)
-            parts.append(f'<p style="color:#e05050;font-size:13px;margin-top:4px">'
-                         f'&#9660; Svakest: {names}</p>')
-        parts.append('</section>')
 
     # Instrument categories — sortert etter sektorscore (beste sektor foerst)
     def cat_sort_key(cat):
@@ -1600,9 +1705,9 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                 cls = "ok" if ratio_pt>=0.8 else ("mid" if ratio_pt>=0.4 else "bad")
                 pills += f'<span class="pt {cls}" title="{html.escape(pnote)}">{html.escape(plabel)}: {pts}/{maxpts}</span>'
             pills += '</div>'
-            meta = (f'W-RSI {fmt(r.get("wrsi"))} &bull; M-RSI {fmt(r.get("mrsi"))} &bull; '
-                    f'36WMA {fmt_pct(r.get("dist36w"))} &bull; 36MMA {fmt_pct(r.get("dist36m"))} &bull; '
-                    f'MACD W {macd_html(r.get("macd_w"))}')
+            meta = (f'M-RSI {fmt(r.get("mrsi"))} &bull; 3M-RSI {fmt(r.get("qrsi"))} &bull; '
+                    f'36M MA {fmt_pct(r.get("dist36m"))} &bull; 36Q MA {fmt_pct(r.get("dist36q"))} &bull; '
+                    f'MACD M {macd_html(r.get("macd_m"))} &bull; MACD 3M {macd_html(r.get("macd_q"))}')
             parts.append(
                 f'<section class="ratio-block" id="{anchor(r["rid"])}">'
                 f'<div class="ratio-head"><h2>{html.escape(r["label"])}</h2>'
@@ -1610,8 +1715,8 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                 f'<div class="meta">{meta}</div>'
                 f'{pills}'
                 f'<div class="charts-grid">')
-            for path, cap in [(r["chart_monthly"], "Maanedlig (36M MA)"),
-                              (r["chart_quarterly"], "3-maaneders (3-aars MA)")]:
+            for path, cap in [(r["chart_monthly"], "Maanedlig"),
+                              (r["chart_quarterly"], "3-maaneders")]:
                 if path in file_set:
                     parts.append(f'<figure><img src="{html.escape(path)}" alt="{html.escape(cap)}" loading="lazy">'
                                   f'<figcaption>{html.escape(cap)}</figcaption></figure>')
