@@ -37,6 +37,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests pandas matplotlib yfinance beautifulsoup4 feedparser pytz lxml numpy
 
+      - name: Backfill score history (one-time, idempotent)
+        if: ${{ hashFiles('scripts/backfill_history.py') != '' }}
+        env:
+          MPLBACKEND: Agg
+          FORCE_RUN: 'true'
+        run: |
+          # Rekonstruerer ~8 ukers score-historikk fra pris.
+          # Idempotent: ekte (ikke-backfilled) snapshots roeres ikke.
+          python scripts/backfill_history.py || true
+
       - name: Run generator
         env:
           MPLBACKEND: Agg
