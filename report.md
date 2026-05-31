@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-31T20:56:00.322794+02:00
+# Daglig rapport – 2026-05-31T21:20:38.415595+02:00
 
 ## Manglet/feilet
 
@@ -49,5 +49,5 @@
 | CEW | EM Currencies | 6. Valuta & Dollar | % | % | 71.39 | 
 | FXA | AUD | 6. Valuta & Dollar | % | % | 65.08 | 
 | BTC | BTC | 7. Crypto & Volatilitet | % | % | 47.25 | 
-| ETHA | ETH | 7. Crypto & Volatilitet | % | % | 43.39 | 
+| ETHA | ETH | 7. Crypto & Volatilitet | % | % | 43.38 | 
 | VIXY | VIX | 7. Crypto & Volatilitet | % | % | 31.4 | 
