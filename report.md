@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-05-31T10:42:50.482681+02:00
+# Daglig rapport – 2026-05-31T12:07:13.820328+02:00
 
 ## Manglet/feilet
 
@@ -24,13 +24,13 @@
 | HACK | Cybersecurity | 2. Tech & Halvledere | % | % | 71.94 | 
 | SKYY | Cloud | 2. Tech & Halvledere | % | % | 64.86 | 
 | BOTZ | Robotics/AI | 2. Tech & Halvledere | % | % | 62.72 | 
-| BCOM | Commodity bred | 3. Rawarer | % | % | 75.01 | 
-| USO | Olje (WTI) | 3. Rawarer | % | % | 69.35 | 
-| UNG | Naturgass | 3. Rawarer | % | % | 41.21 | 
-| COPX | Kobber miners | 3. Rawarer | % | % | 70.7 | 
-| XME | Metals/Mining | 3. Rawarer | % | % | 76.79 | 
-| XLE | Energy | 3. Rawarer | % | % | 66.39 | 
-| DBA | Agri/mat | 3. Rawarer | % | % | 65.43 | 
+| BCOM | Commodity bred | 3. Råvarer | % | % | 75.01 | 
+| USO | Olje (WTI) | 3. Råvarer | % | % | 69.35 | 
+| UNG | Naturgass | 3. Råvarer | % | % | 41.21 | 
+| COPX | Kobber miners | 3. Råvarer | % | % | 70.7 | 
+| XME | Metals/Mining | 3. Råvarer | % | % | 76.79 | 
+| XLE | Energy | 3. Råvarer | % | % | 66.39 | 
+| DBA | Agri/mat | 3. Råvarer | % | % | 65.43 | 
 | GLD | Gull | 4. Edelmetaller | % | % | 70.76 | 
 | SLV | Solv | 4. Edelmetaller | % | % | 69.68 | 
 | GDX | Gull miners | 4. Edelmetaller | % | % | 65.33 | 
