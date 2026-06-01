@@ -73,11 +73,12 @@ def score_at_cutoff(full_df, cutoff_ts):
     df = full_df[full_df.index <= cutoff_ts]
     if df is None or len(df) < 200:
         return None
-    daily, weekly, monthly = resample_frames(df)
+    daily, weekly, monthly, quarterly = resample_frames(df)
     entry = {"frames": {
-        "daily":   frame_summary(daily,   is_weekly=False),
-        "weekly":  frame_summary(weekly,  is_weekly=True),
-        "monthly": frame_summary(monthly, is_weekly=False),
+        "daily":     frame_summary(daily,     is_weekly=False),
+        "weekly":    frame_summary(weekly,    is_weekly=True),
+        "monthly":   frame_summary(monthly,   is_weekly=False),
+        "quarterly": frame_summary(quarterly, is_weekly=False),
     }}
     score, _ = northstar_score(entry)
     return score
