@@ -6,7 +6,7 @@
 |---|---:|---|---:|
 | Valuta | 59.0 | Noytral | 5 |
 | Renter | 58.3 | Noytral | 6 |
-| Crypto | 54.3 | Avvent | 3 |
+| Crypto | 54.0 | Avvent | 3 |
 | Edelmetaller | 44.6 | Avvent | 8 |
 | Rawarer | 38.5 | Avvent | 11 |
 | Aksjer | 35.2 | Avvent | 8 |
@@ -32,8 +32,8 @@ _Trend OK men ikke ideal entry._
 | 10yr UST | **61** | 52.8 | 48.9 | 49.6 | 4.5% | -0.5% |
 | Palladium | **60** | 39.6 | 42.9 | 51.1 | 16.4% | -11.9% |
 | DXY | **60** | 58.5 | 58.3 | 58.7 | 4.3% | 1.7% |
-| BTC | **57** | 29.5 | 38.8 | 46.0 | -2.7% | -16.0% |
 | Housing US | **56** | 41.9 | 53.7 | 57.8 | 12.4% | 3.4% |
+| BTC | **56** | 29.2 | 38.7 | 46.0 | -2.9% | -16.1% |
 
 ### Avvent
 _Stretched eller svak momentum._
@@ -41,7 +41,7 @@ _Stretched eller svak momentum._
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
 | Uranium miners | **54** | 46.0 | 48.7 | 56.8 | 30.5% | -1.6% |
-| ETH | **54** | 30.5 | 37.0 | 43.3 | -26.9% | -26.6% |
+| ETH | **54** | 30.5 | 37.0 | 43.3 | -26.8% | -26.6% |
 | Naturgass | **53** | 54.6 | 47.4 | 40.8 | -33.4% | -7.4% |
 | High Yield | **52** | 49.2 | 57.0 | 74.0 | 10.5% | 1.0% |
 | VIX | **52** | 32.1 | 36.7 | 31.7 | -54.2% | -19.8% |
