@@ -108,7 +108,7 @@ All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutnin
   </div>
   <div class="section">
     <h2>&#128221; Posisjoner &amp; anbefaling</h2>
-    <p class="muted" style="font-size:12px">Skriv inn n&aring;v&aelig;rende vekt (%) du allerede eier. Anbefalingen tar hensyn til eksisterende posisjoner.</p>
+    <p class="muted" style="font-size:12px">Topp 10 instrumenter etter score (fra Market Daily Report). Skriv inn n&aring;v&aelig;rende vekt (%) du allerede eier. Anbefalingen tar hensyn til eksisterende posisjoner.</p>
     <table id="posTable"><thead><tr>
       <th>Ratio/Instrument</th><th>Score</th><th>Eier %</th><th>M&aring;l %</th><th>Anbefaling</th>
     </tr></thead><tbody id="posBody"></tbody></table>
@@ -125,7 +125,7 @@ All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutnin
 <div class="section">
   <h2>&#8505;&#65039; Slik fungerer modellen</h2>
   <div class="legend">
-  <code>M&aring;l %</code> beregnes fra trend-score: kun ratioer/instrumenter med score &ge; 55 f&aring;r tildelt vekt. Vekt er proporsjonal med score over terskelen.<br>
+  <code>M&aring;l %</code> beregnes fra trend-score p&aring; topp 10 instrumenter: kun de med score &ge; 55 f&aring;r tildelt vekt. Vekt er proporsjonal med score over terskelen.<br>
   <code>Cash-buffer</code> (standard 15%) holdes alltid igjen f&oslash;r fordeling &mdash; du tar kun posisjoner n&aring;r noe ser lovende ut.<br>
   <code>Maks vekt</code> per posisjon hindrer at alt samles i &eacute;n id&eacute;.<br>
   <code>KJ&Oslash;P</code>: score &ge; 55 og du eier mindre enn m&aring;l. <code>LEGG TIL</code>: god score, litt under m&aring;l.<br>
@@ -180,15 +180,30 @@ async function init(){
   render();
 }
 
-// Bygg kandidatliste fra trend_ratios + instrument-scores
+// Bygg kandidatliste fra topp-10 instrumenter etter score (Market Daily Report)
 function candidates(){
-  const out = [];
-  (DATA.trend_ratios||[]).forEach(t=>{
-    out.push({ id: t.rid, label: t.label, score: t.score,
-      rsi: t.qrsi ?? t.mrsi, macd: t.macd_q ?? t.macd_m,
-      d36: t.dist36q ?? t.dist36m, d3yr: null, kind:"ratio" });
+  const assets = (DATA.summary && DATA.summary.assets) || {};
+  const arr = [];
+  Object.keys(assets).forEach(iid=>{
+    const a = assets[iid];
+    if(a.missing_data || a.northstar_score == null) return;
+    const w = (a.frames && a.frames.weekly) || {};
+    const m = (a.frames && a.frames.monthly) || {};
+    const q = (a.frames && a.frames.quarterly) || {};
+    arr.push({
+      id: iid,
+      label: (a.display_name || iid) + " (" + (a.symbol_label || iid) + ")",
+      score: a.northstar_score,
+      // bruk hoeyeste tidsramme for overbought-sjekk (3M, faller tilbake til M/W)
+      rsi: q.rsi14 ?? m.rsi14 ?? w.rsi14,
+      macd: q.macd_hist ?? m.macd_hist ?? w.macd_hist,
+      d36: q.dist_to_36MA ?? m.dist_to_36MA ?? w.dist_to_36MA,
+      sector: a.sector || "",
+      kind: "instrument"
+    });
   });
-  return out;
+  arr.sort((a,b)=>b.score-a.score);
+  return arr.slice(0, 10);   // topp 10
 }
 
 // Beregn mål-vekter fra score
