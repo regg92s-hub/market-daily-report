@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-01T23:55:21.300429+02:00
+# Daglig rapport – 2026-06-02T07:52:16.763866+02:00
 
 ## Manglet/feilet
 
@@ -8,10 +8,10 @@
 |---|---|---|---:|---:|---:|
 | UTEN | 10yr UST | 0. Renter & Spreads | % | % | 49.61 | 
 | 2S10S | 2s10s kurve | 0. Renter & Spreads | % | % | 55.13 | 
-| SCHP | 10yr realrente | 0. Renter & Spreads | % | % | 62.95 | 
-| TLT | 20yr UST | 0. Renter & Spreads | % | % | 47.05 | 
-| HYG | High Yield | 0. Renter & Spreads | % | % | 74.01 | 
-| LQD | IG Kreditt | 0. Renter & Spreads | % | % | 60.81 | 
+| SCHP | 10yr realrente | 0. Renter & Spreads | % | % | 67.07 | 
+| TLT | 20yr UST | 0. Renter & Spreads | % | % | 47.61 | 
+| HYG | High Yield | 0. Renter & Spreads | % | % | 77.17 | 
+| LQD | IG Kreditt | 0. Renter & Spreads | % | % | 62.2 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 76.75 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 78.47 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 70.97 | 
@@ -44,10 +44,10 @@
 | NLR | Nuclear energy | 5. Uranium & Energiomstilling | % | % | 58.82 | 
 | ICLN | Clean energy | 5. Uranium & Energiomstilling | % | % | 74.99 | 
 | UUP | DXY | 6. Valuta & Dollar | % | % | 58.7 | 
-| FXE | EUR/USD | 6. Valuta & Dollar | % | % | 58.73 | 
+| FXE | EUR/USD | 6. Valuta & Dollar | % | % | 58.9 | 
 | FXY | JPY | 6. Valuta & Dollar | % | % | 38.62 | 
-| CEW | EM Currencies | 6. Valuta & Dollar | % | % | 71.63 | 
-| FXA | AUD | 6. Valuta & Dollar | % | % | 63.91 | 
-| BTC | BTC | 7. Crypto & Volatilitet | % | % | 45.96 | 
-| ETHA | ETH | 7. Crypto & Volatilitet | % | % | 43.32 | 
+| CEW | EM Currencies | 6. Valuta & Dollar | % | % | 71.64 | 
+| FXA | AUD | 6. Valuta & Dollar | % | % | 64.22 | 
+| BTC | BTC | 7. Crypto & Volatilitet | % | % | 45.67 | 
+| ETHA | ETH | 7. Crypto & Volatilitet | % | % | 43.27 | 
 | VIXY | VIX | 7. Crypto & Volatilitet | % | % | 31.67 | 
