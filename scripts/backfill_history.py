@@ -1148,39 +1148,48 @@ for group in INSTRUMENT_GROUPS:
 
 # ─── VS GULL: relativ styrke mot gull per instrument ───────────
 # Northstar: vurder alt mot gull, ikke bare egen MA. Beregner hver
-# instrument-ratio mot GLD: over stigende 36W-MA = slaar gull.
+# instrument-ratio mot GLD over stigende 36-periode MA, paa flere
+# tidsrammer (ukentlig for badge, maanedlig + kvartal for rotasjon).
+def _vs_gold_state(ratio, ma_window=36, lookback=9):
+    if ratio is None or len(ratio) < ma_window + 4:
+        return None
+    ma = ratio.rolling(ma_window).mean()
+    last = float(ratio.iloc[-1])
+    ma_now = float(ma.iloc[-1]) if pd.notna(ma.iloc[-1]) else None
+    ma_prev = float(ma.iloc[-lookback]) if (len(ma) >= lookback and pd.notna(ma.iloc[-lookback])) else None
+    if ma_now is None:
+        return None
+    above = last > ma_now
+    rising = (ma_now > ma_prev) if ma_prev is not None else None
+    dist = (last-ma_now)/ma_now
+    if above and rising:   vstate, vcol = "Slaar gull", "#50c878"
+    elif above:            vstate, vcol = "Over gull-MA", "#7ec88a"
+    elif rising:           vstate, vcol = "Snur vs gull", "#f0a500"
+    else:                  vstate, vcol = "Taper mot gull", "#e05050"
+    return {"state": vstate, "col": vcol, "dist": dist, "beats": bool(above and rising)}
+
 gold_df = raw_cache.get("GLD")
 for iid, a in summary["assets"].items():
     if a.get("missing_data") or iid == "GLD" or gold_df is None:
-        a["vs_gold"] = None
+        a["vs_gold"] = None; a["vs_gold_m"] = None; a["vs_gold_q"] = None
         continue
     inst_df = raw_cache.get(iid)
     if inst_df is None:
-        a["vs_gold"] = None
+        a["vs_gold"] = None; a["vs_gold_m"] = None; a["vs_gold_q"] = None
         continue
     try:
         comb = pd.DataFrame({"i": inst_df["close_use"], "g": gold_df["close_use"]}).dropna()
         if len(comb) < 60:
-            a["vs_gold"] = None
+            a["vs_gold"] = None; a["vs_gold_m"] = None; a["vs_gold_q"] = None
             continue
-        ratio = (comb["i"]/comb["g"]).resample("W-FRI").last().dropna()
-        if len(ratio) < 40:
-            a["vs_gold"] = None
-            continue
-        ma = ratio.rolling(36).mean()
-        last = float(ratio.iloc[-1])
-        ma_now = float(ma.iloc[-1]) if pd.notna(ma.iloc[-1]) else None
-        ma_prev = float(ma.iloc[-9]) if (len(ma) >= 9 and pd.notna(ma.iloc[-9])) else None
-        above = (last > ma_now) if ma_now else None
-        rising = (ma_now > ma_prev) if (ma_now and ma_prev) else None
-        dist = ((last-ma_now)/ma_now) if ma_now else None
-        if above and rising:   vstate, vcol = "Slaar gull", "#50c878"
-        elif above:            vstate, vcol = "Over gull-MA", "#7ec88a"
-        elif rising:           vstate, vcol = "Snur vs gull", "#f0a500"
-        else:                  vstate, vcol = "Taper mot gull", "#e05050"
-        a["vs_gold"] = {"state": vstate, "col": vcol, "dist": dist}
+        rW = (comb["i"]/comb["g"]).resample("W-FRI").last().dropna()
+        rM = (comb["i"]/comb["g"]).resample("ME").last().dropna()
+        rQ = (comb["i"]/comb["g"]).resample("QE").last().dropna()
+        a["vs_gold"]   = _vs_gold_state(rW, 36, 9)   # ukentlig (badge)
+        a["vs_gold_m"] = _vs_gold_state(rM, 12, 3)    # maanedlig (1aar MA)
+        a["vs_gold_q"] = _vs_gold_state(rQ, 4, 2)     # kvartal (1aar MA)
     except Exception:
-        a["vs_gold"] = None
+        a["vs_gold"] = None; a["vs_gold_m"] = None; a["vs_gold_q"] = None
 
 # Sector scores
 sector_scores = {}
@@ -1257,32 +1266,35 @@ if ten_df is not None and not ten_df.empty:
             regime["yields"] = {"label": f"Fallende ({ten_last:.2f})", "col": "#50c878",
                                 "note": "10yr under 200d MA"}
 
-# Stock-vs-gold regime (Northstar kapitalrotasjon): hvor mange aksjer slaar gull?
-equity_ids = [i["id"] for g in INSTRUMENT_GROUPS if g["sector"] in ("Aksjer","Tech") for i in g["instruments"]]
-beats = []; loses = []
-for iid in equity_ids:
-    vg = summary["assets"].get(iid,{}).get("vs_gold")
-    if not vg:
-        continue
-    sym = summary["assets"].get(iid,{}).get("symbol_label", iid)
-    if vg.get("state","").startswith("Slaar"):
-        beats.append(sym)
-    else:
-        loses.append(sym)
-total_eq = len(beats) + len(loses)
-if total_eq > 0:
-    beat_str = ", ".join(beats) if beats else "ingen"
-    lose_str = ", ".join(loses) if loses else "ingen"
-    detail = f"Slaar gull: {beat_str}. Taper: {lose_str}."
-    if len(beats) == 0:
-        regime["rotation"] = {"label": f"0 av {total_eq} slaar gull", "col": "#e05050",
-                              "note": f"Alle aksjer i bear market vs gull - kapitalrotasjon paagaar. {detail}"}
-    elif len(beats) < total_eq/2:
-        regime["rotation"] = {"label": f"{len(beats)} av {total_eq} slaar gull", "col": "#f0a500",
-                              "note": f"Faa aksjer slaar gull - rotasjon mot hard assets. {detail}"}
-    else:
-        regime["rotation"] = {"label": f"{len(beats)} av {total_eq} slaar gull", "col": "#50c878",
-                              "note": f"Aksjer holder foelge med gull. {detail}"}
+# Kapitalrotasjon (Northstar): hovedinstrumenter vs gull paa maanedlig + 3M.
+# Disse er valgt for aa fange store trender paa tvers av aktivaklasser.
+ROTATION_MAIN = ["SPY","EEM","USO","URNM","XLE","SLV","BTC","NOK","DBA","ACWI","VNQ"]
+def _count_beats(field):
+    beats, loses = [], []
+    for iid in ROTATION_MAIN:
+        a = summary["assets"].get(iid, {})
+        vg = a.get(field)
+        if not vg:
+            continue
+        sym = a.get("symbol_label", iid)
+        (beats if vg.get("beats") else loses).append(sym)
+    return beats, loses
+
+beats_m, loses_m = _count_beats("vs_gold_m")
+beats_q, loses_q = _count_beats("vs_gold_q")
+tot_m = len(beats_m) + len(loses_m)
+tot_q = len(beats_q) + len(loses_q)
+if tot_m > 0 or tot_q > 0:
+    nb = len(beats_m)  # bruk maanedlig for farge/label
+    frac = nb / tot_m if tot_m else 0
+    if frac == 0:       rcol = "#e05050"; rnote = "Alle hovedinstrumenter i bear vs gull - kraftig rotasjon mot hard assets."
+    elif frac < 0.5:    rcol = "#f0a500"; rnote = "Faa hovedinstrumenter slaar gull - rotasjon mot hard assets paagaar."
+    else:               rcol = "#50c878"; rnote = "Flertallet slaar gull - risk-on holder foelge."
+    detail = (f"Maanedlig - slaar gull: {', '.join(beats_m) or 'ingen'}; taper: {', '.join(loses_m) or 'ingen'}. "
+              f"3M - slaar gull: {', '.join(beats_q) or 'ingen'}; taper: {', '.join(loses_q) or 'ingen'}.")
+    regime["rotation"] = {
+        "label": f"M: {len(beats_m)}/{tot_m} | 3M: {len(beats_q)}/{tot_q} slaar gull",
+        "col": rcol, "note": f"{rnote} {detail}"}
 
 # ─── MAKRO-REGIME CHARTS (3-maaneders) ─────────────────────────
 def plot_macro_3m(series, title, out_path, zero_line=False):
@@ -1327,6 +1339,24 @@ if fed_df is not None and not fed_df.empty:
 if ten_df is not None and not ten_df.empty:
     if plot_macro_3m(ten_df["close_use"], "10yr yield - 3-maaneders", CHARTS/"macro_10yr.png"):
         regime.setdefault("yields",{})["chart"] = "charts/macro_10yr.png"
+
+# Kapitalrotasjon-chart: GLD/ACWI (Northstar sin kjerne-ratio) M + 3M
+acwi_df = raw_cache.get("ACWI")
+if gold_df is not None and acwi_df is not None:
+    try:
+        rc = pd.DataFrame({"g": gold_df["close_use"], "a": acwi_df["close_use"]}).dropna()
+        if len(rc) > 200:
+            rot_ratio = (rc["g"]/rc["a"])
+            mdf = pd.DataFrame({"close_use": rot_ratio.resample("ME").last().dropna(), "volume": np.nan})
+            qdf = pd.DataFrame({"close_use": rot_ratio.resample("QE").last().dropna(), "volume": np.nan})
+            plot_compact(mdf.tail(180), "GLD/ACWI - maanedlig", CHARTS/"rotation_gld_acwi_m.png",
+                         ma_short=12, ma_long=36, ma_short_label="SMA12 (1aar)", ma_label_long="SMA36 (3aar)")
+            plot_compact(qdf.tail(120), "GLD/ACWI - 3-maaneders", CHARTS/"rotation_gld_acwi_q.png",
+                         ma_short=4, ma_long=12, ma_short_label="SMA4 (1aar)", ma_label_long="SMA12 (3aar)")
+            regime.setdefault("rotation",{})["chart_m"] = "charts/rotation_gld_acwi_m.png"
+            regime.setdefault("rotation",{})["chart_q"] = "charts/rotation_gld_acwi_q.png"
+    except Exception as e:
+        log(f"rotation chart error: {e}")
 
 # Ratio charts + ratio scoring
 log("Ratio charts...")
@@ -1622,6 +1652,25 @@ def delta_html(delta):
         return f'<span class="delta-dn">&#9660; {delta:.0f}</span>'
     return '<span class="delta-flat">&#8226; 0</span>'
 
+# DPM-stil aktivaklasse per instrument (underklasse-henvisning).
+# Brukes for Trinn A sjanger-rangering (senere) og som merke per instrument.
+ASSET_SUBCLASS = {
+    # Stocks
+    "SPY":"Stocks","QQQ":"Stocks","IWM":"Stocks","ACWI":"Stocks","EXSA":"Stocks","EEM":"Stocks","VNQ":"Stocks",
+    # Tech
+    "SOXQ":"Tech","HACK":"Tech","BOTZ":"Tech",
+    # Bonds / renter & valuta
+    "TLT":"Bonds","HYG":"Bonds","UUP":"Cash","FXE":"Cash","CEW":"Cash",
+    # Edelmetaller
+    "GLD":"Edelmetaller","SLV":"Edelmetaller","GDX":"Edelmetaller","GDXJ":"Edelmetaller",
+    "SIL":"Edelmetaller","SILJ":"Edelmetaller","PPLT":"Edelmetaller","PALL":"Edelmetaller",
+    # Commodity
+    "BCOM":"Commodity","USO":"Commodity","UNG":"Commodity","COPX":"Commodity",
+    "XME":"Commodity","XLE":"Commodity","DBA":"Commodity","URA":"Commodity","URNM":"Commodity",
+    # Crypto
+    "BTC":"Crypto","ETHA":"Crypto",
+}
+
 SECTOR_ANCHORS = {
     "Aksjer": "sec-aksjer", "Tech": "sec-tech", "Edelmetaller": "sec-edelmetaller",
     "Rawarer": "sec-rawarer", "Crypto": "sec-crypto",
@@ -1665,6 +1714,19 @@ def regime_stripe_html(regime):
                 f'<figcaption>{html.escape(cname)} (3-maaneders)</figcaption></figure>')
     if chart_figs:
         out.append('<div class="charts-grid" style="margin-top:12px">' + "".join(chart_figs) + '</div>')
+    # Kapitalrotasjon GLD/ACWI (Northstar kjerne-ratio) - maanedlig + 3M
+    rot = regime.get("rotation") or {}
+    rot_figs = []
+    if rot.get("chart_m"):
+        rot_figs.append(f'<figure><img src="{html.escape(rot["chart_m"])}" alt="GLD/ACWI maanedlig" loading="lazy">'
+                        f'<figcaption>GLD / ACWI - maanedlig (kapitalrotasjon)</figcaption></figure>')
+    if rot.get("chart_q"):
+        rot_figs.append(f'<figure><img src="{html.escape(rot["chart_q"])}" alt="GLD/ACWI 3-maaneders" loading="lazy">'
+                        f'<figcaption>GLD / ACWI - 3-maaneders (kapitalrotasjon)</figcaption></figure>')
+    if rot_figs:
+        out.append('<p style="color:var(--muted);font-size:12px;margin-top:14px">'
+                   '<strong>Kapitalrotasjon</strong> (Northstar kjerne-ratio): naar GLD/ACWI bryter opp = rotasjon mot hard assets bekreftet.</p>')
+        out.append('<div class="charts-grid">' + "".join(rot_figs) + '</div>')
     out.append('</section>')
     return "".join(out)
 
@@ -1862,6 +1924,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
                 f'<div class="inst-head">'
                 f'<h3>{html.escape(a.get("display_name") or iid)}</h3>'
                 f'<span class="ticker">{html.escape(a.get("symbol_label") or iid)}</span>'
+                f'<span class="ticker" style="color:#5aa9ff;font-weight:600">{html.escape(ASSET_SUBCLASS.get(iid,""))}</span>'
                 f'<span class="pill" style="background:{c}20;color:{c};border:1px solid {c}40">Score {sc} &bull; {html.escape(slabel)}</span>'
                 f'<span class="delta">{delta_html(a.get("score_delta"))} vs forrige uke</span>'
                 f'</div>'
