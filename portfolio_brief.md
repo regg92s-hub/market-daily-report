@@ -4,7 +4,7 @@
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 55.0 | Noytral | 2 |
+| Crypto | 55.5 | Noytral | 2 |
 | Edelmetaller | 44.4 | Avvent | 8 |
 | Rawarer | 37.0 | Avvent | 9 |
 | Aksjer | 34.3 | Unnga/trim | 7 |
@@ -26,9 +26,9 @@ _Trend OK men ikke ideal entry._
 | EUR/USD | **65** | 45.1 | 49.4 | 58.7 | 6.4% | -0.1% |
 | DXY | **60** | 58.5 | 58.3 | 58.7 | 4.3% | 1.7% |
 | Palladium | **60** | 40.9 | 43.3 | 51.4 | 17.0% | -11.4% |
+| BTC | **56** | 23.3 | 36.0 | 44.5 | -7.1% | -19.7% |
 | Housing US | **55** | 44.6 | 54.7 | 58.3 | 12.9% | 3.9% |
-| BTC | **55** | 22.4 | 35.5 | 44.2 | -7.9% | -20.4% |
-| ETH | **55** | 24.1 | 35.3 | 42.6 | -30.1% | -29.8% |
+| ETH | **55** | 24.4 | 35.4 | 42.6 | -30.0% | -29.7% |
 
 ### Avvent
 _Stretched eller svak momentum._
