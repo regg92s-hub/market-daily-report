@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-02T10:55:24.148652+02:00
+# Daglig rapport – 2026-06-02T13:31:29.202622+02:00
 
 ## Manglet/feilet
 
@@ -16,7 +16,7 @@
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 78.47 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 70.97 | 
 | ACWI | ACWI | 1. Aksjer | % | % | 77.3 | 
-| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 70.48 | 
+| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 70.46 | 
 | EEM | MSCI EM | 1. Aksjer | % | % | 78.42 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 57.76 | 
 | IAI | Broker/Dealers | 1. Aksjer | % | % | 67.82 | 
@@ -48,6 +48,6 @@
 | FXY | JPY | 6. Valuta & Dollar | % | % | 38.62 | 
 | CEW | EM Currencies | 6. Valuta & Dollar | % | % | 71.64 | 
 | FXA | AUD | 6. Valuta & Dollar | % | % | 64.22 | 
-| BTC | BTC | 7. Crypto & Volatilitet | % | % | 45.39 | 
+| BTC | BTC | 7. Crypto & Volatilitet | % | % | 45.24 | 
 | ETHA | ETH | 7. Crypto & Volatilitet | % | % | 43.19 | 
 | VIXY | VIX | 7. Crypto & Volatilitet | % | % | 31.67 | 
