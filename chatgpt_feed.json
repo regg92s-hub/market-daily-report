@@ -1,6 +1,6 @@
 {
   "spec": "chatgpt-feed-v2",
-  "generated_utc": "2026-06-02T11:33:53Z",
+  "generated_utc": "2026-06-02T11:43:02Z",
   "mirrors": {
     "primary": "https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages/chatgpt_feed.json",
     "jsdelivr": "https://cdn.jsdelivr.net/gh/regg92s-hub/market-daily-report@gh-pages/chatgpt_feed.json",
@@ -10,91 +10,22 @@
   },
   "tickers": [
     {
-      "ticker": "UTEN",
-      "display_name": "10yr UST",
-      "symbol_label": "UTEN",
-      "resolved_symbol": "UTEN",
-      "category": {
-        "key": "renter_spreads",
-        "title": "0. Renter & Spreads",
-        "description": "10yr yield, yieldkurve, realrente, kredittstress. Forteller makroregime."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 48.942205096332316,
-        "monthly_rsi14": 49.605650416311164,
-        "weekly_macd": -0.027430282777494597,
-        "monthly_macd": 0.6718296162082638
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "2S10S",
-      "display_name": "2s10s kurve",
-      "symbol_label": "FRED",
-      "resolved_symbol": "FRED:DGS10-DGS2",
-      "category": {
-        "key": "renter_spreads",
-        "title": "0. Renter & Spreads",
-        "description": "10yr yield, yieldkurve, realrente, kredittstress. Forteller makroregime."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 42.42638136454913,
-        "monthly_rsi14": 55.13202434602131,
-        "weekly_macd": -0.030167110092434224,
-        "monthly_macd": 0.15975980477479068
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "SCHP",
-      "display_name": "10yr realrente",
-      "symbol_label": "SCHP",
-      "resolved_symbol": "SCHP",
-      "category": {
-        "key": "renter_spreads",
-        "title": "0. Renter & Spreads",
-        "description": "10yr yield, yieldkurve, realrente, kredittstress. Forteller makroregime."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 60.02139867243602,
-        "monthly_rsi14": 67.06691008439924,
-        "weekly_macd": 0.11307622822046781,
-        "monthly_macd": 0.5567043974552313
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
       "ticker": "TLT",
       "display_name": "20yr UST",
       "symbol_label": "TLT",
       "resolved_symbol": "TLT",
       "category": {
-        "key": "renter_spreads",
-        "title": "0. Renter & Spreads",
-        "description": "10yr yield, yieldkurve, realrente, kredittstress. Forteller makroregime."
+        "key": "renter_valuta",
+        "title": "0. Renter & Valuta",
+        "description": "Lange renter, kreditt og dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
       },
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 48.78684051712165,
-        "monthly_rsi14": 47.61067794400973,
-        "weekly_macd": -0.3170390593649728,
-        "monthly_macd": -0.7845373671993627
+        "weekly_rsi14": 48.78683988464816,
+        "monthly_rsi14": 47.61067796639269,
+        "weekly_macd": -0.3170387653417208,
+        "monthly_macd": -0.7845385363827404
       },
       "charts": {
         "weekly": null,
@@ -107,17 +38,17 @@
       "symbol_label": "HYG",
       "resolved_symbol": "HYG",
       "category": {
-        "key": "renter_spreads",
-        "title": "0. Renter & Spreads",
-        "description": "10yr yield, yieldkurve, realrente, kredittstress. Forteller makroregime."
+        "key": "renter_valuta",
+        "title": "0. Renter & Valuta",
+        "description": "Lange renter, kreditt og dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
       },
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 62.232541611899094,
-        "monthly_rsi14": 77.1701075462858,
-        "weekly_macd": 0.49896698090849156,
-        "monthly_macd": 2.917544860632887
+        "weekly_rsi14": 62.23255475129749,
+        "monthly_rsi14": 77.17026704258339,
+        "weekly_macd": 0.4989668684495854,
+        "monthly_macd": 2.9175443138380217
       },
       "charts": {
         "weekly": null,
@@ -125,22 +56,68 @@
       }
     },
     {
-      "ticker": "LQD",
-      "display_name": "IG Kreditt",
-      "symbol_label": "LQD",
-      "resolved_symbol": "LQD",
+      "ticker": "UUP",
+      "display_name": "DXY",
+      "symbol_label": "UUP",
+      "resolved_symbol": "UUP",
       "category": {
-        "key": "renter_spreads",
-        "title": "0. Renter & Spreads",
-        "description": "10yr yield, yieldkurve, realrente, kredittstress. Forteller makroregime."
+        "key": "renter_valuta",
+        "title": "0. Renter & Valuta",
+        "description": "Lange renter, kreditt og dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
       },
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 54.744231228815316,
-        "monthly_rsi14": 62.20121013842027,
-        "weekly_macd": 0.248207814279354,
-        "monthly_macd": 2.5127045725488983
+        "weekly_rsi14": 58.25027854861918,
+        "monthly_rsi14": 58.701462778851536,
+        "weekly_macd": 0.16586801675718377,
+        "monthly_macd": 0.4072613391965092
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "FXE",
+      "display_name": "EUR/USD",
+      "symbol_label": "FXE",
+      "resolved_symbol": "FXE",
+      "category": {
+        "key": "renter_valuta",
+        "title": "0. Renter & Valuta",
+        "description": "Lange renter, kreditt og dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": 49.788344729454195,
+        "monthly_rsi14": 58.90192582718963,
+        "weekly_macd": 0.15484138951956083,
+        "monthly_macd": 2.653581218122028
+      },
+      "charts": {
+        "weekly": null,
+        "monthly": null
+      }
+    },
+    {
+      "ticker": "CEW",
+      "display_name": "EM Currencies",
+      "symbol_label": "CEW",
+      "resolved_symbol": "CEW",
+      "category": {
+        "key": "renter_valuta",
+        "title": "0. Renter & Valuta",
+        "description": "Lange renter, kreditt og dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
+      },
+      "metrics": {
+        "dist_36wma": null,
+        "dist_36mma": null,
+        "weekly_rsi14": 60.80582177959971,
+        "monthly_rsi14": 71.63704764173846,
+        "weekly_macd": 0.19001228362317235,
+        "monthly_macd": 0.7584998070308835
       },
       "charts": {
         "weekly": null,
@@ -160,10 +137,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 74.0208428383225,
-        "monthly_rsi14": 76.75147061132665,
-        "weekly_macd": 23.382604658998048,
-        "monthly_macd": 60.161080867446
+        "weekly_rsi14": 74.02084188567855,
+        "monthly_rsi14": 76.75146567671766,
+        "weekly_macd": 23.382604100508274,
+        "monthly_macd": 60.161082898133714
       },
       "charts": {
         "weekly": null,
@@ -183,10 +160,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 77.94082890063358,
-        "monthly_rsi14": 78.47074578324583,
-        "weekly_macd": 35.25463974692991,
-        "monthly_macd": 68.95345951644913
+        "weekly_rsi14": 77.9408214222738,
+        "monthly_rsi14": 78.47073861055769,
+        "weekly_macd": 35.25463951143604,
+        "monthly_macd": 68.95346220358215
       },
       "charts": {
         "weekly": null,
@@ -206,10 +183,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 68.9283567231338,
-        "monthly_rsi14": 70.96647630893493,
-        "weekly_macd": 11.113951311603046,
-        "monthly_macd": 21.107915583283273
+        "weekly_rsi14": 68.92835798690963,
+        "monthly_rsi14": 70.9664743387954,
+        "weekly_macd": 11.11395159132087,
+        "monthly_macd": 21.10791583621966
       },
       "charts": {
         "weekly": null,
@@ -229,10 +206,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 72.18739329443481,
-        "monthly_rsi14": 77.30049902682596,
-        "weekly_macd": 4.950250993824795,
-        "monthly_macd": 12.885412718114566
+        "weekly_rsi14": 72.18739297100139,
+        "monthly_rsi14": 77.30050283579448,
+        "weekly_macd": 4.9502509683695735,
+        "monthly_macd": 12.885413250972505
       },
       "charts": {
         "weekly": null,
@@ -252,10 +229,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 62.94318372556161,
-        "monthly_rsi14": 70.46285069600512,
-        "weekly_macd": 1.313836442264872,
-        "monthly_macd": 4.0274610354437
+        "weekly_rsi14": 63.00347677424781,
+        "monthly_rsi14": 70.48979051114235,
+        "weekly_macd": 1.315431928126607,
+        "monthly_macd": 4.029056334248068
       },
       "charts": {
         "weekly": null,
@@ -275,10 +252,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 72.7387585705885,
-        "monthly_rsi14": 78.41808254532285,
-        "weekly_macd": 3.5736255430970587,
-        "monthly_macd": 6.715507898012994
+        "weekly_rsi14": 72.73875862507344,
+        "monthly_rsi14": 78.4180809072785,
+        "weekly_macd": 3.5736255449664966,
+        "monthly_macd": 6.715507941392637
       },
       "charts": {
         "weekly": null,
@@ -298,33 +275,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 53.739291765276775,
-        "monthly_rsi14": 57.76168245766988,
-        "weekly_macd": 1.6615187238437557,
-        "monthly_macd": 3.235391594161584
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "IAI",
-      "display_name": "Broker/Dealers",
-      "symbol_label": "IAI",
-      "resolved_symbol": "IAI",
-      "category": {
-        "key": "aksjer",
-        "title": "1. Aksjer",
-        "description": "Bred aksjeeksponering, vekstsyklus og regional styrke."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 61.18740939761924,
-        "monthly_rsi14": 67.81781621713347,
-        "weekly_macd": 2.3626166964622826,
-        "monthly_macd": 16.013324233255418
+        "weekly_rsi14": 53.73929202618641,
+        "monthly_rsi14": 57.76168552023769,
+        "weekly_macd": 1.6615187292207594,
+        "monthly_macd": 3.235391697787577
       },
       "charts": {
         "weekly": null,
@@ -344,10 +298,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 86.59043923829074,
-        "monthly_rsi14": 87.54035710914394,
-        "weekly_macd": 11.400932455175464,
-        "monthly_macd": 14.116941216816961
+        "weekly_rsi14": 86.59044046827215,
+        "monthly_rsi14": 87.54035854025044,
+        "weekly_macd": 11.40093243986999,
+        "monthly_macd": 14.116941163783295
       },
       "charts": {
         "weekly": null,
@@ -367,33 +321,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 75.06507536498896,
-        "monthly_rsi14": 74.61560366700196,
-        "weekly_macd": 4.182331937915237,
-        "monthly_macd": 6.973383133890593
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "SKYY",
-      "display_name": "Cloud",
-      "symbol_label": "SKYY",
-      "resolved_symbol": "SKYY",
-      "category": {
-        "key": "tech",
-        "title": "2. Tech & Halvledere",
-        "description": "Teknologilederskap og AI-infrastruktur."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 73.08121196029595,
-        "monthly_rsi14": 68.16501711449911,
-        "weekly_macd": 4.670197613284145,
-        "monthly_macd": 10.104107256161768
+        "weekly_rsi14": 75.06507532275403,
+        "monthly_rsi14": 74.61560186750464,
+        "weekly_macd": 4.182331938165618,
+        "monthly_macd": 6.973383116266163
       },
       "charts": {
         "weekly": null,
@@ -413,10 +344,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 62.58195397819282,
-        "monthly_rsi14": 63.349996045679625,
-        "weekly_macd": 1.239249160717577,
-        "monthly_macd": 2.57241982058148
+        "weekly_rsi14": 62.58195398026228,
+        "monthly_rsi14": 63.34999665917824,
+        "weekly_macd": 1.2392491605809397,
+        "monthly_macd": 2.5724198361274304
       },
       "charts": {
         "weekly": null,
@@ -436,10 +367,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 66.2916610351989,
-        "monthly_rsi14": 75.8248715284228,
-        "weekly_macd": 1.146858510192704,
-        "monthly_macd": 1.2999977573076489
+        "weekly_rsi14": 66.29166104263709,
+        "monthly_rsi14": 75.82487309248323,
+        "weekly_macd": 1.1468585100554947,
+        "monthly_macd": 1.299997748241859
       },
       "charts": {
         "weekly": null,
@@ -505,10 +436,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 62.06144969950233,
-        "monthly_rsi14": 71.44662242499336,
-        "weekly_macd": 5.05883479329222,
-        "monthly_macd": 13.085117650632569
+        "weekly_rsi14": 62.06144969295756,
+        "monthly_rsi14": 71.4466227529578,
+        "weekly_macd": 5.058834794042383,
+        "monthly_macd": 13.085117741689572
       },
       "charts": {
         "weekly": null,
@@ -528,10 +459,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 65.38289251282578,
-        "monthly_rsi14": 77.4640952779819,
-        "weekly_macd": 5.729044368159975,
-        "monthly_macd": 17.56746468925803
+        "weekly_rsi14": 65.3828924693556,
+        "monthly_rsi14": 77.46409433425768,
+        "weekly_macd": 5.729044372841855,
+        "monthly_macd": 17.567464577360226
       },
       "charts": {
         "weekly": null,
@@ -551,10 +482,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 57.08999095836791,
-        "monthly_rsi14": 67.47641551415924,
-        "weekly_macd": 2.7471633411620715,
-        "monthly_macd": 4.653320616349369
+        "weekly_rsi14": 57.08999092579835,
+        "monthly_rsi14": 67.4764154910851,
+        "weekly_macd": 2.7471633464710905,
+        "monthly_macd": 4.653320657049122
       },
       "charts": {
         "weekly": null,
@@ -574,10 +505,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 58.12907290658767,
-        "monthly_rsi14": 65.35077375850679,
-        "weekly_macd": 0.4659987860433823,
-        "monthly_macd": 1.359145484541184
+        "weekly_rsi14": 58.12907286253147,
+        "monthly_rsi14": 65.35076696336297,
+        "weekly_macd": 0.46599878546524565,
+        "monthly_macd": 1.3591454786560213
       },
       "charts": {
         "weekly": null,
@@ -643,10 +574,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 48.4336529372537,
-        "monthly_rsi14": 63.181629630950084,
-        "weekly_macd": 1.4884701434501721,
-        "monthly_macd": 15.170210836564067
+        "weekly_rsi14": 48.43365293726123,
+        "monthly_rsi14": 63.18162957069697,
+        "weekly_macd": 1.4884701434499874,
+        "monthly_macd": 15.170210843472077
       },
       "charts": {
         "weekly": null,
@@ -666,10 +597,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 49.00150373055504,
-        "monthly_rsi14": 63.00749561839209,
-        "weekly_macd": 2.44488258067544,
-        "monthly_macd": 21.14892003256321
+        "weekly_rsi14": 49.001503731455635,
+        "monthly_rsi14": 63.007495393471764,
+        "weekly_macd": 2.444882582321739,
+        "monthly_macd": 21.148920130253373
       },
       "charts": {
         "weekly": null,
@@ -689,10 +620,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 51.46094625772412,
-        "monthly_rsi14": 65.326608375776,
-        "weekly_macd": 3.290290808699396,
-        "monthly_macd": 16.672896338359877
+        "weekly_rsi14": 51.460946249413944,
+        "monthly_rsi14": 65.32660840894229,
+        "weekly_macd": 3.290290805013214,
+        "monthly_macd": 16.672896325625757
       },
       "charts": {
         "weekly": null,
@@ -712,10 +643,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 51.892283869832085,
-        "monthly_rsi14": 65.27499696936371,
-        "weekly_macd": 1.0455375015685107,
-        "monthly_macd": 5.59914574895943
+        "weekly_rsi14": 51.89228387109688,
+        "monthly_rsi14": 65.27499676669723,
+        "weekly_macd": 1.0455375019697186,
+        "monthly_macd": 5.599145692482601
       },
       "charts": {
         "weekly": null,
@@ -781,10 +712,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 51.457627662423626,
-        "monthly_rsi14": 61.01362748892784,
-        "weekly_macd": 1.3974697708055288,
-        "monthly_macd": 7.2992671321393985
+        "weekly_rsi14": 51.45762766214929,
+        "monthly_rsi14": 61.01362754201231,
+        "weekly_macd": 1.3974697707437969,
+        "monthly_macd": 7.299267141926727
       },
       "charts": {
         "weekly": null,
@@ -804,171 +735,10 @@
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 48.65328929210294,
-        "monthly_rsi14": 56.75533276045611,
-        "weekly_macd": 0.7165139086316259,
-        "monthly_macd": 6.888061097517429
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "NLR",
-      "display_name": "Nuclear energy",
-      "symbol_label": "NLR",
-      "resolved_symbol": "NLR",
-      "category": {
-        "key": "uranium",
-        "title": "5. Uranium & Energiomstilling",
-        "description": "Northstar bullish roadmap. Venter pa $100 breakout."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 47.248622030185444,
-        "monthly_rsi14": 58.82272418959255,
-        "weekly_macd": 0.7324306505982747,
-        "monthly_macd": 17.313558730749136
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "ICLN",
-      "display_name": "Clean energy",
-      "symbol_label": "ICLN",
-      "resolved_symbol": "ICLN",
-      "category": {
-        "key": "uranium",
-        "title": "5. Uranium & Energiomstilling",
-        "description": "Northstar bullish roadmap. Venter pa $100 breakout."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 76.71633881472725,
-        "monthly_rsi14": 74.98821157230346,
-        "weekly_macd": 1.6269178199916503,
-        "monthly_macd": 1.9198340768815605
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "UUP",
-      "display_name": "DXY",
-      "symbol_label": "UUP",
-      "resolved_symbol": "UUP",
-      "category": {
-        "key": "valuta",
-        "title": "6. Valuta & Dollar",
-        "description": "Dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 58.250278528578804,
-        "monthly_rsi14": 58.70146360182127,
-        "weekly_macd": 0.16586801645879135,
-        "monthly_macd": 0.4072614116642157
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "FXE",
-      "display_name": "EUR/USD",
-      "symbol_label": "FXE",
-      "resolved_symbol": "FXE",
-      "category": {
-        "key": "valuta",
-        "title": "6. Valuta & Dollar",
-        "description": "Dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 49.788344359300496,
-        "monthly_rsi14": 58.901934384962914,
-        "weekly_macd": 0.1548415431830108,
-        "monthly_macd": 2.653582681356525
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "FXY",
-      "display_name": "JPY",
-      "symbol_label": "FXY",
-      "resolved_symbol": "FXY",
-      "category": {
-        "key": "valuta",
-        "title": "6. Valuta & Dollar",
-        "description": "Dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 40.64200455499895,
-        "monthly_rsi14": 38.623048490487065,
-        "weekly_macd": -0.5488224700862645,
-        "monthly_macd": -1.7486471716205045
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "CEW",
-      "display_name": "EM Currencies",
-      "symbol_label": "CEW",
-      "resolved_symbol": "CEW",
-      "category": {
-        "key": "valuta",
-        "title": "6. Valuta & Dollar",
-        "description": "Dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 60.80582178112261,
-        "monthly_rsi14": 71.6370489342134,
-        "weekly_macd": 0.19001228364265188,
-        "monthly_macd": 0.7584998167052106
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "FXA",
-      "display_name": "AUD",
-      "symbol_label": "FXA",
-      "resolved_symbol": "FXA",
-      "category": {
-        "key": "valuta",
-        "title": "6. Valuta & Dollar",
-        "description": "Dollar-regimet. Northstar Milkshake Arc: bearish USD langsiktig."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 62.894460563496004,
-        "monthly_rsi14": 64.2200680734747,
-        "weekly_macd": 1.306175398991627,
-        "monthly_macd": 1.8130680176756755
+        "weekly_rsi14": 48.653289292154746,
+        "monthly_rsi14": 56.75533284611261,
+        "weekly_macd": 0.7165139086616179,
+        "monthly_macd": 6.888061118565133
       },
       "charts": {
         "weekly": null,
@@ -982,16 +752,16 @@
       "resolved_symbol": "BTC-USD",
       "category": {
         "key": "crypto",
-        "title": "7. Crypto & Volatilitet",
+        "title": "6. Crypto",
         "description": "Risiko-on spekulasjon og likviditetsindikator."
       },
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 37.349181540715044,
-        "monthly_rsi14": 45.23614870172661,
-        "weekly_macd": -4338.058553019495,
-        "monthly_macd": 2320.30189633822
+        "weekly_rsi14": 37.42430821050641,
+        "monthly_rsi14": 45.276272288507386,
+        "weekly_macd": -4331.151412706109,
+        "monthly_macd": 2327.209036651606
       },
       "charts": {
         "weekly": null,
@@ -1005,39 +775,16 @@
       "resolved_symbol": "ETH-USD",
       "category": {
         "key": "crypto",
-        "title": "7. Crypto & Volatilitet",
+        "title": "6. Crypto",
         "description": "Risiko-on spekulasjon og likviditetsindikator."
       },
       "metrics": {
         "dist_36wma": null,
         "dist_36mma": null,
-        "weekly_rsi14": 36.70659532670743,
-        "monthly_rsi14": 43.186019829039296,
-        "weekly_macd": -232.94498149403626,
-        "monthly_macd": -126.50280290073943
-      },
-      "charts": {
-        "weekly": null,
-        "monthly": null
-      }
-    },
-    {
-      "ticker": "VIXY",
-      "display_name": "VIX",
-      "symbol_label": "VIXY",
-      "resolved_symbol": "VIXY",
-      "category": {
-        "key": "crypto",
-        "title": "7. Crypto & Volatilitet",
-        "description": "Risiko-on spekulasjon og likviditetsindikator."
-      },
-      "metrics": {
-        "dist_36wma": null,
-        "dist_36mma": null,
-        "weekly_rsi14": 36.70370965167637,
-        "monthly_rsi14": 31.66711509648566,
-        "weekly_macd": -2.114334862163453,
-        "monthly_macd": -35.292502107801056
+        "weekly_rsi14": 36.75559002840824,
+        "monthly_rsi14": 43.206679325083414,
+        "weekly_macd": -232.75034229353741,
+        "monthly_macd": -126.30816370024058
       },
       "charts": {
         "weekly": null,

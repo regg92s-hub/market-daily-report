@@ -36,7 +36,9 @@ td{padding:6px 9px;border-bottom:1px solid #1e2530;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 .pill{display:inline-block;padding:2px 8px;border-radius:7px;font-size:12px;font-weight:700}
 .rec{font-weight:700}
-.rec.buy{color:#50c878}.rec.add{color:#7ec88a}.rec.hold{color:#9aa7b5}.rec.trim{color:#f0a500}.rec.sell{color:#e05050}
+.rec.buy{color:#50c878}.rec.add{color:#7ec88a}.rec.hold{color:#9aa7b5}.rec.trim{color:#f0a500}.rec.sell{color:#e05050}.rec.weak{color:#c9a227}
+.genre-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+.gcard{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
 .posinput{width:80px;background:var(--panel2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:4px 6px;font-size:12px}
 .legend{font-size:11px;color:var(--muted);line-height:1.7;margin-top:10px}
 .legend code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--text)}
@@ -99,18 +101,24 @@ All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutnin
   </div>
 </div>
 
+<div class="section">
+  <h2>&#127942; Trinn 1: Sjanger-rangering</h2>
+  <p class="muted" style="font-size:12px">Relativ styrke per aktivaklasse (m&aring;nedlig + 3-m&aring;nedlig trend vs gull og momentum). Topp 3 er <strong>i medvind</strong> &mdash; det er her vi leter etter lavrisiko-entry-instrumenter.</p>
+  <div class="genre-grid" id="genreBox"></div>
+</div>
+
 <div class="grid2">
   <div class="section">
     <h2>&#129518; Anbefalt fordeling</h2>
-    <p class="muted" style="font-size:12px">Vektet etter trend-score. H&oslash;yere score = st&oslash;rre tillatt vekt. Cash-buffer holdes igjen.</p>
+    <p class="muted" style="font-size:12px">Vektet etter score, kun instrumenter i topp-3-sjanger. Cash-buffer holdes igjen.</p>
     <div id="pieWrap"></div>
     <div class="legend-pie" id="pieLegend"></div>
   </div>
   <div class="section">
-    <h2>&#128221; Posisjoner &amp; anbefaling</h2>
-    <p class="muted" style="font-size:12px">Topp 10 instrumenter etter score (fra Market Daily Report). Skriv inn n&aring;v&aelig;rende vekt (%) du allerede eier. Anbefalingen tar hensyn til eksisterende posisjoner.</p>
+    <h2>&#128221; Trinn 2: Posisjoner &amp; anbefaling</h2>
+    <p class="muted" style="font-size:12px">Alle instrumenter vises. KJ&Oslash;P/LEGG TIL gjelder kun lavrisiko-entry i medvind-sjangrer. Eide posisjoner beholdes (flagges hvis sjangeren mistet medvind). Skriv inn n&aring;v&aelig;rende vekt (%) du eier.</p>
     <table id="posTable"><thead><tr>
-      <th>Ratio/Instrument</th><th>Score</th><th>Eier %</th><th>M&aring;l %</th><th>Anbefaling</th>
+      <th>Instrument</th><th>Sjanger</th><th>Score</th><th>Eier %</th><th>M&aring;l %</th><th>Anbefaling</th>
     </tr></thead><tbody id="posBody"></tbody></table>
   </div>
 </div>
@@ -127,7 +135,7 @@ All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutnin
   <div class="legend">
   <code>M&aring;l %</code> beregnes fra trend-score p&aring; topp 10 instrumenter: kun de med score &ge; 55 f&aring;r tildelt vekt. Vekt er proporsjonal med score over terskelen.<br>
   <code>Cash-buffer</code> (standard 15%) holdes alltid igjen f&oslash;r fordeling &mdash; du tar kun posisjoner n&aring;r noe ser lovende ut.<br>
-  <code>Maks vekt</code> per posisjon hindrer at alt samles i &eacute;n id&eacute;.<br>
+  <code>Maks vekt</code> per posisjon hindrer at alt samles i &eacute;n id&eacute;. <code>Maks 7 posisjoner</code> om gangen &mdash; eide posisjoner prioriteres, og nye kvalifiserte venter p&aring; ledig plass.<br>
   <code>KJ&Oslash;P</code>: score &ge; 55 og du eier mindre enn m&aring;l. <code>LEGG TIL</code>: god score, litt under m&aring;l.<br>
   <code>HOLD</code>: posisjon tatt, ikke overkj&oslash;pt enn&aring; &mdash; beholdes selv om score faller, til den blir <em>veldig</em> overkj&oslash;pt.<br>
   <code>SKALER AV</code>: kun n&aring;r RSI &ge; 65 OG MACD-hist &ge; 2 OG strukket langt over 36WMA/3yr MA &mdash; eller n&aring;r du trenger cash til klart bedre muligheter.<br>
@@ -141,6 +149,7 @@ All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutnin
 <script>
 const LS_KEY = "ns_portfolio_v1";
 const CASH_THRESHOLD = 55;     // min score for å få tildelt vekt
+const MAX_POSITIONS = 7;       // maks antall posisjoner om gangen
 const OVERBOUGHT_RSI = 65;
 const OVERBOUGHT_MACD = 2;
 const STRETCH_36 = 0.20;       // 20% over 36MA
@@ -180,9 +189,20 @@ async function init(){
   render();
 }
 
-// Bygg kandidatliste fra topp-10 instrumenter etter score (Market Daily Report)
+// Trinn A: sjanger-styrke fra index.json (beregnet i generatoren)
+function genres(){
+  return (DATA.genre_strength || []);
+}
+function top3GenreNames(){
+  return new Set(genres().filter(g=>g.top3).map(g=>g.genre));
+}
+
+// Trinn B: bygg kandidatliste. Alle instrumenter vurderes, men vi merker
+// hvilke som ligger i en topp-3-sjanger (i medvind). De 7 beste lavrisiko-
+// entry-instrumentene INNENFOR topp-3-sjangrene er de som anbefales kjoept.
 function candidates(){
   const assets = (DATA.summary && DATA.summary.assets) || {};
+  const top3 = top3GenreNames();
   const arr = [];
   Object.keys(assets).forEach(iid=>{
     const a = assets[iid];
@@ -190,28 +210,39 @@ function candidates(){
     const w = (a.frames && a.frames.weekly) || {};
     const m = (a.frames && a.frames.monthly) || {};
     const q = (a.frames && a.frames.quarterly) || {};
+    const sub = a.subclass || "";
     arr.push({
       id: iid,
       label: (a.display_name || iid) + " (" + (a.symbol_label || iid) + ")",
       score: a.northstar_score,
-      // bruk hoeyeste tidsramme for overbought-sjekk (3M, faller tilbake til M/W)
       rsi: q.rsi14 ?? m.rsi14 ?? w.rsi14,
       macd: q.macd_hist ?? m.macd_hist ?? w.macd_hist,
       d36: q.dist_to_36MA ?? m.dist_to_36MA ?? w.dist_to_36MA,
       sector: a.sector || "",
+      subclass: sub,
+      inTop3: top3.has(sub),
       kind: "instrument"
     });
   });
   arr.sort((a,b)=>b.score-a.score);
-  return arr.slice(0, 10);   // topp 10
+  return arr;
 }
 
-// Beregn mål-vekter fra score
+// Mål-vekter: kun instrumenter i topp-3-sjanger OG score>=terskel er
+// kandidater for NYE kjoep. Maks 7 posisjoner, eide prioriteres.
 function targetWeights(cands){
   const cashTarget = clamp(parseFloat(document.getElementById("cashTarget").value)||15, 0, 100);
   const maxPos = clamp(parseFloat(document.getElementById("maxPos").value)||25, 5, 100);
   const investable = 100 - cashTarget;
-  const elig = cands.filter(c => c.score >= CASH_THRESHOLD);
+
+  // Kvalifisert for nytt kjoep: score>=terskel OG i topp-3-sjanger.
+  const eligAll = cands.filter(c => c.score >= CASH_THRESHOLD && c.inTop3)
+                       .sort((a,b)=>b.score-a.score);
+  const held = eligAll.filter(c => (STATE.positions[c.id]||0) > 0);
+  const fresh = eligAll.filter(c => !((STATE.positions[c.id]||0) > 0));
+  let elig = held.slice(0, MAX_POSITIONS);
+  for(const c of fresh){ if(elig.length >= MAX_POSITIONS) break; elig.push(c); }
+
   const sumExcess = elig.reduce((a,c)=>a+(c.score-CASH_THRESHOLD),0);
   const weights = {};
   if(sumExcess > 0){
@@ -219,42 +250,47 @@ function targetWeights(cands){
       let w = investable * (c.score-CASH_THRESHOLD)/sumExcess;
       weights[c.id] = Math.min(w, maxPos);
     });
-    // re-normaliser hvis maxPos kuttet noe
     let tot = Object.values(weights).reduce((a,b)=>a+b,0);
     if(tot>0 && tot < investable){
-      // fordel resten på de som ikke er capped
-      // enkel tilnærming: skaler opp proporsjonalt innenfor maxPos
       let room = elig.filter(c=>weights[c.id] < maxPos);
       let deficit = investable - tot;
       let roomSum = room.reduce((a,c)=>a+(maxPos-weights[c.id]),0);
       if(roomSum>0) room.forEach(c=>{ weights[c.id]+= deficit*(maxPos-weights[c.id])/roomSum; });
     }
   }
-  return { weights, cashTarget, maxPos };
+  return { weights, cashTarget, maxPos, eligIds: new Set(elig.map(c=>c.id)) };
 }
 
 function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
 
-// Returnerer code (stabil) + label (visning) + cls + why
-function recommendation(c, ownPct, targetPct){
+// Delta-anbefaling: tar hensyn til hva du eier + sjanger-medvind + score.
+function recommendation(c, ownPct, targetPct, inElig){
   const rsi = c.rsi ?? 50;
   const macd = c.macd ?? 0;
   const d36 = c.d36 ?? 0;
   const veryOverbought = (rsi >= OVERBOUGHT_RSI) && (macd >= OVERBOUGHT_MACD) && (d36 >= STRETCH_36);
   if(ownPct > 0){
+    // Eid posisjon
     if(veryOverbought) return {code:"SCALE", label:"SKALER AV", cls:"sell", why:`Veldig overkj&oslash;pt (RSI ${Math.round(rsi)}, MACD h&oslash;y, strukket ${(d36*100).toFixed(0)}%)`};
     if(c.score < 35) return {code:"SCALE", label:"SKALER AV", cls:"trim", why:"Score brutt ned i negativ sone"};
-    if(ownPct < targetPct - 3) return {code:"ADD", label:"LEGG TIL", cls:"add", why:"Under m&aring;lvekt, trend intakt"};
-    return {code:"HOLD", label:"HOLD", cls:"hold", why:"Posisjon tatt, ikke overkj&oslash;pt &mdash; behold"};
+    if(!c.inTop3) return {code:"HOLD_WEAK", label:"HOLD (svekket sjanger)", cls:"weak", why:`${c.subclass} falt ut av topp 3 &mdash; teknisk sunt, men mistet medvind`};
+    if(ownPct < targetPct - 3) return {code:"ADD", label:"LEGG TIL", cls:"add", why:"I medvind-sjanger, under m&aring;lvekt"};
+    return {code:"HOLD", label:"HOLD", cls:"hold", why:"I medvind-sjanger, ikke overkj&oslash;pt &mdash; behold"};
   } else {
-    if(c.score >= CASH_THRESHOLD && targetPct > 0) return {code:"BUY", label:"KJ&Oslash;P", cls:"buy", why:`Score ${c.score} &ge; ${CASH_THRESHOLD}, lovende entry`};
+    // Ikke eid
+    if(!c.inTop3) return {code:"WAIT", label:"AVVENT", cls:"hold", why:`${c.subclass} er ikke i topp 3 sjangrer`};
+    if(c.score >= CASH_THRESHOLD && targetPct > 0) return {code:"BUY", label:"KJ&Oslash;P", cls:"buy", why:`Medvind-sjanger + score ${c.score} &ge; ${CASH_THRESHOLD}, lavrisiko entry`};
+    if(c.score >= CASH_THRESHOLD && !inElig) return {code:"WAIT", label:"AVVENT", cls:"hold", why:`Kvalifisert, men maks ${MAX_POSITIONS} posisjoner fylt &mdash; venter p&aring; plass`};
     return {code:"WAIT", label:"AVVENT", cls:"hold", why:`Score ${c.score} under terskel ${CASH_THRESHOLD}`};
   }
 }
 
 function render(){
   const cands = candidates();
-  const { weights, cashTarget } = targetWeights(cands);
+  const { weights, cashTarget, eligIds } = targetWeights(cands);
+
+  // Trinn A: sjanger-rangering (kun visning)
+  renderGenres();
 
   // KPIs
   document.getElementById("kTotal").textContent = kr(STATE.cash + STATE.invested);
@@ -269,11 +305,12 @@ function render(){
   cands.sort((a,b)=>b.score-a.score).forEach(c=>{
     const own = STATE.positions[c.id] || 0;
     const tgt = weights[c.id] || 0;
-    const rec = recommendation(c, own, tgt);
+    const rec = recommendation(c, own, tgt, eligIds.has(c.id));
     const sc = scoreColor(c.score);
     const tr = document.createElement("tr");
     tr.innerHTML =
-      `<td><strong>${c.label}</strong></td>`+
+      `<td><strong>${c.label}</strong>${c.inTop3?' <span style="color:#50c878;font-size:10px">&#9650; medvind</span>':''}</td>`+
+      `<td><span class="muted" style="font-size:11px">${c.subclass}</span></td>`+
       `<td><span class="pill" style="background:${sc}20;color:${sc};border:1px solid ${sc}40">${c.score}</span></td>`+
       `<td><input class="posinput" type="number" min="0" max="100" step="1" value="${own}" data-id="${c.id}"></td>`+
       `<td>${tgt>0?tgt.toFixed(1)+"%":"&ndash;"}</td>`+
@@ -343,6 +380,25 @@ function drawPie(cands){
   });
 }
 
+function renderGenres(){
+  const box = document.getElementById("genreBox");
+  if(!box) return;
+  const gs = genres();
+  if(!gs.length){ box.innerHTML = '<div class="muted" style="font-size:12px">Ingen sjanger-data.</div>'; return; }
+  box.innerHTML = gs.map(g=>{
+    const col = g.strength>=66 ? "#50c878" : g.strength>=40 ? "#f0a500" : "#e05050";
+    const medvind = g.top3 ? '<span style="color:#50c878;font-weight:700;font-size:11px">&#9650; I MEDVIND</span>' : '<span class="muted" style="font-size:11px">&ndash;</span>';
+    return `<div class="gcard" style="border-color:${col}50">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-weight:700">${g.rank}. ${g.genre}</span>
+        ${medvind}
+      </div>
+      <div style="font-size:22px;font-weight:700;color:${col};margin:2px 0">${g.strength}</div>
+      <div class="muted" style="font-size:11px">${g.n} instr: ${g.members.join(", ")}</div>
+    </div>`;
+  }).join("");
+}
+
 function renderHist(){
   const box=document.getElementById("histBox");
   if(!STATE.history.length){ box.innerHTML='<div class="muted" style="font-size:12px">Ingen endringer enn&aring;.</div>'; return; }
@@ -371,12 +427,12 @@ document.getElementById("applyCap").addEventListener("click", ()=>{
 
 document.getElementById("rebalance").addEventListener("click", ()=>{
   const cands = candidates();
-  const { weights } = targetWeights(cands);
+  const { weights, eligIds } = targetWeights(cands);
   let changes=[];
   cands.forEach(c=>{
     const own = STATE.positions[c.id]||0;
     const tgt = weights[c.id]||0;
-    const rec = recommendation(c, own, tgt);
+    const rec = recommendation(c, own, tgt, eligIds.has(c.id));
     if(rec.code==="BUY"){ if(tgt>0 && own<tgt){ STATE.positions[c.id]=parseFloat(tgt.toFixed(1)); changes.push(`KJ&Oslash;P ${c.label} &rarr; ${tgt.toFixed(1)}%`);} }
     else if(rec.code==="ADD"){ STATE.positions[c.id]=parseFloat(tgt.toFixed(1)); changes.push(`LEGG TIL ${c.label} &rarr; ${tgt.toFixed(1)}%`); }
     else if(rec.code==="SCALE"){ if(own>0){ STATE.positions[c.id]=0; changes.push(`SKALER AV ${c.label} (fra ${own}%)`);} }
