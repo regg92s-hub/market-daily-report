@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-03T22:43:10.068481+02:00
+# Daglig rapport – 2026-06-03T23:39:40.163053+02:00
 
 ## Manglet/feilet
 
@@ -38,5 +38,5 @@
 | PALL | Palladium | 4. Edelmetaller | % | % | 49.06 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 60.85 | 
 | URNM | Uranium miners | 5. Uranium & Energiomstilling | % | % | 56.98 | 
-| BTC | BTC | 6. Crypto | % | % | 43.35 | 
-| ETHA | ETH | 6. Crypto | % | % | 41.69 | 
+| BTC | BTC | 6. Crypto | % | % | 43.41 | 
+| ETHA | ETH | 6. Crypto | % | % | 41.85 | 
