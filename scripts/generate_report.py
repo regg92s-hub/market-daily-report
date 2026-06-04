@@ -30,7 +30,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-VERSION = "2026-06-02-northstar-v5"
+VERSION = "2026-06-04-northstar-v6"
 import base64 as _b64mod
 PORTFOLIO_HTML_B64 = (
     "PCFkb2N0eXBlIGh0bWw+CjxodG1sIGxhbmc9Im5vIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPHRpdGxlPlBvcnRl"
@@ -1650,6 +1650,130 @@ for (num_key, den_key, label) in TREND_RATIOS:
 trend_ratios.sort(key=lambda x: -x["score"])
 log(f"Trend-oversikt: {len(trend_ratios)} ratioer scoret")
 
+# ─── LEADERSHIP RANKING (Trend-oversikt lag 1+2+4) ─────────────
+# Kjerneprinsipp: all analyse relativt til gull (baseline), og til DXY.
+# Vi rangerer sykliske instrumenter etter relativ styrke vs gull og vs DXY
+# paa 1M og 3M. I tillegg sykliske par (instrument vs instrument).
+log("Leadership ranking (vs gull, vs DXY, sykliske par)...")
+
+# Sykliske instrumenter: aksjer, raavarer, energi, krypto, uran.
+# (Edelmetaller utelatt fra "vs gull"-ranking siden de ER gull-komplekset.)
+CYCLICAL_IDS = [
+    "SPY","QQQ","IWM","ACWI","EXSA","EEM","VNQ",      # aksjer
+    "SOXQ","HACK","BOTZ",                              # tech
+    "BCOM","USO","UNG","COPX","XME","XLE","DBA",       # raavarer/energi
+    "URA","URNM",                                      # uran
+    "BTC","ETHA",                                      # krypto
+]
+
+def _rel_perf(num_id, den_df):
+    """Relativ performance num/den: 1M og 3M % endring + retning vs MA.
+    Returnerer dict med pct-endringer og en samlet styrke-score 0..100."""
+    num_df = raw_cache.get(num_id)
+    if num_df is None or den_df is None:
+        return None
+    comb = pd.DataFrame({"n": num_df["close_use"], "d": den_df["close_use"]}).dropna()
+    if len(comb) < 80:
+        return None
+    ratio = (comb["n"]/comb["d"])
+    m = ratio.resample("ME").last().dropna()
+    if len(m) < 6:
+        return None
+    last = float(m.iloc[-1])
+    # 1M og 3M prosentendring i ratioen (relativ performance)
+    chg_1m = (last/float(m.iloc[-2]) - 1.0)*100 if len(m) >= 2 else None
+    chg_3m = (last/float(m.iloc[-4]) - 1.0)*100 if len(m) >= 4 else None
+    # Over stigende 12M-MA = relativ opptrend
+    ma = m.rolling(12).mean()
+    ma_now = float(ma.iloc[-1]) if pd.notna(ma.iloc[-1]) else None
+    ma_prev = float(ma.iloc[-4]) if (len(ma) >= 4 and pd.notna(ma.iloc[-4])) else None
+    above = (last > ma_now) if ma_now else False
+    rising = (ma_now > ma_prev) if (ma_now and ma_prev) else False
+    dist = ((last-ma_now)/ma_now*100) if ma_now else 0.0
+    # Styrke-score: momentum (1M+3M) + trend (over/stigende MA)
+    s = 50.0
+    if chg_1m is not None: s += max(-20, min(20, chg_1m*1.5))
+    if chg_3m is not None: s += max(-20, min(20, chg_3m*0.8))
+    if above:  s += 5
+    if rising: s += 5
+    return {"chg_1m": chg_1m, "chg_3m": chg_3m, "dist": dist,
+            "above": above, "rising": rising, "strength": round(max(0, min(100, s)))}
+
+def _build_ranking(den_df, den_label):
+    rows = []
+    for iid in CYCLICAL_IDS:
+        rp = _rel_perf(iid, den_df)
+        if rp is None:
+            continue
+        a = summary["assets"].get(iid, {})
+        rows.append({
+            "id": iid, "label": a.get("symbol_label", iid),
+            "name": a.get("display_name", iid),
+            "subclass": ASSET_SUBCLASS.get(iid, ""),
+            **rp,
+        })
+    rows.sort(key=lambda x: -(x.get("chg_3m") if x.get("chg_3m") is not None else -999))
+    return {"den": den_label, "rows": rows}
+
+ranking_gold = _build_ranking(raw_cache.get("GLD"), "Gull (GLD)")
+ranking_dxy  = _build_ranking(raw_cache.get("UUP"), "DXY (UUP)")
+log(f"  ranking vs gull: {len(ranking_gold['rows'])} | vs DXY: {len(ranking_dxy['rows'])}")
+
+# Sykliske par (lag 4): intern rotasjon mellom sykliske aktiva.
+# Hoeyere ratio-endring = foerste-nevnte leder.
+CYCLICAL_PAIRS = [
+    ("XLE","URNM","Energi vs Uran"),
+    ("USO","XLE","Olje vs Energi-aksjer"),
+    ("EEM","SPY","EM vs US"),
+    ("IWM","SPY","Small-cap vs Large-cap"),
+    ("SOXQ","QQQ","Halvledere vs Nasdaq"),
+    ("COPX","XME","Kobber vs Metaller"),
+    ("BTC","QQQ","Krypto vs Tech"),
+    ("DBA","BCOM","Agri vs Bred raavare"),
+    ("URNM","SPY","Uran vs US-aksjer"),
+]
+cyclical_pairs = []
+for (a_id, b_id, plabel) in CYCLICAL_PAIRS:
+    bdf = raw_cache.get(b_id)
+    rp = _rel_perf(a_id, bdf) if bdf is not None else None
+    if rp is None:
+        continue
+    cyclical_pairs.append({
+        "label": plabel, "a": a_id, "b": b_id,
+        "chg_1m": rp["chg_1m"], "chg_3m": rp["chg_3m"],
+        "strength": rp["strength"], "above": rp["above"], "rising": rp["rising"],
+    })
+cyclical_pairs.sort(key=lambda x: -(x.get("chg_3m") if x.get("chg_3m") is not None else -999))
+log(f"  sykliske par: {len(cyclical_pairs)}")
+
+# ─── MONEY FLOW / LIKVIDITET (lag 3) ───────────────────────────
+# Fed-likviditet finnes i regime. Legg til risk-appetitt: HYG/TLT
+# (kreditt-spread proxy) og kobber/gull (vekst vs frykt).
+money_flow = []
+def _flow_signal(num_id, den_id, label, note):
+    nd = raw_cache.get(num_id); dd = raw_cache.get(den_id)
+    if nd is None or dd is None:
+        return
+    comb = pd.DataFrame({"n": nd["close_use"], "d": dd["close_use"]}).dropna()
+    if len(comb) < 80:
+        return
+    r = (comb["n"]/comb["d"]).resample("ME").last().dropna()
+    if len(r) < 4:
+        return
+    chg_3m = (float(r.iloc[-1])/float(r.iloc[-4]) - 1.0)*100
+    ma = r.rolling(12).mean()
+    rising = pd.notna(ma.iloc[-1]) and pd.notna(ma.iloc[-4]) and ma.iloc[-1] > ma.iloc[-4]
+    risk_on = chg_3m > 0 and rising
+    money_flow.append({
+        "label": label, "chg_3m": round(chg_3m, 1),
+        "state": "Risk-on" if risk_on else ("Noeytral" if chg_3m > -2 else "Risk-off"),
+        "col": "#50c878" if risk_on else ("#f0a500" if chg_3m > -2 else "#e05050"),
+        "note": note,
+    })
+_flow_signal("HYG","TLT","Kreditt-appetitt (HYG/TLT)", "Hoey = risikovillig kapital soeker yield")
+_flow_signal("COPX","GLD","Vekst vs frykt (kobber/gull)", "Hoey = vekstforventning over sikkerhet")
+_flow_signal("EEM","ACWI","EM-ledelse (EM/verden)", "Hoey = risk-on, likviditet til periferien")
+
 # Index.json
 # ─── SJANGER-STYRKE (Trinn A): relativ styrke per aktivaklasse ──
 # Aggregerer hvert instrument sin styrke til sjanger-nivaa. Metode:
@@ -1707,6 +1831,8 @@ index = {"generated_local": NOW.isoformat(), "version": VERSION, "summary": summ
          "sector_summary": sector_summary, "sector_trend": sector_trend,
          "ratio_charts": ratio_results, "rotation": rotation,
          "trend_ratios": trend_ratios, "regime": regime,
+         "ranking_gold": ranking_gold, "ranking_dxy": ranking_dxy,
+         "cyclical_pairs": cyclical_pairs, "money_flow": money_flow,
          "genre_strength": genre_strength,
          "notes": {"instrument_count": len(ALL_IDS)}}
 with open(DOCS/"index.json","w",encoding="utf-8") as f:
@@ -2092,6 +2218,11 @@ figcaption{padding:6px 10px;border-top:1px solid var(--border);color:var(--muted
 html{scroll-behavior:smooth}section[id]{scroll-margin-top:12px}
 .legend{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.7}
 .legend code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--text)}
+table.rank{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+table.rank th{background:var(--panel2);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);color:var(--muted);font-weight:600;font-size:11px}
+table.rank td{padding:5px 8px;border-bottom:1px solid #1e2530}
+table.rank tr:last-child td{border-bottom:none}
+.muted{color:var(--muted)}
 footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 
     def anchor(rid): return f"r-{rid.lower()}"
@@ -2109,6 +2240,79 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}"""
 <p class="topnote">Generert: {html.escape(str(generated))} &nbsp;&bull;&nbsp; {VERSION} &nbsp;&bull;&nbsp; Makro-ratioer scoret med samme Northstar-modell</p>"""]
 
     parts.append(regime_stripe_html(regime))
+
+    # ─── LEADERSHIP RANKING (lag 1+2): vs gull og vs DXY ─────────
+    rgold = index_data.get("ranking_gold", {})
+    rdxy  = index_data.get("ranking_dxy", {})
+    mflow = index_data.get("money_flow", [])
+    cpairs = index_data.get("cyclical_pairs", [])
+
+    def _chg_cell(v):
+        if v is None: return '<td class="muted">&ndash;</td>'
+        col = "#50c878" if v > 0 else "#e05050"
+        return f'<td style="color:{col};text-align:right">{v:+.1f}%</td>'
+
+    def _ranking_table(rk, title, baseline_note):
+        rows = rk.get("rows", [])
+        if not rows:
+            return ""
+        out = [f'<div style="flex:1;min-width:340px"><h3 style="margin:0 0 4px;font-size:15px">{html.escape(title)}</h3>'
+               f'<p style="color:var(--muted);font-size:11px;margin:0 0 8px">{html.escape(baseline_note)}</p>'
+               '<table class="rank"><thead><tr><th>#</th><th>Instr</th><th>Sjanger</th>'
+               '<th style="text-align:right">1M</th><th style="text-align:right">3M</th><th>Trend</th></tr></thead><tbody>']
+        for i, r in enumerate(rows, 1):
+            tcol = "#50c878" if (r.get("above") and r.get("rising")) else ("#f0a500" if r.get("above") else "#e05050")
+            tlab = "Leder" if (r.get("above") and r.get("rising")) else ("Over MA" if r.get("above") else "Svak")
+            out.append(
+                f'<tr><td class="muted">{i}</td>'
+                f'<td><strong>{html.escape(r["label"])}</strong></td>'
+                f'<td class="muted" style="font-size:11px">{html.escape(r.get("subclass",""))}</td>'
+                f'{_chg_cell(r.get("chg_1m"))}{_chg_cell(r.get("chg_3m"))}'
+                f'<td><span style="color:{tcol};font-size:11px;font-weight:600">{tlab}</span></td></tr>')
+        out.append('</tbody></table></div>')
+        return "".join(out)
+
+    if rgold.get("rows") or rdxy.get("rows"):
+        parts.append('<section class="section"><h2>&#127942; Leadership ranking (relativ styrke)</h2>'
+                     '<p style="color:var(--muted);font-size:12px">Kjerneprinsipp: all analyse er <strong>relativ til gull</strong> '
+                     '(baseline for likviditet, realrenter og monetaer politikk), og til <strong>DXY</strong>. '
+                     'Sykliske instrumenter rangert etter relativ performance &mdash; hva outperformer naa, paa 1M og 3M.</p>'
+                     '<div style="display:flex;flex-wrap:wrap;gap:24px;margin-top:10px">')
+        parts.append(_ranking_table(rgold, "&#129351; vs Gull (XAU baseline)", "Positiv = slaar gull. Dette er hovedlinsa for kapitalrotasjon."))
+        parts.append(_ranking_table(rdxy,  "&#128181; vs DXY (dollar)", "Positiv = slaar dollaren. Bekrefter ekte styrke vs valutaeffekt."))
+        parts.append('</div></section>')
+
+    # ─── MONEY FLOW (lag 3) ──────────────────────────────────────
+    if mflow:
+        parts.append('<section class="section"><h2>&#128167; Money flow &amp; likviditet</h2>'
+                     '<p style="color:var(--muted);font-size:12px">Hvor kapital flyter: risikoappetitt og vekstforventning. '
+                     'Kompletterer Fed-likviditet i makro-regimet over.</p>'
+                     '<div class="sector-grid">')
+        for f in mflow:
+            parts.append(
+                f'<div class="sc" style="border-color:{f["col"]}50;cursor:default;text-align:left">'
+                f'<div class="sc-name" style="min-height:auto">{html.escape(f["label"])}</div>'
+                f'<div style="font-size:16px;font-weight:700;color:{f["col"]};margin:3px 0">{html.escape(f["state"])} ({f["chg_3m"]:+.1f}% 3M)</div>'
+                f'<div style="font-size:11px;color:var(--muted)">{html.escape(f["note"])}</div></div>')
+        parts.append('</div></section>')
+
+    # ─── SYKLISKE PAR (lag 4): intern rotasjon ───────────────────
+    if cpairs:
+        parts.append('<section class="section"><h2>&#9878;&#65039; Sykliske par (intern rotasjon)</h2>'
+                     '<p style="color:var(--muted);font-size:12px">Instrument vs instrument &mdash; hvem leder innad blant sykliske aktiva. '
+                     'Positiv = foerste leder.</p>'
+                     '<table class="rank"><thead><tr><th>Par</th>'
+                     '<th style="text-align:right">1M</th><th style="text-align:right">3M</th><th>Leder</th></tr></thead><tbody>')
+        for p in cpairs:
+            leader = p["a"] if (p.get("chg_3m") or 0) > 0 else p["b"]
+            lcol = "#50c878" if (p.get("chg_3m") or 0) > 0 else "#e05050"
+            parts.append(
+                f'<tr><td><strong>{html.escape(p["label"])}</strong> '
+                f'<span class="muted" style="font-size:11px">{html.escape(p["a"])}/{html.escape(p["b"])}</span></td>'
+                f'{_chg_cell(p.get("chg_1m"))}{_chg_cell(p.get("chg_3m"))}'
+                f'<td style="color:{lcol};font-weight:600">{html.escape(leader)}</td></tr>')
+        parts.append('</tbody></table></section>')
+
 
     if not trend_ratios:
         parts.append('<section class="section"><p>Ingen trend-data ennaa. '
