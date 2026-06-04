@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-03T23:39:40.163053+02:00
+# Daglig rapport – 2026-06-04T15:16:12.977749+02:00
 
 ## Manglet/feilet
 
@@ -10,12 +10,12 @@
 | HYG | High Yield | 0. Renter & Valuta | % | % | 75.9 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 59.42 | 
 | FXE | EUR/USD | 0. Renter & Valuta | % | % | 57.88 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.54 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.58 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 75.95 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 78.56 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 70.3 | 
 | ACWI | ACWI | 1. Aksjer | % | % | 77.12 | 
-| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 69.14 | 
+| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 69.77 | 
 | EEM | MSCI EM | 1. Aksjer | % | % | 78.32 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 58.2 | 
 | SOXQ | Semiconductors | 2. Tech & Halvledere | % | % | 88.8 | 
@@ -38,5 +38,5 @@
 | PALL | Palladium | 4. Edelmetaller | % | % | 49.06 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 60.85 | 
 | URNM | Uranium miners | 5. Uranium & Energiomstilling | % | % | 56.98 | 
-| BTC | BTC | 6. Crypto | % | % | 43.41 | 
-| ETHA | ETH | 6. Crypto | % | % | 41.85 | 
+| BTC | BTC | 6. Crypto | % | % | 42.63 | 
+| ETHA | ETH | 6. Crypto | % | % | 41.49 | 
