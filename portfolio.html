@@ -105,7 +105,7 @@ All data er teknisk og kan v&aelig;re feil eller utdatert. Du tar alle beslutnin
 
 <div class="section">
   <h2>&#127942; Trinn 1: Sjanger-rangering</h2>
-  <p class="muted" style="font-size:12px">Relativ styrke per aktivaklasse (m&aring;nedlig + 3-m&aring;nedlig trend vs gull og momentum). Sjangrer som <strong>sl&aring;r gull = i medvind</strong> &mdash; det er her vi leter etter lavrisiko-entry-instrumenter.</p>
+  <p class="muted" style="font-size:12px"><strong>Score</strong> = andel av instrumentene i sjangeren som sl&aring;r b&aring;de gull og dollar (ratioen over 50-MA p&aring; m&aring;nedlig og 3-m&aring;nedlig). <strong>&ge;70% = i medvind</strong> (gr&oslash;nt), 40&ndash;70% = avventende (gult), <strong>&le;30% = nedadg&aring;ende</strong> (r&oslash;dt, dvs. 70%+ taper). Vi leter etter lavrisiko-entry kun i medvind-sjangrer.</p>
   <div class="genre-grid" id="genreBox"></div>
 </div>
 
@@ -213,7 +213,9 @@ function candidates(){
     const w = (a.frames && a.frames.weekly) || {};
     const m = (a.frames && a.frames.monthly) || {};
     const q = (a.frames && a.frames.quarterly) || {};
-    const sub = a.subclass || "";
+    // Sjanger = sektor (samme som sektorscore). "Rawarer" vises som "Råvarer".
+    const secRaw = a.sector || "";
+    const sec = (secRaw === "Rawarer") ? "Råvarer" : secRaw;
     arr.push({
       id: iid,
       label: (a.display_name || iid) + " (" + (a.symbol_label || iid) + ")",
@@ -222,9 +224,10 @@ function candidates(){
       rsi: q.rsi14 ?? m.rsi14 ?? w.rsi14,
       macd: q.macd_hist ?? m.macd_hist ?? w.macd_hist,
       d36: q.dist_to_36MA ?? m.dist_to_36MA ?? w.dist_to_36MA,
-      sector: a.sector || "",
-      subclass: sub,
-      inMedvind: medvind.has(sub),
+      sector: sec,
+      subclass: a.subclass || "",
+      genre: sec,
+      inMedvind: medvind.has(sec),
       kind: "instrument"
     });
   });
@@ -276,13 +279,13 @@ function recommendation(c, ownPct, targetPct, inElig){
   if(ownPct > 0){
     // Eid posisjon
     if(veryOverbought) return {code:"SCALE", label:"SKALER AV", cls:"sell", why:`Veldig overkj&oslash;pt (RSI ${Math.round(rsi)}, MACD h&oslash;y, strukket ${(d36*100).toFixed(0)}%)`};
-    if(c.score < 35) return {code:"SCALE", label:"SKALER AV", cls:"trim", why:"Score brutt ned i negativ sone"};
-    if(!c.inMedvind) return {code:"HOLD_WEAK", label:"HOLD (svekket sjanger)", cls:"weak", why:`${c.subclass} sl&aring;r ikke gull lenger &mdash; teknisk sunt, men mistet medvind`};
+    if(c.score < 35) return {code:"SCALE", label:"SKALER AV", cls:"sell", why:"Score brutt ned i negativ sone"};
+    if(!c.inMedvind) return {code:"HOLD_WEAK", label:"HOLD (svekket sjanger)", cls:"weak", why:`${c.genre} sl&aring;r ikke gull lenger &mdash; teknisk sunt, men sektoren mistet medvind`};
     if(ownPct < targetPct - 3) return {code:"ADD", label:"LEGG TIL", cls:"add", why:"I medvind-sjanger, under m&aring;lvekt"};
     return {code:"HOLD", label:"HOLD", cls:"hold", why:"I medvind-sjanger, ikke overkj&oslash;pt &mdash; behold"};
   } else {
     // Ikke eid
-    if(!c.inMedvind) return {code:"WAIT", label:"AVVENT", cls:"hold", why:`${c.subclass} sl&aring;r ikke gull (ikke i medvind)`};
+    if(!c.inMedvind) return {code:"WAIT", label:"AVVENT", cls:"hold", why:`${c.genre} sl&aring;r ikke gull (sektor ikke i medvind)`};
     if(c.score >= CASH_THRESHOLD && targetPct > 0) return {code:"BUY", label:"KJ&Oslash;P", cls:"buy", why:`Medvind-sjanger + score ${c.score} &ge; ${CASH_THRESHOLD}, lavrisiko entry`};
     if(c.score >= CASH_THRESHOLD && !inElig) return {code:"WAIT", label:"AVVENT", cls:"hold", why:`Kvalifisert, men maks ${MAX_POSITIONS} posisjoner fylt &mdash; venter p&aring; plass`};
     return {code:"WAIT", label:"AVVENT", cls:"hold", why:`Score ${c.score} under terskel ${CASH_THRESHOLD}`};
@@ -431,14 +434,16 @@ function renderGenres(){
   const gs = genres();
   if(!gs.length){ box.innerHTML = '<div class="muted" style="font-size:12px">Ingen sjanger-data.</div>'; return; }
   box.innerHTML = gs.map(g=>{
-    const col = g.medvind ? "#50c878" : (g.strength>=40 ? "#f0a500" : "#e05050");
-    const medvind = g.medvind ? '<span style="color:#50c878;font-weight:700;font-size:11px">&#9650; I MEDVIND (sl&aring;r gull)</span>' : '<span class="muted" style="font-size:11px">ikke medvind</span>';
+    // Farge fra generatoren: groent >=70% slår, roedt >=70% taper, gult ellers.
+    const col = g.col || (g.strength>=70 ? "#50c878" : (g.strength>=40 ? "#f0a500" : "#e05050"));
+    const stateTxt = g.state || (g.medvind ? "I medvind" : "Avventende");
+    const badge = `<span style="color:${col};font-weight:700;font-size:11px">${g.medvind?'&#9650; ':''}${stateTxt}</span>`;
     return `<div class="gcard" style="border-color:${col}50">
       <div style="display:flex;justify-content:space-between;align-items:baseline">
         <span style="font-weight:700">${g.rank}. ${g.genre}</span>
-        ${medvind}
+        ${badge}
       </div>
-      <div style="font-size:22px;font-weight:700;color:${col};margin:2px 0">${g.strength}</div>
+      <div style="font-size:22px;font-weight:700;color:${col};margin:2px 0">${g.strength}<span style="font-size:12px;color:var(--muted)">% sl&aring;r gull</span></div>
       <div class="muted" style="font-size:11px">${g.n} instr: ${g.members.join(", ")}</div>
     </div>`;
   }).join("");
