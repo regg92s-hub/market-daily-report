@@ -2027,6 +2027,9 @@ def regime_stripe_html(regime):
             f'<div style="margin-bottom:6px"><span style="color:#50c878;font-weight:600;font-size:12px">Slår gull:</span><br>{_rot_chips(rot.get("beats", []), True)}</div>'
             f'<div><span style="color:#e05050;font-weight:600;font-size:12px">Taper mot gull:</span><br>{_rot_chips(rot.get("loses", []), False)}</div>'
             '</div>')
+    # 3-maaneders charts under kortene
+    chart_cards = [("Yield-kurve 2s10s", regime.get("yield_curve")),
+                   ("Fed-balanse",       regime.get("fed_liquidity"))]
     chart_figs = []
     for cname, r in chart_cards:
         if r and r.get("chart"):
