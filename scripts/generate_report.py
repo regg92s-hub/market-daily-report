@@ -1811,7 +1811,7 @@ for (a_id, b_id, plabel) in CYCLICAL_PAIRS:
     cyclical_pairs.append({
         "label": plabel, "a": a_id, "b": b_id,
         "chg_1m": rp["chg_1m"], "chg_3m": rp["chg_3m"],
-        "strength": rp["strength"], "above": rp["above"], "rising": rp["rising"],
+        "strength": rp["strength"], "beats": rp["beats"], "loses": rp["loses"],
     })
 cyclical_pairs.sort(key=lambda x: -(x.get("chg_3m") if x.get("chg_3m") is not None else -999))
 log(f"  sykliske par: {len(cyclical_pairs)}")
