@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 05. June 2026
+## Ukentlig Portfolio-Brief - 06. June 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 55.0 | Noytral | 2 |
+| Crypto | 56.0 | Noytral | 2 |
 | Edelmetaller | 46.0 | Avvent | 8 |
 | Rawarer | 42.8 | Avvent | 9 |
 | Aksjer | 38.6 | Avvent | 7 |
@@ -25,10 +25,10 @@ _Trend OK men ikke ideal entry._
 | 20yr UST | **69** | 50.3 | 47.2 | 46.9 | -0.1% | -1.5% |
 | EUR/USD | **67** | 34.8 | 44.9 | 56.2 | 5.5% | -1.0% |
 | Palladium | **60** | 28.0 | 37.3 | 46.7 | 4.9% | -20.4% |
-| ETH | **58** | 13.2 | 30.4 | 40.2 | -41.4% | -41.0% |
+| ETH | **59** | 12.4 | 29.9 | 39.9 | -42.7% | -40.6% |
 | DXY | **57** | 68.9 | 62.4 | 60.5 | 5.3% | 2.6% |
 | Uranium miners | **56** | 36.7 | 42.2 | 52.4 | 18.1% | -10.8% |
-| EM Currencies | **55** | 41.4 | 54.1 | 67.7 | 11.1% | 1.3% |
+| EM Currencies | **55** | 41.2 | 54.0 | 67.7 | 11.0% | 1.3% |
 | Agri/mat | **55** | 28.9 | 46.0 | 59.1 | 11.5% | 0.7% |
 
 ### Avvent
@@ -37,8 +37,8 @@ _Stretched eller svak momentum._
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
 | Naturgass | **53** | 54.3 | 48.0 | 40.9 | -32.7% | -6.4% |
+| BTC | **53** | 15.2 | 31.1 | 41.5 | -17.1% | -26.5% |
 | High Yield | **52** | 47.3 | 57.0 | 74.0 | 10.5% | 1.0% |
-| BTC | **52** | 15.6 | 31.3 | 41.7 | -16.3% | -27.5% |
 | Housing US | **51** | 57.1 | 59.6 | 61.0 | 15.6% | 6.3% |
 | Robotics/AI | **50** | 40.5 | 52.6 | 57.9 | 20.2% | 2.9% |
 | Uranium ETF | **49** | 35.8 | 43.2 | 55.7 | 40.2% | -8.4% |
