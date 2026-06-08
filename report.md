@@ -1,6 +1,7 @@
 # Daglig rapport – 2026-06-07T22:03:36.985229+02:00
 
 ## Manglet/feilet
+- postprocess: brukte speil for index.json (https://raw.githubusercontent.com/regg92s-hub/market-daily-report/gh-pages/index.json?t=27148520487)
 
 ## Oversikt
 
