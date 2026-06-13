@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-12T22:57:40.203771+02:00
+# Daglig rapport – 2026-06-13T21:00:22.348889+02:00
 
 ## Manglet/feilet
 
@@ -10,7 +10,7 @@
 | HYG | High Yield | 0. Renter & Valuta | % | % | 77.76 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 60.05 | 
 | FXE | EUR/USD | 0. Renter & Valuta | % | % | 57.57 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 71.94 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 71.96 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 72.66 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 74.48 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 72.24 | 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 56.68 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 48.16 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 55.91 | 
-| BTC | BTC | 6. Crypto | % | % | 42.65 | 
-| ETHA | ETH | 6. Crypto | % | % | 40.71 | 
+| BTC | BTC | 6. Crypto | % | % | 42.96 | 
+| ETHA | ETH | 6. Crypto | % | % | 40.82 | 
