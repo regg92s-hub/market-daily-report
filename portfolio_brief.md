@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 13. June 2026
+## Ukentlig Portfolio-Brief - 14. June 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 56.0 | Noytral | 2 |
+| Crypto | 56.5 | Noytral | 2 |
 | Edelmetaller | 46.1 | Avvent | 8 |
 | Rawarer | 41.9 | Avvent | 8 |
 | Aksjer | 36.0 | Avvent | 7 |
@@ -26,9 +26,9 @@ _Trend OK men ikke ideal entry._
 | 20yr UST | **65** | 56.2 | 50.2 | 48.2 | 0.8% | -0.7% |
 | DXY | **58** | 61.3 | 60.7 | 60.1 | 4.9% | 2.2% |
 | Agri/mat | **58** | 27.9 | 44.1 | 58.1 | 10.6% | 0.0% |
+| ETH | **58** | 31.5 | 32.9 | 40.7 | -38.9% | -35.1% |
 | Palladium | **57** | 39.4 | 40.2 | 48.2 | 9.1% | -17.3% |
-| ETH | **57** | 32.3 | 33.3 | 40.8 | -38.3% | -34.5% |
-| BTC | **55** | 35.8 | 35.8 | 43.0 | -12.4% | -20.9% |
+| BTC | **55** | 35.0 | 35.1 | 42.8 | -13.1% | -21.5% |
 
 ### Avvent
 _Stretched eller svak momentum._
