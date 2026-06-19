@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-18T23:15:18.115483+02:00
+# Daglig rapport – 2026-06-19T21:19:35.986343+02:00
 
 ## Manglet/feilet
 
@@ -10,12 +10,12 @@
 | HYG | High Yield | 0. Renter & Valuta | % | % | 77.92 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 62.33 | 
 | FXE | EUR/USD | 0. Renter & Valuta | % | % | 54.93 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.96 | 
-| SPY | S&P 500 | 1. Aksjer | % | % | 73.94 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.98 | 
+| SPY | S&P 500 | 1. Aksjer | % | % | 74.45 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 78.34 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 72.9 | 
 | ACWI | ACWI | 1. Aksjer | % | % | 77.17 | 
-| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 71.9 | 
+| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 71.72 | 
 | EEM | MSCI EM | 1. Aksjer | % | % | 79.07 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 59.81 | 
 | SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 88.94 | 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 56.06 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 48.16 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 58.1 | 
-| BTC | BTC | 6. Crypto | % | % | 42.43 | 
-| ETHA | ETH | 6. Crypto | % | % | 40.99 | 
+| BTC | BTC | 6. Crypto | % | % | 42.46 | 
+| ETHA | ETH | 6. Crypto | % | % | 40.97 | 
