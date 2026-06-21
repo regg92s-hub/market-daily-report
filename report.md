@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-06-20T22:08:56.720989+02:00
+# Daglig rapport – 2026-06-21T21:06:47.842671+02:00
 
 ## Manglet/feilet
 
@@ -8,7 +8,7 @@
 |---|---|---|---:|---:|---:|
 | TLT | 20yr UST | 0. Renter & Valuta | % | % | 49.87 | 
 | HYG | High Yield | 0. Renter & Valuta | % | % | 77.92 | 
-| UUP | DXY | 0. Renter & Valuta | % | % | 61.58 | 
+| UUP | DXY | 0. Renter & Valuta | % | % | 62.33 | 
 | FXE | EUR/USD | 0. Renter & Valuta | % | % | 54.93 | 
 | CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.98 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 74.45 | 
@@ -21,7 +21,7 @@
 | SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 88.94 | 
 | HACK | Cybersecurity | 2. Tech & Halvledere | % | % | 67.71 | 
 | BOTZ | Robotics/AI | 2. Tech & Halvledere | % | % | 58.71 | 
-| DBC | Commodity bred | 3. Råvarer | % | % | 65.5 | 
+| DBC | Commodity bred | 3. Råvarer | % | % | 65.13 | 
 | USO | Olje (WTI) | 3. Råvarer | % | % | 61.54 | 
 | UNG | Naturgass | 3. Råvarer | % | % | 40.99 | 
 | COPX | Kobber miners | 3. Råvarer | % | % | 68.24 | 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 56.06 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 48.16 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 58.1 | 
-| BTC | BTC | 6. Crypto | % | % | 42.84 | 
-| ETHA | ETH | 6. Crypto | % | % | 41.19 | 
+| BTC | BTC | 6. Crypto | % | % | 42.93 | 
+| ETHA | ETH | 6. Crypto | % | % | 41.23 | 
