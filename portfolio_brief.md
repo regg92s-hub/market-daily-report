@@ -28,7 +28,7 @@ _Trend OK men ikke ideal entry._
 | Robotics/AI | **61** | 46.2 | 49.1 | 55.7 | 15.8% | -0.2% |
 | Palladium | **58** | 49.3 | 41.3 | 48.2 | 8.4% | -16.8% |
 | EM Currencies | **55** | 54.0 | 56.5 | 69.6 | 11.3% | 1.4% |
-| BTC | **55** | 53.5 | 38.2 | 43.8 | -13.6% | -15.9% |
+| BTC | **55** | 54.0 | 38.3 | 43.9 | -13.5% | -15.8% |
 
 ### Avvent
 _Stretched eller svak momentum._
