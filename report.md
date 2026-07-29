@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-07-28T22:09:06.866955+02:00
+# Daglig rapport – 2026-07-29T20:43:18.293201+02:00
 
 ## Manglet/feilet
 
@@ -6,36 +6,36 @@
 
 | Ticker | Navn | Kategori | Dist36WMA | Dist36MMA | M-RSI14 |
 |---|---|---|---:|---:|---:|
-| TLT | 20yr UST | 0. Renter & Valuta | % | % | 46.14 | 
-| HYG | High Yield | 0. Renter & Valuta | % | % | 76.18 | 
-| UUP | DXY | 0. Renter & Valuta | % | % | 63.95 | 
-| FXE | EUR/USD | 0. Renter & Valuta | % | % | 53.53 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.8 | 
-| SPY | S&P 500 | 1. Aksjer | % | % | 72.77 | 
-| QQQ | Nasdaq-100 | 1. Aksjer | % | % | 65.37 | 
-| IWM | Russell 2000 | 1. Aksjer | % | % | 70.15 | 
-| ACWI | ACWI | 1. Aksjer | % | % | 72.97 | 
-| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 73.27 | 
-| EEM | MSCI EM | 1. Aksjer | % | % | 64.81 | 
-| VNQ | Housing US | 1. Aksjer | % | % | 65.45 | 
-| SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 65.76 | 
-| HACK | Cybersecurity | 2. Tech & Halvledere | % | % | 74.91 | 
-| BOTZ | Robotics/AI | 2. Tech & Halvledere | % | % | 50.26 | 
-| DBC | Commodity bred | 3. Råvarer | % | % | 65.67 | 
-| USO | Olje (WTI) | 3. Råvarer | % | % | 61.96 | 
-| UNG | Naturgass | 3. Råvarer | % | % | 38.68 | 
-| COPX | Kobber miners | 3. Råvarer | % | % | 61.17 | 
-| XME | Metals/Mining | 3. Råvarer | % | % | 58.22 | 
-| XLE | Energy | 3. Råvarer | % | % | 65.76 | 
-| DBA | Agri/mat | 3. Råvarer | % | % | 66.0 | 
-| GLD | Gull | 4. Edelmetaller | % | % | 57.72 | 
-| SLV | Solv | 4. Edelmetaller | % | % | 54.03 | 
-| GDX | Gull miners | 4. Edelmetaller | % | % | 55.1 | 
-| GDXJ | Junior gull | 4. Edelmetaller | % | % | 54.92 | 
-| SIL | Solv miners | 4. Edelmetaller | % | % | 55.29 | 
-| SILJ | Junior solv | 4. Edelmetaller | % | % | 54.61 | 
-| PPLT | Platina | 4. Edelmetaller | % | % | 53.13 | 
-| PALL | Palladium | 4. Edelmetaller | % | % | 47.86 | 
-| URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 50.11 | 
-| BTC | BTC | 6. Crypto | % | % | 43.7 | 
-| ETHA | ETH | 6. Crypto | % | % | 43.84 | 
+| TLT | 20yr UST | 0. Renter & Valuta | % | % | 45.38 | 
+| HYG | High Yield | 0. Renter & Valuta | % | % | 76.01 | 
+| UUP | DXY | 0. Renter & Valuta | % | % | 63.31 | 
+| FXE | EUR/USD | 0. Renter & Valuta | % | % | 54.39 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 70.96 | 
+| SPY | S&P 500 | 1. Aksjer | % | % | 72.56 | 
+| QQQ | Nasdaq-100 | 1. Aksjer | % | % | 65.48 | 
+| IWM | Russell 2000 | 1. Aksjer | % | % | 69.39 | 
+| ACWI | ACWI | 1. Aksjer | % | % | 72.81 | 
+| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 73.05 | 
+| EEM | MSCI EM | 1. Aksjer | % | % | 64.65 | 
+| VNQ | Housing US | 1. Aksjer | % | % | 65.41 | 
+| SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 64.89 | 
+| HACK | Cybersecurity | 2. Tech & Halvledere | % | % | 74.97 | 
+| BOTZ | Robotics/AI | 2. Tech & Halvledere | % | % | 50.67 | 
+| DBC | Commodity bred | 3. Råvarer | % | % | 67.38 | 
+| USO | Olje (WTI) | 3. Råvarer | % | % | 64.11 | 
+| UNG | Naturgass | 3. Råvarer | % | % | 38.82 | 
+| COPX | Kobber miners | 3. Råvarer | % | % | 61.89 | 
+| XME | Metals/Mining | 3. Råvarer | % | % | 56.73 | 
+| XLE | Energy | 3. Råvarer | % | % | 66.9 | 
+| DBA | Agri/mat | 3. Råvarer | % | % | 64.77 | 
+| GLD | Gull | 4. Edelmetaller | % | % | 58.62 | 
+| SLV | Solv | 4. Edelmetaller | % | % | 55.12 | 
+| GDX | Gull miners | 4. Edelmetaller | % | % | 55.62 | 
+| GDXJ | Junior gull | 4. Edelmetaller | % | % | 55.25 | 
+| SIL | Solv miners | 4. Edelmetaller | % | % | 55.39 | 
+| SILJ | Junior solv | 4. Edelmetaller | % | % | 54.83 | 
+| PPLT | Platina | 4. Edelmetaller | % | % | 53.68 | 
+| PALL | Palladium | 4. Edelmetaller | % | % | 48.25 | 
+| URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 49.64 | 
+| BTC | BTC | 6. Crypto | % | % | 43.97 | 
+| ETHA | ETH | 6. Crypto | % | % | 43.85 | 
