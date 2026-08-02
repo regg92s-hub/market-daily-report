@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 01. August 2026
+## Ukentlig Portfolio-Brief - 02. August 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 57.5 | Noytral | 2 |
+| Crypto | 58.0 | Noytral | 2 |
 | Edelmetaller | 45.2 | Avvent | 8 |
 | Rawarer | 44.5 | Avvent | 8 |
 | Tech | 42.3 | Avvent | 3 |
@@ -25,7 +25,7 @@ _Trend OK men ikke ideal entry._
 | 20yr UST | **72** | 31.6 | 38.0 | 43.2 | -2.8% | -3.8% |
 | EUR/USD | **65** | 63.0 | 49.8 | 56.4 | 5.3% | -0.6% |
 | Robotics/AI | **65** | 47.2 | 45.4 | 52.4 | 10.1% | -4.7% |
-| ETH | **63** | 47.7 | 40.7 | 43.0 | -32.4% | -18.3% |
+| ETH | **62** | 52.6 | 42.1 | 43.4 | -30.8% | -16.4% |
 | DXY | **58** | 41.7 | 57.0 | 60.5 | 5.1% | 2.2% |
 | Palladium | **55** | 50.6 | 42.8 | 48.5 | 9.2% | -15.6% |
 
@@ -34,9 +34,9 @@ _Stretched eller svak momentum._
 
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
+| BTC | **54** | 47.1 | 38.0 | 43.5 | -15.3% | -14.3% |
 | High Yield | **53** | 49.6 | 57.3 | 76.8 | 9.8% | 0.9% |
 | Uranium ETF | **53** | 40.8 | 36.6 | 50.2 | 16.5% | -19.4% |
-| BTC | **52** | 42.6 | 36.6 | 43.0 | -16.6% | -15.6% |
 | EM Currencies | **51** | 62.4 | 62.8 | 71.8 | 12.4% | 2.4% |
 | Naturgass | **50** | 37.2 | 39.7 | 39.0 | -38.8% | -15.9% |
 | Gull | **50** | 45.8 | 38.0 | 58.1 | 29.3% | -10.9% |
