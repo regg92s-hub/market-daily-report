@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-08-16T19:59:08.885896+02:00
+# Daglig rapport – 2026-08-16T21:09:11.499249+02:00
 
 ## Manglet/feilet
 
@@ -9,8 +9,8 @@
 | TLT | 20yr UST | 0. Renter & Valuta | % | % | 43.42 | 
 | HYG | High Yield | 0. Renter & Valuta | % | % | 78.38 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 59.85 | 
-| FXE | EUR/USD | 0. Renter & Valuta | % | % | 57.01 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 72.59 | 
+| FXE | EUR/USD | 0. Renter & Valuta | % | % | 57.17 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 72.61 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 77.24 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 71.26 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 71.98 | 
@@ -32,10 +32,10 @@
 | SLV | Solv | 4. Edelmetaller | % | % | 58.54 | 
 | GDX | Gull miners | 4. Edelmetaller | % | % | 62.12 | 
 | GDXJ | Junior gull | 4. Edelmetaller | % | % | 61.41 | 
-| SIL | Solv miners | 4. Edelmetaller | % | % | 61.72 | 
+| SIL | Solv miners | 4. Edelmetaller | % | % | 61.32 | 
 | SILJ | Junior solv | 4. Edelmetaller | % | % | 61.08 | 
 | PPLT | Platina | 4. Edelmetaller | % | % | 56.93 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 49.82 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 54.81 | 
-| BTC | BTC | 6. Crypto | % | % | 43.3 | 
-| ETHA | ETH | 6. Crypto | % | % | 43.49 | 
+| BTC | BTC | 6. Crypto | % | % | 43.31 | 
+| ETHA | ETH | 6. Crypto | % | % | 43.51 | 
