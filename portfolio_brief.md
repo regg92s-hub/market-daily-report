@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 29. August 2026
+## Ukentlig Portfolio-Brief - 30. August 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 54.0 | Avvent | 2 |
+| Crypto | 53.5 | Avvent | 2 |
 | Tech | 42.7 | Avvent | 3 |
 | Aksjer | 39.9 | Avvent | 7 |
 | Rawarer | 38.6 | Avvent | 8 |
@@ -35,8 +35,8 @@ _Stretched eller svak momentum._
 |---|---:|---:|---:|---:|---:|---:|
 | Housing US | **54** | 42.9 | 54.1 | 61.1 | 14.6% | 3.6% |
 | Naturgass | **54** | 53.0 | 43.3 | 39.5 | -35.3% | -10.3% |
-| BTC | **54** | 72.3 | 56.8 | 50.9 | 2.7% | 7.8% |
-| ETH | **54** | 71.3 | 58.5 | 49.2 | -10.2% | 12.9% |
+| ETH | **54** | 72.9 | 59.8 | 49.7 | -8.3% | 15.3% |
+| BTC | **53** | 72.6 | 58.2 | 51.2 | 3.6% | 8.8% |
 | High Yield | **49** | 56.6 | 63.1 | 78.5 | 10.0% | 1.4% |
 | EM Currencies | **49** | 50.6 | 59.8 | 72.7 | 12.4% | 2.3% |
 | Uranium ETF | **48** | 53.4 | 49.2 | 55.3 | 33.4% | -6.2% |
