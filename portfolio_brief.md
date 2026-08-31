@@ -4,7 +4,7 @@
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 53.5 | Avvent | 2 |
+| Crypto | 54.0 | Avvent | 2 |
 | Tech | 42.3 | Avvent | 3 |
 | Aksjer | 40.7 | Avvent | 7 |
 | Rawarer | 38.1 | Avvent | 8 |
@@ -34,9 +34,9 @@ _Stretched eller svak momentum._
 
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
-| ETH | **54** | 71.7 | 59.1 | 49.4 | -9.3% | 14.0% |
+| BTC | **54** | 71.9 | 57.7 | 51.0 | 3.0% | 8.2% |
+| ETH | **54** | 71.2 | 58.8 | 49.3 | -9.8% | 13.4% |
 | EUR/USD | **53** | 57.1 | 53.5 | 58.1 | 5.7% | 0.2% |
-| BTC | **53** | 72.8 | 58.2 | 51.2 | 3.7% | 9.0% |
 | High Yield | **49** | 58.6 | 63.9 | 78.6 | 9.9% | 1.4% |
 | EM Currencies | **49** | 51.6 | 60.3 | 72.8 | 12.4% | 2.3% |
 | Uranium ETF | **47** | 53.1 | 49.1 | 55.2 | 32.6% | -6.5% |
