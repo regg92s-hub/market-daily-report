@@ -1,4 +1,4 @@
-## Ukentlig Portfolio-Brief - 06. September 2026
+## Ukentlig Portfolio-Brief - 07. September 2026
 
 ### Sektorscore
 
@@ -6,7 +6,7 @@
 |---|---:|---|---:|
 | Crypto | 53.5 | Avvent | 2 |
 | Tech | 44.3 | Avvent | 3 |
-| Aksjer | 40.6 | Avvent | 7 |
+| Aksjer | 40.7 | Avvent | 7 |
 | Rawarer | 38.2 | Avvent | 8 |
 | Edelmetaller | 37.1 | Avvent | 8 |
 
@@ -34,9 +34,9 @@ _Stretched eller svak momentum._
 
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
-| ETH | **54** | 65.1 | 59.7 | 49.7 | -8.7% | 16.0% |
+| ETH | **54** | 63.7 | 59.5 | 49.6 | -8.9% | 15.7% |
 | EUR/USD | **53** | 55.6 | 53.4 | 58.0 | 5.7% | 0.2% |
-| BTC | **53** | 67.0 | 59.1 | 51.7 | 4.5% | 10.7% |
+| BTC | **53** | 63.1 | 58.2 | 51.3 | 3.6% | 9.7% |
 | High Yield | **51** | 50.7 | 60.6 | 76.6 | 9.6% | 1.1% |
 | EM Currencies | **47** | 62.7 | 64.8 | 74.7 | 13.8% | 3.6% |
 | Uranium ETF | **47** | 55.0 | 50.2 | 55.6 | 34.2% | -5.4% |
@@ -44,7 +44,7 @@ _Stretched eller svak momentum._
 | Platina | **41** | 56.3 | 50.7 | 58.6 | 40.2% | -6.8% |
 | Nasdaq-100 | **40** | 53.6 | 58.7 | 70.3 | 36.6% | 8.4% |
 | Russell 2000 | **40** | 48.2 | 60.5 | 70.2 | 32.1% | 7.3% |
-| STOXX Europe 600 | **39** | 48.9 | 63.7 | 73.9 | 24.8% | 5.5% |
+| STOXX Europe 600 | **40** | 48.4 | 63.5 | 73.9 | 24.4% | 5.1% |
 | Solv | **39** | 52.9 | 49.4 | 59.2 | 56.5% | -9.7% |
 | Semiconductors | **38** | 49.0 | 54.9 | 68.3 | 89.8% | 14.8% |
 | Gull | **38** | 52.4 | 52.0 | 63.5 | 38.0% | -2.8% |
