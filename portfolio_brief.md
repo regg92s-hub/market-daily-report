@@ -1,11 +1,11 @@
-## Ukentlig Portfolio-Brief - 14. September 2026
+## Ukentlig Portfolio-Brief - 15. September 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
 | Crypto | 53.5 | Avvent | 2 |
-| Aksjer | 46.0 | Avvent | 7 |
+| Aksjer | 45.7 | Avvent | 7 |
 | Tech | 45.0 | Avvent | 3 |
 | Edelmetaller | 40.8 | Avvent | 8 |
 | Rawarer | 39.0 | Avvent | 8 |
@@ -36,12 +36,12 @@ _Stretched eller svak momentum._
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
 | Naturgass | **54** | 50.5 | 44.0 | 39.6 | -34.0% | -9.3% |
-| BTC | **54** | 60.0 | 57.4 | 51.2 | 2.8% | 9.9% |
-| ETH | **53** | 64.1 | 61.2 | 50.2 | -6.6% | 19.6% |
+| BTC | **54** | 59.5 | 57.2 | 51.1 | 2.6% | 9.7% |
+| ETH | **53** | 63.6 | 61.0 | 50.2 | -6.9% | 19.3% |
 | Uranium ETF | **50** | 40.9 | 43.1 | 52.3 | 22.0% | -12.8% |
 | EM Currencies | **49** | 49.7 | 59.2 | 73.4 | 12.4% | 2.3% |
 | Russell 2000 | **47** | 37.4 | 52.9 | 66.6 | 27.7% | 3.6% |
-| STOXX Europe 600 | **46** | 35.0 | 54.4 | 69.0 | 21.4% | 2.7% |
+| STOXX Europe 600 | **44** | 37.5 | 56.1 | 69.9 | 22.3% | 3.4% |
 | Nasdaq-100 | **43** | 46.9 | 55.7 | 68.6 | 33.6% | 6.1% |
 | Semiconductors | **43** | 41.8 | 50.7 | 65.9 | 78.6% | 7.3% |
 | Metals/Mining | **43** | 41.0 | 48.3 | 59.9 | 42.6% | -3.7% |
