@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-09-15T22:29:06.477952+02:00
+# Daglig rapport – 2026-09-15T23:47:54.683609+02:00
 
 ## Manglet/feilet
 
@@ -10,8 +10,8 @@
 | HYG | High Yield | 0. Renter & Valuta | % | % | 70.19 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 60.71 | 
 | FXE | EUR/USD | 0. Renter & Valuta | % | % | 56.21 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 72.62 | 
-| SPY | S&P 500 | 1. Aksjer | % | % | 73.52 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 72.58 | 
+| SPY | S&P 500 | 1. Aksjer | % | % | 73.51 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 67.72 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 65.21 | 
 | ACWI | ACWI | 1. Aksjer | % | % | 73.82 | 
