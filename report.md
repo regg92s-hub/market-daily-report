@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-09-16T22:28:13.193823+02:00
+# Daglig rapport – 2026-09-16T23:45:38.660015+02:00
 
 ## Manglet/feilet
 
@@ -7,10 +7,10 @@
 | Ticker | Navn | Kategori | Dist36WMA | Dist36MMA | M-RSI14 |
 |---|---|---|---:|---:|---:|
 | TLT | 20yr UST | 0. Renter & Valuta | % | % | 42.28 | 
-| HYG | High Yield | 0. Renter & Valuta | % | % | 70.88 | 
+| HYG | High Yield | 0. Renter & Valuta | % | % | 70.5 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 61.98 | 
 | FXE | EUR/USD | 0. Renter & Valuta | % | % | 54.56 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 72.19 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 71.19 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 72.55 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 67.75 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 64.98 | 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 56.37 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 48.21 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 51.62 | 
-| BTC | BTC | 6. Crypto | % | % | 49.89 | 
-| ETHA | ETH | 6. Crypto | % | % | 48.82 | 
+| BTC | BTC | 6. Crypto | % | % | 49.78 | 
+| ETHA | ETH | 6. Crypto | % | % | 48.73 | 
