@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-09-29T00:39:19.484871+02:00
+# Daglig rapport – 2026-09-29T01:33:56.135698+02:00
 
 ## Manglet/feilet
 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 55.45 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 46.32 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 50.63 | 
-| BTC | BTC | 6. Crypto | % | % | 53.22 | 
-| ETHA | ETH | 6. Crypto | % | % | 51.38 | 
+| BTC | BTC | 6. Crypto | % | % | 53.26 | 
+| ETHA | ETH | 6. Crypto | % | % | 51.43 | 
