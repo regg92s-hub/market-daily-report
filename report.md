@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-10-13T01:48:02.474275+02:00
+# Daglig rapport – 2026-10-13T03:00:18.824710+02:00
 
 ## Manglet/feilet
 
@@ -19,8 +19,8 @@
 | EEM | MSCI EM | 1. Aksjer | % | % | 68.69 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 53.77 | 
 | SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 67.96 | 
-| HACK | Cybersecurity | 2. Tech & Halvledere | % | % | 82.59 | 
-| BOTZ | Robotics/AI | 2. Tech & Halvledere | % | % | 51.52 | 
+| HACK | Cybersecurity | 2. Tech & Halvledere | % | % | 83.5 | 
+| BOTZ | Robotics/AI | 2. Tech & Halvledere | % | % | 52.71 | 
 | DBC | Commodity bred | 3. Råvarer | % | % | 74.13 | 
 | USO | Olje (WTI) | 3. Råvarer | % | % | 69.45 | 
 | UNG | Naturgass | 3. Råvarer | % | % | 40.82 | 
@@ -33,9 +33,9 @@
 | GDX | Gull miners | 4. Edelmetaller | % | % | 59.14 | 
 | GDXJ | Junior gull | 4. Edelmetaller | % | % | 57.83 | 
 | SIL | Solv miners | 4. Edelmetaller | % | % | 57.93 | 
-| SILJ | Junior solv | 4. Edelmetaller | % | % | 56.19 | 
+| SILJ | Junior solv | 4. Edelmetaller | % | % | 56.66 | 
 | PPLT | Platina | 4. Edelmetaller | % | % | 54.39 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 43.99 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 48.7 | 
-| BTC | BTC | 6. Crypto | % | % | 52.34 | 
-| ETHA | ETH | 6. Crypto | % | % | 49.06 | 
+| BTC | BTC | 6. Crypto | % | % | 52.22 | 
+| ETHA | ETH | 6. Crypto | % | % | 48.88 | 
