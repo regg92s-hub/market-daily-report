@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 23. October 2026
+## Ukentlig Portfolio-Brief - 24. October 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 55.0 | Noytral | 2 |
+| Crypto | 56.5 | Noytral | 2 |
 | Edelmetaller | 51.9 | Avvent | 8 |
 | Aksjer | 51.6 | Avvent | 7 |
 | Tech | 48.3 | Avvent | 3 |
@@ -28,9 +28,10 @@ _Trend OK men ikke ideal entry._
 | Housing US | **67** | 55.1 | 47.5 | 55.2 | 8.5% | -1.2% |
 | Palladium | **65** | 27.4 | 31.7 | 41.5 | -11.2% | -23.8% |
 | Uranium ETF | **63** | 28.4 | 30.8 | 46.0 | -2.7% | -26.0% |
-| EM Currencies | **58** | 47.5 | 52.9 | 68.7 | 10.4% | 0.9% |
+| EM Currencies | **58** | 47.3 | 52.8 | 68.7 | 10.3% | 0.9% |
+| ETH | **57** | 35.0 | 50.9 | 48.1 | -15.8% | 9.2% |
 | Russell 2000 | **56** | 43.2 | 44.8 | 61.2 | 20.7% | -1.3% |
-| ETH | **56** | 39.9 | 53.0 | 48.6 | -13.5% | 12.5% |
+| BTC | **56** | 42.9 | 56.2 | 51.7 | 2.1% | 11.2% |
 
 ### Avvent
 _Stretched eller svak momentum._
@@ -38,7 +39,6 @@ _Stretched eller svak momentum._
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
 | Gull | **54** | 34.1 | 38.1 | 54.4 | 20.6% | -10.4% |
-| BTC | **54** | 45.8 | 57.6 | 52.1 | 3.5% | 12.9% |
 | MSCI EM | **53** | 32.3 | 42.9 | 60.7 | 27.3% | -3.4% |
 | Metals/Mining | **53** | 31.1 | 36.3 | 52.7 | 22.1% | -13.7% |
 | Platina | **53** | 32.5 | 35.7 | 50.3 | 16.2% | -16.0% |
