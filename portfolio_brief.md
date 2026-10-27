@@ -4,7 +4,7 @@
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 56.0 | Noytral | 2 |
+| Crypto | 55.5 | Noytral | 2 |
 | Edelmetaller | 51.8 | Avvent | 8 |
 | Aksjer | 49.7 | Avvent | 7 |
 | Tech | 45.7 | Avvent | 3 |
@@ -30,9 +30,9 @@ _Trend OK men ikke ideal entry._
 | EM Currencies | **61** | 39.3 | 49.2 | 67.0 | 9.5% | 0.3% |
 | Uranium ETF | **60** | 39.9 | 35.7 | 47.3 | 2.1% | -21.3% |
 | Agri/mat | **59** | 27.5 | 46.2 | 58.6 | 10.3% | -0.6% |
-| BTC | **56** | 44.7 | 56.6 | 51.8 | 2.3% | 11.5% |
-| ETH | **56** | 36.6 | 51.0 | 48.1 | -15.6% | 9.3% |
+| ETH | **56** | 37.6 | 51.2 | 48.2 | -15.4% | 9.7% |
 | Platina | **55** | 32.7 | 35.1 | 50.0 | 15.0% | -15.8% |
+| BTC | **55** | 45.2 | 56.8 | 51.9 | 2.5% | 11.6% |
 
 ### Avvent
 _Stretched eller svak momentum._
