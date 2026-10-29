@@ -1,4 +1,4 @@
-## Ukentlig Portfolio-Brief - 29. October 2026
+## Ukentlig Portfolio-Brief - 30. October 2026
 
 ### Sektorscore
 
@@ -6,7 +6,7 @@
 |---|---:|---|---:|
 | Crypto | 58.5 | Noytral | 2 |
 | Edelmetaller | 52.6 | Avvent | 8 |
-| Aksjer | 49.0 | Avvent | 7 |
+| Aksjer | 49.3 | Avvent | 7 |
 | Tech | 46.7 | Avvent | 3 |
 | Rawarer | 44.4 | Avvent | 8 |
 
@@ -32,7 +32,7 @@ _Trend OK men ikke ideal entry._
 | Agri/mat | **60** | 25.9 | 44.1 | 57.3 | 9.4% | -1.4% |
 | ETH | **59** | 31.8 | 48.5 | 47.4 | -18.3% | 5.9% |
 | Platina | **58** | 28.6 | 32.9 | 48.6 | 11.2% | -18.5% |
-| BTC | **58** | 38.9 | 53.8 | 50.9 | 0.1% | 9.1% |
+| BTC | **58** | 38.5 | 53.6 | 50.9 | -0.1% | 8.9% |
 
 ### Avvent
 _Stretched eller svak momentum._
@@ -49,10 +49,10 @@ _Stretched eller svak momentum._
 | Gull miners | **49** | 39.2 | 44.2 | 55.4 | 41.8% | -8.4% |
 | Junior gull | **49** | 37.5 | 42.1 | 53.5 | 38.7% | -12.7% |
 | Kobber miners | **48** | 36.6 | 43.2 | 56.3 | 40.3% | -7.9% |
+| STOXX Europe 600 | **47** | 55.8 | 57.0 | 70.1 | 21.0% | 3.2% |
 | Solv miners | **47** | 34.3 | 40.8 | 53.1 | 39.3% | -14.7% |
 | Junior solv | **47** | 36.3 | 39.9 | 52.1 | 34.8% | -17.4% |
 | Nasdaq-100 | **45** | 44.5 | 53.4 | 67.2 | 31.3% | 4.0% |
-| STOXX Europe 600 | **45** | 60.1 | 59.1 | 70.8 | 21.9% | 3.9% |
 | ACWI | **44** | 48.5 | 55.7 | 74.7 | 26.2% | 3.4% |
 | Semiconductors | **44** | 46.6 | 50.9 | 64.2 | 75.2% | 3.8% |
 | S&P 500 | **41** | 50.8 | 59.9 | 76.3 | 27.0% | 5.1% |
