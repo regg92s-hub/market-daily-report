@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 31. October 2026
+## Ukentlig Portfolio-Brief - 01. November 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 61.0 | Noytral | 2 |
+| Crypto | 60.0 | Noytral | 2 |
 | Edelmetaller | 54.1 | Avvent | 8 |
 | Aksjer | 52.0 | Avvent | 7 |
 | Tech | 49.3 | Avvent | 3 |
@@ -31,8 +31,8 @@ _Trend OK men ikke ideal entry._
 | Palladium | **62** | 21.0 | 29.0 | 39.9 | -16.6% | -27.3% |
 | Uranium ETF | **62** | 33.7 | 30.3 | 45.8 | -4.0% | -25.9% |
 | Platina | **61** | 24.9 | 30.9 | 47.3 | 7.3% | -21.3% |
-| BTC | **61** | 35.8 | 51.8 | 50.3 | -1.9% | 6.8% |
-| ETH | **61** | 31.8 | 48.1 | 47.3 | -18.9% | 4.9% |
+| BTC | **60** | 37.3 | 52.2 | 50.4 | -1.6% | 7.2% |
+| ETH | **60** | 33.5 | 48.5 | 47.4 | -18.5% | 5.4% |
 | Gull | **56** | 30.3 | 35.0 | 52.3 | 16.6% | -12.3% |
 | Solv | **56** | 23.9 | 32.7 | 47.8 | 11.7% | -27.4% |
 
