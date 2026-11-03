@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-11-03T23:34:07.090326+01:00
+# Daglig rapport – 2026-11-04T00:43:54.142729+01:00
 
 ## Manglet/feilet
 
@@ -15,7 +15,7 @@
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 62.04 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 62.77 | 
 | ACWI | ACWI | 1. Aksjer | % | % | 70.38 | 
-| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 70.07 | 
+| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 70.87 | 
 | EEM | MSCI EM | 1. Aksjer | % | % | 59.13 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 57.49 | 
 | SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 59.02 | 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 46.75 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 38.72 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 45.28 | 
-| BTC | BTC | 6. Crypto | % | % | 50.38 | 
-| ETHA | ETH | 6. Crypto | % | % | 47.69 | 
+| BTC | BTC | 6. Crypto | % | % | 50.37 | 
+| ETHA | ETH | 6. Crypto | % | % | 47.64 | 
