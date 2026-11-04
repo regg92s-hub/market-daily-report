@@ -1,4 +1,4 @@
-## Ukentlig Portfolio-Brief - 04. November 2026
+## Ukentlig Portfolio-Brief - 05. November 2026
 
 ### Sektorscore
 
@@ -7,8 +7,8 @@
 | Crypto | 57.0 | Noytral | 2 |
 | Edelmetaller | 54.0 | Avvent | 8 |
 | Tech | 50.7 | Avvent | 3 |
+| Aksjer | 50.3 | Avvent | 7 |
 | Rawarer | 50.1 | Avvent | 8 |
-| Aksjer | 49.7 | Avvent | 7 |
 
 ### Lavrisiko entry
 _Near 3yr MA, RSI ok, momentum positivt._
@@ -32,8 +32,8 @@ _Trend OK men ikke ideal entry._
 | EM Currencies | **60** | 51.1 | 52.3 | 67.7 | 10.0% | 0.8% |
 | Platina | **59** | 38.4 | 35.7 | 49.0 | 11.4% | -17.0% |
 | Housing US | **58** | 72.2 | 60.3 | 60.3 | 14.3% | 4.3% |
-| BTC | **57** | 51.5 | 55.8 | 51.8 | 2.0% | 11.0% |
-| ETH | **57** | 55.1 | 53.9 | 49.2 | -12.3% | 13.2% |
+| BTC | **57** | 50.6 | 55.5 | 51.7 | 1.7% | 10.7% |
+| ETH | **57** | 54.1 | 53.6 | 49.0 | -12.7% | 12.6% |
 | Metals/Mining | **55** | 35.1 | 36.6 | 52.4 | 20.5% | -13.3% |
 | Gull | **55** | 47.8 | 42.9 | 55.2 | 21.6% | -7.5% |
 | Solv | **55** | 38.0 | 37.2 | 49.6 | 17.6% | -21.9% |
@@ -55,8 +55,8 @@ _Stretched eller svak momentum._
 | Solv miners | **49** | 46.3 | 44.2 | 54.0 | 43.3% | -10.5% |
 | ACWI | **47** | 49.9 | 55.1 | 72.1 | 25.5% | 3.0% |
 | Semiconductors | **47** | 34.0 | 41.7 | 57.5 | 52.8% | -9.3% |
+| STOXX Europe 600 | **46** | 54.9 | 57.4 | 70.1 | 20.9% | 3.3% |
 | S&P 500 | **43** | 50.8 | 58.7 | 74.7 | 26.1% | 4.5% |
-| STOXX Europe 600 | **42** | 64.4 | 62.6 | 72.1 | 23.2% | 5.2% |
 | Commodity bred | **42** | 30.3 | 52.7 | 65.2 | 34.1% | 3.6% |
 | Energy | **41** | 38.9 | 54.5 | 63.6 | 37.1% | 6.6% |
 
