@@ -1,11 +1,11 @@
-## Ukentlig Portfolio-Brief - 06. November 2026
+## Ukentlig Portfolio-Brief - 07. November 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
 | Crypto | 61.0 | Noytral | 2 |
-| Aksjer | 55.0 | Noytral | 7 |
+| Aksjer | 54.7 | Avvent | 7 |
 | Edelmetaller | 53.8 | Avvent | 8 |
 | Tech | 53.7 | Avvent | 3 |
 | Rawarer | 50.4 | Avvent | 8 |
@@ -28,8 +28,8 @@ _Trend OK men ikke ideal entry._
 | Agri/mat | **66** | 15.4 | 36.1 | 51.9 | 5.0% | -5.2% |
 | Palladium | **64** | 40.6 | 33.1 | 41.5 | -12.9% | -22.9% |
 | Housing US | **62** | 59.9 | 55.6 | 58.2 | 11.6% | 1.9% |
-| BTC | **61** | 38.4 | 49.6 | 49.5 | -3.9% | 4.7% |
-| ETH | **61** | 39.8 | 47.6 | 47.2 | -19.4% | 4.2% |
+| BTC | **61** | 38.3 | 49.5 | 49.5 | -4.0% | 4.6% |
+| ETH | **61** | 39.8 | 47.6 | 47.2 | -19.4% | 4.3% |
 | EM Currencies | **60** | 48.2 | 51.1 | 67.2 | 9.7% | 0.6% |
 | Uranium ETF | **60** | 34.7 | 28.5 | 44.8 | -8.1% | -28.0% |
 | Nasdaq-100 | **57** | 31.4 | 39.5 | 57.5 | 20.1% | -4.7% |
@@ -55,8 +55,8 @@ _Stretched eller svak momentum._
 | Junior solv | **50** | 48.1 | 43.3 | 53.1 | 39.2% | -12.8% |
 | Solv miners | **49** | 48.9 | 45.2 | 54.5 | 45.6% | -9.1% |
 | Semiconductors | **46** | 30.5 | 37.1 | 53.8 | 39.0% | -17.4% |
-| STOXX Europe 600 | **45** | 54.1 | 58.8 | 70.7 | 21.4% | 3.7% |
 | Energy | **44** | 34.1 | 51.0 | 61.1 | 33.0% | 3.5% |
+| STOXX Europe 600 | **43** | 62.6 | 62.1 | 71.9 | 22.9% | 4.9% |
 | Cybersecurity | **41** | 34.8 | 50.9 | 66.0 | 39.8% | 9.7% |
 | Commodity bred | **41** | 34.2 | 54.0 | 66.1 | 35.2% | 4.4% |
 
