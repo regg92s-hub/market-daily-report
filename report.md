@@ -1,4 +1,4 @@
-# Daglig rapport – 2026-11-07T00:33:16.298560+01:00
+# Daglig rapport – 2026-11-07T22:05:42.018835+01:00
 
 ## Manglet/feilet
 
@@ -6,16 +6,16 @@
 
 | Ticker | Navn | Kategori | Dist36WMA | Dist36MMA | M-RSI14 |
 |---|---|---|---:|---:|---:|
-| TLT | 20yr UST | 0. Renter & Valuta | % | % | 45.8 | 
-| HYG | High Yield | 0. Renter & Valuta | % | % | 61.83 | 
+| TLT | 20yr UST | 0. Renter & Valuta | % | % | 46.33 | 
+| HYG | High Yield | 0. Renter & Valuta | % | % | 63.08 | 
 | UUP | DXY | 0. Renter & Valuta | % | % | 66.61 | 
-| FXE | EUR/USD | 0. Renter & Valuta | % | % | 47.49 | 
-| CEW | EM Currencies | 0. Renter & Valuta | % | % | 67.18 | 
+| FXE | EUR/USD | 0. Renter & Valuta | % | % | 47.66 | 
+| CEW | EM Currencies | 0. Renter & Valuta | % | % | 67.2 | 
 | SPY | S&P 500 | 1. Aksjer | % | % | 67.12 | 
 | QQQ | Nasdaq-100 | 1. Aksjer | % | % | 57.45 | 
 | IWM | Russell 2000 | 1. Aksjer | % | % | 59.9 | 
 | ACWI | ACWI | 1. Aksjer | % | % | 65.53 | 
-| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 71.86 | 
+| EXSA | STOXX Europe 600 | 1. Aksjer | % | % | 70.68 | 
 | EEM | MSCI EM | 1. Aksjer | % | % | 56.22 | 
 | VNQ | Housing US | 1. Aksjer | % | % | 58.18 | 
 | SOXX | Semiconductors | 2. Tech & Halvledere | % | % | 53.76 | 
@@ -37,5 +37,5 @@
 | PPLT | Platina | 4. Edelmetaller | % | % | 49.94 | 
 | PALL | Palladium | 4. Edelmetaller | % | % | 41.5 | 
 | URA | Uranium ETF | 5. Uranium & Energiomstilling | % | % | 44.78 | 
-| BTC | BTC | 6. Crypto | % | % | 49.48 | 
-| ETHA | ETH | 6. Crypto | % | % | 47.19 | 
+| BTC | BTC | 6. Crypto | % | % | 49.35 | 
+| ETHA | ETH | 6. Crypto | % | % | 47.08 | 
