@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 07. November 2026
+## Ukentlig Portfolio-Brief - 08. November 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 62.5 | Noytral | 2 |
+| Crypto | 63.0 | Noytral | 2 |
 | Aksjer | 55.0 | Noytral | 7 |
 | Edelmetaller | 53.8 | Avvent | 8 |
 | Tech | 53.7 | Avvent | 3 |
@@ -27,9 +27,9 @@ _Trend OK men ikke ideal entry._
 | High Yield | **66** | 48.2 | 43.5 | 63.1 | 6.1% | -0.8% |
 | Agri/mat | **66** | 15.4 | 36.1 | 51.9 | 5.0% | -5.2% |
 | Palladium | **64** | 40.6 | 33.1 | 41.5 | -12.9% | -22.9% |
-| ETH | **63** | 39.3 | 47.4 | 47.1 | -19.6% | 3.6% |
+| ETH | **64** | 38.9 | 47.2 | 47.1 | -19.9% | 3.3% |
 | Housing US | **62** | 59.9 | 55.6 | 58.2 | 11.6% | 1.9% |
-| BTC | **62** | 38.0 | 49.3 | 49.4 | -4.5% | 4.1% |
+| BTC | **62** | 37.9 | 49.3 | 49.4 | -4.5% | 4.1% |
 | EM Currencies | **60** | 48.3 | 51.2 | 67.2 | 9.7% | 0.6% |
 | Uranium ETF | **60** | 34.7 | 28.5 | 44.8 | -8.1% | -28.0% |
 | Nasdaq-100 | **57** | 31.4 | 39.5 | 57.5 | 20.1% | -4.7% |
