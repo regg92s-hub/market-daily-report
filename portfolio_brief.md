@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 14. November 2026
+## Ukentlig Portfolio-Brief - 15. November 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 66.0 | Noytral | 2 |
+| Crypto | 66.5 | Noytral | 2 |
 | Edelmetaller | 55.0 | Noytral | 8 |
 | Tech | 52.0 | Avvent | 3 |
 | Aksjer | 51.7 | Avvent | 7 |
@@ -23,13 +23,13 @@ _Trend OK men ikke ideal entry._
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
 | Robotics/AI | **73** | 38.4 | 34.0 | 44.7 | -5.2% | -13.1% |
-| ETH | **71** | 19.4 | 34.8 | 43.1 | -36.7% | -17.8% |
+| ETH | **72** | 25.3 | 36.2 | 43.6 | -34.3% | -14.7% |
 | 20yr UST | **68** | 40.7 | 42.5 | 43.2 | -4.8% | -3.5% |
 | High Yield | **66** | 47.0 | 44.9 | 63.8 | 6.1% | -0.7% |
 | Agri/mat | **64** | 34.6 | 41.0 | 54.1 | 6.6% | -3.6% |
 | EM Currencies | **63** | 39.9 | 46.9 | 65.1 | 8.7% | -0.3% |
 | Palladium | **63** | 38.5 | 32.0 | 40.6 | -14.9% | -23.7% |
-| BTC | **61** | 19.8 | 36.1 | 44.2 | -19.8% | -11.9% |
+| BTC | **61** | 23.9 | 37.3 | 44.8 | -18.0% | -10.0% |
 | Housing US | **60** | 60.1 | 57.3 | 58.9 | 12.3% | 2.5% |
 | Platina | **59** | 39.8 | 36.5 | 48.9 | 10.7% | -16.5% |
 | Uranium ETF | **59** | 37.2 | 27.9 | 44.4 | -9.6% | -28.4% |
