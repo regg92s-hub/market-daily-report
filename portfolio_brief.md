@@ -1,4 +1,4 @@
-## Ukentlig Portfolio-Brief - 21. November 2026
+## Ukentlig Portfolio-Brief - 22. November 2026
 
 ### Sektorscore
 
