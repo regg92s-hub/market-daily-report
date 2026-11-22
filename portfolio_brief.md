@@ -1,10 +1,10 @@
-## Ukentlig Portfolio-Brief - 22. November 2026
+## Ukentlig Portfolio-Brief - 23. November 2026
 
 ### Sektorscore
 
 | Sektor | Score | Signal | n |
 |---|---:|---|---:|
-| Crypto | 64.5 | Noytral | 2 |
+| Crypto | 65.5 | Noytral | 2 |
 | Edelmetaller | 60.9 | Noytral | 8 |
 | Aksjer | 60.1 | Noytral | 7 |
 | Rawarer | 55.6 | Noytral | 8 |
@@ -22,7 +22,7 @@ _Trend OK men ikke ideal entry._
 
 | Instrument | Score | D-RSI | W-RSI | M-RSI | Dist 3yr | Dist 36W |
 |---|---:|---:|---:|---:|---:|---:|
-| ETH | **72** | 29.5 | 35.8 | 42.8 | -38.0% | -19.0% |
+| ETH | **71** | 30.0 | 36.0 | 42.9 | -37.8% | -18.8% |
 | Robotics/AI | **70** | 23.0 | 25.5 | 39.0 | -17.0% | -23.4% |
 | High Yield | **69** | 36.3 | 38.9 | 60.0 | 5.1% | -1.5% |
 | Platina | **69** | 24.3 | 29.4 | 43.9 | -3.8% | -26.5% |
@@ -39,12 +39,12 @@ _Trend OK men ikke ideal entry._
 | Kobber miners | **61** | 22.3 | 27.3 | 46.0 | 2.9% | -30.2% |
 | Gull | **61** | 23.7 | 30.4 | 46.4 | 4.7% | -18.4% |
 | Uranium ETF | **60** | 24.8 | 22.4 | 41.2 | -24.0% | -38.9% |
+| BTC | **60** | 27.0 | 35.9 | 43.3 | -23.0% | -14.9% |
 | S&P 500 | **59** | 24.9 | 35.3 | 56.4 | 12.8% | -6.3% |
 | Nasdaq-100 | **59** | 26.6 | 34.2 | 51.3 | 10.7% | -12.0% |
 | ACWI | **59** | 24.1 | 33.4 | 55.0 | 12.3% | -7.6% |
 | Junior gull | **58** | 28.2 | 35.7 | 47.4 | 9.9% | -27.4% |
 | Solv miners | **58** | 26.7 | 34.2 | 47.2 | 9.5% | -29.5% |
-| BTC | **57** | 25.9 | 35.5 | 43.2 | -23.4% | -15.3% |
 | Naturgass | **56** | 56.9 | 49.7 | 41.1 | -28.0% | -1.6% |
 | Gull miners | **55** | 29.8 | 37.8 | 49.3 | 17.2% | -21.0% |
 
